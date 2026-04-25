@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="mn">
 <head>
 <meta charset="UTF-8">
@@ -19,384 +20,387 @@
     --cream: #FFF8E1;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+- { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
-    background: #050505;
-    font-family: 'Rajdhani', sans-serif;
-    color: var(--white);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    padding: 20px;
-  }
+body {
+background: #050505;
+font-family: ‘Rajdhani’, sans-serif;
+color: var(–white);
+min-height: 100vh;
+display: flex;
+justify-content: center;
+padding: 20px;
+}
 
-  .poster {
-    width: 900px;
-    background: linear-gradient(160deg, #0D0D00 0%, #050500 40%, #0A0800 100%);
-    border: 2px solid var(--gold3);
-    box-shadow: 0 0 80px rgba(255,200,0,0.15), inset 0 0 120px rgba(0,0,0,0.8);
-    position: relative;
-    overflow: hidden;
-    animation: glow 6s ease-in-out infinite;
-  }
+.poster {
+width: 900px;
+background: linear-gradient(160deg, #0D0D00 0%, #050500 40%, #0A0800 100%);
+border: 2px solid var(–gold3);
+box-shadow: 0 0 80px rgba(255,200,0,0.15), inset 0 0 120px rgba(0,0,0,0.8);
+position: relative;
+overflow: hidden;
+animation: glow 6s ease-in-out infinite;
+}
 
-  .poster::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at 20% 20%, rgba(255,180,0,0.05) 0%, transparent 60%),
-      radial-gradient(ellipse at 80% 80%, rgba(255,140,0,0.04) 0%, transparent 50%),
-      repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,200,0,0.01) 40px, rgba(255,200,0,0.01) 41px);
-    pointer-events: none;
-  }
+.poster::before {
+content: ‘’;
+position: absolute;
+inset: 0;
+background:
+radial-gradient(ellipse at 20% 20%, rgba(255,180,0,0.05) 0%, transparent 60%),
+radial-gradient(ellipse at 80% 80%, rgba(255,140,0,0.04) 0%, transparent 50%),
+repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,200,0,0.01) 40px, rgba(255,200,0,0.01) 41px);
+pointer-events: none;
+}
 
-  .corner {
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    border-color: var(--gold3);
-    border-style: solid;
-    opacity: 0.6;
-  }
-  .corner-tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
-  .corner-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
-  .corner-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
-  .corner-br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+.corner {
+position: absolute;
+width: 60px;
+height: 60px;
+border-color: var(–gold3);
+border-style: solid;
+opacity: 0.6;
+}
+.corner-tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+.corner-tr { top: 12px; right: 12px; border-width: 2px 2px 0 0; }
+.corner-bl { bottom: 12px; left: 12px; border-width: 0 0 2px 2px; }
+.corner-br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
 
-  .header {
-    padding: 40px 50px 20px;
-    text-align: center;
-    position: relative;
-  }
+.header {
+padding: 40px 50px 20px;
+text-align: center;
+position: relative;
+}
 
-  .header-line {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 8px;
-  }
-  .header-line::before, .header-line::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold3), transparent);
-  }
+.header-line {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 16px;
+margin-bottom: 8px;
+}
+.header-line::before, .header-line::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: linear-gradient(90deg, transparent, var(–gold3), transparent);
+}
 
-  .subtitle-top {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 13px;
-    letter-spacing: 4px;
-    color: var(--gold3);
-    text-transform: uppercase;
-  }
+.subtitle-top {
+font-family: ‘Rajdhani’, sans-serif;
+font-size: 13px;
+letter-spacing: 4px;
+color: var(–gold3);
+text-transform: uppercase;
+}
 
-  .main-title {
-    font-family: 'Cinzel', serif;
-    font-size: 62px;
-    font-weight: 900;
-    line-height: 1;
-    background: linear-gradient(180deg, #FFE566 0%, #FFD700 40%, #B8860B 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 10px 0;
-    letter-spacing: -1px;
-    animation: shimmer 4s ease-in-out infinite;
-  }
+.main-title {
+font-family: ‘Cinzel’, serif;
+font-size: 62px;
+font-weight: 900;
+line-height: 1;
+background: linear-gradient(180deg, #FFE566 0%, #FFD700 40%, #B8860B 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin: 10px 0;
+letter-spacing: -1px;
+animation: shimmer 4s ease-in-out infinite;
+}
 
-  .main-title .arrow {
-    background: linear-gradient(180deg, #FFF 0%, #FFD700 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+.main-title .arrow {
+background: linear-gradient(180deg, #FFF 0%, #FFD700 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
 
-  .plan-title {
-    font-family: 'Cinzel', serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--white);
-    letter-spacing: 3px;
-    margin-bottom: 4px;
-  }
+.plan-title {
+font-family: ‘Cinzel’, serif;
+font-size: 20px;
+font-weight: 700;
+color: var(–white);
+letter-spacing: 3px;
+margin-bottom: 4px;
+}
 
-  .rr-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 20px;
-    background: linear-gradient(135deg, rgba(184,134,11,0.3), rgba(255,215,0,0.1));
-    border: 1px solid rgba(255,215,0,0.4);
-    padding: 8px 30px;
-    border-radius: 2px;
-    font-size: 13px;
-    letter-spacing: 2px;
-    color: var(--gold);
-    margin-top: 12px;
-  }
-  .rr-badge .dot { width: 4px; height: 4px; background: var(--gold3); border-radius: 50%; }
+.rr-badge {
+display: inline-flex;
+align-items: center;
+gap: 20px;
+background: linear-gradient(135deg, rgba(184,134,11,0.3), rgba(255,215,0,0.1));
+border: 1px solid rgba(255,215,0,0.4);
+padding: 8px 30px;
+border-radius: 2px;
+font-size: 13px;
+letter-spacing: 2px;
+color: var(–gold);
+margin-top: 12px;
+}
+.rr-badge .dot { width: 4px; height: 4px; background: var(–gold3); border-radius: 50%; }
 
-  .table-wrap { padding: 20px 40px; }
+.table-wrap { padding: 20px 40px; }
 
-  table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0 3px;
-  }
+table {
+width: 100%;
+border-collapse: separate;
+border-spacing: 0 3px;
+}
 
-  thead tr th {
-    background: linear-gradient(135deg, #1A1200, #2A1E00);
-    border-top: 1px solid var(--gold3);
-    border-bottom: 1px solid var(--gold3);
-    padding: 14px 10px;
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    color: var(--gold);
-    text-align: center;
-    text-transform: uppercase;
-  }
-  thead tr th:first-child { border-left: 1px solid var(--gold3); }
-  thead tr th:last-child { border-right: 1px solid var(--gold3); }
+thead tr th {
+background: linear-gradient(135deg, #1A1200, #2A1E00);
+border-top: 1px solid var(–gold3);
+border-bottom: 1px solid var(–gold3);
+padding: 14px 10px;
+font-family: ‘Cinzel’, serif;
+font-size: 10px;
+letter-spacing: 1.5px;
+color: var(–gold);
+text-align: center;
+text-transform: uppercase;
+}
+thead tr th:first-child { border-left: 1px solid var(–gold3); }
+thead tr th:last-child { border-right: 1px solid var(–gold3); }
 
-  .th-icon { display: block; font-size: 16px; margin-bottom: 4px; }
+.th-icon { display: block; font-size: 16px; margin-bottom: 4px; }
 
-  tbody tr td {
-    padding: 13px 10px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 600;
-    border-top: 1px solid rgba(255,200,0,0.06);
-    border-bottom: 1px solid rgba(0,0,0,0.3);
-  }
+tbody tr td {
+padding: 13px 10px;
+text-align: center;
+font-size: 16px;
+font-weight: 600;
+border-top: 1px solid rgba(255,200,0,0.06);
+border-bottom: 1px solid rgba(0,0,0,0.3);
+}
 
-  .phase-build { background: rgba(0, 100, 0, 0.25); }
-  .phase-stability { background: rgba(0, 40, 120, 0.3); }
-  .phase-compound { background: rgba(80, 0, 80, 0.3); }
+.phase-build { background: rgba(0, 100, 0, 0.25); }
+.phase-stability { background: rgba(0, 40, 120, 0.3); }
+.phase-compound { background: rgba(80, 0, 80, 0.3); }
 
-  .phase-milestone {
-    background: linear-gradient(90deg, rgba(180,120,0,0.25), rgba(255,200,0,0.15), rgba(180,120,0,0.25));
-    border-top: 1px solid rgba(255,215,0,0.4) !important;
-    border-bottom: 1px solid rgba(255,215,0,0.4) !important;
-  }
+.phase-milestone {
+background: linear-gradient(90deg, rgba(180,120,0,0.25), rgba(255,200,0,0.15), rgba(180,120,0,0.25));
+border-top: 1px solid rgba(255,215,0,0.4) !important;
+border-bottom: 1px solid rgba(255,215,0,0.4) !important;
+}
 
-  .td-num { color: rgba(255,255,255,0.4); font-size: 12px; }
-  .td-balance { color: var(--gold); font-family: 'Cinzel', serif; font-size: 17px; }
-  .td-lot { color: #64B5F6; font-size: 15px; }
-  .td-risk { color: #FF6B6B; }
-  .td-profit { color: #69F0AE; }
-  .td-next { color: var(--white); font-family: 'Cinzel', serif; }
+.td-num { color: rgba(255,255,255,0.4); font-size: 12px; }
+.td-balance { color: var(–gold); font-family: ‘Cinzel’, serif; font-size: 17px; }
+.td-lot { color: #64B5F6; font-size: 15px; }
+.td-risk { color: #FF6B6B; }
+.td-profit { color: #69F0AE; }
+.td-next { color: var(–white); font-family: ‘Cinzel’, serif; }
 
-  .milestone-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: linear-gradient(135deg, var(--gold3), var(--gold));
-    color: #000;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 20px;
-    letter-spacing: 1px;
-    font-family: 'Cinzel', serif;
-  }
+.milestone-badge {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+background: linear-gradient(135deg, var(–gold3), var(–gold));
+color: #000;
+font-size: 10px;
+font-weight: 700;
+padding: 2px 8px;
+border-radius: 20px;
+letter-spacing: 1px;
+font-family: ‘Cinzel’, serif;
+}
 
-  .star-milestone .td-balance {
-    background: linear-gradient(180deg, #FFE566, #FFD700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-size: 18px;
-  }
-  .star-milestone .td-next {
-    background: linear-gradient(180deg, #FFE566, #FFD700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 700;
-  }
+.star-milestone .td-balance {
+background: linear-gradient(180deg, #FFE566, #FFD700);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+font-size: 18px;
+}
+.star-milestone .td-next {
+background: linear-gradient(180deg, #FFE566, #FFD700);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+font-weight: 700;
+}
 
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    padding: 5px 40px;
-    margin: 5px 0;
-  }
-  .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--gold3), transparent); }
-  .divider-diamond { width: 8px; height: 8px; background: var(--gold3); transform: rotate(45deg); }
+.divider {
+display: flex;
+align-items: center;
+gap: 16px;
+padding: 5px 40px;
+margin: 5px 0;
+}
+.divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(–gold3), transparent); }
+.divider-diamond { width: 8px; height: 8px; background: var(–gold3); transform: rotate(45deg); }
 
-  .info-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
-    padding: 20px 40px;
-  }
+.info-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 16px;
+padding: 20px 40px;
+}
 
-  .info-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,200,0,0.15);
-    padding: 18px;
-    position: relative;
-  }
+.info-card {
+background: rgba(255,255,255,0.03);
+border: 1px solid rgba(255,200,0,0.15);
+padding: 18px;
+position: relative;
+}
 
-  .info-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--gold3), transparent);
-  }
+.info-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 2px;
+background: linear-gradient(90deg, transparent, var(–gold3), transparent);
+}
 
-  .info-card-title {
-    font-family: 'Cinzel', serif;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: var(--gold);
-    margin-bottom: 14px;
-    text-transform: uppercase;
-  }
+.info-card-title {
+font-family: ‘Cinzel’, serif;
+font-size: 11px;
+letter-spacing: 2px;
+color: var(–gold);
+margin-bottom: 14px;
+text-transform: uppercase;
+}
 
-  .rule-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 5px 0;
-    font-size: 13px;
-    color: rgba(255,255,220,0.85);
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-  }
-  .rule-item:last-child { border-bottom: none; }
-  .rule-icon { font-size: 14px; flex-shrink: 0; }
+.rule-item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 5px 0;
+font-size: 13px;
+color: rgba(255,255,220,0.85);
+border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.rule-item:last-child { border-bottom: none; }
+.rule-icon { font-size: 14px; flex-shrink: 0; }
 
-  .phase-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 7px 0;
-    font-size: 13px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-  }
-  .phase-item:last-child { border-bottom: none; }
-  .phase-dot { width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; }
-  .phase-label { color: var(--gold); font-size: 11px; display: block; }
-  .phase-range { color: rgba(255,255,220,0.7); font-size: 12px; }
+.phase-item {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 7px 0;
+font-size: 13px;
+border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.phase-item:last-child { border-bottom: none; }
+.phase-dot { width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+.phase-label { color: var(–gold); font-size: 11px; display: block; }
+.phase-range { color: rgba(255,255,220,0.7); font-size: 12px; }
 
-  .timeline-item {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-  }
-  .timeline-item:last-child { border-bottom: none; }
-  .tl-label { color: var(--gold); font-size: 11px; font-weight: 700; min-width: 90px; }
-  .tl-value { color: rgba(255,255,220,0.85); font-size: 13px; }
+.timeline-item {
+display: flex;
+align-items: baseline;
+gap: 8px;
+padding: 6px 0;
+border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.timeline-item:last-child { border-bottom: none; }
+.tl-label { color: var(–gold); font-size: 11px; font-weight: 700; min-width: 90px; }
+.tl-value { color: rgba(255,255,220,0.85); font-size: 13px; }
 
-  .patience-quote {
-    margin-top: 10px;
-    padding: 8px 12px;
-    background: rgba(255,215,0,0.08);
-    border-left: 2px solid var(--gold3);
-    font-size: 11px;
-    color: var(--gold);
-    font-style: italic;
-    letter-spacing: 0.5px;
-    line-height: 1.5;
-  }
+.patience-quote {
+margin-top: 10px;
+padding: 8px 12px;
+background: rgba(255,215,0,0.08);
+border-left: 2px solid var(–gold3);
+font-size: 11px;
+color: var(–gold);
+font-style: italic;
+letter-spacing: 0.5px;
+line-height: 1.5;
+}
 
-  .quote-section {
-    padding: 30px 50px;
-    text-align: center;
-    position: relative;
-  }
+.quote-section {
+padding: 30px 50px;
+text-align: center;
+position: relative;
+}
 
-  .quote-section::before {
-    content: '"';
-    position: absolute;
-    top: 10px;
-    left: 40px;
-    font-family: 'Cinzel', serif;
-    font-size: 120px;
-    color: rgba(255,215,0,0.06);
-    line-height: 1;
-  }
+.quote-section::before {
+content: ‘”’;
+position: absolute;
+top: 10px;
+left: 40px;
+font-family: ‘Cinzel’, serif;
+font-size: 120px;
+color: rgba(255,215,0,0.06);
+line-height: 1;
+}
 
-  .quote-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.5;
-    color: var(--white);
-    position: relative;
-    z-index: 1;
-    max-width: 640px;
-    margin: 0 auto 16px;
-  }
+.quote-text {
+font-family: ‘Playfair Display’, serif;
+font-size: 22px;
+font-weight: 700;
+line-height: 1.5;
+color: var(–white);
+position: relative;
+z-index: 1;
+max-width: 640px;
+margin: 0 auto 16px;
+}
 
-  .quote-text em {
-    background: linear-gradient(180deg, #FFE566, #FFD700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-style: normal;
-  }
+.quote-text em {
+background: linear-gradient(180deg, #FFE566, #FFD700);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+font-style: normal;
+}
 
-  .values-row {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    padding: 10px 40px 30px;
-  }
+.values-row {
+display: flex;
+justify-content: center;
+gap: 40px;
+padding: 10px 40px 30px;
+}
 
-  .value-item { text-align: center; opacity: 0.85; }
-  .value-icon { font-size: 28px; margin-bottom: 6px; display: block; }
-  .value-label {
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: var(--gold3);
-    text-transform: uppercase;
-  }
+.value-item { text-align: center; opacity: 0.85; }
+.value-icon { font-size: 28px; margin-bottom: 6px; display: block; }
+.value-label {
+font-family: ‘Cinzel’, serif;
+font-size: 9px;
+letter-spacing: 2px;
+color: var(–gold3);
+text-transform: uppercase;
+}
 
-  .footer {
-    border-top: 1px solid rgba(255,200,0,0.2);
-    padding: 16px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(0,0,0,0.4);
-  }
+.footer {
+border-top: 1px solid rgba(255,200,0,0.2);
+padding: 16px 40px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+background: rgba(0,0,0,0.4);
+}
 
-  .footer-text {
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: var(--gold3);
-    text-transform: uppercase;
-  }
+.footer-text {
+font-size: 11px;
+letter-spacing: 2px;
+color: var(–gold3);
+text-transform: uppercase;
+}
 
-  @keyframes shimmer {
-    0% { opacity: 0.7; }
-    50% { opacity: 1; }
-    100% { opacity: 0.7; }
-  }
+@keyframes shimmer {
+0% { opacity: 0.7; }
+50% { opacity: 1; }
+100% { opacity: 0.7; }
+}
 
-  @keyframes glow {
-    0%, 100% { box-shadow: 0 0 80px rgba(255,200,0,0.15), inset 0 0 120px rgba(0,0,0,0.8); }
-    50% { box-shadow: 0 0 120px rgba(255,200,0,0.25), inset 0 0 120px rgba(0,0,0,0.8); }
-  }
+@keyframes glow {
+0%, 100% { box-shadow: 0 0 80px rgba(255,200,0,0.15), inset 0 0 120px rgba(0,0,0,0.8); }
+50% { box-shadow: 0 0 120px rgba(255,200,0,0.25), inset 0 0 120px rgba(0,0,0,0.8); }
+}
 </style>
+
 </head>
 <body>
 
 <!-- Autoplay music -->
+
 <audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <!-- Music control button -->
+
 <div id="musicBtn" onclick="toggleMusic()" style="
   position: fixed;
   bottom: 24px;
@@ -584,56 +588,59 @@
       <div class="rule-item"><span class="rule-icon">🚫</span>2 дараалсан алдалт = зогс!</div>
     </div>
 
-    <div class="info-card">
-      <div class="info-card-title">📊 Өсөлтийн Үе Шат</div>
-      <div class="phase-item">
-        <div class="phase-dot" style="background:#00C853;"></div>
-        <div>
-          <span class="phase-label">БҮТЭЭХ ҮЕ</span>
-          <span class="phase-range">$50 – $100 · 1–3-р түвшин</span>
-        </div>
-      </div>
-      <div class="phase-item">
-        <div class="phase-dot" style="background:#2196F3;"></div>
-        <div>
-          <span class="phase-label">ТОГТВОРЖИХ ҮЕ</span>
-          <span class="phase-range">$100 – $527 · 4–7-р түвшин</span>
-        </div>
-      </div>
-      <div class="phase-item">
-        <div class="phase-dot" style="background:#9C27B0;"></div>
-        <div>
-          <span class="phase-label">КОМПАУНДИНГ ҮЕ</span>
-          <span class="phase-range">$527 – $1,000+ · 8–9-р түвшин</span>
-        </div>
-      </div>
-      <div class="phase-item" style="margin-top:4px;">
-        <div class="phase-dot" style="background:#FFD700;"></div>
-        <div>
-          <span class="phase-label">★ ЗОРИЛГО БИЕЛЭВ!</span>
-          <span class="phase-range">9-р түвшинд $1,032 хүрнэ</span>
-        </div>
-      </div>
+```
+<div class="info-card">
+  <div class="info-card-title">📊 Өсөлтийн Үе Шат</div>
+  <div class="phase-item">
+    <div class="phase-dot" style="background:#00C853;"></div>
+    <div>
+      <span class="phase-label">БҮТЭЭХ ҮЕ</span>
+      <span class="phase-range">$50 – $100 · 1–3-р түвшин</span>
     </div>
+  </div>
+  <div class="phase-item">
+    <div class="phase-dot" style="background:#2196F3;"></div>
+    <div>
+      <span class="phase-label">ТОГТВОРЖИХ ҮЕ</span>
+      <span class="phase-range">$100 – $527 · 4–7-р түвшин</span>
+    </div>
+  </div>
+  <div class="phase-item">
+    <div class="phase-dot" style="background:#9C27B0;"></div>
+    <div>
+      <span class="phase-label">КОМПАУНДИНГ ҮЕ</span>
+      <span class="phase-range">$527 – $1,000+ · 8–9-р түвшин</span>
+    </div>
+  </div>
+  <div class="phase-item" style="margin-top:4px;">
+    <div class="phase-dot" style="background:#FFD700;"></div>
+    <div>
+      <span class="phase-label">★ ЗОРИЛГО БИЕЛЭВ!</span>
+      <span class="phase-range">9-р түвшинд $1,032 хүрнэ</span>
+    </div>
+  </div>
+</div>
 
-    <div class="info-card">
-      <div class="info-card-title">⏳ Хугацааны Таамаг</div>
-      <div class="timeline-item">
-        <span class="tl-label">ИДЭВХТЭЙ:</span>
-        <span class="tl-value">1 – 2 сар</span>
-      </div>
-      <div class="timeline-item">
-        <span class="tl-label">ХЭВИЙН:</span>
-        <span class="tl-value">2 – 4 сар</span>
-      </div>
-      <div class="timeline-item">
-        <span class="tl-label">ААЖУУ:</span>
-        <span class="tl-value">4 – 6 сар</span>
-      </div>
-      <div class="patience-quote">
-        "ТЭВЧЭЭР + САХИЛГА БАТ = ЭРХЧ ЧӨЛӨӨ"
-      </div>
-    </div>
+<div class="info-card">
+  <div class="info-card-title">⏳ Хугацааны Таамаг</div>
+  <div class="timeline-item">
+    <span class="tl-label">ИДЭВХТЭЙ:</span>
+    <span class="tl-value">1 – 2 сар</span>
+  </div>
+  <div class="timeline-item">
+    <span class="tl-label">ХЭВИЙН:</span>
+    <span class="tl-value">2 – 4 сар</span>
+  </div>
+  <div class="timeline-item">
+    <span class="tl-label">ААЖУУ:</span>
+    <span class="tl-value">4 – 6 сар</span>
+  </div>
+  <div class="patience-quote">
+    "ТЭВЧЭЭР + САХИЛГА БАТ = ЭРХЧ ЧӨЛӨӨ"
+  </div>
+</div>
+```
+
   </div>
 
   <div class="divider">
