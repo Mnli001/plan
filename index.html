@@ -1420,6 +1420,168 @@
     }
   }
 
+
+  /* ===== HOME SUMMARY + SAFETY SYSTEM ===== */
+  .next-trade-panel,
+  .safety-panel {
+    padding: 0 16px 14px;
+  }
+
+  .next-trade-card,
+  .safety-card {
+    padding: 18px;
+    border-radius: 30px;
+  }
+
+  .next-trade-head,
+  .safety-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .next-level-pill {
+    min-height: 38px;
+    padding: 0 14px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #06120b;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
+    white-space: nowrap;
+  }
+
+  .next-trade-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .next-mini {
+    padding: 13px 12px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.09);
+  }
+
+  .next-mini span {
+    display: block;
+    color: rgba(255,249,215,0.58);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+  }
+
+  .next-mini strong {
+    display: block;
+    margin-top: 7px;
+    color: #fff0a8;
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 900;
+  }
+
+  .next-trade-note,
+  .safety-note {
+    margin-top: 12px;
+    color: rgba(255,249,215,0.64);
+    font-size: 12px;
+    line-height: 1.45;
+    font-weight: 800;
+  }
+
+  .safety-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .safety-btn {
+    min-height: 44px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18);
+    cursor: pointer;
+    color: #fff2a8;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 900;
+    letter-spacing: .35px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: .2s ease;
+  }
+
+  .safety-btn.danger {
+    color: #ffd2d9;
+    border-color: rgba(255,93,115,0.32);
+    background: rgba(255,93,115,0.10);
+  }
+
+  .safety-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+
+  /* ===== iOS / MOBILE SAFE AREA FIX ===== */
+  body {
+    padding-bottom: calc(118px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .bottom-nav {
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  @supports (padding: max(0px)) {
+    body {
+      padding-bottom: max(118px, calc(96px + env(safe-area-inset-bottom))) !important;
+    }
+
+    .bottom-nav {
+      bottom: max(14px, env(safe-area-inset-bottom)) !important;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .next-trade-grid,
+    .safety-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .next-trade-panel,
+    .safety-panel {
+      padding: 0 12px 12px;
+    }
+
+    .next-trade-card,
+    .safety-card {
+      padding: 16px;
+      border-radius: 26px;
+    }
+
+    .next-trade-head,
+    .safety-head {
+      align-items: flex-start;
+    }
+
+    .next-trade-grid,
+    .safety-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .next-mini strong {
+      font-size: 19px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1507,7 +1669,65 @@
     </div>
   </section>
 
-<section class="dashboard app-only page-section page-home" id="homeDashboard">
+  <section class="next-trade-panel app-only page-section page-home" id="nextTradeSection">
+    <div class="next-trade-card glass-card">
+      <div class="next-trade-head">
+        <div>
+          <div class="auth-kicker">NEXT TRADE SUMMARY</div>
+          <div class="auth-title">Дараагийн арилжааны тооцоо</div>
+        </div>
+        <div class="next-level-pill" id="nextLevelPill">Level 1</div>
+      </div>
+
+      <div class="next-trade-grid">
+        <div class="next-mini">
+          <span>Balance</span>
+          <strong id="summaryBalance">$0.00</strong>
+        </div>
+        <div class="next-mini">
+          <span>20% Risk</span>
+          <strong id="summaryRisk">$0.00</strong>
+        </div>
+        <div class="next-mini">
+          <span>RR 1:2 Profit</span>
+          <strong id="summaryProfit">$0.00</strong>
+        </div>
+        <div class="next-mini">
+          <span>Lot</span>
+          <strong id="summaryLot">0.01</strong>
+        </div>
+      </div>
+
+      <div class="next-trade-note" id="summaryNote">
+        Setup байхгүй бол trade байхгүй. Lot-оо шалгаад зөвхөн plan дагуу execute.
+      </div>
+    </div>
+  </section>
+
+  <section class="safety-panel app-only page-section page-home" id="safetySection">
+    <div class="safety-card glass-card">
+      <div class="safety-head">
+        <div>
+          <div class="auth-kicker">SAFETY ACTIONS</div>
+          <div class="auth-title">Undo / Reset хамгаалалт</div>
+        </div>
+      </div>
+
+      <div class="safety-grid">
+        <button class="safety-btn" onclick="restartLastLevel()">↺ Сүүлийн trade буцаах</button>
+        <button class="safety-btn" onclick="clearOnlyHistory()">History цэвэрлэх</button>
+        <button class="safety-btn danger" onclick="resetOnlyProgress()">Progress reset</button>
+        <button class="safety-btn danger" onclick="resetEverything()">Бүгдийг reset</button>
+      </div>
+
+      <div class="safety-note">
+        Санамсаргүй reset хийхээс хамгаалж бүх чухал action confirm асууна.
+      </div>
+    </div>
+  </section>
+
+
+  <section id="homeDashboard">
     <div class="stat-card glass-card">
       <div class="stat-label">Одоогийн баланс</div>
       <div class="stat-value" id="currentBalance">$50.00</div>
@@ -1939,6 +2159,7 @@
     const beforeLevel = compute().levels[idx];
     outcomes[idx] = type;
     recordTradeHistory(beforeLevel, type);
+    savePrivateTradeLog(beforeLevel, type);
     if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1);
     while (outcomes.length < 9) outcomes.push(null);
 
@@ -2157,10 +2378,114 @@
     document.getElementById('profileMeta').textContent = `${email} · ${START > 0 ? `Start ${formatMoney(START)} · ` : ''}${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`;
   }
 
+
+  function getOpenLevelData() {
+    const data = compute();
+    let currentIndex = outcomes.findIndex(o => o === null);
+    if (currentIndex === -1) currentIndex = Math.max(0, data.levels.length - 1);
+    return data.levels[currentIndex] || data.levels[data.levels.length - 1] || null;
+  }
+
+  function updateNextTradeSummary() {
+    const level = getOpenLevelData();
+    if (!level) return;
+
+    const setText = (id, text) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    };
+
+    setText('nextLevelPill', `Level ${level.idx + 1}`);
+    setText('summaryBalance', formatMoney(level.startBalance));
+    setText('summaryRisk', formatMoney(level.risk));
+    setText('summaryProfit', formatMoney(level.profit));
+    setText('summaryLot', Number(level.lot || 0).toFixed(2));
+
+    const note = document.getElementById('summaryNote');
+    if (note) {
+      note.textContent = `Next trade: risk ${formatMoney(level.risk)}, target profit ${formatMoney(level.profit)}, lot ${Number(level.lot || 0).toFixed(2)}.`;
+    }
+  }
+
+  async function savePrivateTradeLog(levelData, type) {
+    if (!firebaseReady || !currentUser || !db || !levelData) return;
+
+    try {
+      const tradeId = `${Date.now()}_${levelData.idx + 1}_${type}`;
+      await db.collection('users')
+        .doc(currentUser.uid)
+        .collection('trades')
+        .doc(tradeId)
+        .set({
+          level: levelData.idx + 1,
+          outcome: type,
+          startBalance: Number(levelData.startBalance || 0),
+          risk: Number(levelData.risk || 0),
+          profit: Number(levelData.profit || 0),
+          lot: Number(levelData.lot || 0),
+          newBalance: type === 'taken'
+            ? Number(levelData.startBalance + levelData.profit)
+            : Math.max(0, Number(levelData.startBalance - levelData.risk)),
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    } catch (error) {
+      console.warn('Private trade log хадгалах боломжгүй байна:', error);
+    }
+  }
+
+  window.clearOnlyHistory = function() {
+    const ok = confirm('Зөвхөн trade history-г цэвэрлэх үү? Progress хэвээр үлдэнэ.');
+    if (!ok) return;
+
+    if (typeof tradeHistory !== 'undefined') {
+      tradeHistory = [];
+      if (typeof HISTORY_KEY !== 'undefined') saveJSON(HISTORY_KEY, tradeHistory);
+    }
+
+    saveProgress();
+    render();
+  };
+
+  window.resetOnlyProgress = function() {
+    const ok = confirm('Зөвхөн progress reset хийх үү? Balance хэвээр, history хэвээр үлдэнэ.');
+    if (!ok) return;
+
+    outcomes = new Array(9).fill(null);
+    saveProgress();
+    render();
+    if (typeof showPage === 'function') showPage('home');
+  };
+
+  window.resetEverything = function() {
+    const ok = confirm('Progress + history бүгд reset хийх үү? Balance хэвээр үлдэнэ.');
+    if (!ok) return;
+
+    outcomes = new Array(9).fill(null);
+
+    if (typeof tradeHistory !== 'undefined') {
+      tradeHistory = [];
+      if (typeof HISTORY_KEY !== 'undefined') saveJSON(HISTORY_KEY, tradeHistory);
+    }
+
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      if (typeof HISTORY_KEY !== 'undefined') localStorage.removeItem(HISTORY_KEY);
+      if (typeof REVENGE_KEY !== 'undefined') localStorage.removeItem(REVENGE_KEY);
+    } catch (_) {}
+
+    if (typeof revengeUntil !== 'undefined') revengeUntil = 0;
+
+    saveProgress();
+    render();
+    if (typeof showPage === 'function') showPage('home');
+  };
+
+
   function render() {
     renderTable();
     bindButtons();
     renderProStats();
+    updateNextTradeSummary();
     renderHistory();
     updateRevengeLock();
     renderProfile();
@@ -2611,5 +2936,29 @@
     document.addEventListener('click', () => { if (!playing) tryPlay(); }, { once: true });
   });
 </script>
+
+<!--
+Recommended Firestore rules for this version:
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+
+      match /trades/{tradeId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+    match /leaderboard/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}
+-->
+
 </body>
 </html>
