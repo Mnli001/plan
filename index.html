@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-<title>$50 → $1,000 · XAUUSD Liquid Challenge</title>
+<title>АЛТ $1000 Challenge</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
@@ -1284,19 +1284,83 @@
     }
   }
 
+
+  .home-logout-btn.secondary {
+    color: #fff2a8 !important;
+    background: rgba(255,255,255,0.08) !important;
+  }
+
+
+  /* ===== POST-LOGIN BALANCE SETUP ===== */
+  .balance-setup-panel {
+    margin: 16px 16px 16px;
+    padding: 18px;
+    border-radius: 30px;
+  }
+
+  .balance-setup-inner {
+    display: grid;
+    grid-template-columns: 1fr minmax(260px, 360px);
+    gap: 16px;
+    align-items: center;
+  }
+
+  .balance-setup-note {
+    margin-top: 8px;
+    color: rgba(255,249,215,0.66);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.45;
+  }
+
+  .balance-setup-form {
+    display: grid;
+    gap: 10px;
+  }
+
+  body:not(.is-authenticated) #balanceSetupPanel {
+    display: none !important;
+  }
+
+  body.is-authenticated.balance-ready #balanceSetupPanel {
+    display: none !important;
+  }
+
+  body.is-authenticated:not(.balance-ready) #balanceSetupPanel {
+    display: block !important;
+  }
+
+  body.is-authenticated:not(.balance-ready) .page-title-card,
+  body.is-authenticated:not(.balance-ready) .page-section,
+  body.is-authenticated:not(.balance-ready) .bottom-nav {
+    display: none !important;
+  }
+
+  @media (max-width: 700px) {
+    .balance-setup-panel {
+      margin: 12px 12px 16px;
+      padding: 16px;
+      border-radius: 26px;
+    }
+
+    .balance-setup-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
 </style>
 </head>
 <body>
 <div class="poster">
   <header class="header" id="top">
-    <div class="top-pill">XAUUSD · LIQUID GLASS · DISCIPLINE MODE</div>
-    <h1 class="main-title">$50 → $1,000</h1>
+    <div class="top-pill">XAUUSD · АЛТ $1000 CHALLENGE · DISCIPLINE MODE</div>
+    <h1 class="main-title">АЛТ $1000</h1>
     <div class="plan-title">АЛДАГДЛЫГ ХӨӨХГҮЙ · ЗӨВХӨН ТӨЛӨВЛӨГӨӨГӨӨ ДАГАНА · LOT-ОО ЗӨВ ТООЦООЛНО</div>
     <div class="badges">
       <span class="badge">⚖️ RR 1:2</span>
       <span class="badge">🛡️ Risk = Balance × 20%</span>
       <span class="badge">🧮 Lot 0.01 алхамтай</span>
-      <span class="badge">🎯 Зорилго: $1,000</span>
+      <span class="badge">🎯 Challenge: $1,000</span>
     </div>
   </header>
 
@@ -1339,7 +1403,21 @@
     </div>
   </section>
 
-  <section class="profile-wrap app-only page-section page-home" id="profileSection">
+  <section class="balance-setup-panel app-only glass-card" id="balanceSetupPanel">
+    <div class="balance-setup-inner">
+      <div>
+        <div class="auth-kicker">START BALANCE</div>
+        <div class="auth-title">Эхлэх balance-аа сонго</div>
+        <div class="balance-setup-note">Энэ balance-аас 20% risk, RR 1:2 profit, lot болон $1000 хүртэлх level автоматаар тооцогдоно.</div>
+      </div>
+      <div class="balance-setup-form">
+        <input id="startBalanceSetupInput" class="auth-input" type="number" min="1" step="0.01" placeholder="Жишээ: 50" inputmode="decimal" />
+        <button class="auth-btn primary" onclick="saveInitialBalance()">Start Challenge</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="profileSection">
     <div class="profile-card glass-card">
       <div>
         <div class="auth-kicker">TRADER PROFILE</div>
@@ -1379,8 +1457,8 @@
   <section class="progress-wrap app-only page-section page-home" id="progressSection">
     <div class="progress-card glass-card">
       <div class="progress-head">
-        <span>Өсөлтийн зам: $50 → $1,000</span>
-        <span id="progressText">$50.00 / $1,000</span>
+        <span>Өсөлтийн зам: Start balance → $1,000</span>
+        <span id="progressText">$0.00 / $1,000</span>
       </div>
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
@@ -1497,7 +1575,7 @@
 <script>
   const RISK = 0.20;
   const RR = 2;
-  const START = 50;
+  let START = 0;
   const TARGET = 1000;
   const STOP_LOSS_PIPS = 100;
   const PIP_VALUE_PER_1_LOT = 10;
@@ -1505,6 +1583,7 @@
   const MAX_LOT = 0.30;
 
   const STORAGE_KEY = 'xauusd_50_to_1000_outcomes_v2';
+  const START_BALANCE_KEY = 'xauusd_start_balance_v1';
   const JOURNAL_KEY = 'xauusd_50_to_1000_journal_v2';
   const REVENGE_KEY = 'xauusd_50_to_1000_revenge_v2';
   const HISTORY_KEY = 'xauusd_50_to_1000_history_v2';
@@ -1565,8 +1644,56 @@
       console.warn('localStorage save error:', error);
     }
   }
+  function getStartBalanceInputValue() {
+    const setupInput = document.getElementById('startBalanceSetupInput');
+    const value = Number(setupInput?.value || 0);
+    return Number.isFinite(value) && value > 0 ? round2(value) : null;
+  }
+
+  function setStartBalance(value, shouldReset = true) {
+    const next = Number(value);
+    if (!Number.isFinite(next) || next <= 0) return false;
+
+    START = round2(next);
+    document.body.classList.add('balance-ready');
+
+    try {
+      localStorage.setItem(START_BALANCE_KEY, String(START));
+    } catch (_) {}
+
+    if (shouldReset) {
+      outcomes = new Array(9).fill(null);
+      if (typeof tradeHistory !== 'undefined') {
+        tradeHistory = [];
+        if (typeof HISTORY_KEY !== 'undefined') saveJSON(HISTORY_KEY, tradeHistory);
+      }
+    }
+
+    return true;
+  }
+
+  function loadStartBalance() {
+    try {
+      const raw = localStorage.getItem(START_BALANCE_KEY);
+      const parsed = Number(raw);
+      if (Number.isFinite(parsed) && parsed > 0) {
+        START = round2(parsed);
+        document.body.classList.add('balance-ready');
+      } else {
+        START = 0;
+        document.body.classList.remove('balance-ready');
+      }
+    } catch (_) {
+      START = 0;
+      document.body.classList.remove('balance-ready');
+    }
+  }
+
+
+
 
   function init() {
+    loadStartBalance();
     const saved = loadJSON(STORAGE_KEY, null);
     outcomes = Array.isArray(saved) && saved.length >= 9 ? saved : new Array(9).fill(null);
     journalEntries = loadJSON(JOURNAL_KEY, []);
@@ -1628,6 +1755,7 @@
         name: currentUser.displayName || '',
         email: currentUser.email || '',
         challenge: {
+          startBalance: START,
           outcomes,
           journalEntries,
           tradeHistory,
@@ -1950,7 +2078,7 @@
     const email = currentUser?.email || 'local browser mode';
     document.getElementById('profileName').textContent = name;
     const { finalBalance } = compute();
-    document.getElementById('profileMeta').textContent = `${email} · ${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`;
+    document.getElementById('profileMeta').textContent = `${email} · ${START > 0 ? `Start ${formatMoney(START)} · ` : ''}${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`;
   }
 
   function render() {
@@ -2090,6 +2218,7 @@
 
     document.body.classList.toggle('is-authenticated', !!user);
     if (!user) document.body.dataset.page = '';
+    document.body.classList.remove('balance-ready');
 
     if (user) {
       if (title) title.textContent = `${user.displayName || 'Trader'} · progress хадгалагдаж байна`;
@@ -2184,6 +2313,18 @@
   };
 
 
+
+  function openHomeOrBalanceSetup() {
+    if (START > 0) {
+      document.body.classList.add('balance-ready');
+      showPage('home');
+    } else {
+      document.body.classList.remove('balance-ready');
+      document.body.dataset.page = '';
+    }
+  }
+
+
   function initFirebase() {
     try {
       const hasConfig = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes('YOUR_');
@@ -2200,7 +2341,7 @@
       auth.onAuthStateChanged(async (user) => {
         currentUser = user;
         updateAuthUI(user);
-        if (user) { await loadCloudData(); await saveLeaderboardStats(); showPage('home'); }
+        if (user) { await loadCloudData(); await saveLeaderboardStats(); openHomeOrBalanceSetup(); }
       });
     } catch (error) {
       console.warn('Firebase init error:', error);
@@ -2215,6 +2356,10 @@
       const snap = await db.collection('users').doc(currentUser.uid).get();
       const data = snap.exists ? snap.data() : null;
       const challenge = data?.challenge || {};
+
+      if (Number(challenge.startBalance) > 0) {
+        setStartBalance(Number(challenge.startBalance), false);
+      }
 
       if (Array.isArray(challenge.outcomes) && challenge.outcomes.length >= 9) {
         outcomes = challenge.outcomes;
@@ -2253,7 +2398,7 @@
 
     const { name, email, password } = getAuthInputs();
     if (!name || !email || !password) {
-      alert('Нэр, mail, code/password гурвууланг нь бөглөнө үү.');
+      alert('Нэр, mail, password гурвууланг нь бөглөнө үү.');
       return;
     }
 
@@ -2275,7 +2420,7 @@
       }, { merge: true });
       updateAuthUI(cred.user);
       await saveLeaderboardStats();
-      setAuthStatus('Бүртгэл амжилттай. Progress энэ account дээр хадгалагдлаа.');
+      setAuthStatus('Бүртгэл амжилттай. Одоо эхлэх balance-аа сонго.');
       render();
     } catch (error) {
       alert(error.message);
@@ -2299,11 +2444,49 @@
       currentUser = cred.user;
       updateAuthUI(cred.user);
       await loadCloudData();
-      showPage('home');
+      openHomeOrBalanceSetup();
     } catch (error) {
       alert(error.message);
     }
   };
+
+
+
+  window.saveInitialBalance = async function() {
+    const value = getStartBalanceInputValue();
+    if (!value) {
+      alert('Эхлэх balance-аа зөв оруулна уу.');
+      return;
+    }
+
+    setStartBalance(value, true);
+    saveProgress();
+    render();
+
+    if (typeof saveLeaderboardStats === 'function') {
+      await saveLeaderboardStats();
+    }
+
+    showPage('home');
+  };
+
+
+  window.changeStartBalance = function() {
+    const raw = prompt('Шинэ эхлэх balance оруулна уу:', String(START));
+    if (raw === null) return;
+    const value = Number(raw);
+    if (!Number.isFinite(value) || value <= 0) {
+      alert('Зөв balance оруулна уу.');
+      return;
+    }
+    const ok = confirm('Эхлэх balance солиход progress/history reset болно. Үргэлжлүүлэх үү?');
+    if (!ok) return;
+    setStartBalance(value, true);
+    saveProgress();
+    render();
+    if (typeof saveLeaderboardStats === 'function') saveLeaderboardStats();
+  };
+
 
   window.logoutUser = async function() {
     if (!auth) return;
