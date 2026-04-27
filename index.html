@@ -2133,6 +2133,32 @@
     display: none !important;
   }
 
+
+  /* ===== ADMIN FULL CONTROL FIX ===== */
+  .admin-row-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .admin-row-actions .soft-btn {
+    margin-top: 0 !important;
+    min-height: 36px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 850px) {
+    .admin-row-actions {
+      justify-content: stretch;
+    }
+
+    .admin-row-actions .soft-btn {
+      flex: 1;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -2380,11 +2406,12 @@
     <div class="admin-head">
       <div>
         <div class="auth-kicker">ADMIN PANEL</div>
-        <div class="auth-title">Users / Leaderboard control</div>
+        <div class="auth-title">Users / Reset / Leaderboard control</div>
       </div>
       <div class="admin-actions">
         <button class="soft-btn" onclick="loadAdminUsers()">Refresh users</button>
-        <button class="soft-btn danger-btn" onclick="adminResetAllLeaderboard()">Reset leaderboard</button>
+        <button class="soft-btn" onclick="adminClearLeaderboard()">Clear leaderboard</button>
+        <button class="soft-btn danger-btn" onclick="adminResetAllUsersChallenge()">Reset all users</button>
       </div>
     </div>
 
@@ -2440,6 +2467,7 @@
   const REVENGE_KEY = 'xauusd_50_to_1000_revenge_v2';
   const HISTORY_KEY = 'xauusd_50_to_1000_history_v2';
   const LEADERBOARD_COLLECTION = 'leaderboard_profit_reset_v1';
+  const ADMIN_RESET_TOKEN_KEY = 'xauusd_admin_reset_token_v1';
 
   // Firebase Console → Project settings → Web app config-оо энд солино.
   const firebaseConfig = {
@@ -3151,7 +3179,10 @@
               <strong>Level ${stats.currentLevel}</strong>
               <span>${stats.wins}W / ${stats.losses}L · ${stats.winRate}%</span>
             </div>
-            <button class="soft-btn" onclick="adminResetUserLeaderboard('${doc.id}')">Reset profit</button>
+            <div class="admin-row-actions">
+              <button class="soft-btn danger-btn" onclick="adminResetUserChallenge('${doc.id}')">Reset account</button>
+              <button class="soft-btn" onclick="adminDeleteFromLeaderboard('${doc.id}')">Delete LB</button>
+            </div>
           </div>
         `);
       });
@@ -3163,61 +3194,128 @@
     }
   };
 
-  window.adminResetAllLeaderboard = async function() {
+
+
+  function getAdminResetPayload() {
+    const token = String(Date.now());
+    return {
+      challenge: {
+        startBalance: 0,
+        outcomes: [],
+        tradeHistory: [],
+        journalEntries: [],
+        revengeUntil: 0,
+        adminForceSetup: true,
+        adminResetToken: token,
+        resetAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }
+    };
+  }
+
+  window.adminResetUserChallenge = async function(userId) {
     const isAdmin = await checkAdminStatus();
     if (!isAdmin) {
       alert('Admin эрх байхгүй байна.');
       return;
     }
 
-    const ok = confirm('Бүх leaderboard net profit-ийг 0$ болгох уу? Хүмүүсийн progress өөрчлөгдөхгүй.');
+    const ok = confirm('Энэ user-ийн balance/profit/progress/history бүгдийг reset хийгээд Start Balance сонгох төлөвт буцаах уу?');
     if (!ok) return;
 
     try {
-      const snap = await db.collection(LEADERBOARD_COLLECTION).limit(500).get();
-      const batch = db.batch();
-
-      snap.forEach(doc => {
-        const data = doc.data() || {};
-        const currentProfit = Number(data.currentProfit || 0);
-        batch.set(doc.ref, {
-          baseProfit: currentProfit,
-          netProfit: 0,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        }, { merge: true });
-      });
-
-      await batch.commit();
+      await db.collection('users').doc(userId).set(getAdminResetPayload(), { merge: true });
+      await db.collection(LEADERBOARD_COLLECTION).doc(userId).delete().catch(() => {});
       await loadLeaderboard();
       await loadAdminUsers();
-      alert('Leaderboard reset хийгдлээ.');
+      alert('User reset хийгдлээ. Дараа login хийхэд Start Balance сонгоно.');
     } catch (error) {
       alert(error.message);
     }
   };
 
-  window.adminResetUserLeaderboard = async function(userId) {
+  window.adminResetAllUsersChallenge = async function() {
     const isAdmin = await checkAdminStatus();
     if (!isAdmin) {
       alert('Admin эрх байхгүй байна.');
       return;
     }
 
-    const ok = confirm('Энэ user-ийн leaderboard net profit-ийг 0$ болгох уу?');
+    const ok = confirm('БҮХ user-ийн balance/profit/progress/history reset хийгээд leaderboard-оос бүгдийг устгах уу? Энэ action буцаах боломжгүй.');
     if (!ok) return;
 
     try {
-      const ref = db.collection(LEADERBOARD_COLLECTION).doc(userId);
-      const snap = await ref.get();
-      const data = snap.exists ? snap.data() : {};
-      const currentProfit = Number(data.currentProfit || 0);
+      const usersSnap = await db.collection('users').limit(500).get();
+      let batch = db.batch();
+      let count = 0;
 
-      await ref.set({
-        baseProfit: currentProfit,
-        netProfit: 0,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge: true });
+      usersSnap.forEach(doc => {
+        batch.set(doc.ref, getAdminResetPayload(), { merge: true });
+        count++;
+      });
 
+      await batch.commit();
+
+      const lbSnap = await db.collection(LEADERBOARD_COLLECTION).limit(500).get();
+      batch = db.batch();
+      let lbCount = 0;
+
+      lbSnap.forEach(doc => {
+        batch.delete(doc.ref);
+        lbCount++;
+      });
+
+      await batch.commit();
+
+      await loadLeaderboard();
+      await loadAdminUsers();
+      alert(`${count} user reset, ${lbCount} leaderboard item устгалаа.`);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  window.adminClearLeaderboard = async function() {
+    const isAdmin = await checkAdminStatus();
+    if (!isAdmin) {
+      alert('Admin эрх байхгүй байна.');
+      return;
+    }
+
+    const ok = confirm('Leaderboard дээр байгаа бүх хүнийг устгах уу? Users progress өөрчлөгдөхгүй.');
+    if (!ok) return;
+
+    try {
+      const snap = await db.collection(LEADERBOARD_COLLECTION).limit(500).get();
+      const batch = db.batch();
+      let count = 0;
+
+      snap.forEach(doc => {
+        batch.delete(doc.ref);
+        count++;
+      });
+
+      await batch.commit();
+      await loadLeaderboard();
+      await loadAdminUsers();
+      alert(`${count} leaderboard item устгалаа.`);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  window.adminDeleteFromLeaderboard = async function(userId) {
+    const isAdmin = await checkAdminStatus();
+    if (!isAdmin) {
+      alert('Admin эрх байхгүй байна.');
+      return;
+    }
+
+    const ok = confirm('Энэ user-ийг leaderboard-оос устгах уу? Account progress өөрчлөгдөхгүй.');
+    if (!ok) return;
+
+    try {
+      await db.collection(LEADERBOARD_COLLECTION).doc(userId).delete();
       await loadLeaderboard();
       await loadAdminUsers();
     } catch (error) {
@@ -3262,6 +3360,7 @@
 
   async function saveLeaderboardStats() {
     if (!firebaseReady || !currentUser || !db) return;
+    if (!(START > 0)) return;
 
     try {
       const ref = db.collection(LEADERBOARD_COLLECTION).doc(currentUser.uid);
@@ -3526,6 +3625,39 @@
     }
   }
 
+
+  function clearLocalChallengeAfterAdminReset(resetToken = '') {
+    START = 0;
+    outcomes = new Array(9).fill(null);
+    journalEntries = [];
+    tradeHistory = [];
+    revengeUntil = 0;
+
+    try {
+      localStorage.removeItem(START_BALANCE_KEY);
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(JOURNAL_KEY);
+      localStorage.removeItem(HISTORY_KEY);
+      localStorage.removeItem(REVENGE_KEY);
+      if (resetToken) localStorage.setItem(ADMIN_RESET_TOKEN_KEY, resetToken);
+    } catch (_) {}
+
+    document.body.classList.remove('balance-ready');
+    document.body.dataset.page = '';
+  }
+
+  function isAdminForcedResetChallenge(challenge) {
+    return !!(
+      challenge &&
+      (
+        challenge.adminForceSetup === true ||
+        challenge.forceSetup === true ||
+        Number(challenge.startBalance || 0) <= 0
+      )
+    );
+  }
+
+
   async function loadCloudData() {
     if (!firebaseReady || !currentUser || !db) return;
 
@@ -3533,6 +3665,20 @@
       const snap = await db.collection('users').doc(currentUser.uid).get();
       const data = snap.exists ? snap.data() : null;
       const challenge = data?.challenge || {};
+
+      if (isAdminForcedResetChallenge(challenge)) {
+        const token = String(challenge.adminResetToken || challenge.resetAt || '');
+        const localToken = localStorage.getItem(ADMIN_RESET_TOKEN_KEY) || '';
+
+        // If admin reset exists, force this device back to first-time setup too.
+        if (token !== localToken || Number(challenge.startBalance || 0) <= 0) {
+          clearLocalChallengeAfterAdminReset(token);
+        }
+
+        setAuthStatus('Admin reset хийгдсэн байна. Эхлэх balance-аа дахин сонгоно уу.');
+        render();
+        return;
+      }
 
       if (Number(challenge.startBalance) > 0) {
         setStartBalance(Number(challenge.startBalance), false);
@@ -3639,6 +3785,19 @@
     }
 
     setStartBalance(value, true);
+    if (firebaseReady && currentUser && db) {
+      await db.collection('users').doc(currentUser.uid).set({
+        challenge: {
+          adminForceSetup: false,
+          startBalance: START,
+          outcomes,
+          tradeHistory,
+          journalEntries,
+          revengeUntil,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }
+      }, { merge: true });
+    }
     saveProgress();
     render();
 
@@ -3776,8 +3935,11 @@
 
 
 
+
+
+
 <!--
-Recommended Firestore rules for admin version:
+Recommended Firestore rules for admin full-control version:
 
 rules_version = '2';
 
@@ -3799,26 +3961,21 @@ service cloud.firestore {
 
     match /users/{userId} {
       allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
-      allow write: if isSignedIn() && request.auth.uid == userId;
+      allow write: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
 
       match /trades/{tradeId} {
         allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
         allow write: if isSignedIn() && request.auth.uid == userId;
+        allow delete: if isAdmin();
       }
     }
 
     match /leaderboard_profit_reset_v1/{userId} {
       allow read: if isSignedIn();
-      allow write: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+      allow write, delete: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
     }
   }
 }
-
-Admin болгох:
-1. Firebase Console → Authentication → Users → өөрийн admin account UID-г copy.
-2. Firestore Database → Start collection → admins
-3. Document ID дээр UID-гаа paste.
-4. Хоосон field нэмэх боломжгүй бол role: "admin" гэж field нэм.
 -->
 
 </body>
