@@ -670,8 +670,8 @@
     <div class="plan-title">АЛДАГДЛЫГ ХӨӨХГҮЙ · ЗӨВХӨН ТӨЛӨВЛӨГӨӨГӨӨ ДАГАНА · LOT-ОО ЗӨВ ТООЦООЛНО</div>
     <div class="badges">
       <span class="badge">⚖️ RR 1:2</span>
-      <span class="badge">🛡️ 20% эрсдэл / хэлцэл</span>
-      <span class="badge">🧮 Lot = Risk ÷ Stop-Loss Pips ÷ Pip Value</span>
+      <span class="badge">🛡️ Balance-д таарсан эрсдэл</span>
+      <span class="badge">🧮 XAUUSD lot: 0.01-ээс эхэлж өснө</span>
       <span class="badge">🎯 Зорилго: $1,000</span>
     </div>
   </header>
@@ -694,8 +694,8 @@
     </div>
     <div class="stat-card">
       <div class="stat-label">Зөв lot</div>
-      <div class="stat-value" id="nextLot">0.10</div>
-      <div class="stat-note" id="lotNote">SL 100 pips гэж тооцсон</div>
+      <div class="stat-value" id="nextLot">0.01</div>
+      <div class="stat-note" id="lotNote">XAUUSD · 0.01 lot-оос эхэлнэ</div>
     </div>
   </section>
 
@@ -741,9 +741,9 @@
       <div class="ic-title">⚔️ АРИЛЖААНЫ ДҮРЭМ</div>
       <div class="rules-grid">
         <div class="rule">📌 Entry зөвхөн setup бүрэн болсон үед. FOMO entry хийхгүй.</div>
-        <div class="rule">🛡️ Нэг арилжаанд балансын 20%-иас илүү эрсдэл авахгүй.</div>
+        <div class="rule">🛡️ XAUUSD дээр эхлэл lot 0.01 байна. Баланс өсөх тусам lot аажмаар нэмэгдэнэ.</div>
         <div class="rule">⚖️ RR заавал 1:2 буюу түүнээс дээш байна. RR муу бол арилжаа авахгүй.</div>
-        <div class="rule">🧮 Lot-оо entry хийхээс өмнө SL pips + pip value-р заавал шалгана.</div>
+        <div class="rule">🧮 Lot-оо entry хийхээс өмнө SL pips + XAUUSD contract/pip value-р заавал шалгана.</div>
         <div class="rule">🚫 Алдсаны дараа шууд нөхөх гэж орохгүй. Дараагийн setup хүртэл хүлээнэ.</div>
         <div class="rule">🧊 Сэтгэл хөдөлсөн үед арилжаа хийхгүй. Calm mind = clean execution.</div>
       </div>
@@ -754,11 +754,11 @@
       <div class="ic-title">🧮 LOT ЗӨВ ТООЦОХ САНАМЖ</div>
       <div class="calculator-box">
         <div class="calc-line"><strong>Risk $</strong><span>Balance × 20%</span></div>
-        <div class="calc-line"><strong>Lot formula</strong><span>Risk ÷ SL pips ÷ Pip value</span></div>
-        <div class="calc-line"><strong>Энэ plan дээр</strong><span>SL 100 pips · $1 / pip / 1 lot</span></div>
-        <div class="calc-line"><strong>Жишээ</strong><span>$50 × 20% = $10 → 0.10 lot</span></div>
+        <div class="calc-line"><strong>Lot formula</strong><span>Risk ÷ SL pips ÷ XAUUSD pip value</span></div>
+        <div class="calc-line"><strong>Энэ plan дээр</strong><span>SL 100 pips · $10 / pip / 1 lot</span></div>
+        <div class="calc-line"><strong>Жишээ</strong><span>$50 × 20% = $10 → 0.01 lot</span></div>
       </div>
-      <div class="patience">⚠️ Broker бүрийн XAUUSD pip value өөр байж болно. MT4/MT5 дээр position size calculator-аар давхар шалга.</div>
+      <div class="patience">⚠️ Broker бүрийн XAUUSD contract size, point value, pip value өөр байж болно. 0.01 lot дээр хэдэн $ алдахыг MT4/MT5 position size calculator-аар давхар шалга.</div>
     </div>
   </section>
 
@@ -790,9 +790,9 @@
 
   // XAUUSD example settings. Өөрийн broker-ийн pip value болон SL-д тааруулж өөрчилж болно.
   const STOP_LOSS_PIPS = 100;
-  const PIP_VALUE_PER_1_LOT = 1;
+  const PIP_VALUE_PER_1_LOT = 10; // XAUUSD жишээ: 1.00 lot ≈ $10 / pip гэж авч үзэв
   const MIN_LOT = 0.01;
-  const MAX_LOT = 3.00;
+  const MAX_LOT = 0.30;
 
   let outcomes = [];
 
@@ -809,6 +809,8 @@
   }
 
   function calculateLot(risk, slPips = STOP_LOSS_PIPS, pipValue = PIP_VALUE_PER_1_LOT) {
+    // XAUUSD дээр 0.01 lot-оос эхлээд balance өсөх тусам аажмаар нэмэгдэнэ.
+    // Жишээ: $50 balance, 20% risk = $10. SL 100 pips, $10/pip/1lot үед lot = 0.01
     const rawLot = risk / slPips / pipValue;
     return round2(clamp(rawLot, MIN_LOT, MAX_LOT));
   }
@@ -899,7 +901,7 @@
     document.getElementById('progressPercent').textContent = `${progress.toFixed(1)}%`;
     document.getElementById('nextRisk').textContent = formatMoney(nextRisk);
     document.getElementById('nextLot').textContent = nextLot.toFixed(2);
-    document.getElementById('lotNote').textContent = `SL ${STOP_LOSS_PIPS} pips гэж тооцсон`;
+    document.getElementById('lotNote').textContent = `SL ${STOP_LOSS_PIPS} pips · XAUUSD 0.01-ээс эхэлнэ`;
     document.getElementById('progressText').textContent = `${formatMoney(finalBalance)} / ${formatMoney(TARGET)}`;
     document.getElementById('progressFill').style.width = `${progress}%`;
 
