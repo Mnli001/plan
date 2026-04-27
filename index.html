@@ -2113,6 +2113,26 @@
     }
   }
 
+
+  /* ===== FINAL ADMIN TAB VISIBILITY FIX ===== */
+  body:not(.is-admin) .admin-only {
+    display: none !important;
+  }
+
+  body.is-authenticated.is-admin .bottom-nav .admin-only {
+    display: inline-flex !important;
+  }
+
+  body.is-authenticated[data-page="admin"].is-admin #adminSection,
+  body.is-authenticated[data-page="admin"].is-admin .page-admin {
+    display: block !important;
+  }
+
+  body.is-authenticated[data-page="admin"]:not(.is-admin) #adminSection,
+  body.is-authenticated[data-page="admin"]:not(.is-admin) .page-admin {
+    display: none !important;
+  }
+
 </style>
 </head>
 <body>
@@ -3490,7 +3510,15 @@
       auth.onAuthStateChanged(async (user) => {
         currentUser = user;
         updateAuthUI(user);
-        if (user) { await loadCloudData(); await saveLeaderboardStats(); openHomeOrBalanceSetup(); }
+
+        if (user) {
+          await checkAdminStatus();
+          await loadCloudData();
+          await saveLeaderboardStats();
+          openHomeOrBalanceSetup();
+        } else {
+          document.body.classList.remove('is-admin');
+        }
       });
     } catch (error) {
       console.warn('Firebase init error:', error);
@@ -3568,6 +3596,7 @@
         }
       }, { merge: true });
       updateAuthUI(cred.user);
+      await checkAdminStatus();
       await saveLeaderboardStats();
       setAuthStatus('Бүртгэл амжилттай. Одоо эхлэх balance-аа сонго.');
       render();
@@ -3592,6 +3621,7 @@
       const cred = await auth.signInWithEmailAndPassword(email, password);
       currentUser = cred.user;
       updateAuthUI(cred.user);
+      await checkAdminStatus();
       await loadCloudData();
       openHomeOrBalanceSetup();
     } catch (error) {
@@ -3656,6 +3686,7 @@
     currentUser = null;
     document.body.classList.remove('is-authenticated');
     document.body.classList.remove('balance-ready');
+    document.body.classList.remove('is-admin');
     document.body.dataset.page = '';
     const currentLevelTitle = document.getElementById('currentLevelTitle');
     if (currentLevelTitle) currentLevelTitle.remove();
@@ -3683,8 +3714,7 @@
     setInterval(updateRevengeLock, 1000);
     goTop();
     setTimeout(goTop, 80);
-    document.addEventListener('click', () => { if (!playing) tryPlay(); }, { once: true });
-  });
+});
 
   window.openSettingsPopup = function() {
     const overlay = document.getElementById('settingsOverlay');
@@ -3793,4 +3823,3 @@ Admin болгох:
 
 </body>
 </html>
-
