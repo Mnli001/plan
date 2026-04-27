@@ -1350,20 +1350,25 @@
 
   function updateAuthUI(user) {
     const title = document.getElementById('authTitle');
-    const forms = document.getElementById('authForms');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const modeTabs = document.getElementById('authModeTabs');
     const logoutBtn = document.getElementById('logoutBtn');
 
     document.body.classList.toggle('is-authenticated', !!user);
 
     if (user) {
-      title.textContent = `${user.displayName || 'Trader'} · progress хадгалагдаж байна`;
-      forms.style.display = 'none';
-      logoutBtn.style.display = 'inline-flex';
+      if (title) title.textContent = `${user.displayName || 'Trader'} · progress хадгалагдаж байна`;
+      if (loginForm) loginForm.style.display = 'none';
+      if (registerForm) registerForm.style.display = 'none';
+      if (modeTabs) modeTabs.style.display = 'none';
+      if (logoutBtn) logoutBtn.style.display = 'inline-flex';
       setAuthStatus(`Нэвтэрсэн: ${user.email}`);
     } else {
-      title.textContent = 'Нэвтэрч progress-оо хадгал';
-      forms.style.display = 'grid';
-      logoutBtn.style.display = 'none';
+      if (title) title.textContent = 'Нэвтэрч progress-оо хадгал';
+      if (modeTabs) modeTabs.style.display = 'flex';
+      if (logoutBtn) logoutBtn.style.display = 'none';
+      showLoginMode();
       setAuthStatus('Эхлээд account-аараа нэвтэрнэ үү.');
     }
 
@@ -1396,7 +1401,8 @@
   };
 
   function getAuthInputs() {
-    const isRegister = document.getElementById('registerForm')?.style.display !== 'none';
+    const registerForm = document.getElementById('registerForm');
+    const isRegister = registerForm && registerForm.style.display !== 'none';
 
     if (isRegister) {
       return {
