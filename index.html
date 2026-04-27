@@ -627,6 +627,29 @@
     transition: .2s ease;
   }
 
+  #resetPlanBtn {
+    position: fixed;
+    left: 18px;
+    bottom: 18px;
+    z-index: 999;
+    height: 46px;
+    padding: 0 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.22);
+    cursor: pointer;
+    color: #fff2a8;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 900;
+    letter-spacing: .6px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,215,0,0.16));
+    box-shadow: 0 16px 38px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.24);
+    backdrop-filter: blur(18px) saturate(1.35);
+    -webkit-backdrop-filter: blur(18px) saturate(1.35);
+    transition: .2s ease;
+  }
+
+  #resetPlanBtn:hover { transform: translateY(-3px) scale(1.03); }
+
   #musicBtn:hover { transform: translateY(-3px) scale(1.05); }
 
   .risk-note {
@@ -838,12 +861,14 @@
     .rules-grid { grid-template-columns: 1fr; }
     .quote-section { margin: 0 12px 14px; border-radius: 28px; }
     #musicBtn { width: 54px; height: 54px; right: 16px; bottom: 16px; }
+    #resetPlanBtn { left: 16px; bottom: 18px; height: 44px; padding: 0 15px; }
   }
 </style>
 </head>
 <body>
 <audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg" /></audio>
 <button id="musicBtn" onclick="toggleMusic()" title="Дуу">🔇</button>
+<button id="resetPlanBtn" onclick="resetPlanProgress()" title="Progress reset">↺ Reset</button>
 
 <div class="poster">
   <header class="header" id="top">
@@ -949,9 +974,45 @@
   const MAX_LOT = 0.30;
 
   let outcomes = [];
+  const STORAGE_KEY = 'xauusd_50_to_1000_outcomes_v1';
 
   function init() {
+    const saved = loadProgress();
+    if (saved && Array.isArray(saved) && saved.length >= 9) {
+      outcomes = saved;
+    } else {
+      outcomes = new Array(9).fill(null);
+    }
+  }
+
+  function saveProgress() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(outcomes));
+    } catch (error) {
+      console.warn('Progress хадгалах боломжгүй байна:', error);
+    }
+  }
+
+  function loadProgress() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      return parsed;
+    } catch (error) {
+      console.warn('Progress унших боломжгүй байна:', error);
+      return null;
+    }
+  }
+
+  function clearProgress() {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+      console.warn('Progress устгах боломжгүй байна:', error);
+    }
     outcomes = new Array(9).fill(null);
+    render();
   }
 
   function clamp(value, min, max) {
@@ -1030,6 +1091,7 @@
     while (outcomes.length < 9) outcomes.push(null);
 
     addLevelIfNeeded();
+    saveProgress();
     render();
     return true;
   }
@@ -1041,6 +1103,7 @@
     if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1);
     while (outcomes.length < 9) outcomes.push(null);
 
+    saveProgress();
     render();
   }
 
@@ -1173,6 +1236,13 @@
         musicBtn.textContent = '🔇';
       });
   }
+
+  window.resetPlanProgress = function() {
+    const ok = confirm('Бүх level-ийн сонголтыг reset хийх үү?');
+    if (!ok) return;
+    clearProgress();
+    goTop();
+  };
 
   window.toggleMusic = function() {
     if (!audio) return;
