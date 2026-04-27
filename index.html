@@ -1196,6 +1196,94 @@
     display: flex !important;
   }
 
+
+  /* ===== FIX: LOGIN AFTER OPEN HOME BY DEFAULT ===== */
+  body.is-authenticated:not([data-page]) .page-home,
+  body.is-authenticated[data-page=""] .page-home {
+    display: grid !important;
+  }
+
+  body.is-authenticated:not([data-page]) .progress-wrap.page-home,
+  body.is-authenticated[data-page=""] .progress-wrap.page-home,
+  body.is-authenticated:not([data-page]) .info-section.page-home,
+  body.is-authenticated[data-page=""] .info-section.page-home,
+  body.is-authenticated:not([data-page]) .quote-section.page-home,
+  body.is-authenticated[data-page=""] .quote-section.page-home,
+  body.is-authenticated:not([data-page]) .risk-note.page-home,
+  body.is-authenticated[data-page=""] .risk-note.page-home,
+  body.is-authenticated:not([data-page]) .footer.page-home,
+  body.is-authenticated[data-page=""] .footer.page-home {
+    display: block !important;
+  }
+
+
+  /* ===== BIGGER MOBILE BOTTOM NAV ===== */
+  .bottom-nav {
+    min-height: 64px;
+    padding: 10px 12px !important;
+    gap: 8px !important;
+  }
+
+  .bottom-nav a {
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px !important;
+    font-size: 14px !important;
+    border-radius: 999px;
+  }
+
+  @media (max-width: 700px) {
+    body {
+      padding-bottom: 118px !important;
+    }
+
+    .bottom-nav {
+      width: calc(100vw - 18px) !important;
+      max-width: 760px !important;
+      min-height: 70px !important;
+      padding: 11px 10px !important;
+      gap: 7px !important;
+      bottom: 14px !important;
+      border-radius: 999px !important;
+      overflow-x: auto;
+      justify-content: flex-start !important;
+      scrollbar-width: none;
+    }
+
+    .bottom-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .bottom-nav a {
+      flex: 0 0 auto;
+      min-width: 82px;
+      min-height: 48px;
+      padding: 0 16px !important;
+      font-size: 13px !important;
+      font-weight: 900 !important;
+      border-radius: 999px !important;
+    }
+
+    .bottom-nav a.active {
+      min-width: 98px;
+      box-shadow: 0 12px 28px rgba(255, 215, 0, 0.22);
+    }
+  }
+
+  @media (max-width: 390px) {
+    .bottom-nav a {
+      min-width: 76px;
+      padding: 0 14px !important;
+      font-size: 12.5px !important;
+    }
+
+    .bottom-nav a.active {
+      min-width: 92px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1392,7 +1480,18 @@
 
 <div class="milestone-toast app-only" id="milestoneToast"></div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js">
+  // FIX_AUTH_HOME_LOAD
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      if (document.body.classList.contains('is-authenticated') && !document.body.dataset.page) {
+        showPage('home');
+      }
+    }, 250);
+  });
+
+</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script>
@@ -2200,6 +2299,7 @@
       currentUser = cred.user;
       updateAuthUI(cred.user);
       await loadCloudData();
+      showPage('home');
     } catch (error) {
       alert(error.message);
     }
