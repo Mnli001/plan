@@ -276,7 +276,7 @@
 
   .smart-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: 1.2fr .9fr .9fr;
     gap: 14px;
     padding-bottom: 16px;
   }
@@ -830,156 +830,67 @@
     }
   }
 
+  /* ===== CLEAN STABLE LAYOUT FIX ===== */
+  body:not(.is-authenticated) .app-only { display: none !important; }
+  body:not(.is-authenticated) .poster { max-width: 980px; margin-top: 24px; }
+  body:not(.is-authenticated) .auth-panel { padding: 28px 18px 36px !important; }
+  body:not(.is-authenticated) .auth-glass { max-width: 640px; margin: 0 auto; }
 
-  /* ===== TOP ACCOUNT + PROFILE COMPACT LAYOUT ===== */
-  .top-account-grid {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
-    gap: 12px;
-    padding: 16px 16px 8px;
+  .auth-panel { padding: 16px !important; }
+  .auth-glass { padding: 18px !important; }
+
+  .auth-mode-tabs { display: flex; gap: 10px; margin-bottom: 14px; }
+  .auth-tab {
+    height: 38px; padding: 0 16px; border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,249,215,0.70); background: rgba(0,0,0,0.18);
+    font-family: 'Rajdhani', sans-serif; font-weight: 900; cursor: pointer;
+  }
+  .auth-tab.active { color: #06120b; background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00); }
+
+  .auth-login-wrap, .auth-register-wrap { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .auth-login-wrap .big-auth-btn, .auth-register-wrap .big-auth-btn {
+    width: 100%; height: 48px !important; font-size: 15px;
   }
 
-  .top-account-grid .auth-panel,
-  .top-account-grid .profile-wrap {
-    padding: 0 !important;
+  .profile-wrap { padding: 16px 16px 12px !important; }
+  .profile-card {
+    min-height: auto !important; display: grid; grid-template-columns: 1fr auto;
+    align-items: center; gap: 14px; padding: 18px !important;
   }
+  .profile-name { font-size: 24px !important; }
+  .profile-meta { font-size: 13px !important; line-height: 1.35; }
 
-  .top-account-grid .auth-glass,
-  .top-account-grid .profile-card {
-    min-height: 138px;
-    height: 100%;
-  }
+  .pro-stats { grid-template-columns: repeat(5, 1fr) !important; }
+  .smart-grid { grid-template-columns: 1fr !important; }
 
-  .top-account-grid .auth-glass {
-    padding: 14px !important;
-  }
-
-  .top-account-grid .auth-title {
-    font-size: 13px;
-    line-height: 1.25;
-  }
-
-  .top-account-grid .auth-status {
-    font-size: 11px;
-    line-height: 1.3;
-  }
-
-  .top-account-grid .auth-mode-tabs {
-    margin-bottom: 10px;
-  }
-
-  .top-account-grid .auth-tab {
-    height: 34px;
-    padding: 0 12px;
-  }
-
-  .top-account-grid .auth-login-wrap,
-  .top-account-grid .auth-register-wrap {
-    grid-template-columns: 1fr auto;
-    gap: 10px;
-  }
-
-  .top-account-grid .auth-stack {
-    gap: 8px;
-  }
-
-  .top-account-grid .auth-input {
-    height: 38px;
-    font-size: 13px;
-  }
-
-  .top-account-grid .big-auth-btn {
-    min-width: 118px;
-    height: 84px !important;
-    font-size: 14px;
-  }
-
-  .top-account-grid .auth-register-wrap .big-auth-btn {
-    height: 130px !important;
-  }
-
-  .top-account-grid .profile-card {
-    padding: 18px !important;
-    grid-template-columns: 1fr auto;
-  }
-
-  .top-account-grid .profile-name {
-    font-size: 24px;
-  }
-
-  .top-account-grid .profile-meta {
-    font-size: 14px;
-    line-height: 1.4;
-  }
-
-  .pro-stats {
-    grid-template-columns: repeat(5, 1fr) !important;
-  }
-
-  .current-level-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-  }
-
+  .current-level-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   .level-restart-btn {
-    min-height: 36px;
-    padding: 0 14px;
-    border-radius: 999px;
-    border: 1px solid rgba(255, 215, 0, 0.28);
-    cursor: pointer;
-    color: #fff2a8;
-    background: rgba(255,255,255,0.08);
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 900;
-    letter-spacing: .4px;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    min-height: 36px; padding: 0 14px; border-radius: 999px;
+    border: 1px solid rgba(255, 215, 0, 0.28); cursor: pointer;
+    color: #fff2a8; background: rgba(255,255,255,0.08);
+    font-family: 'Rajdhani', sans-serif; font-weight: 900; letter-spacing: .4px;
+    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   }
 
-  .level-restart-btn:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.08);
-  }
+  #resetPlanBtn { left: 18px !important; bottom: 18px !important; }
 
   @media (max-width: 900px) {
-    .top-account-grid {
-      grid-template-columns: 1fr;
-      padding: 12px 12px 8px;
-    }
+    .pro-stats { grid-template-columns: repeat(2, 1fr) !important; }
+    .profile-card { grid-template-columns: 1fr; }
+    .current-level-title { flex-direction: column; align-items: stretch; }
+    .level-restart-btn { width: 100%; }
+  }
 
-    .top-account-grid .auth-login-wrap,
-    .top-account-grid .auth-register-wrap {
-      grid-template-columns: 1fr;
-    }
-
-    .top-account-grid .big-auth-btn,
-    .top-account-grid .auth-register-wrap .big-auth-btn {
-      width: 100%;
-      height: 46px !important;
-    }
-
-    .pro-stats {
-      grid-template-columns: repeat(2, 1fr) !important;
-    }
-
-    .current-level-title {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .level-restart-btn {
-      width: 100%;
-    }
+  @media (max-width: 700px) {
+    body:not(.is-authenticated) .poster { margin-top: 0; }
+    .auth-mode-tabs { display: grid; grid-template-columns: 1fr 1fr; }
   }
 
 </style>
 </head>
 <body>
-<button class="app-only" id="resetPlanBtn" onclick="resetPlanProgress()" title="Progress reset">↺ Reset</button>
+<button class="app-only" id="resetPlanBtn" onclick="resetAllData()" title="All reset">↺ Reset all</button>
 
 <div class="poster">
   <header class="header" id="top">
@@ -994,13 +905,12 @@
     </div>
   </header>
 
-  <section class="top-account-grid" id="accountTop">
-    <div class="auth-panel" id="authPanel">
+  <section class="auth-panel" id="authPanel">
     <div class="auth-glass glass-card">
       <div class="auth-head">
         <div>
           <div class="auth-kicker">ACCOUNT SAVE</div>
-          <div class="auth-title" id="authTitle">Нэвтэрч progress-оо хадгал</div>
+          <div class="auth-title" id="authTitle">Challenge account</div>
         </div>
         <button class="auth-ghost" id="logoutBtn" onclick="logoutUser()" style="display:none;">Гарах</button>
       </div>
@@ -1011,25 +921,33 @@
       </div>
 
       <div class="auth-login-wrap" id="loginForm">
-        <div class="auth-stack">
-          <input id="loginEmailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
-          <input id="loginPasswordInput" class="auth-input" type="password" placeholder="Code / Password" autocomplete="current-password" />
-        </div>
+        <input id="loginEmailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
+        <input id="loginPasswordInput" class="auth-input" type="password" placeholder="Password" autocomplete="current-password" />
         <button class="auth-btn primary big-auth-btn" onclick="loginUser()">Нэвтрэх</button>
       </div>
 
       <div class="auth-register-wrap" id="registerForm" style="display:none;">
-        <div class="auth-stack">
-          <input id="nameInput" class="auth-input" type="text" placeholder="Нэр" autocomplete="name" />
-          <input id="emailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
-          <input id="passwordInput" class="auth-input" type="password" placeholder="Password" autocomplete="new-password" />
-        </div>
+        <input id="nameInput" class="auth-input" type="text" placeholder="Нэр" autocomplete="name" />
+        <input id="emailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
+        <input id="passwordInput" class="auth-input" type="password" placeholder="Password" autocomplete="new-password" />
         <button class="auth-btn primary big-auth-btn" onclick="registerUser()">Бүртгүүлэх</button>
       </div>
 
       <div class="auth-status" id="authStatus">Эхлээд account-аараа нэвтэрнэ үү.</div>
     </div>
   </section>
+
+<section class="profile-wrap app-only" id="profileSection">
+    <div class="profile-card glass-card">
+      <div>
+        <div class="auth-kicker">TRADER PROFILE</div>
+        <div class="profile-name" id="profileName">Guest Trader</div>
+        <div class="profile-meta" id="profileMeta">Challenge эхлэхэд бэлэн</div>
+      </div>
+      <div class="phase-badge" id="phaseBadge">Phase 1</div>
+    </div>
+  </section>
+
 <section class="dashboard app-only">
     <div class="stat-card glass-card">
       <div class="stat-label">Одоогийн баланс</div>
@@ -1061,20 +979,8 @@
       </div>
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
-    </div>
-
-    <div class="profile-wrap app-only" id="profileSection">
-    <div class="profile-card glass-card">
-      <div>
-        <div class="auth-kicker">TRADER PROFILE</div>
-        <div class="profile-name" id="profileName">Guest Trader</div>
-        <div class="profile-meta" id="profileMeta">Challenge эхлэхэд бэлэн · progress localStorage дээр хадгалагдана</div>
-      </div>
-      <div class="phase-badge" id="phaseBadge">Phase 1</div>
-    </div>
   </section>
-
-  <section class="pro-stats app-only" id="statsSection">
+<section class="pro-stats app-only" id="statsSection">
     <div class="mini-card glass-card"><span>Win</span><strong id="statWins">0</strong></div>
     <div class="mini-card glass-card"><span>Loss</span><strong id="statLosses">0</strong></div>
     <div class="mini-card glass-card"><span>Win Rate</span><strong id="statWinRate">0%</strong></div>
@@ -1329,34 +1235,29 @@
     saveJSON(HISTORY_KEY, tradeHistory);
   }
 
-
   window.restartLastLevel = function() {
     const lastIndex = outcomes.map((o, i) => o ? i : -1).filter(i => i >= 0).pop();
-
     if (lastIndex === undefined || lastIndex === null || lastIndex < 0) {
       alert('Буцаах сонголт алга байна.');
       return;
     }
-
     const ok = confirm(`${lastIndex + 1}-р level-ийн сонголтыг буцаах уу?`);
     if (!ok) return;
-
     outcomes[lastIndex] = null;
     if (outcomes.length > lastIndex + 1) outcomes = outcomes.slice(0, lastIndex + 1);
     while (outcomes.length < 9) outcomes.push(null);
-
-    for (let i = tradeHistory.length - 1; i >= 0; i--) {
-      if (Number(tradeHistory[i].level) === lastIndex + 1) {
-        tradeHistory.splice(i, 1);
-        break;
+    if (typeof tradeHistory !== 'undefined' && Array.isArray(tradeHistory)) {
+      for (let i = tradeHistory.length - 1; i >= 0; i--) {
+        if (Number(tradeHistory[i].level) === lastIndex + 1) {
+          tradeHistory.splice(i, 1);
+          break;
+        }
       }
+      saveJSON(HISTORY_KEY, tradeHistory);
     }
-
-    saveJSON(HISTORY_KEY, tradeHistory);
     saveProgress();
     render();
   };
-
 
   function renderHistory() {
     const box = document.getElementById('historyList');
@@ -1629,6 +1530,22 @@
     renderProfile();
   }
 
+  window.resetAllData = function() {
+    const ok = confirm('Progress, history, local data бүгдийг reset хийх үү?');
+    if (!ok) return;
+    outcomes = new Array(9).fill(null);
+    if (typeof tradeHistory !== 'undefined') tradeHistory = [];
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(HISTORY_KEY);
+      localStorage.removeItem(REVENGE_KEY);
+    } catch (_) {}
+    revengeUntil = 0;
+    saveProgress();
+    render();
+    goTop();
+  };
+
   window.resetPlanProgress = function() {
     const ok = confirm('Бүх level-ийн сонголтыг reset хийх үү? Journal note хэвээр үлдэнэ.');
     if (!ok) return;
@@ -1658,7 +1575,7 @@
       if (logoutBtn) logoutBtn.style.display = 'inline-flex';
       setAuthStatus('Нэвтэрсэн.');
     } else {
-      if (title) title.textContent = 'Нэвтэрч progress-оо хадгал';
+      if (title) title.textContent = 'Challenge account';
       if (modeTabs) modeTabs.style.display = 'flex';
       if (logoutBtn) logoutBtn.style.display = 'none';
       showLoginMode();
