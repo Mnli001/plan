@@ -34,11 +34,10 @@
     color: var(--text);
     padding: 18px 10px 88px;
     background:
-      linear-gradient(180deg, rgba(255,255,255,0.10), transparent 18%),
-      radial-gradient(circle at 18% 8%, rgba(255, 230, 120, 0.26), transparent 28%),
-      radial-gradient(circle at 82% 16%, rgba(120, 255, 214, 0.18), transparent 25%),
-      radial-gradient(circle at 48% 82%, rgba(140, 120, 255, 0.18), transparent 32%),
-      linear-gradient(145deg, #0b0d0c 0%, #10130f 45%, #080909 100%);
+      radial-gradient(circle at 15% 10%, rgba(255, 215, 0, 0.18), transparent 28%),
+      radial-gradient(circle at 82% 18%, rgba(0, 245, 160, 0.12), transparent 24%),
+      radial-gradient(circle at 52% 88%, rgba(192, 132, 252, 0.13), transparent 30%),
+      linear-gradient(140deg, #020203 0%, #080607 45%, #0d0a02 100%);
     overflow-x: hidden;
   }
 
@@ -81,17 +80,14 @@
     max-width: 1180px;
     margin: 0 auto;
     overflow: hidden;
-    border-radius: 38px;
+    border-radius: 34px;
     background:
-      linear-gradient(145deg, rgba(255,255,255,0.18), rgba(255,255,255,0.045) 42%, rgba(255,255,255,0.08)),
+      linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.035)),
       radial-gradient(circle at 50% -10%, rgba(255, 215, 0, 0.18), transparent 38%);
-    border: 1px solid rgba(255, 255, 255, 0.22);
-    box-shadow:
-      0 34px 90px rgba(0, 0, 0, 0.62),
-      inset 0 1px 0 rgba(255,255,255,0.34),
-      inset 0 -1px 0 rgba(255,255,255,0.08);
-    backdrop-filter: blur(34px) saturate(1.45);
-    -webkit-backdrop-filter: blur(34px) saturate(1.45);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.05);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
   }
 
   .poster::before {
@@ -179,19 +175,12 @@
 
   .stat-card {
     position: relative;
-    min-height: 104px;
-    padding: 17px;
-    border-radius: 28px;
-    background:
-      linear-gradient(145deg, rgba(255,255,255,0.19), rgba(255,255,255,0.055)),
-      radial-gradient(circle at 22% 0%, rgba(255,255,255,0.18), transparent 42%);
-    border: 1px solid rgba(255,255,255,0.22);
-    box-shadow:
-      0 16px 42px rgba(0,0,0,0.22),
-      inset 0 1px 0 rgba(255,255,255,0.28),
-      inset 0 -1px 0 rgba(255,255,255,0.07);
-    backdrop-filter: blur(24px) saturate(1.55);
-    -webkit-backdrop-filter: blur(24px) saturate(1.55);
+    min-height: 96px;
+    padding: 15px;
+    border-radius: 24px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.035));
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: inset 0 0 24px rgba(255,255,255,0.04);
     overflow: hidden;
   }
 
@@ -233,15 +222,10 @@
   }
 
   .progress-card {
-    padding: 18px;
-    border-radius: 28px;
-    background:
-      linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.045)),
-      radial-gradient(circle at 8% 0%, rgba(255,215,0,0.16), transparent 38%);
-    border: 1px solid rgba(255,255,255,0.18);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 12px 34px rgba(0,0,0,0.18);
-    backdrop-filter: blur(24px) saturate(1.45);
-    -webkit-backdrop-filter: blur(24px) saturate(1.45);
+    padding: 16px;
+    border-radius: 24px;
+    background: rgba(0,0,0,0.26);
+    border: 1px solid rgba(255,215,0,0.16);
   }
 
   .progress-head {
@@ -313,7 +297,6 @@
   .table-wrapper {
     padding: 0 16px 16px;
     overflow-x: auto;
-    border-radius: 30px;
   }
 
   .trading-table {
@@ -347,13 +330,9 @@
     padding: 13px 8px;
     text-align: center;
     font-weight: 700;
-    background:
-      linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.035));
-    border-top: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.045);
+    border-top: 1px solid rgba(255,255,255,0.08);
     border-bottom: 1px solid rgba(255,255,255,0.08);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
-    backdrop-filter: blur(18px) saturate(1.3);
-    -webkit-backdrop-filter: blur(18px) saturate(1.3);
     transition: 0.25s ease;
   }
 
@@ -568,16 +547,13 @@
 
   .quote-section {
     margin: 0 16px 16px;
-    padding: 24px 18px;
+    padding: 22px 18px;
     text-align: center;
-    border-radius: 32px;
+    border-radius: 30px;
     background:
-      linear-gradient(145deg, rgba(255,255,255,0.17), rgba(255,255,255,0.048)),
-      radial-gradient(circle at 50% 0%, rgba(255,215,0,0.20), transparent 48%);
-    border: 1px solid rgba(255,255,255,0.18);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.26), 0 16px 42px rgba(0,0,0,0.18);
-    backdrop-filter: blur(24px) saturate(1.45);
-    -webkit-backdrop-filter: blur(24px) saturate(1.45);
+      linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,255,255,0.04)),
+      radial-gradient(circle at 50% 0%, rgba(255,255,255,0.12), transparent 46%);
+    border: 1px solid rgba(255,215,0,0.22);
   }
 
   .quote-text {
@@ -668,89 +644,18 @@
     .values-row { grid-template-columns: repeat(2, 1fr); }
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 560px) {
     body { padding: 10px 6px 78px; }
-    .poster { border-radius: 28px; }
-    .header { padding: 34px 14px 22px; }
-    .top-pill { font-size: 9px; letter-spacing: 1.7px; padding: 7px 12px; }
-    .main-title { font-size: clamp(42px, 14vw, 68px); }
-    .plan-title { font-size: 12px; letter-spacing: 1.3px; }
+    .poster { border-radius: 24px; }
+    .header { padding: 32px 14px 22px; }
     .dashboard { grid-template-columns: 1fr; padding: 12px; }
-    .stat-card { min-height: 96px; border-radius: 26px; }
-    .progress-wrap { padding: 0 12px 12px; }
-    .progress-card { border-radius: 26px; }
-    .progress-head { flex-direction: column; gap: 4px; }
-    .table-wrapper { padding: 0 12px 14px; overflow: visible; }
-    .trading-table { min-width: 0; width: 100%; border-spacing: 0 14px; }
-    .trading-table thead { display: none; }
-    .trading-table, .trading-table tbody, .trading-table tr, .trading-table td { display: block; }
-    .trading-table tr {
-      position: relative;
-      padding: 16px;
-      border-radius: 30px;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.045)),
-        radial-gradient(circle at 0% 0%, rgba(255,215,0,0.13), transparent 42%);
-      border: 1px solid rgba(255,255,255,0.16);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.24),
-        0 18px 46px rgba(0,0,0,0.26);
-      backdrop-filter: blur(28px) saturate(1.55);
-      -webkit-backdrop-filter: blur(28px) saturate(1.55);
-      overflow: hidden;
-    }
-    .trading-table tr::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(120deg, rgba(255,255,255,0.20), transparent 34%, rgba(255,255,255,0.05));
-      pointer-events: none;
-    }
-    .trading-table td,
-    .trading-table td:first-child,
-    .trading-table td:last-child {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      padding: 10px 2px;
-      min-width: 0 !important;
-      text-align: right;
-      background: transparent !important;
-      border: 0;
-      border-radius: 0;
-      box-shadow: none;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      border-bottom: 1px solid rgba(255,255,255,0.075);
-    }
-    .trading-table td:last-child { border-bottom: 0; }
-    .trading-table td::before {
-      content: attr(data-label);
-      flex: 0 0 auto;
-      color: rgba(255,249,215,0.58);
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      text-align: left;
-    }
-    .trading-table td[data-label="#"] {
-      justify-content: center;
-      padding-bottom: 14px;
-      margin-bottom: 4px;
-      border-bottom-color: rgba(255,215,0,0.18);
-    }
-    .trading-table td[data-label="#"]::before { display: none; }
-    .level-chip, .goal-flag { min-width: 52px; height: 52px; font-size: 18px; }
-    .action-group { justify-content: flex-end; }
-    .btn-sm { padding: 8px 12px; font-size: 11px; }
-    .info-section { grid-template-columns: 1fr; padding: 0 12px 14px; }
+    .phase-row { grid-template-columns: 1fr; padding: 0 12px 12px; }
+    .table-wrapper { padding: 0 12px 12px; }
+    .info-section { padding: 0 12px 14px; }
     .rules-grid { grid-template-columns: 1fr; }
-    .quote-section { margin: 0 12px 14px; border-radius: 28px; }
-    #musicBtn { width: 54px; height: 54px; right: 16px; bottom: 16px; }
+    .values-row { grid-template-columns: 1fr; padding: 0 12px 14px; }
+    .quote-section { margin: 0 12px 14px; }
+    .btn-sm { padding: 6px 10px; font-size: 10px; }
   }
 
   /* ================= iOS 26 LIQUID GLASS OVERRIDE ================= */
@@ -802,14 +707,19 @@
     .progress-card { border-radius: 26px; }
     .progress-head { flex-direction: column; gap: 4px; }
 
-    .table-wrapper { padding: 0 12px 14px; overflow: visible; }
-    .trading-table { min-width: 0; width: 100%; border-spacing: 0 14px; }
+    .table-wrapper { padding: 0 12px 24px; overflow: visible; }
+    .trading-table {
+      min-width: 0;
+      width: 100%;
+      border-spacing: 0 22px;
+    }
     .trading-table thead { display: none; }
     .trading-table, .trading-table tbody, .trading-table tr, .trading-table td { display: block; }
 
     .trading-table tr {
       position: relative;
-      padding: 16px;
+      padding: 22px 18px;
+      margin-bottom: 22px;
       border-radius: 30px;
       background:
         linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.045)),
@@ -839,7 +749,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 14px;
-      padding: 10px 2px;
+      padding: 13px 2px;
       min-width: 0 !important;
       text-align: right;
       background: transparent !important;
@@ -873,7 +783,7 @@
 
     .trading-table td[data-label="#"]::before { display: none; }
     .level-chip, .goal-flag { min-width: 52px; height: 52px; font-size: 18px; }
-    .action-group { justify-content: flex-end; }
+    .action-group { justify-content: flex-end; gap: 10px; }
     .btn-sm { padding: 8px 12px; font-size: 11px; }
     .info-section { grid-template-columns: 1fr; padding: 0 12px 14px; }
     .rules-grid { grid-template-columns: 1fr; }
@@ -941,7 +851,7 @@
           <th>SL PIPS</th>
           <th>20% RISK</th>
           <th>LOT</th>
-          <th>ЭРСДЭЛ</th>
+          
           <th>АШИГ</th>
           <th>ҮР ДҮН</th>
           <th>ШИНЭ БАЛАНС</th>
@@ -1170,7 +1080,6 @@
           <td data-label="SL pips">${l.slPips}</td>
           <td data-label="20% risk" style="color:#ffcf7a;">${formatMoney(l.risk)}</td>
           <td data-label="Lot" class="lot-cell">${l.lot.toFixed(2)}</td>
-          <td data-label="Actual risk" style="color:#ffb0bc;">${formatMoney(l.actualRisk)}</td>
           <td data-label="Ашиг" style="color:#b9ffd7;">${formatMoney(l.profit)}</td>
           <td data-label="Үр дүн" style="min-width:190px;">${actionHtml}</td>
           <td data-label="Шинэ баланс" style="font-weight:900; ${balanceColor}">${newBalText}</td>
