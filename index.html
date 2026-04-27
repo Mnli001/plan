@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Алтан зам · $50 → $1,000 Динамик төлөвлөгөө</title>
+<title>Алтан зам · $50 → $1,000 НӨХӨХ БОНУСТАЙ ТӨЛӨВЛӨГӨӨ</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     background: #020100;
     font-family: 'Rajdhani', sans-serif;
@@ -15,9 +14,8 @@
     min-height: 100vh;
     padding: 12px 8px;
   }
-
   .poster {
-    max-width: 880px;
+    max-width: 920px;
     margin: 0 auto;
     background: linear-gradient(170deg, #0E0B00 0%, #060500 50%, #0A0800 100%);
     border-left: 1.5px solid #B8860B;
@@ -25,8 +23,6 @@
     border-radius: 6px;
     box-shadow: 0 0 40px rgba(255,200,0,0.12);
   }
-
-  /* HEADER */
   .header {
     padding: 28px 20px 18px;
     text-align: center;
@@ -69,8 +65,6 @@
     color: #FFD700;
     border-radius: 2px;
   }
-
-  /* table wrapper */
   .table-wrapper {
     padding: 14px 12px;
     overflow-x: auto;
@@ -79,7 +73,7 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 12px;
-    min-width: 740px;
+    min-width: 780px;
   }
   .trading-table th {
     font-family: 'Cinzel', serif;
@@ -98,20 +92,10 @@
     font-weight: 600;
     vertical-align: middle;
   }
-  /* Мөрний өнгөний динамик классууд */
-  .tr-taken {
-    background: rgba(0, 160, 60, 0.28);
-    border-left: 3px solid #00E676;
-  }
-  .tr-loss {
-    background: rgba(200, 40, 30, 0.28);
-    border-left: 3px solid #FF5252;
-  }
-  .tr-neutral {
-    background: rgba(30, 20, 5, 0.5);
-  }
+  .tr-taken { background: rgba(0, 160, 60, 0.28); border-left: 3px solid #00E676; }
+  .tr-loss { background: rgba(200, 40, 30, 0.28); border-left: 3px solid #FF5252; }
+  .tr-neutral { background: rgba(30, 20, 5, 0.5); }
 
-  /* Товчнууд */
   .action-group {
     display: flex;
     gap: 6px;
@@ -132,26 +116,10 @@
     color: #FFD966;
     border: 1px solid #B8860B;
   }
-  .btn-taken {
-    background: #004d2e;
-    color: #b9f6ca;
-    border-color: #00E676;
-  }
-  .btn-loss {
-    background: #5e1e1a;
-    color: #ffb4a2;
-    border-color: #FF5252;
-  }
-  .btn-reset {
-    background: #2a2a2a;
-    color: #FFD966;
-    border-color: #7A5500;
-    font-size: 9px;
-  }
-  .btn-sm:hover {
-    transform: scale(1.02);
-    filter: brightness(1.1);
-  }
+  .btn-taken { background: #004d2e; color: #b9f6ca; border-color: #00E676; }
+  .btn-loss { background: #5e1e1a; color: #ffb4a2; border-color: #FF5252; }
+  .btn-reset { background: #2a2a2a; color: #FFD966; border-color: #7A5500; font-size: 9px; }
+  .btn-sm:hover { transform: scale(1.02); filter: brightness(1.1); }
   .outcome-badge {
     display: inline-block;
     font-weight: 800;
@@ -161,17 +129,9 @@
     background: rgba(0,0,0,0.6);
     margin-bottom: 4px;
   }
-  .outcome-profit {
-    color: #00E676;
-  }
-  .outcome-loss {
-    color: #FF5252;
-  }
-  .bal-cell {
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-    color: #FFE484;
-  }
+  .outcome-profit { color: #00E676; }
+  .outcome-loss { color: #FF5252; }
+  .bal-cell { font-family: 'Cinzel', serif; font-weight: 900; color: #FFE484; }
   .goal-flag {
     background: linear-gradient(135deg, #7A5500, #FFD700);
     color: #000;
@@ -181,6 +141,15 @@
     font-weight: 900;
     display: inline-block;
   }
+  .bonus-tag {
+    background: rgba(255,215,0,0.2);
+    padding: 2px 6px;
+    border-radius: 16px;
+    font-size: 9px;
+    color: #FFD966;
+    display: inline-block;
+    margin-left: 6px;
+  }
   .warning-prev {
     font-size: 9px;
     color: #FFB347;
@@ -188,13 +157,7 @@
     padding: 4px 6px;
     border-radius: 12px;
   }
-  /* info */
-  .info-section {
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
+  .info-section { padding: 12px 14px; display: flex; flex-direction: column; gap: 14px; }
   .info-card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,200,0,0.2);
@@ -208,16 +171,8 @@
     color: #FFD700;
     margin-bottom: 12px;
   }
-  .rules-grid, .phases-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 12px;
-  }
-  .phase-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
-  }
+  .rules-grid, .phases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; }
+  .phase-dot { width: 12px; height: 12px; border-radius: 2px; }
   .patience {
     margin-top: 12px;
     background: rgba(255,215,0,0.07);
@@ -227,47 +182,14 @@
     font-size: 11px;
     color: #FFD966;
   }
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 6px 20px;
-  }
-  .div-line {
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, #B8860B, transparent);
-  }
-  .div-gem {
-    width: 6px;
-    height: 6px;
-    background: #FFD700;
-    transform: rotate(45deg);
-  }
-  .quote-section {
-    text-align: center;
-    padding: 16px 20px;
-  }
-  .quote-text {
-    font-size: clamp(13px, 4vw, 18px);
-    font-weight: 700;
-  }
-  .quote-text em {
-    background: linear-gradient(180deg, #FFE566, #FFD700);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .values-row {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 16px 20px;
-    text-align: center;
-  }
-  .val-item {
-    font-size: 10px;
-    color: #B8860B;
-  }
+  .divider { display: flex; align-items: center; gap: 12px; margin: 6px 20px; }
+  .div-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #B8860B, transparent); }
+  .div-gem { width: 6px; height: 6px; background: #FFD700; transform: rotate(45deg); }
+  .quote-section { text-align: center; padding: 16px 20px; }
+  .quote-text { font-size: clamp(13px, 4vw, 18px); font-weight: 700; }
+  .quote-text em { background: linear-gradient(180deg, #FFE566, #FFD700); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .values-row { display: flex; justify-content: space-around; padding: 10px 16px 20px; text-align: center; }
+  .val-item { font-size: 10px; color: #B8860B; }
   .footer {
     border-top: 1px solid rgba(255,200,0,0.2);
     padding: 14px;
@@ -297,36 +219,34 @@
 </style>
 </head>
 <body>
-
 <audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg"></audio>
 <button id="musicBtn" onclick="toggleMusic()" title="Дуу">🔊</button>
 
 <div class="poster">
   <div class="header">
-    <div class="sub-label">XAUUSD · АЛТАН · DISCIPLINE</div>
+    <div class="sub-label">XAUUSD · АЛТАН · LOSS RECOVERY БОНУС</div>
     <div class="main-title">$50 → $1,000</div>
-    <div class="plan-title">ДИНАМИК ӨСӨЛТИЙН ТӨЛӨВЛӨГӨӨ</div>
+    <div class="plan-title">НӨХӨХ БОНУСТАЙ ӨСӨЛТИЙН ТӨЛӨВЛӨГӨӨ</div>
     <div class="badges">
       <span class="badge">⚖️ Эрсдэл : Ашиг = 1:2</span>
       <span class="badge">🛡️ 20% эрсдэл / хэлцэл</span>
-      <span class="badge">🏔️ 9 алхам</span>
+      <span class="badge">🏔️ 9 алхам + алдагдлын бонус</span>
     </div>
   </div>
 
   <div class="table-wrapper">
     <table class="trading-table" id="tradeTable">
       <thead>
-        <tr><th>#</th><th>БАЛАНС ($)</th><th>LOT</th><th>ЭРСДЭЛ ($)</th><th>АШИГ ($)</th><th>ҮР ДҮН / СОНГОЛТ</th><th>ШИНЭ БАЛАНС ($)</th></tr>
+        <tr><th>#</th><th>БАЛАНС ($)</th><th>LOT</th><th>ЭРСДЭЛ ($)</th><th>АШИГ ($)</th><th>НӨХӨХ БОНУС</th><th>ҮР ДҮН</th><th>ШИНЭ БАЛАНС ($)</th></tr>
       </thead>
       <tbody id="tableBody"></tbody>
     </table>
   </div>
 
   <div class="divider"><div class="div-line"></div><div class="div-gem"></div><div class="div-line"></div></div>
-
   <div class="info-section">
     <div class="info-card">
-      <div class="ic-title">⚔️ Арилжааны дүрэм</div>
+      <div class="ic-title">⚔️ Арилжааны дүрэм + НӨХӨХ МЕХАНИЗМ</div>
       <div class="rules-grid">
         <div class="rule">⏱️ Таймфрейм: 5M / 15M</div>
         <div class="rule">📈 Тренд чиглэл заавал</div>
@@ -335,114 +255,165 @@
         <div class="rule">📅 Өдөрт max 2 арилжаа</div>
         <div class="rule">🚫 2 алдалт = зогсох</div>
       </div>
+      <div class="patience">✨ АЛДАГДСАН ҮЕД: алдагдлын дүн дараагийн түвшний АШИГ дээр нэмэгдэнэ (нөхөх бонус). Ингэснээр алдсан дүнгээ эргүүлэн олох боломжтой.</div>
     </div>
     <div class="info-card">
-      <div class="ic-title">📊 Өсөлтийн үе шатууд</div>
+      <div class="ic-title">📊 Өсөлтийн үе шат + бонусын нөлөө</div>
       <div class="phases-grid">
         <div class="phase-item"><div class="phase-dot" style="background:#00E676;"></div><div><span style="color:#00E676;">БҮТЭЭХ ҮЕ</span><br>$50–$100</div></div>
         <div class="phase-item"><div class="phase-dot" style="background:#2196F3;"></div><div><span style="color:#64B5F6;">ТОГТВОРЖИХ ҮЕ</span><br>$100–$527</div></div>
         <div class="phase-item"><div class="phase-dot" style="background:#9C27B0;"></div><div><span style="color:#CE93D8;">КОМПАУНДИНГ</span><br>$527–$1,032</div></div>
-        <div class="phase-item"><div class="phase-dot" style="background:#FFD700;"></div><div><span style="color:#FFD700;">★ ЗОРИЛГО</span><br>9-р түвшин</div></div>
+        <div class="phase-item"><div class="phase-dot" style="background:#FFD700;"></div><div><span style="color:#FFD700;">★ ЗОРИЛГО</span><br>9-р түвшин $1,000+</div></div>
       </div>
-      <div class="patience">"Тэвчээр + сахилга бат = санхүүгийн эрх чөлөө"</div>
     </div>
   </div>
 
   <div class="quote-section">
-    <div class="quote-text">Сахилга бат гэдэг бол хүсэхгүй байсан ч <em>хийх ёстой зүйлээ хийх явдал юм.</em></div>
+    <div class="quote-text">Алдагдал бүр — дараагийн амжилтын <em>шатахуун</em>. Бонус нэмэгдэнэ.</div>
   </div>
   <div class="values-row">
     <div class="val-item">🎯 Анхаарал</div><div class="val-item">🧠 Тэвчээр</div>
-    <div class="val-item">🛡️ Эрсдэлийн менежмент</div><div class="val-item">🏆 Тогтвортой байдал</div>
+    <div class="val-item">🛡️ Эрсдэлийн менежмент</div><div class="val-item">🏆 Алдагдлаа нөхөх тактик</div>
   </div>
   <div class="footer">
-    <div>👑 Жижиг алхам → Их эрх чөлөө 👑</div>
-    <div style="font-size:8px; margin-top:4px;">Процесст итгэ · Бүү зогс · Сонголтоо өөрчлөх боломжтой</div>
+    <div>🔥 АЛДАХ БҮРТ НӨХӨХ БОНУС НЭМЭГДЭНЭ → ЗОРИЛГОД ОЙРТНО 🔥</div>
+    <div style="font-size:8px; margin-top:4px;">Сонголтоо өөрчлөх (Болиулах) товч — дараагийн бүх түвшний шийдвэрийг цуцална</div>
   </div>
 </div>
 
 <script>
-  // ======================== ДИНАМИК ЛОГИК =========================
+  // ======================== Шинэ Логик: Алдагдлын бонус (дараагийн ашиг дээр нэмэгдэнэ) =========================
   const TOTAL_LEVELS = 9;
   const RISK_PERCENT = 0.20;      // 20%
   const REWARD_RATIO = 2;         // 1:2
   const START_BALANCE = 50;
 
-  // outcomes массив: 'taken', 'loss', null (шийдээгүй)
+  // outcomes: 'taken', 'loss', null
   let levelOutcomes = new Array(TOTAL_LEVELS).fill(null);
-  // 1-р түвшинг анхнаасаа "АВСАН" гэж бэлэн болгохгүй, хэрэглэгч өөрөө шийднэ.
-  // Хэрэв та эхний түвшинг урьдчилсан байдлаар "авсан" болгохыг хүсвэл доорхи мөрийг идэвхжүүлэх:
-  // levelOutcomes[0] = 'taken';
-  // Харин жинхэнэ туршилт: эхний түвшний сонголтыг хэрэглэгч хийнэ. (сонголтгүй эхэлнэ)
-  // Зааварчилгаа: анхны ачаалал дээр бүх түвшин null байна.
   
-  // Балансыг дарааллаар бодох функц (outcome array-д тулгуурласан)
-  function computeSequentialBalances() {
-    let balances = [START_BALANCE];
-    let current = START_BALANCE;
+  // Алдагдлын бонус хуримтлал: түвшин бүрийн эхэнд хэдэн төгрөгийн бонус нэмэгдсэн бэ?
+  // Энэ массивыг computeSequential-д динамикаар тооцоолно
+  
+  // Үндсэн тооцоолуур: түвшин бүрийн эхлэх баланс, бонусын хэмжээ, ашиг, эрсдэл гэх мэт
+  function computeFullPlan() {
+    let startBalances = [START_BALANCE];
+    let cumulativeLossBonus = [0]; // i-р түвшинд хэр их бонус (нэмэгдэл ашиг) өгөх
+    let currentBalance = START_BALANCE;
+    let pendingBonus = 0;  // дараагийн түвшинд шилжих бонус (өмнөх алдагдлаас үүсэлтэй)
+    
     for (let i = 0; i < TOTAL_LEVELS; i++) {
-      if (i > 0) balances.push(current);
+      // Энэ түвшний эхлэх баланс
+      let startBal = currentBalance;
+      startBalances[i] = startBal;
+      
+      // Энэ түвшинд өгөх нийт бонус (өмнөх алдагдлуудаас хуримтлагдсан)
+      let bonusThisLevel = pendingBonus;
+      
+      // Эрсдэл (balance дээр суурилсан)
+      let riskAmount = startBal * RISK_PERCENT;
+      // Үндсэн ашиг (1:2)
+      let baseProfit = riskAmount * REWARD_RATIO;
+      // НИЙТ ашиг = үндсэн ашиг + бонус (алдагдлын нөхөн олговор)
+      let totalProfit = baseProfit + bonusThisLevel;
+      
+      // LOT тооцоо (эрсдэл дээр тулгуурласан, бонус нөлөөлөхгүй)
+      let lotVal = riskAmount / 1000;
+      lotVal = Math.max(0.01, Math.min(0.3, lotVal));
+      lotVal = Math.round(lotVal * 100) / 100;
+      
       const outcome = levelOutcomes[i];
-      if (outcome === null) {
-        // хэрэв одоогийн түвшин шийдэгдээгүй бол дараагийн түвшний баланс өөрчлөгдөхгүй (нөлөөлөхгүй, зөвхөн харагдац)
-        // current хэвээр үлдэнэ
-      } else if (outcome === 'taken') {
-        const risk = current * RISK_PERCENT;
-        const profit = risk * REWARD_RATIO;
-        current = current + profit;
-      } else if (outcome === 'loss') {
-        const risk = current * RISK_PERCENT;
-        current = current - risk;
-        if (current < 0) current = 0;
+      let newBalance = null;
+      let nextBonus = 0;  // дараагийн түвшинд шилжих бонус
+      
+      if (outcome === 'taken') {
+        newBalance = startBal + totalProfit;
+        // Ашиг авсан: хуримтлагдсан бонусыг зарцуулсан, дараагийн түвшинд бонус 0
+        nextBonus = 0;
+      } 
+      else if (outcome === 'loss') {
+        newBalance = startBal - riskAmount;
+        if (newBalance < 0) newBalance = 0;
+        // АЛДАГДСАН: энэ түвшний алдагдлын дүнг (riskAmount) дараагийн түвшний бонус дээр НЭМЭХ (шинэ зүйл нэмэгдэнэ)
+        nextBonus = pendingBonus + riskAmount;   // хуучин бонус + шинэ алдагдлын дүн
+      } 
+      else { // null (шийдээгүй)
+        newBalance = null;
+        nextBonus = pendingBonus;  // бонус хэвээр үлдэнэ, гэхдээ баланс өөрчлөгдөхгүй
+      }
+      
+      // Хадгалах өгөгдөл
+      cumulativeLossBonus[i] = bonusThisLevel;
+      
+      // Дараагийн давталтад зориулж
+      if (outcome === 'taken' || outcome === 'loss') {
+        currentBalance = newBalance;
+        pendingBonus = nextBonus;
+      } else {
+        // шийдээгүй бол balance өөрчлөгдөхгүй, гэхдээ pendingBonus хэвээр (дараагийн түвшинд нөлөөлөхгүй, учир нь тэр түвшин null үед тооцоолол хийхдээ pendingBonus ашиглана)
+        // pendingBonus хадгална
+        pendingBonus = nextBonus;
       }
     }
-    // balances массив нь түвшин бүрийн эхлэх балансыг агуулна. length = TOTAL_LEVELS
-    while(balances.length < TOTAL_LEVELS) balances.push(current);
-    return balances; // balances[i] = i-р түвшний эхлэх баланс (index 0 эхний)
-  }
-
-  // Түвшин бүрийн дэлгэрэнгүй мэдээллийг массиваар буцаах
-  function getLevelsData() {
-    let startBalances = computeSequentialBalances();
+    
+    // Өгөгдлийн массив үүсгэх
     let levels = [];
-    // бид startBalances[i] - i-р түвшний эхлэх баланс
+    let tmpBalance = START_BALANCE;
+    let tmpBonus = 0;
     for (let i = 0; i < TOTAL_LEVELS; i++) {
-      const startBal = startBalances[i];
+      const startBal = (i === 0 ? START_BALANCE : (levels[i-1]?.newBalanceAfter ?? START_BALANCE));
+      // Илүү зөв арга: compute дээр хадгалсан утгаар давтах
+    }
+    // Дахин бодож гаргах
+    let bal = START_BALANCE;
+    let bonusAcc = 0;
+    for (let i = 0; i < TOTAL_LEVELS; i++) {
+      const risk = bal * RISK_PERCENT;
+      const baseProfit = risk * REWARD_RATIO;
+      const totalProfit = baseProfit + bonusAcc;
+      const lotVal2 = Math.max(0.01, Math.round((risk/1000)*100)/100);
       const outcome = levelOutcomes[i];
-      const riskAmount = startBal * RISK_PERCENT;
-      const profitAmount = riskAmount * REWARD_RATIO;
-      let lotValue = riskAmount / 1000;
-      lotValue = Math.max(0.01, Math.min(0.3, lotValue));
-      lotValue = Math.round(lotValue * 100) / 100;
-      let newBalance = null;
-      if (outcome === 'taken') newBalance = startBal + profitAmount;
-      else if (outcome === 'loss') newBalance = Math.max(0, startBal - riskAmount);
-      
+      let newBal = null;
+      let nextBonus = bonusAcc;
+      if (outcome === 'taken') {
+        newBal = bal + totalProfit;
+        nextBonus = 0;
+      } else if (outcome === 'loss') {
+        newBal = Math.max(0, bal - risk);
+        nextBonus = bonusAcc + risk;   // <<< алдагдлын дүнг дараагийн бонус дээр нэмэх (ШИНЭ ЗҮЙЛ)
+      } else {
+        newBal = null;
+        nextBonus = bonusAcc;
+      }
       levels.push({
         idx: i,
-        startBalance: startBal,
-        risk: riskAmount,
-        profit: profitAmount,
-        lot: lotValue,
+        startBalance: bal,
+        risk: risk,
+        baseProfit: baseProfit,
+        bonusAmount: bonusAcc,
+        totalProfit: totalProfit,
+        lot: lotVal2,
         outcome: outcome,
-        newBalance: newBalance
+        newBalance: newBal,
+        nextBonusWillBe: (outcome === 'loss' ? bonusAcc + risk : (outcome === 'taken' ? 0 : bonusAcc))
       });
+      if (outcome === 'taken' || outcome === 'loss') {
+        bal = newBal;
+        bonusAcc = (outcome === 'loss' ? bonusAcc + risk : 0);
+      } else {
+        // balance өөрчлөгдөхгүй, bonusAcc хэвээр
+      }
     }
     return levels;
   }
-
-  // Сонголт хийх (АВСАН / АЛДСАН)
+  
+  // Сонголт хийх функц
   function setOutcome(levelIndex, outcomeType) {
     if (levelIndex < 0 || levelIndex >= TOTAL_LEVELS) return false;
-    // Хэрэв өмнөх түвшин null байвал хориглоно (түвшин 0-ээс бусад)
     if (levelIndex > 0 && levelOutcomes[levelIndex-1] === null) {
       alert(`⚠️ ${levelIndex+1}-р түвшинд шилжихийн тулд эхлээд ${levelIndex}-р түвшний үр дүнг (АВСАН / АЛДСАН) сонгоно уу!`);
       return false;
     }
-    // Хэрэв аль хэдийн ижил байвал юу ч хийхгүй
     if (levelOutcomes[levelIndex] === outcomeType) return false;
-    
-    // Шинэ үр дүнг тохируулж, дараа бүх түвшинг null болго
     levelOutcomes[levelIndex] = outcomeType;
     for (let i = levelIndex+1; i < TOTAL_LEVELS; i++) {
       levelOutcomes[i] = null;
@@ -451,12 +422,9 @@
     return true;
   }
   
-  // Сонголтыг буцаах (болиулах)
   function resetOutcome(levelIndex) {
     if (levelIndex < 0 || levelIndex >= TOTAL_LEVELS) return;
-    // Хэрэв өмнөх түвшин null байсан ч гэсэн энэ түвшинг сэргээж болно (гэхдээ өмнөх нь null бол энэ нь автоматик null болсон байх)
-    // Бүх тохиолдолд тухайн түвшин болон дараагийн түвшнүүдийг null болгоно
-    if (levelOutcomes[levelIndex] === null) return; // аль хэдийн null
+    if (levelOutcomes[levelIndex] === null) return;
     levelOutcomes[levelIndex] = null;
     for (let i = levelIndex+1; i < TOTAL_LEVELS; i++) {
       levelOutcomes[i] = null;
@@ -464,23 +432,23 @@
     renderTable();
   }
   
-  // Хүснэгтийг зурах
   function renderTable() {
     const tbody = document.getElementById('tableBody');
     if (!tbody) return;
-    const levelsData = getLevelsData();
+    const levels = computeFullPlan();
     let rowsHtml = '';
     
-    for (let i = 0; i < levelsData.length; i++) {
-      const lvl = levelsData[i];
+    for (let i = 0; i < levels.length; i++) {
+      const lvl = levels[i];
       const startBal = lvl.startBalance;
       const risk = lvl.risk;
-      const profit = lvl.profit;
+      const baseProfit = lvl.baseProfit;
+      const bonus = lvl.bonusAmount;
+      const totalProfit = lvl.totalProfit;
       const lotVal = lvl.lot;
       const outcome = lvl.outcome;
       const newBal = lvl.newBalance;
       
-      // row class
       let rowClass = 'tr-neutral';
       if (outcome === 'taken') rowClass = 'tr-taken';
       else if (outcome === 'loss') rowClass = 'tr-loss';
@@ -488,13 +456,15 @@
       const isGoal = (i === TOTAL_LEVELS-1);
       const levelDisplay = isGoal ? `<span class="goal-flag">★${i+1}</span>` : `${i+1}`;
       
-      // Шинэ балансын харагдах текст
       let displayNewBalance = '—';
       if (outcome === 'taken') displayNewBalance = `$${newBal.toFixed(2)}`;
       else if (outcome === 'loss') displayNewBalance = `$${newBal.toFixed(2)}`;
-      else displayNewBalance = '— (шийдээгүй)';
       
-      // Үр дүнгийн баганад товчнууд + статус
+      // Бонус багана (нэмэгдэл)
+      let bonusDisplay = bonus > 0 ? `<span class="bonus-tag">+$${bonus.toFixed(2)}</span>` : '—';
+      if (bonus === 0) bonusDisplay = '—';
+      
+      // Үр дүнгийн баганад товч + статус
       let outcomeCellContent = '';
       const isPrevUnresolved = (i > 0 && levelOutcomes[i-1] === null);
       
@@ -503,7 +473,7 @@
       } else {
         if (outcome === 'taken') {
           outcomeCellContent = `
-            <div class="outcome-badge outcome-profit">✅ АВСАН (+$${profit.toFixed(2)})</div>
+            <div class="outcome-badge outcome-profit">✅ АВСАН (+$${totalProfit.toFixed(2)})</div>
             <div class="action-group">
               <button class="btn-sm btn-loss" data-level="${i}" data-action="loss">❌ АЛДСАН</button>
               <button class="btn-sm btn-reset" data-level="${i}" data-action="reset">↺ Болиулах</button>
@@ -518,7 +488,6 @@
             </div>
           `;
         } else {
-          // шийдээгүй - хоёр үндсэн товч + болиулах байхгүй (болиулах шаардлагагүй)
           outcomeCellContent = `
             <div class="action-group">
               <button class="btn-sm btn-taken" data-level="${i}" data-action="taken">✅ АВСАН</button>
@@ -534,40 +503,33 @@
           <td class="bal-cell">$${startBal.toFixed(2)}</td>
           <td>${lotVal.toFixed(2)}</td>
           <td style="color:#FF9F8F;">$${risk.toFixed(2)}</td>
-          <td style="color:#B9F6CA;">$${profit.toFixed(2)}</td>
-          <td style="min-width: 160px;">${outcomeCellContent}</td>
+          <td style="color:#B9F6CA;">$${baseProfit.toFixed(2)}</td>
+          <td style="color:#FFD966; font-weight:bold;">${bonusDisplay}</td>
+          <td style="min-width: 170px;">${outcomeCellContent}</td>
           <td style="font-weight:700; ${outcome === 'taken' ? 'color:#00E676;' : (outcome === 'loss' ? 'color:#FFAA88;' : 'color:#aaa')}">${displayNewBalance}</td>
         </tr>
       `;
     }
-    
     tbody.innerHTML = rowsHtml;
     
-    // Бүх товчлуурт event listener хавсаргах
     document.querySelectorAll('.btn-taken, .btn-loss, .btn-reset').forEach(btn => {
       btn.removeEventListener('click', handleButtonClick);
       btn.addEventListener('click', handleButtonClick);
     });
   }
   
-  // Товчнуудын нэгдсэн handler
   function handleButtonClick(e) {
     e.stopPropagation();
     const btn = e.currentTarget;
     const level = parseInt(btn.getAttribute('data-level'));
     const action = btn.getAttribute('data-action');
     if (isNaN(level)) return;
-    
-    if (action === 'taken') {
-      setOutcome(level, 'taken');
-    } else if (action === 'loss') {
-      setOutcome(level, 'loss');
-    } else if (action === 'reset') {
-      resetOutcome(level);
-    }
+    if (action === 'taken') setOutcome(level, 'taken');
+    else if (action === 'loss') setOutcome(level, 'loss');
+    else if (action === 'reset') resetOutcome(level);
   }
   
-  // Дууны удирдлага
+  // Дуу
   const audio = document.getElementById('bgMusic');
   const musicBtn = document.getElementById('musicBtn');
   let musicPlaying = false;
@@ -598,12 +560,8 @@
     setTimeout(() => { if(musicBtn) musicBtn.style.transform = 'scale(1)'; }, 150);
   };
   
-  // Анхны өгөгдөл: бүх түвшин null (хэрэглэгч өөрөө шийднэ)
-  // Хэрэв та эхний түвшин "авсан" гэж демо болгохыг хүсвэл доорх мөрийн тайлбарыг аваарай, эсвэл хэрэглэгч өөрөө эхлүүлнэ.
   window.addEventListener('load', () => {
-    // Анхны төлөв: бүгд null. (хэрэв та зааварчилгаа болгон эхний түвшинд "АВСАН" дарсан мэт харагдуулахыг хүсвэл levelOutcomes[0] = 'taken' гэх хэрэгтэй, гэхдээ хэрэглэгч өөрөө шийдвэрлэх эрхтэй)
-    // Зааварчилгааны дагуу эхний түвшинг УРЬДЧИЛАН авахгүй, харин хэрэглэгч өөрөө АВСАН эсвэл АЛДСАН товчийг дарна.
-    // Энэ нь "болиулах" логикийг бүрэн дэмжинэ.
+    // Бүх түвшин null эхэлнэ, хэрэглэгч өөрөө шийднэ
     renderTable();
     tryPlayMusic();
     document.addEventListener('click', function onceTouch() {
