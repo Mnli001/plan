@@ -664,14 +664,14 @@
 <button id="musicBtn" onclick="toggleMusic()" title="Дуу">🔇</button>
 
 <div class="poster">
-  <header class="header">
+  <header class="header" id="top">
     <div class="top-pill">XAUUSD · GLASS LIQUID · DISCIPLINE MODE</div>
     <h1 class="main-title">$50 → $1,000</h1>
     <div class="plan-title">АЛДАГДЛЫГ ХӨӨХГҮЙ · ЗӨВХӨН ТӨЛӨВЛӨГӨӨГӨӨ ДАГАНА · LOT-ОО ЗӨВ ТООЦООЛНО</div>
     <div class="badges">
       <span class="badge">⚖️ RR 1:2</span>
-      <span class="badge">🛡️ Balance-д таарсан эрсдэл</span>
-      <span class="badge">🧮 Risk = Balance × 20%, Lot нь түүнд таарна</span>
+      <span class="badge">🛡️ Risk = Balance × 20%</span>
+      <span class="badge">🧮 Lot 0.01 алхамтай</span>
       <span class="badge">🎯 Зорилго: $1,000</span>
     </div>
   </header>
@@ -695,7 +695,7 @@
     <div class="stat-card">
       <div class="stat-label">Зөв lot</div>
       <div class="stat-value" id="nextLot">0.01</div>
-      <div class="stat-note" id="lotNote">Risk 20%-д таарсан lot</div>
+      <div class="stat-note" id="lotNote">0.01 алхмаар доош тайрна</div>
     </div>
   </section>
 
@@ -709,14 +709,6 @@
     </div>
   </section>
 
-  <section class="phase-row" id="phaseRow">
-    <div class="phase" data-min="0" data-max="100"><span>1-р үе</span><small>$50–$100 · Амьд үлдэх</small></div>
-    <div class="phase" data-min="100" data-max="200"><span>2-р үе</span><small>$100–$200 · Итгэлцэл</small></div>
-    <div class="phase" data-min="200" data-max="400"><span>3-р үе</span><small>$200–$400 · Хурд</small></div>
-    <div class="phase" data-min="400" data-max="700"><span>4-р үе</span><small>$400–$700 · Хяналт</small></div>
-    <div class="phase" data-min="700" data-max="1000"><span>5-р үе</span><small>$700–$1,000 · Finish</small></div>
-  </section>
-
   <div class="table-wrapper">
     <table class="trading-table" id="tradeTable">
       <thead>
@@ -724,7 +716,7 @@
           <th>#</th>
           <th>БАЛАНС</th>
           <th>SL PIPS</th>
-          <th>SL VALUE</th>
+          <th>20% RISK</th>
           <th>LOT</th>
           <th>ЭРСДЭЛ</th>
           <th>АШИГ</th>
@@ -738,44 +730,24 @@
 
   <section class="info-section">
     <div class="info-card">
-      <div class="ic-title">⚔️ АРИЛЖААНЫ ДҮРЭМ</div>
+      <div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div>
       <div class="rules-grid">
-        <div class="rule">📌 Entry зөвхөн setup бүрэн болсон үед. FOMO entry хийхгүй.</div>
-        <div class="rule">🛡️ Яг байгаа балансын 20%-ийг эрсдэлд оруулна. $50 бол $10, $70 бол $14 risk.</div>
-        <div class="rule">⚖️ RR заавал 1:2 буюу түүнээс дээш байна. RR муу бол арилжаа авахгүй.</div>
-        <div class="rule">🧮 Lot нь 20% risk-д тааруулж бодогдоно: Risk ÷ SL pips ÷ XAUUSD pip value.</div>
-        <div class="rule">🚫 Алдсаны дараа шууд нөхөх гэж орохгүй. Дараагийн setup хүртэл хүлээнэ.</div>
-        <div class="rule">🧊 Сэтгэл хөдөлсөн үед арилжаа хийхгүй. Calm mind = clean execution.</div>
+        <div class="rule">🛡️ Эрсдэл: тухайн үеийн баланс × 20%.</div>
+        <div class="rule">⚖️ Ашиг: risk × 2 буюу RR 1:2.</div>
+        <div class="rule">🧮 Lot: 20% risk-д тааруулж бодоод 0.01 алхам руу доош тайрна.</div>
+        <div class="rule">🚫 Loss дараа нөхөх гэж орохгүй. Дараагийн setup хүртэл хүлээнэ.</div>
       </div>
-      <div class="patience">✨ Нэг trade амьдралыг өөрчлөхгүй. Харин нэг дүрмээ эвдэх нь account-ыг устгаж чадна.</div>
-    </div>
-
-    <div class="info-card">
-      <div class="ic-title">🧮 LOT ЗӨВ ТООЦОХ САНАМЖ</div>
-      <div class="calculator-box">
-        <div class="calc-line"><strong>Risk $</strong><span>Balance × 20%</span></div>
-        <div class="calc-line"><strong>Lot formula</strong><span>Risk ÷ SL pips ÷ XAUUSD pip value</span></div>
-        <div class="calc-line"><strong>Энэ plan дээр</strong><span>Risk = Balance × 20%</span></div>
-        <div class="calc-line"><strong>Жишээ</strong><span>$70 × 20% = $14 risk → 0.014 lot</span></div>
-      </div>
-      <div class="patience">⚠️ Broker бүрийн XAUUSD contract size, point value, pip value өөр байж болно. Зарим broker 0.014 lot авахгүй, зөвхөн 0.01 алхамтай байдаг тул бодит entry хийхдээ position size calculator-аар давхар шалга.</div>
+      <div class="patience">Жишээ: $70 balance → $14 risk. Тооцоогоор 0.014 lot гарвал бодит lot нь 0.01 гэж авна.</div>
     </div>
   </section>
 
   <section class="quote-section">
     <div class="quote-text">“<em>Discipline</em> бол хурдан баяжих арга биш. Discipline бол account-оо амьд үлдээж, боломж ирэхэд бэлэн байх хүч.”</div>
-    <div class="quote-sub">Хугацааны таамаг: төгс дарааллаар 4–8 win хэрэгтэй. Loss орвол хугацаа уртасна. Чухал нь хурд биш, дүрмээ эвдэхгүй байх.</div>
-  </section>
-
-  <section class="values-row">
-    <div class="val-item">📈 Тэвчээр</div>
-    <div class="val-item">🧊 Сэтгэлзүй</div>
-    <div class="val-item">🧮 Зөв lot</div>
-    <div class="val-item">🎯 Зөв setup</div>
+    <div class="quote-sub">Чухал нь хурд биш — дүрмээ эвдэхгүй, lot-оо хэтрүүлэхгүй байх.</div>
   </section>
 
   <div class="risk-note">
-    Санамж: Энэ нь зөвхөн төлөвлөгөөний dashboard загвар. 20% эрсдэл нь өндөр эрсдэлтэй тул бодит дансанд хэрэглэхээс өмнө demo/backtest дээр шалгаж, өөрийн stop-loss болон broker-ийн pip value-д тааруулж lot-оо бодоорой.
+    Санамж: 20% risk бол өндөр эрсдэл. Бодит entry хийхээс өмнө XAUUSD-ийн stop-loss, spread, broker-ийн lot step-ээ заавал шалга.
   </div>
 
   <footer class="footer">⚡ PLAN THE TRADE · CALCULATE THE LOT · EXECUTE WITHOUT EMOTION ⚡</footer>
@@ -808,15 +780,11 @@
     return Math.round((value + Number.EPSILON) * 100) / 100;
   }
 
-  function round3(value) {
-    return Math.round((value + Number.EPSILON) * 1000) / 1000;
-  }
-
   function calculateLot(risk, slPips = STOP_LOSS_PIPS, pipValue = PIP_VALUE_PER_1_LOT) {
-    // Risk яг balance-ийн 20% байна. Lot нь тэр risk-д тааруулж бодогдоно.
-    // Жишээ: $70 balance, 20% risk = $14. SL 100 pips, $10/pip/1lot үед lot = 0.014
+    // Lot 0.01 алхамтай гэж үзнэ. 0.014 гарвал 0.01 болгож доош тайрна.
     const rawLot = risk / slPips / pipValue;
-    return round3(clamp(rawLot, MIN_LOT, MAX_LOT));
+    const flooredLot = Math.floor(rawLot * 100) / 100;
+    return round2(clamp(flooredLot, MIN_LOT, MAX_LOT));
   }
 
   function compute() {
@@ -827,7 +795,7 @@
       const startBal = balance;
       const risk = startBal * RISK;
       const lot = calculateLot(risk);
-      const slValue = risk;
+      const actualRisk = lot * STOP_LOSS_PIPS * PIP_VALUE_PER_1_LOT;
       const profit = risk * RR;
       const outcome = outcomes[i];
       let newBal = null;
@@ -839,12 +807,12 @@
         idx: i,
         startBalance: startBal,
         risk,
+        actualRisk,
         targetRisk: risk,
         profit,
         lot,
         slPips: STOP_LOSS_PIPS,
         pipValue: PIP_VALUE_PER_1_LOT,
-        slValue,
         outcome,
         newBalance: newBal
       });
@@ -908,17 +876,10 @@
     document.getElementById('progressPercent').textContent = `${progress.toFixed(1)}%`;
     document.getElementById('nextRisk').textContent = formatMoney(nextRisk);
     document.getElementById('nextLot').textContent = nextLot.toFixed(2);
-    document.getElementById('lotNote').textContent = `Balance × 20% risk-д таарсан lot`;
+    document.getElementById('lotNote').textContent = `0.01 lot алхмаар доош тайрсан`;
     document.getElementById('progressText').textContent = `${formatMoney(finalBalance)} / ${formatMoney(TARGET)}`;
     document.getElementById('progressFill').style.width = `${progress}%`;
 
-    document.querySelectorAll('.phase').forEach(phase => {
-      const min = Number(phase.getAttribute('data-min'));
-      const max = Number(phase.getAttribute('data-max'));
-      const active = finalBalance >= min && finalBalance < max;
-      const finished = finalBalance >= TARGET && max === TARGET;
-      phase.classList.toggle('active', active || finished);
-    });
   }
 
   function render() {
@@ -984,9 +945,9 @@
           <td>${levelDisplay}</td>
           <td class="bal-cell">${formatMoney(l.startBalance)}</td>
           <td>${l.slPips}</td>
-          <td style="color:#ffcf7a;">${formatMoney(l.slValue)}</td>
-          <td class="lot-cell">${l.lot.toFixed(3)}</td>
-          <td style="color:#ffb0bc;">${formatMoney(l.risk)}</td>
+          <td style="color:#ffcf7a;">${formatMoney(l.risk)}</td>
+          <td class="lot-cell">${l.lot.toFixed(2)}</td>
+          <td style="color:#ffb0bc;">${formatMoney(l.actualRisk)}</td>
           <td style="color:#b9ffd7;">${formatMoney(l.profit)}</td>
           <td style="min-width:190px;">${actionHtml}</td>
           <td style="font-weight:900; ${balanceColor}">${newBalText}</td>
@@ -1053,9 +1014,23 @@
     setTimeout(() => { musicBtn.style.transform = ''; }, 150);
   };
 
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  function goTop() {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    const top = document.getElementById('top');
+    if (top) top.scrollIntoView({ block: 'start', behavior: 'instant' });
+  }
+
+  window.addEventListener('DOMContentLoaded', goTop);
+
   window.addEventListener('load', () => {
     init();
     render();
+    goTop();
+    setTimeout(goTop, 80);
     document.addEventListener('click', () => { if (!playing) tryPlay(); }, { once: true });
   });
 </script>
