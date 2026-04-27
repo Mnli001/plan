@@ -1057,11 +1057,84 @@
     }
   }
 
+
+  /* ===== FINAL MOBILE/PAGE SWITCH FIX ===== */
+  #resetPlanBtn { display: none !important; }
+
+  body.is-authenticated #authPanel {
+    display: none !important;
+  }
+
+  body:not(.is-authenticated) #authPanel {
+    display: block !important;
+  }
+
+  body:not(.is-authenticated) .page-title-card,
+  body:not(.is-authenticated) .bottom-nav {
+    display: none !important;
+  }
+
+  body.is-authenticated .page-section {
+    display: none !important;
+  }
+
+  body.is-authenticated[data-page="home"] .page-home,
+  body.is-authenticated[data-page="stats"] .page-stats,
+  body.is-authenticated[data-page="levels"] .page-levels,
+  body.is-authenticated[data-page="history"] .page-history,
+  body.is-authenticated[data-page="leaderboard"] .page-leaderboard {
+    display: grid !important;
+  }
+
+  body.is-authenticated[data-page="home"] .progress-wrap.page-home,
+  body.is-authenticated[data-page="home"] .info-section.page-home,
+  body.is-authenticated[data-page="home"] .quote-section.page-home,
+  body.is-authenticated[data-page="home"] .risk-note.page-home,
+  body.is-authenticated[data-page="home"] .footer.page-home,
+  body.is-authenticated[data-page="levels"] .table-wrapper.page-levels,
+  body.is-authenticated[data-page="history"] .history-panel.page-history,
+  body.is-authenticated[data-page="leaderboard"] .leaderboard-panel.page-leaderboard {
+    display: block !important;
+  }
+
+  .page-title-card {
+    margin: 16px 16px 10px;
+    padding: 16px 18px;
+    border-radius: 26px;
+  }
+
+  .bottom-nav a.active {
+    color: #06120b !important;
+    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00) !important;
+  }
+
+  @media (max-width: 700px) {
+    .bottom-nav {
+      left: 50% !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
+      bottom: 12px !important;
+      width: calc(100vw - 22px);
+      justify-content: center;
+      overflow-x: auto;
+    }
+
+    .bottom-nav a {
+      white-space: nowrap;
+      padding: 9px 9px !important;
+      font-size: 10.5px !important;
+    }
+
+    .page-title-card {
+      margin: 12px 12px 10px;
+      padding: 14px 16px;
+      border-radius: 22px;
+    }
+  }
+
 </style>
 </head>
 <body>
-<button class="app-only" id="resetPlanBtn" onclick="resetAllData()" title="All reset">↺ Reset all</button>
-
 <div class="poster">
   <header class="header" id="top">
     <div class="top-pill">XAUUSD · LIQUID GLASS · DISCIPLINE MODE</div>
@@ -1961,7 +2034,7 @@
       auth.onAuthStateChanged(async (user) => {
         currentUser = user;
         updateAuthUI(user);
-        if (user) { await loadCloudData(); await saveLeaderboardStats(); loadLeaderboard(); }
+        if (user) { await loadCloudData(); await saveLeaderboardStats(); showPage('home'); }
       });
     } catch (error) {
       console.warn('Firebase init error:', error);
