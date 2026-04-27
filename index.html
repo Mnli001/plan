@@ -1133,55 +1133,6 @@
   }
 
 
-  /* ===== HOME LOGOUT BUTTON ===== */
-  .profile-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .home-logout-btn {
-    height: 44px;
-    padding: 0 18px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.22);
-    cursor: pointer;
-    color: #06120b;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 900;
-    letter-spacing: .5px;
-    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
-    box-shadow: 0 14px 34px rgba(255,215,0,0.16), inset 0 1px 0 rgba(255,255,255,0.28);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    transition: .2s ease;
-  }
-
-  .home-logout-btn:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.08);
-  }
-
-  .home-logout-section {
-    padding: 0 16px 12px;
-  }
-
-  .home-logout-section .home-logout-btn {
-    width: 100%;
-  }
-
-  @media (max-width: 700px) {
-    .profile-actions {
-      justify-content: flex-start;
-    }
-
-    .home-logout-btn {
-      width: 100%;
-    }
-  }
-
 
   /* ===== FIX: HIDE LEVEL TITLE ON LOGIN ===== */
   body:not(.is-authenticated) .current-level-title {
@@ -1348,6 +1299,127 @@
     }
   }
 
+
+  /* ===== FIXED PROFILE LAYOUT + BALANCE CHANGE ===== */
+  .profile-wrap {
+    padding: 16px 16px 12px !important;
+  }
+
+  .profile-card {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 16px !important;
+    min-height: 118px !important;
+    padding: 18px 20px !important;
+    border-radius: 30px !important;
+  }
+
+  .profile-info {
+    min-width: 0;
+  }
+
+  .profile-name {
+    margin-top: 4px;
+    color: var(--gold-soft, #ffe98a) !important;
+    font-family: 'Cinzel', serif !important;
+    font-size: clamp(22px, 4vw, 32px) !important;
+    font-weight: 900 !important;
+    line-height: 1.05 !important;
+    overflow-wrap: anywhere;
+  }
+
+  .profile-meta {
+    margin-top: 8px !important;
+    color: rgba(255,249,215,0.70) !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    line-height: 1.35 !important;
+    overflow-wrap: anywhere;
+  }
+
+  .profile-side {
+    display: grid;
+    justify-items: end;
+    gap: 10px;
+    min-width: 210px;
+  }
+
+  .profile-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .profile-action-btn {
+    height: 42px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.22);
+    cursor: pointer;
+    color: #06120b;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .4px;
+    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
+    box-shadow: 0 12px 30px rgba(255,215,0,0.14), inset 0 1px 0 rgba(255,255,255,0.28);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: .2s ease;
+    white-space: nowrap;
+  }
+
+  .profile-action-btn.secondary {
+    color: #fff2a8;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .profile-action-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+
+  @media (max-width: 700px) {
+    .profile-wrap {
+      padding: 12px 12px 10px !important;
+    }
+
+    .profile-card {
+      grid-template-columns: 1fr !important;
+      gap: 14px !important;
+      padding: 17px !important;
+      min-height: auto !important;
+      border-radius: 26px !important;
+    }
+
+    .profile-side {
+      min-width: 0;
+      width: 100%;
+      justify-items: stretch;
+    }
+
+    .profile-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+    }
+
+    .profile-action-btn {
+      width: 100%;
+      padding: 0 10px;
+      font-size: 12.5px;
+    }
+
+    .phase-badge {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1417,16 +1489,20 @@
     </div>
   </section>
 
-  <section id="profileSection">
+  <section class="profile-wrap app-only page-section page-home" id="profileSection">
     <div class="profile-card glass-card">
-      <div>
+      <div class="profile-info">
         <div class="auth-kicker">TRADER PROFILE</div>
         <div class="profile-name" id="profileName">Guest Trader</div>
         <div class="profile-meta" id="profileMeta">Challenge эхлэхэд бэлэн</div>
       </div>
-      <div class="profile-actions">
+
+      <div class="profile-side">
         <div class="phase-badge" id="phaseBadge">Phase 1</div>
-        <button class="home-logout-btn" id="homeLogoutBtn" onclick="logoutUser()">Гарах</button>
+        <div class="profile-actions">
+          <button class="profile-action-btn secondary" onclick="changeStartBalance()">Balance солих</button>
+          <button class="profile-action-btn" id="homeLogoutBtn" onclick="logoutUser()">Гарах</button>
+        </div>
       </div>
     </div>
   </section>
@@ -2470,22 +2546,35 @@
     showPage('home');
   };
 
-
   window.changeStartBalance = function() {
-    const raw = prompt('Шинэ эхлэх balance оруулна уу:', String(START));
+    if (!currentUser) {
+      alert('Эхлээд нэвтэрнэ үү.');
+      return;
+    }
+
+    const raw = prompt('Шинэ эхлэх balance оруулна уу:', START > 0 ? String(START) : '');
     if (raw === null) return;
+
     const value = Number(raw);
     if (!Number.isFinite(value) || value <= 0) {
       alert('Зөв balance оруулна уу.');
       return;
     }
-    const ok = confirm('Эхлэх balance солиход progress/history reset болно. Үргэлжлүүлэх үү?');
+
+    const ok = confirm('Balance солиход current progress болон history reset болно. Үргэлжлүүлэх үү?');
     if (!ok) return;
+
     setStartBalance(value, true);
     saveProgress();
     render();
-    if (typeof saveLeaderboardStats === 'function') saveLeaderboardStats();
+
+    if (typeof saveLeaderboardStats === 'function') {
+      saveLeaderboardStats();
+    }
+
+    showPage('home');
   };
+
 
 
   window.logoutUser = async function() {
