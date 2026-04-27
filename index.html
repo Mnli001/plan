@@ -3,75 +3,57 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-<title>$50 → $1,000 · Glass Liquid Trading Plan</title>
+<title>$50 → $1,000 · XAUUSD Liquid Challenge</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --bg: #050608;
-    --glass: rgba(255, 255, 255, 0.075);
-    --glass-strong: rgba(255, 255, 255, 0.12);
-    --stroke: rgba(255, 215, 0, 0.24);
-    --stroke-strong: rgba(255, 215, 0, 0.55);
     --gold: #ffd700;
-    --gold-soft: #ffe98a;
-    --gold-dark: #936200;
+    --gold-soft: #fff0a8;
     --green: #00f5a0;
     --red: #ff5d73;
     --blue: #7dd3fc;
-    --purple: #c084fc;
     --text: #fff9d7;
-    --muted: rgba(255, 249, 215, 0.68);
-    --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+    --muted: rgba(255, 249, 215, 0.66);
+    --glass: rgba(255,255,255,0.10);
+    --stroke: rgba(255,255,255,0.18);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
     min-height: 100vh;
     font-family: 'Rajdhani', sans-serif;
     color: var(--text);
-    padding: 18px 10px 88px;
+    padding: 18px 10px 96px;
     background:
-      radial-gradient(circle at 15% 10%, rgba(255, 215, 0, 0.18), transparent 28%),
-      radial-gradient(circle at 82% 18%, rgba(0, 245, 160, 0.12), transparent 24%),
-      radial-gradient(circle at 52% 88%, rgba(192, 132, 252, 0.13), transparent 30%),
-      linear-gradient(140deg, #020203 0%, #080607 45%, #0d0a02 100%);
+      linear-gradient(180deg, rgba(255,255,255,0.10), transparent 18%),
+      radial-gradient(circle at 18% 8%, rgba(255, 230, 120, 0.26), transparent 28%),
+      radial-gradient(circle at 82% 16%, rgba(120, 255, 214, 0.18), transparent 25%),
+      radial-gradient(circle at 48% 82%, rgba(140, 120, 255, 0.18), transparent 32%),
+      linear-gradient(145deg, #0b0d0c 0%, #10130f 45%, #080909 100%);
     overflow-x: hidden;
   }
 
-  body::before,
-  body::after {
+  body::before, body::after {
     content: '';
     position: fixed;
-    inset: auto;
-    width: 360px;
-    height: 360px;
+    width: 380px;
+    height: 380px;
     border-radius: 50%;
-    filter: blur(28px);
-    opacity: 0.23;
+    filter: blur(36px);
+    opacity: .22;
     pointer-events: none;
     z-index: 0;
-    animation: floatOrb 12s ease-in-out infinite alternate;
+    animation: orb 12s ease-in-out infinite alternate;
   }
 
-  body::before {
-    left: -120px;
-    top: 80px;
-    background: radial-gradient(circle, #ffd700, transparent 68%);
-  }
+  body::before { left: -140px; top: 70px; background: radial-gradient(circle, #ffd700, transparent 68%); }
+  body::after { right: -150px; bottom: 70px; background: radial-gradient(circle, #00f5a0, transparent 68%); animation-delay: -4s; }
 
-  body::after {
-    right: -140px;
-    bottom: 80px;
-    background: radial-gradient(circle, #00f5a0, transparent 68%);
-    animation-delay: -4s;
-  }
-
-  @keyframes floatOrb {
-    from { transform: translate3d(0, 0, 0) scale(1); }
-    to { transform: translate3d(30px, -24px, 0) scale(1.08); }
+  @keyframes orb {
+    from { transform: translate3d(0,0,0) scale(1); }
+    to { transform: translate3d(30px,-24px,0) scale(1.08); }
   }
 
   .poster {
@@ -80,14 +62,17 @@
     max-width: 1180px;
     margin: 0 auto;
     overflow: hidden;
-    border-radius: 34px;
+    border-radius: 38px;
     background:
-      linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.035)),
+      linear-gradient(145deg, rgba(255,255,255,0.18), rgba(255,255,255,0.045) 48%, rgba(255,255,255,0.08)),
       radial-gradient(circle at 50% -10%, rgba(255, 215, 0, 0.18), transparent 38%);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.05);
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(255,255,255,0.20);
+    box-shadow:
+      0 34px 90px rgba(0,0,0,0.55),
+      inset 0 1px 0 rgba(255,255,255,0.34),
+      inset 0 -1px 0 rgba(255,255,255,0.07);
+    backdrop-filter: blur(30px) saturate(1.55);
+    -webkit-backdrop-filter: blur(30px) saturate(1.55);
   }
 
   .poster::before {
@@ -101,30 +86,32 @@
     mix-blend-mode: screen;
   }
 
+  section, header, footer { position: relative; z-index: 1; }
+
   .header {
-    position: relative;
     text-align: center;
     padding: 42px 22px 26px;
-    border-bottom: 1px solid rgba(255, 215, 0, 0.16);
+    border-bottom: 1px solid rgba(255,215,0,0.16);
   }
 
   .top-pill {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 7px 16px;
+    padding: 8px 16px;
     border-radius: 999px;
     color: var(--gold-soft);
-    background: rgba(255, 215, 0, 0.08);
-    border: 1px solid rgba(255, 215, 0, 0.22);
-    box-shadow: inset 0 0 18px rgba(255, 215, 0, 0.08);
+    background: rgba(255,215,0,0.08);
+    border: 1px solid rgba(255,215,0,0.22);
+    box-shadow: inset 0 0 18px rgba(255,215,0,0.08);
     font-size: 11px;
-    letter-spacing: 2.6px;
+    letter-spacing: 2.4px;
     text-transform: uppercase;
+    font-weight: 900;
   }
 
   .main-title {
-    margin-top: 12px;
+    margin-top: 14px;
     font-family: 'Cinzel', serif;
     font-size: clamp(46px, 11vw, 92px);
     font-weight: 900;
@@ -133,13 +120,12 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 32px rgba(255, 215, 0, 0.2);
   }
 
   .plan-title {
     margin: 14px auto 18px;
-    max-width: 820px;
-    color: rgba(255, 249, 215, 0.84);
+    max-width: 860px;
+    color: rgba(255,249,215,0.84);
     font-family: 'Cinzel', serif;
     font-size: clamp(13px, 3.5vw, 18px);
     letter-spacing: 2px;
@@ -154,51 +140,104 @@
   }
 
   .badge {
-    position: relative;
-    overflow: hidden;
     border-radius: 999px;
     padding: 8px 15px;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 800;
     color: #fff4b8;
     background: linear-gradient(135deg, rgba(255,255,255,0.11), rgba(255,255,255,0.04));
-    border: 1px solid rgba(255, 215, 0, 0.28);
+    border: 1px solid rgba(255,215,0,0.28);
     box-shadow: inset 0 0 18px rgba(255,255,255,0.04);
   }
 
+  .glass-card {
+    border-radius: 30px;
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.17), rgba(255,255,255,0.045)),
+      radial-gradient(circle at 10% 0%, rgba(255,215,0,0.12), transparent 38%);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow:
+      0 20px 54px rgba(0,0,0,0.28),
+      inset 0 1px 0 rgba(255,255,255,0.25),
+      inset 0 -1px 0 rgba(255,255,255,0.06);
+    backdrop-filter: blur(26px) saturate(1.45);
+    -webkit-backdrop-filter: blur(26px) saturate(1.45);
+  }
+
+  .auth-panel, .dashboard, .progress-wrap, .pro-stats, .smart-grid, .table-wrapper, .info-section, .profile-wrap {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .auth-panel { padding-top: 16px; padding-bottom: 8px; }
+  .auth-glass { padding: 16px; }
+  .auth-head { display: flex; justify-content: space-between; gap: 14px; align-items: center; margin-bottom: 12px; }
+  .auth-kicker { color: rgba(255,249,215,0.58); font-size: 10px; font-weight: 900; letter-spacing: 2px; }
+  .auth-title { margin-top: 3px; color: #fff0a8; font-family: 'Cinzel', serif; font-size: 15px; font-weight: 900; letter-spacing: 1px; }
+
+  .auth-forms, .journal-form {
+    display: grid;
+    gap: 10px;
+  }
+
+  .auth-forms { grid-template-columns: 1fr 1fr 1fr auto; align-items: center; }
+
+  .auth-input, .journal-textarea {
+    width: 100%;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18);
+    outline: none;
+    color: #fff9d7;
+    background: rgba(0,0,0,0.22);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.09);
+  }
+
+  .auth-input { height: 44px; padding: 0 14px; }
+  .auth-input::placeholder, .journal-textarea::placeholder { color: rgba(255,249,215,0.42); }
+  .auth-input:focus, .journal-textarea:focus { border-color: rgba(255,215,0,0.48); box-shadow: 0 0 0 3px rgba(255,215,0,0.08); }
+
+  .auth-actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+  .auth-btn, .auth-ghost, .soft-btn, .btn-sm {
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.20);
+    cursor: pointer;
+    color: #fff2a8;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 900;
+    letter-spacing: .5px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: .2s ease;
+  }
+
+  .auth-btn, .auth-ghost { height: 44px; padding: 0 16px; }
+  .auth-btn.primary { color: #06120b; background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00); }
+  .auth-btn:hover, .auth-ghost:hover, .soft-btn:hover, .btn-sm:hover { transform: translateY(-2px); filter: brightness(1.08); }
+  .auth-status { margin-top: 10px; color: rgba(255,249,215,0.62); font-size: 12px; font-weight: 700; }
+
   .dashboard {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4,1fr);
     gap: 12px;
-    padding: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
   }
 
   .stat-card {
-    position: relative;
-    min-height: 96px;
-    padding: 15px;
-    border-radius: 24px;
-    background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.035));
-    border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: inset 0 0 24px rgba(255,255,255,0.04);
+    min-height: 104px;
+    padding: 17px;
     overflow: hidden;
-  }
-
-  .stat-card::after {
-    content: '';
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    right: -54px;
-    top: -52px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 215, 0, 0.2), transparent 70%);
   }
 
   .stat-label {
     color: var(--muted);
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 900;
     letter-spacing: 1.2px;
     text-transform: uppercase;
   }
@@ -206,7 +245,7 @@
   .stat-value {
     margin-top: 8px;
     font-family: 'Cinzel', serif;
-    font-size: clamp(22px, 4vw, 34px);
+    font-size: clamp(22px,4vw,34px);
     font-weight: 900;
     color: var(--gold-soft);
   }
@@ -215,98 +254,64 @@
     margin-top: 3px;
     color: rgba(255,255,255,0.58);
     font-size: 11px;
-  }
-
-  .progress-wrap {
-    padding: 0 16px 16px;
-  }
-
-  .progress-card {
-    padding: 16px;
-    border-radius: 24px;
-    background: rgba(0,0,0,0.26);
-    border: 1px solid rgba(255,215,0,0.16);
-  }
-
-  .progress-head {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 10px;
-    color: var(--muted);
-    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 1px;
   }
 
-  .progress-track {
-    position: relative;
-    height: 16px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.07);
-    overflow: hidden;
-    border: 1px solid rgba(255,255,255,0.08);
-  }
+  .progress-wrap { padding-bottom: 16px; }
+  .progress-card { padding: 18px; }
+  .progress-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 10px; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: 1px; }
+  .progress-track { height: 16px; border-radius: 999px; background: rgba(255,255,255,0.07); overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+  .progress-fill { height: 100%; width: 0%; border-radius: inherit; background: linear-gradient(90deg, #00f5a0, #ffd700, #fff2a8); box-shadow: 0 0 24px rgba(255,215,0,0.35); transition: width .45s ease; }
 
-  .progress-fill {
-    height: 100%;
-    width: 0%;
-    border-radius: inherit;
-    background: linear-gradient(90deg, #00f5a0, #ffd700, #fff2a8);
-    box-shadow: 0 0 24px rgba(255,215,0,0.35);
-    transition: width 0.45s ease;
-  }
-
-  .phase-row {
+  .pro-stats {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6,1fr);
     gap: 10px;
-    padding: 0 16px 16px;
+    padding-bottom: 16px;
   }
 
-  .phase {
-    padding: 12px 10px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.055);
-    border: 1px solid rgba(255,255,255,0.11);
-    text-align: center;
-    transition: 0.25s ease;
+  .mini-card { min-height: 82px; padding: 14px; }
+  .mini-card span { display: block; color: rgba(255,249,215,0.58); font-size: 10px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; }
+  .mini-card strong { display: block; margin-top: 8px; color: #fff0a8; font-family: 'Cinzel', serif; font-size: 21px; }
+
+  .smart-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .9fr .9fr;
+    gap: 14px;
+    padding-bottom: 16px;
   }
 
-  .phase.active {
-    transform: translateY(-2px);
-    background: linear-gradient(145deg, rgba(255,215,0,0.16), rgba(255,255,255,0.06));
-    border-color: rgba(255,215,0,0.42);
-    box-shadow: 0 10px 28px rgba(255,215,0,0.12);
-  }
-
-  .phase span {
-    display: block;
-    color: var(--gold-soft);
+  .smart-card { padding: 18px; }
+  .smart-title { color: #fff0a8; font-family: 'Cinzel', serif; font-size: 13px; font-weight: 900; letter-spacing: 1.5px; margin-bottom: 12px; }
+  .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .checklist label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 11px;
+    border-radius: 16px;
+    background: rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,249,215,0.78);
+    font-size: 12px;
     font-weight: 800;
-    font-size: 13px;
   }
+  .checklist input { accent-color: #00f5a0; }
+  .check-meter { margin-top: 12px; height: 10px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; }
+  .check-meter div { width: 0%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #ff5d73, #ffd700, #00f5a0); transition: .25s ease; }
+  .smart-note { margin-top: 10px; color: rgba(255,249,215,0.62); font-size: 12px; line-height: 1.4; font-weight: 700; }
+  .lock-display { display: inline-flex; align-items: center; justify-content: center; min-width: 120px; min-height: 52px; padding: 0 18px; border-radius: 999px; color: #03140d; background: linear-gradient(135deg, #bfffe4, #00f5a0 60%, #007a4d); font-family: 'Cinzel', serif; font-size: 18px; font-weight: 900; }
+  .daily-rule { color: #fff9d7; font-size: 16px; font-weight: 900; line-height: 1.35; min-height: 52px; }
+  .soft-btn { margin-top: 10px; min-height: 38px; padding: 0 14px; }
 
-  .phase small {
-    display: block;
-    margin-top: 3px;
-    color: var(--muted);
-    font-size: 10px;
-  }
+  .profile-wrap { padding-bottom: 16px; }
+  .profile-card { padding: 18px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+  .profile-name { font-family: 'Cinzel', serif; color: var(--gold-soft); font-size: 18px; font-weight: 900; }
+  .profile-meta { color: var(--muted); font-size: 12px; font-weight: 800; margin-top: 4px; }
+  .phase-badge { border-radius: 999px; padding: 10px 14px; color: #06120b; background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00); font-weight: 900; }
 
-  .table-wrapper {
-    padding: 0 16px 16px;
-    overflow-x: auto;
-  }
-
-  .trading-table {
-    width: 100%;
-    min-width: 920px;
-    border-collapse: separate;
-    border-spacing: 0 9px;
-    font-size: 13px;
-  }
-
+  .table-wrapper { padding-bottom: 16px; overflow-x: auto; border-radius: 30px; }
+  .trading-table { width: 100%; min-width: 850px; border-collapse: separate; border-spacing: 0 9px; font-size: 13px; }
   .trading-table th {
     position: sticky;
     top: 0;
@@ -322,54 +327,41 @@
     border-top: 1px solid rgba(255,215,0,0.18);
     border-bottom: 1px solid rgba(255,215,0,0.18);
   }
-
   .trading-table th:first-child { border-radius: 18px 0 0 18px; border-left: 1px solid rgba(255,215,0,0.18); }
   .trading-table th:last-child { border-radius: 0 18px 18px 0; border-right: 1px solid rgba(255,215,0,0.18); }
 
   .trading-table td {
     padding: 13px 8px;
     text-align: center;
-    font-weight: 700;
-    background: rgba(255,255,255,0.045);
+    font-weight: 800;
+    background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.035));
     border-top: 1px solid rgba(255,255,255,0.08);
     border-bottom: 1px solid rgba(255,255,255,0.08);
-    transition: 0.25s ease;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.13);
+    backdrop-filter: blur(18px) saturate(1.3);
+    -webkit-backdrop-filter: blur(18px) saturate(1.3);
+    transition: .25s ease;
   }
 
-  .trading-table td:first-child {
-    border-left: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px 0 0 20px;
+  .trading-table td:first-child { border-left: 1px solid rgba(255,255,255,0.08); border-radius: 20px 0 0 20px; }
+  .trading-table td:last-child { border-right: 1px solid rgba(255,255,255,0.08); border-radius: 0 20px 20px 0; }
+  .trading-table tr:hover td { transform: translateY(-1px); filter: brightness(1.07); }
+
+  .trading-table tr.tr-taken td {
+    background: linear-gradient(90deg, rgba(0,245,160,0.34), rgba(255,255,255,0.055)) !important;
+    border-top-color: rgba(0,245,160,0.45) !important;
+    border-bottom-color: rgba(0,245,160,0.36) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 0 26px rgba(0,245,160,0.13) !important;
   }
 
-  .trading-table td:last-child {
-    border-right: 1px solid rgba(255,255,255,0.08);
-    border-radius: 0 20px 20px 0;
+  .trading-table tr.tr-loss td {
+    background: linear-gradient(90deg, rgba(255,93,115,0.38), rgba(255,255,255,0.055)) !important;
+    border-top-color: rgba(255,93,115,0.50) !important;
+    border-bottom-color: rgba(255,93,115,0.40) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 0 26px rgba(255,93,115,0.14) !important;
   }
 
-  .trading-table tr:hover td {
-    background: rgba(255,255,255,0.075);
-    transform: translateY(-1px);
-  }
-
-  .tr-taken td {
-    background: linear-gradient(90deg, rgba(0,245,160,0.26), rgba(255,255,255,0.045));
-    border-color: rgba(0,245,160,0.36);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 0 24px rgba(0,245,160,0.08);
-  }
-
-  .tr-loss td {
-    background: linear-gradient(90deg, rgba(255,93,115,0.30), rgba(255,255,255,0.045));
-    border-color: rgba(255,93,115,0.40);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 0 24px rgba(255,93,115,0.09);
-  }
-
-  .tr-goal td {
-    background: linear-gradient(90deg, rgba(255,215,0,0.28), rgba(255,255,255,0.07));
-    border-color: rgba(255,215,0,0.4);
-  }
-
-  .level-chip,
-  .goal-flag {
+  .level-chip, .goal-flag {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -382,62 +374,15 @@
     box-shadow: 0 0 18px rgba(255,215,0,0.2);
   }
 
-  .extra-chip {
-    color: white;
-    background: linear-gradient(135deg, #c084fc, #7c3aed);
-  }
+  .extra-chip { color: #fff; background: linear-gradient(135deg, #c084fc, #7c3aed); }
+  .bal-cell { font-family: 'Cinzel', serif; font-weight: 900; color: var(--gold-soft); }
+  .lot-cell { color: var(--blue); }
+  .action-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
 
-  .bal-cell {
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-    color: var(--gold-soft);
-  }
-
-  .lot-cell {
-    color: var(--blue);
-  }
-
-  .action-group {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 7px;
-  }
-
-  .btn-sm {
-    border: 0;
-    cursor: pointer;
-    border-radius: 999px;
-    padding: 7px 12px;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 800;
-    font-size: 11px;
-    letter-spacing: .4px;
-    color: white;
-    transition: 0.2s ease;
-    border: 1px solid rgba(255,255,255,0.18);
-  }
-
-  .btn-sm:hover {
-    transform: translateY(-2px) scale(1.025);
-    filter: brightness(1.1);
-  }
-
-  .btn-taken {
-    background: linear-gradient(135deg, rgba(0,245,160,0.95), rgba(0,116,78,0.9));
-    box-shadow: 0 8px 22px rgba(0,245,160,0.14);
-  }
-
-  .btn-loss {
-    background: linear-gradient(135deg, rgba(255,93,115,0.95), rgba(111,21,35,0.92));
-    box-shadow: 0 8px 22px rgba(255,93,115,0.14);
-  }
-
-  .btn-reset {
-    color: #fff2a8;
-    background: rgba(255,255,255,0.07);
-    border-color: rgba(255,215,0,0.26);
-  }
+  .btn-sm { padding: 7px 12px; font-size: 11px; color: #fff; }
+  .btn-taken { background: linear-gradient(135deg, rgba(0,245,160,0.95), rgba(0,116,78,0.9)); }
+  .btn-loss { background: linear-gradient(135deg, rgba(255,93,115,0.95), rgba(111,21,35,0.92)); }
+  .btn-reset { color: #fff2a8; background: rgba(255,255,255,0.07); border-color: rgba(255,215,0,0.26); }
 
   .outcome-badge {
     display: inline-block;
@@ -449,333 +394,121 @@
     background: rgba(0,0,0,0.34);
     border: 1px solid rgba(255,255,255,0.12);
   }
-
   .outcome-profit { color: var(--green); }
   .outcome-loss { color: var(--red); }
+  .warning-prev { display: inline-block; color: #ffcf7a; background: rgba(0,0,0,0.36); border: 1px solid rgba(255,207,122,0.18); padding: 7px 10px; border-radius: 999px; font-size: 10px; }
 
-  .warning-prev {
-    display: inline-block;
-    color: #ffcf7a;
-    background: rgba(0,0,0,0.36);
-    border: 1px solid rgba(255,207,122,0.18);
-    padding: 7px 10px;
-    border-radius: 999px;
-    font-size: 10px;
-  }
+  .journal-panel { margin: 0 16px 16px; padding: 18px; }
+  .journal-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .journal-form { grid-template-columns: repeat(4,1fr); }
+  .journal-textarea { grid-column: 1 / -1; min-height: 92px; resize: vertical; padding: 14px; border-radius: 22px; }
+  .journal-list { display: grid; gap: 10px; margin-top: 14px; }
+  .journal-item { padding: 12px; border-radius: 18px; background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,249,215,0.78); font-size: 12px; font-weight: 700; }
+  .journal-item strong { color: #fff0a8; }
 
-  .info-section {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 14px;
-    padding: 0 16px 18px;
-  }
+  .info-section { display: grid; grid-template-columns: 1fr; gap: 14px; padding-bottom: 18px; }
+  .info-card { padding: 18px; }
+  .ic-title { margin-bottom: 13px; color: var(--gold-soft); font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px; }
+  .rules-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+  .rule { padding: 12px; border-radius: 18px; color: rgba(255,249,215,0.84); background: rgba(0,0,0,0.22); border: 1px solid rgba(255,255,255,0.08); font-size: 12px; line-height: 1.35; font-weight: 800; }
 
-  .info-card {
-    position: relative;
-    overflow: hidden;
-    padding: 18px;
-    border-radius: 28px;
-    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.035));
-    border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: inset 0 0 30px rgba(255,255,255,0.035);
-  }
+  .quote-section { margin: 0 16px 16px; padding: 24px 18px; text-align: center; }
+  .quote-text { max-width: 840px; margin: 0 auto; font-size: clamp(17px,4vw,28px); font-weight: 900; line-height: 1.25; }
+  .quote-text em { font-style: normal; background: linear-gradient(180deg, #fff6bd, #ffd700, #a56d00); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .quote-sub { margin-top: 10px; color: var(--muted); font-size: 13px; letter-spacing: 1px; font-weight: 800; }
 
-  .info-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 14% 0%, rgba(255,215,0,0.13), transparent 38%);
-    pointer-events: none;
-  }
+  .risk-note { max-width: 980px; margin: 0 auto 18px; padding: 0 16px; color: rgba(255,249,215,0.62); text-align: center; font-size: 11px; line-height: 1.45; font-weight: 700; }
+  .footer { padding: 18px 14px 22px; text-align: center; border-top: 1px solid rgba(255,215,0,0.16); color: rgba(255,234,160,0.74); font-size: 10px; letter-spacing: 1.4px; font-weight: 900; }
 
-  .ic-title {
-    position: relative;
-    margin-bottom: 13px;
-    color: var(--gold-soft);
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-    letter-spacing: 2px;
-  }
-
-  .rules-grid {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-
-  .rule {
-    padding: 11px 12px;
-    border-radius: 18px;
-    color: rgba(255,249,215,0.84);
-    background: rgba(0,0,0,0.22);
-    border: 1px solid rgba(255,255,255,0.08);
-    font-size: 12px;
-    line-height: 1.35;
-  }
-
-  .patience {
-    position: relative;
-    margin-top: 13px;
-    padding: 12px 14px;
-    border-left: 3px solid var(--gold);
-    border-radius: 16px;
-    color: #ffeaa0;
-    background: rgba(255,215,0,0.07);
-    font-style: italic;
-    font-size: 12px;
-    line-height: 1.45;
-  }
-
-  .calculator-box {
-    position: relative;
-    display: grid;
-    gap: 10px;
-  }
-
-  .calc-line {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 11px 12px;
-    border-radius: 16px;
-    background: rgba(0,0,0,0.24);
-    border: 1px solid rgba(255,255,255,0.08);
-    font-size: 12px;
-  }
-
-  .calc-line strong { color: var(--gold-soft); }
-  .calc-line span:last-child { color: var(--blue); font-weight: 800; text-align: right; }
-
-  .quote-section {
-    margin: 0 16px 16px;
-    padding: 22px 18px;
-    text-align: center;
-    border-radius: 30px;
-    background:
-      linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,255,255,0.04)),
-      radial-gradient(circle at 50% 0%, rgba(255,255,255,0.12), transparent 46%);
-    border: 1px solid rgba(255,215,0,0.22);
-  }
-
-  .quote-text {
-    max-width: 840px;
-    margin: 0 auto;
-    font-size: clamp(17px, 4vw, 28px);
-    font-weight: 900;
-    line-height: 1.25;
-  }
-
-  .quote-text em {
-    font-style: normal;
-    background: linear-gradient(180deg, #fff6bd, #ffd700, #a56d00);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .quote-sub {
-    margin-top: 10px;
-    color: var(--muted);
-    font-size: 13px;
-    letter-spacing: 1px;
-  }
-
-  .values-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    padding: 0 16px 18px;
-  }
-
-  .val-item {
-    padding: 13px 10px;
-    border-radius: 20px;
-    color: #ffeaa0;
-    background: rgba(255,255,255,0.055);
-    border: 1px solid rgba(255,255,255,0.1);
-    text-align: center;
-    font-weight: 800;
-    font-size: 12px;
-  }
-
-  .footer {
-    position: relative;
-    padding: 18px 14px 22px;
-    text-align: center;
-    border-top: 1px solid rgba(255,215,0,0.16);
-    color: rgba(255,234,160,0.74);
-    font-size: 10px;
-    letter-spacing: 1.4px;
-  }
-
-  #musicBtn {
+  #musicBtn, #resetPlanBtn {
     position: fixed;
-    right: 18px;
     bottom: 18px;
     z-index: 999;
-    width: 54px;
-    height: 54px;
-    border-radius: 50%;
     border: 1px solid rgba(255,255,255,0.24);
     cursor: pointer;
-    font-size: 22px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,215,0,0.38));
-    box-shadow: 0 16px 40px rgba(255,215,0,0.25), inset 0 0 18px rgba(255,255,255,0.17);
+    background: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,215,0,0.26));
+    box-shadow: 0 16px 40px rgba(0,0,0,0.25), inset 0 0 18px rgba(255,255,255,0.17);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     transition: .2s ease;
   }
 
-  #resetPlanBtn {
+  #musicBtn { right: 18px; width: 54px; height: 54px; border-radius: 50%; font-size: 22px; }
+  #resetPlanBtn { left: 18px; height: 46px; padding: 0 18px; border-radius: 999px; color: #fff2a8; font-family: 'Rajdhani'; font-weight: 900; letter-spacing: .6px; }
+
+  .milestone-toast {
     position: fixed;
-    left: 18px;
-    bottom: 18px;
-    z-index: 999;
-    height: 46px;
-    padding: 0 18px;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-130px);
+    z-index: 1200;
+    max-width: min(520px, calc(100vw - 28px));
+    padding: 14px 18px;
     border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.22);
-    cursor: pointer;
-    color: #fff2a8;
-    font-family: 'Rajdhani', sans-serif;
+    color: #071109;
+    background: linear-gradient(135deg, #fff6bd, #ffd700, #00f5a0);
+    box-shadow: 0 18px 50px rgba(255,215,0,0.24);
     font-weight: 900;
-    letter-spacing: .6px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,215,0,0.16));
-    box-shadow: 0 16px 38px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.24);
-    backdrop-filter: blur(18px) saturate(1.35);
-    -webkit-backdrop-filter: blur(18px) saturate(1.35);
-    transition: .2s ease;
-  }
-
-  #resetPlanBtn:hover { transform: translateY(-3px) scale(1.03); }
-
-  #musicBtn:hover { transform: translateY(-3px) scale(1.05); }
-
-  .risk-note {
-    max-width: 980px;
-    margin: 0 auto 18px;
-    padding: 0 16px;
-    color: rgba(255,249,215,0.62);
     text-align: center;
-    font-size: 11px;
-    line-height: 1.45;
+    transition: .35s ease;
   }
+  .milestone-toast.show { transform: translateX(-50%) translateY(0); }
 
-  @media (max-width: 900px) {
-    .dashboard { grid-template-columns: repeat(2, 1fr); }
-    .phase-row { grid-template-columns: repeat(2, 1fr); }
-    .info-section { grid-template-columns: 1fr; }
-    .values-row { grid-template-columns: repeat(2, 1fr); }
+  .bottom-nav {
+    position: fixed;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    z-index: 998;
+    display: flex;
+    gap: 4px;
+    padding: 7px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 16px 44px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.24);
+    backdrop-filter: blur(22px) saturate(1.45);
+    -webkit-backdrop-filter: blur(22px) saturate(1.45);
   }
+  .bottom-nav a { color: #fff2a8; text-decoration: none; font-size: 12px; font-weight: 900; padding: 10px 13px; border-radius: 999px; }
+  .bottom-nav a:hover { background: rgba(255,255,255,0.12); }
 
-  @media (max-width: 560px) {
-    body { padding: 10px 6px 78px; }
-    .poster { border-radius: 24px; }
-    .header { padding: 32px 14px 22px; }
-    .dashboard { grid-template-columns: 1fr; padding: 12px; }
-    .phase-row { grid-template-columns: 1fr; padding: 0 12px 12px; }
-    .table-wrapper { padding: 0 12px 12px; }
-    .info-section { padding: 0 12px 14px; }
-    .rules-grid { grid-template-columns: 1fr; }
-    .values-row { grid-template-columns: 1fr; padding: 0 12px 14px; }
-    .quote-section { margin: 0 12px 14px; }
-    .btn-sm { padding: 6px 10px; font-size: 10px; }
-  }
-
-  /* ================= iOS 26 LIQUID GLASS OVERRIDE ================= */
-  body {
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.10), transparent 18%),
-      radial-gradient(circle at 18% 8%, rgba(255, 230, 120, 0.26), transparent 28%),
-      radial-gradient(circle at 82% 16%, rgba(120, 255, 214, 0.18), transparent 25%),
-      radial-gradient(circle at 48% 82%, rgba(140, 120, 255, 0.18), transparent 32%),
-      linear-gradient(145deg, #0b0d0c 0%, #10130f 45%, #080909 100%);
-  }
-
-  .poster,
-  .stat-card,
-  .progress-card,
-  .info-card,
-  .quote-section {
-    border: 1px solid rgba(255,255,255,0.20) !important;
-    background:
-      linear-gradient(145deg, rgba(255,255,255,0.18), rgba(255,255,255,0.045) 48%, rgba(255,255,255,0.08)) !important;
-    box-shadow:
-      0 28px 70px rgba(0,0,0,0.38),
-      inset 0 1px 0 rgba(255,255,255,0.34),
-      inset 0 -1px 0 rgba(255,255,255,0.07) !important;
-    backdrop-filter: blur(30px) saturate(1.55) !important;
-    -webkit-backdrop-filter: blur(30px) saturate(1.55) !important;
-  }
-
-  .poster { border-radius: 38px; }
-  .stat-card, .progress-card, .info-card, .quote-section { border-radius: 30px; }
-
-  .trading-table td {
-    background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.035));
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.13);
-    backdrop-filter: blur(18px) saturate(1.3);
-    -webkit-backdrop-filter: blur(18px) saturate(1.3);
-  }
-
-  /* Desktop дээр Авсан / Алдсан өнгө заавал харагдана */
-  .trading-table tr.tr-taken td {
-    background: linear-gradient(90deg, rgba(0,245,160,0.34), rgba(255,255,255,0.055)) !important;
-    border-top-color: rgba(0,245,160,0.45) !important;
-    border-bottom-color: rgba(0,245,160,0.36) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 0 26px rgba(0,245,160,0.13) !important;
-  }
-
-  .trading-table tr.tr-taken td:first-child {
-    border-left-color: rgba(0,245,160,0.52) !important;
-  }
-
-  .trading-table tr.tr-taken td:last-child {
-    border-right-color: rgba(0,245,160,0.52) !important;
-  }
-
-  .trading-table tr.tr-loss td {
-    background: linear-gradient(90deg, rgba(255,93,115,0.38), rgba(255,255,255,0.055)) !important;
-    border-top-color: rgba(255,93,115,0.50) !important;
-    border-bottom-color: rgba(255,93,115,0.40) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 0 26px rgba(255,93,115,0.14) !important;
-  }
-
-  .trading-table tr.tr-loss td:first-child {
-    border-left-color: rgba(255,93,115,0.58) !important;
-  }
-
-  .trading-table tr.tr-loss td:last-child {
-    border-right-color: rgba(255,93,115,0.58) !important;
+  @media (max-width: 980px) {
+    .dashboard { grid-template-columns: repeat(2,1fr); }
+    .pro-stats { grid-template-columns: repeat(3,1fr); }
+    .smart-grid { grid-template-columns: 1fr; }
+    .rules-grid { grid-template-columns: 1fr 1fr; }
+    .journal-form { grid-template-columns: 1fr 1fr; }
+    .auth-forms { grid-template-columns: 1fr 1fr; }
   }
 
   @media (max-width: 700px) {
-    body { padding: 10px 6px 78px; }
+    body { padding: 10px 6px 92px; }
     .poster { border-radius: 28px; }
     .header { padding: 34px 14px 22px; }
     .top-pill { font-size: 9px; letter-spacing: 1.7px; padding: 7px 12px; }
-    .main-title { font-size: clamp(42px, 14vw, 68px); }
+    .main-title { font-size: clamp(42px,14vw,68px); }
     .plan-title { font-size: 12px; letter-spacing: 1.3px; }
-    .dashboard { grid-template-columns: 1fr; padding: 12px; }
-    .stat-card { min-height: 96px; border-radius: 26px; }
-    .progress-wrap { padding: 0 12px 12px; }
-    .progress-card { border-radius: 26px; }
-    .progress-head { flex-direction: column; gap: 4px; }
 
-    .table-wrapper { padding: 0 12px 24px; overflow: visible; }
-    .trading-table {
-      min-width: 0;
-      width: 100%;
-      border-spacing: 0 22px;
-    }
+    .auth-panel, .dashboard, .progress-wrap, .pro-stats, .smart-grid, .table-wrapper, .info-section, .profile-wrap { padding-left: 12px; padding-right: 12px; }
+    .dashboard, .pro-stats { grid-template-columns: 1fr; }
+    .mini-card { min-height: 76px; border-radius: 22px; }
+    .auth-forms, .journal-form { grid-template-columns: 1fr; }
+    .auth-actions { justify-content: stretch; }
+    .auth-btn { flex: 1; }
+    .progress-head { flex-direction: column; gap: 4px; }
+    .checklist, .rules-grid { grid-template-columns: 1fr; }
+    .profile-card { grid-template-columns: 1fr; }
+
+    .table-wrapper { padding-bottom: 24px; overflow: visible; }
+    .trading-table { min-width: 0; width: 100%; border-spacing: 0 22px; }
     .trading-table thead { display: none; }
     .trading-table, .trading-table tbody, .trading-table tr, .trading-table td { display: block; }
 
     .trading-table tr {
       position: relative;
       padding: 22px 18px;
-      margin-bottom: 22px;
+      margin-bottom: 26px;
       border-radius: 30px;
       background:
         linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.045)),
@@ -793,52 +526,40 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(120deg, rgba(255,255,255,0.20), transparent 34%, rgba(255,255,255,0.05));
+      border-radius: inherit;
+      background: linear-gradient(120deg, rgba(255,255,255,0.16), transparent 36%, rgba(255,255,255,0.04));
       pointer-events: none;
     }
 
     .trading-table tr.tr-taken {
       background:
-        linear-gradient(145deg, rgba(0, 190, 120, 0.18), rgba(255,255,255,0.055)),
-        radial-gradient(circle at 0% 0%, rgba(0, 245, 160, 0.16), transparent 44%) !important;
-      border-color: rgba(0, 245, 160, 0.34) !important;
+        linear-gradient(145deg, rgba(0,245,160,0.20), rgba(255,255,255,0.075) 52%, rgba(255,255,255,0.045)),
+        radial-gradient(circle at 18% 0%, rgba(0,245,160,0.24), transparent 42%) !important;
+      border: 1px solid rgba(0,245,160,0.42) !important;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.24),
+        inset 0 1px 0 rgba(255,255,255,0.26),
+        inset 0 -1px 0 rgba(0,245,160,0.11),
         0 16px 38px rgba(0,0,0,0.24),
-        0 0 18px rgba(0,245,160,0.08) !important;
+        0 0 18px rgba(0,245,160,0.09) !important;
     }
 
     .trading-table tr.tr-loss {
       background:
-        linear-gradient(145deg, rgba(210, 55, 70, 0.20), rgba(255,255,255,0.055)),
-        radial-gradient(circle at 0% 0%, rgba(255, 93, 115, 0.14), transparent 44%) !important;
-      border-color: rgba(255, 93, 115, 0.34) !important;
+        linear-gradient(145deg, rgba(255,93,115,0.20), rgba(255,255,255,0.075) 52%, rgba(255,255,255,0.045)),
+        radial-gradient(circle at 18% 0%, rgba(255,93,115,0.22), transparent 42%) !important;
+      border: 1px solid rgba(255,93,115,0.42) !important;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.24),
+        inset 0 1px 0 rgba(255,255,255,0.26),
+        inset 0 -1px 0 rgba(255,93,115,0.11),
         0 16px 38px rgba(0,0,0,0.24),
-        0 0 18px rgba(255,93,115,0.08) !important;
-    }
-
-    .trading-table tr.tr-taken td,
-    .trading-table tr.tr-loss td {
-      color: inherit;
-    }
-
-    .trading-table tr.tr-taken .level-chip,
-    .trading-table tr.tr-taken .goal-flag {
-      background: linear-gradient(135deg, #bfffe4, #00f5a0 58%, #007a4d);
-      color: #03140d;
-    }
-
-    .trading-table tr.tr-loss .level-chip,
-    .trading-table tr.tr-loss .goal-flag {
-      background: linear-gradient(135deg, #ffd2d9, #ff5d73 58%, #8a1628);
-      color: #1c0307;
+        0 0 18px rgba(255,93,115,0.09) !important;
     }
 
     .trading-table td,
     .trading-table td:first-child,
-    .trading-table td:last-child {
+    .trading-table td:last-child,
+    .trading-table tr.tr-taken td,
+    .trading-table tr.tr-loss td {
       position: relative;
       display: flex;
       justify-content: space-between;
@@ -848,22 +569,21 @@
       min-width: 0 !important;
       text-align: right;
       background: transparent !important;
-      border: 0;
-      border-radius: 0;
-      box-shadow: none;
-      backdrop-filter: none;
-      -webkit-backdrop-filter: none;
-      border-bottom: 1px solid rgba(255,255,255,0.075);
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border-bottom: 1px solid rgba(255,255,255,0.075) !important;
     }
 
-    .trading-table td:last-child { border-bottom: 0; }
-
+    .trading-table td:last-child { border-bottom: 0 !important; }
     .trading-table td::before {
       content: attr(data-label);
       flex: 0 0 auto;
       color: rgba(255,249,215,0.58);
       font-size: 11px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 1px;
       text-transform: uppercase;
       text-align: left;
@@ -873,18 +593,18 @@
       justify-content: center;
       padding-bottom: 14px;
       margin-bottom: 4px;
-      border-bottom-color: rgba(255,215,0,0.18);
+      border-bottom-color: rgba(255,215,0,0.18) !important;
     }
-
     .trading-table td[data-label="#"]::before { display: none; }
     .level-chip, .goal-flag { min-width: 52px; height: 52px; font-size: 18px; }
     .action-group { justify-content: flex-end; gap: 10px; }
-    .btn-sm { padding: 8px 12px; font-size: 11px; }
-    .info-section { grid-template-columns: 1fr; padding: 0 12px 14px; }
-    .rules-grid { grid-template-columns: 1fr; }
-    .quote-section { margin: 0 12px 14px; border-radius: 28px; }
-    #musicBtn { width: 54px; height: 54px; right: 16px; bottom: 16px; }
-    #resetPlanBtn { left: 16px; bottom: 18px; height: 44px; padding: 0 15px; }
+    .journal-panel { margin: 0 12px 16px; border-radius: 26px; }
+    .journal-head { align-items: flex-start; }
+
+    .bottom-nav { bottom: 12px; max-width: calc(100vw - 18px); }
+    .bottom-nav a { padding: 9px 10px; font-size: 11px; }
+    #resetPlanBtn { bottom: 74px; left: 16px; height: 44px; padding: 0 15px; }
+    #musicBtn { bottom: 72px; right: 16px; width: 54px; height: 54px; }
   }
 </style>
 </head>
@@ -895,7 +615,7 @@
 
 <div class="poster">
   <header class="header" id="top">
-    <div class="top-pill">XAUUSD · GLASS LIQUID · DISCIPLINE MODE</div>
+    <div class="top-pill">XAUUSD · LIQUID GLASS · DISCIPLINE MODE</div>
     <h1 class="main-title">$50 → $1,000</h1>
     <div class="plan-title">АЛДАГДЛЫГ ХӨӨХГҮЙ · ЗӨВХӨН ТӨЛӨВЛӨГӨӨГӨӨ ДАГАНА · LOT-ОО ЗӨВ ТООЦООЛНО</div>
     <div class="badges">
@@ -906,31 +626,54 @@
     </div>
   </header>
 
+  <section class="auth-panel" id="authPanel">
+    <div class="auth-glass glass-card">
+      <div class="auth-head">
+        <div>
+          <div class="auth-kicker">ACCOUNT SAVE</div>
+          <div class="auth-title" id="authTitle">Нэвтэрч progress-оо хадгал</div>
+        </div>
+        <button class="auth-ghost" id="logoutBtn" onclick="logoutUser()" style="display:none;">Гарах</button>
+      </div>
+
+      <div class="auth-forms" id="authForms">
+        <input id="nameInput" class="auth-input" type="text" placeholder="Нэр" autocomplete="name" />
+        <input id="emailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
+        <input id="passwordInput" class="auth-input" type="password" placeholder="Code / Password" autocomplete="current-password" />
+        <div class="auth-actions">
+          <button class="auth-btn primary" onclick="loginUser()">Нэвтрэх</button>
+          <button class="auth-btn" onclick="registerUser()">Бүртгүүлэх</button>
+        </div>
+      </div>
+      <div class="auth-status" id="authStatus">Нэвтрээгүй үед progress зөвхөн энэ browser дээр хадгалагдана.</div>
+    </div>
+  </section>
+
   <section class="dashboard">
-    <div class="stat-card">
+    <div class="stat-card glass-card">
       <div class="stat-label">Одоогийн баланс</div>
       <div class="stat-value" id="currentBalance">$50.00</div>
       <div class="stat-note">Сүүлийн сонгосон үр дүнгээр</div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card glass-card">
       <div class="stat-label">Target Progress</div>
       <div class="stat-value" id="progressPercent">5%</div>
       <div class="stat-note">$1,000 хүртэлх зам</div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card glass-card">
       <div class="stat-label">Дараагийн эрсдэл</div>
       <div class="stat-value" id="nextRisk">$10.00</div>
       <div class="stat-note">Балансын 20%</div>
     </div>
-    <div class="stat-card">
+    <div class="stat-card glass-card">
       <div class="stat-label">Одоогийн lot</div>
       <div class="stat-value" id="nextLot">0.01</div>
       <div class="stat-note" id="lotNote">0.01 алхмаар доош тайрна</div>
     </div>
   </section>
 
-  <section class="progress-wrap">
-    <div class="progress-card">
+  <section class="progress-wrap" id="progressSection">
+    <div class="progress-card glass-card">
       <div class="progress-head">
         <span>Өсөлтийн зам: $50 → $1,000</span>
         <span id="progressText">$50.00 / $1,000</span>
@@ -939,7 +682,54 @@
     </div>
   </section>
 
-  <div class="table-wrapper">
+  <section class="profile-wrap" id="profileSection">
+    <div class="profile-card glass-card">
+      <div>
+        <div class="auth-kicker">TRADER PROFILE</div>
+        <div class="profile-name" id="profileName">Guest Trader</div>
+        <div class="profile-meta" id="profileMeta">Challenge эхлэхэд бэлэн · progress localStorage дээр хадгалагдана</div>
+      </div>
+      <div class="phase-badge" id="phaseBadge">Phase 1</div>
+    </div>
+  </section>
+
+  <section class="pro-stats" id="statsSection">
+    <div class="mini-card glass-card"><span>Win</span><strong id="statWins">0</strong></div>
+    <div class="mini-card glass-card"><span>Loss</span><strong id="statLosses">0</strong></div>
+    <div class="mini-card glass-card"><span>Win Rate</span><strong id="statWinRate">0%</strong></div>
+    <div class="mini-card glass-card"><span>Streak</span><strong id="statStreak">—</strong></div>
+    <div class="mini-card glass-card"><span>Best Balance</span><strong id="statBestBalance">$50.00</strong></div>
+    <div class="mini-card glass-card"><span>Discipline</span><strong id="statDiscipline">—</strong></div>
+  </section>
+
+  <section class="smart-grid" id="rulesSection">
+    <div class="smart-card glass-card checklist-card">
+      <div class="smart-title">✅ BEFORE ENTRY CHECKLIST</div>
+      <div class="checklist" id="entryChecklist">
+        <label><input type="checkbox" data-check="trend"> Trend тодорхой</label>
+        <label><input type="checkbox" data-check="setup"> Setup бүрэн</label>
+        <label><input type="checkbox" data-check="rr"> RR 1:2+</label>
+        <label><input type="checkbox" data-check="sl"> SL тодорхой</label>
+        <label><input type="checkbox" data-check="lot"> Lot шалгасан</label>
+      </div>
+      <div class="check-meter"><div id="checkFill"></div></div>
+      <div class="smart-note" id="checkStatus">Checklist бөглөөд entry ав.</div>
+    </div>
+
+    <div class="smart-card glass-card">
+      <div class="smart-title">🧊 REVENGE TRADE LOCK</div>
+      <div class="lock-display" id="revengeLock">Ready</div>
+      <div class="smart-note">Loss дараа шууд арилжаанд орохгүй. Тайван байж дараагийн setup хүлээнэ.</div>
+    </div>
+
+    <div class="smart-card glass-card">
+      <div class="smart-title">🔥 TODAY'S RULE</div>
+      <div class="daily-rule" id="dailyRule">Setup байхгүй бол trade байхгүй.</div>
+      <button class="soft-btn" onclick="newDailyRule()">Өөр rule</button>
+    </div>
+  </section>
+
+  <div class="table-wrapper" id="levelsSection">
     <table class="trading-table" id="tradeTable">
       <thead>
         <tr>
@@ -948,7 +738,6 @@
           <th>SL PIPS</th>
           <th>20% RISK</th>
           <th>LOT</th>
-          
           <th>АШИГ</th>
           <th>ҮР ДҮН</th>
           <th>ШИНЭ БАЛАНС</th>
@@ -958,8 +747,48 @@
     </table>
   </div>
 
+  <section class="journal-panel glass-card" id="journalSection">
+    <div class="journal-head">
+      <div>
+        <div class="auth-kicker">TRADE JOURNAL</div>
+        <div class="auth-title">Арилжаагаа тэмдэглэ</div>
+      </div>
+      <button class="soft-btn" onclick="saveJournalEntry()">Save note</button>
+    </div>
+    <div class="journal-form">
+      <select id="journalSession" class="auth-input">
+        <option value="Asia">Asia session</option>
+        <option value="London">London session</option>
+        <option value="New York">New York session</option>
+        <option value="NY Killzone">NY Killzone</option>
+      </select>
+      <select id="journalSetup" class="auth-input">
+        <option value="Liquidity Sweep">Liquidity Sweep</option>
+        <option value="Breakout">Breakout</option>
+        <option value="Reversal">Reversal</option>
+        <option value="Trend Continuation">Trend Continuation</option>
+      </select>
+      <select id="journalMood" class="auth-input">
+        <option value="Calm">Calm</option>
+        <option value="Confident">Confident</option>
+        <option value="FOMO">FOMO</option>
+        <option value="Revenge">Revenge</option>
+      </select>
+      <select id="journalScore" class="auth-input">
+        <option value="10">Discipline 10/10</option>
+        <option value="9">Discipline 9/10</option>
+        <option value="8">Discipline 8/10</option>
+        <option value="7">Discipline 7/10</option>
+        <option value="6">Discipline 6/10</option>
+        <option value="5">Discipline 5/10</option>
+      </select>
+      <textarea id="journalNote" class="journal-textarea" placeholder="Яагаад орсон, юу сайн/муу болсон, дараа юуг анхаарах вэ?"></textarea>
+    </div>
+    <div class="journal-list" id="journalList"></div>
+  </section>
+
   <section class="info-section">
-    <div class="info-card">
+    <div class="info-card glass-card">
       <div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div>
       <div class="rules-grid">
         <div class="rule">🛡️ Эрсдэл: тухайн үеийн баланс × 20%.</div>
@@ -967,11 +796,10 @@
         <div class="rule">🧮 Lot: 20% risk-д тааруулж бодоод 0.01 алхам руу доош тайрна.</div>
         <div class="rule">🚫 Loss дараа нөхөх гэж орохгүй. Дараагийн setup хүртэл хүлээнэ.</div>
       </div>
-      
     </div>
   </section>
 
-  <section class="quote-section">
+  <section class="quote-section glass-card">
     <div class="quote-text">“Зах зээл чамайг шагнах албагүй. Харин чи <em>дүрмээ хамгаалж</em> чадвал боломж ирэх мөчид бэлэн байна.”</div>
     <div class="quote-sub">Чухал нь хурд биш — дүрмээ эвдэхгүй, lot-оо хэтрүүлэхгүй байх.</div>
   </section>
@@ -983,60 +811,62 @@
   <footer class="footer">⚡ PLAN THE TRADE · CALCULATE THE LOT · EXECUTE WITHOUT EMOTION ⚡</footer>
 </div>
 
+<nav class="bottom-nav">
+  <a href="#top">Home</a>
+  <a href="#statsSection">Stats</a>
+  <a href="#levelsSection">Levels</a>
+  <a href="#rulesSection">Rules</a>
+  <a href="#journalSection">Journal</a>
+</nav>
+
+<div class="milestone-toast" id="milestoneToast"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script>
-  // ======================== TRADING PLAN LOGIC ========================
   const RISK = 0.20;
   const RR = 2;
   const START = 50;
   const TARGET = 1000;
-
-  // XAUUSD example settings. Өөрийн broker-ийн pip value болон SL-д тааруулж өөрчилж болно.
   const STOP_LOSS_PIPS = 100;
-  const PIP_VALUE_PER_1_LOT = 10; // XAUUSD жишээ: 1.00 lot ≈ $10 / pip гэж авч үзэв
+  const PIP_VALUE_PER_1_LOT = 10;
   const MIN_LOT = 0.01;
   const MAX_LOT = 0.30;
 
+  const STORAGE_KEY = 'xauusd_50_to_1000_outcomes_v2';
+  const JOURNAL_KEY = 'xauusd_50_to_1000_journal_v2';
+  const CHECKLIST_KEY = 'xauusd_50_to_1000_checklist_v2';
+  const REVENGE_KEY = 'xauusd_50_to_1000_revenge_v2';
+
+  // Firebase Console → Project settings → Web app config-оо энд солино.
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
   let outcomes = [];
-  const STORAGE_KEY = 'xauusd_50_to_1000_outcomes_v1';
+  let journalEntries = [];
+  let auth = null;
+  let db = null;
+  let currentUser = null;
+  let firebaseReady = false;
+  let lastMilestone = 0;
+  let revengeUntil = Number(localStorage.getItem(REVENGE_KEY) || 0);
 
-  function init() {
-    const saved = loadProgress();
-    if (saved && Array.isArray(saved) && saved.length >= 9) {
-      outcomes = saved;
-    } else {
-      outcomes = new Array(9).fill(null);
-    }
-  }
-
-  function saveProgress() {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(outcomes));
-    } catch (error) {
-      console.warn('Progress хадгалах боломжгүй байна:', error);
-    }
-  }
-
-  function loadProgress() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return null;
-      const parsed = JSON.parse(raw);
-      return parsed;
-    } catch (error) {
-      console.warn('Progress унших боломжгүй байна:', error);
-      return null;
-    }
-  }
-
-  function clearProgress() {
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch (error) {
-      console.warn('Progress устгах боломжгүй байна:', error);
-    }
-    outcomes = new Array(9).fill(null);
-    render();
-  }
+  const RULES = [
+    'Setup байхгүй бол trade байхгүй.',
+    'FOMO бол entry биш, trap.',
+    'Lot буруу бол analysis зөв байсан ч trade буруу.',
+    'Loss дараа revenge биш, review хий.',
+    'Зах зээл боломж өгнө. Чи зөвхөн бэлэн байх ёстой.',
+    'Нэг trade биш, 100 trade-ийн discipline чамайг өсгөнө.',
+    'SL бол дайсан биш. SL бол account хамгаалагч.'
+  ];
 
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
@@ -1047,10 +877,38 @@
   }
 
   function calculateLot(risk, slPips = STOP_LOSS_PIPS, pipValue = PIP_VALUE_PER_1_LOT) {
-    // Lot 0.01 алхамтай гэж үзнэ. 0.014 гарвал 0.01 болгож доош тайрна.
     const rawLot = risk / slPips / pipValue;
     const flooredLot = Math.floor(rawLot * 100) / 100;
     return round2(clamp(flooredLot, MIN_LOT, MAX_LOT));
+  }
+
+  function formatMoney(value) {
+    return `$${Number(value || 0).toFixed(2)}`;
+  }
+
+  function loadJSON(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return fallback;
+      return JSON.parse(raw);
+    } catch (_) {
+      return fallback;
+    }
+  }
+
+  function saveJSON(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.warn('localStorage save error:', error);
+    }
+  }
+
+  function init() {
+    const saved = loadJSON(STORAGE_KEY, null);
+    outcomes = Array.isArray(saved) && saved.length >= 9 ? saved : new Array(9).fill(null);
+    journalEntries = loadJSON(JOURNAL_KEY, []);
+    if (!Array.isArray(journalEntries)) journalEntries = [];
   }
 
   function compute() {
@@ -1074,11 +932,9 @@
         startBalance: startBal,
         risk,
         actualRisk,
-        targetRisk: risk,
         profit,
         lot,
         slPips: STOP_LOSS_PIPS,
-        pipValue: PIP_VALUE_PER_1_LOT,
         outcome,
         newBalance: newBal
       });
@@ -1100,6 +956,26 @@
     while (needMoreLevels()) outcomes.push(null);
   }
 
+  function saveProgress() {
+    saveJSON(STORAGE_KEY, outcomes);
+
+    if (firebaseReady && currentUser && db) {
+      db.collection('users').doc(currentUser.uid).set({
+        name: currentUser.displayName || '',
+        email: currentUser.email || '',
+        challenge: {
+          outcomes,
+          journalEntries,
+          revengeUntil,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }
+      }, { merge: true }).catch((error) => {
+        console.warn('Cloud save error:', error);
+        setAuthStatus('Cloud дээр хадгалахад алдаа гарлаа. Firestore rules/config-оо шалга.');
+      });
+    }
+  }
+
   function setOutcome(idx, type) {
     if (idx < 0 || idx >= outcomes.length) return false;
 
@@ -1109,29 +985,59 @@
     }
 
     outcomes[idx] = type;
-
     if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1);
     while (outcomes.length < 9) outcomes.push(null);
 
     addLevelIfNeeded();
+
+    if (type === 'loss') {
+      revengeUntil = Date.now() + 10 * 60 * 1000;
+      localStorage.setItem(REVENGE_KEY, String(revengeUntil));
+    }
+
     saveProgress();
     render();
+    renderMilestone();
     return true;
   }
 
   function resetOutcome(idx) {
     if (idx < 0 || idx >= outcomes.length) return;
     outcomes[idx] = null;
-
     if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1);
     while (outcomes.length < 9) outcomes.push(null);
-
     saveProgress();
     render();
   }
 
-  function formatMoney(value) {
-    return `$${Number(value).toFixed(2)}`;
+  function clearProgress() {
+    localStorage.removeItem(STORAGE_KEY);
+    outcomes = new Array(9).fill(null);
+    saveProgress();
+    render();
+  }
+
+  function getCompletedLevels() {
+    return compute().levels.filter(l => l.outcome === 'taken' || l.outcome === 'loss');
+  }
+
+  function getLastCompletedLevel() {
+    const completed = getCompletedLevels();
+    return completed.length ? completed[completed.length - 1] : null;
+  }
+
+  function getCurrentLevelNumber() {
+    const openIndex = outcomes.findIndex(o => o === null);
+    return openIndex === -1 ? outcomes.length : openIndex + 1;
+  }
+
+  function getPhase(balance) {
+    if (balance >= 1000) return 'Complete';
+    if (balance >= 700) return 'Phase 5';
+    if (balance >= 400) return 'Phase 4';
+    if (balance >= 200) return 'Phase 3';
+    if (balance >= 100) return 'Phase 2';
+    return 'Phase 1';
   }
 
   function updateDashboard(finalBalance, levels) {
@@ -1144,40 +1050,61 @@
     document.getElementById('progressPercent').textContent = `${progress.toFixed(1)}%`;
     document.getElementById('nextRisk').textContent = formatMoney(nextRisk);
     document.getElementById('nextLot').textContent = nextLot.toFixed(2);
-    document.getElementById('lotNote').textContent = `0.01 lot алхмаар доош тайрсан`;
+    document.getElementById('lotNote').textContent = '0.01 lot алхмаар доош тайрсан';
     document.getElementById('progressText').textContent = `${formatMoney(finalBalance)} / ${formatMoney(TARGET)}`;
     document.getElementById('progressFill').style.width = `${progress}%`;
 
+    const phase = getPhase(finalBalance);
+    document.getElementById('phaseBadge').textContent = phase;
+    document.getElementById('profileMeta').textContent = `${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`;
   }
 
-  function render() {
+  function renderProStats() {
+    const completed = getCompletedLevels();
+    const wins = completed.filter(l => l.outcome === 'taken').length;
+    const losses = completed.filter(l => l.outcome === 'loss').length;
+    const total = wins + losses;
+    const winRate = total ? Math.round((wins / total) * 100) : 0;
+    const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START);
+
+    let streakType = null;
+    let streakCount = 0;
+    for (let i = outcomes.length - 1; i >= 0; i--) {
+      if (!outcomes[i]) continue;
+      if (!streakType) streakType = outcomes[i];
+      if (outcomes[i] === streakType) streakCount++;
+      else break;
+    }
+
+    const scores = journalEntries.map(j => Number(j.score)).filter(n => !Number.isNaN(n));
+    const avgScore = scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '—';
+
+    document.getElementById('statWins').textContent = wins;
+    document.getElementById('statLosses').textContent = losses;
+    document.getElementById('statWinRate').textContent = `${winRate}%`;
+    document.getElementById('statStreak').textContent = streakCount ? `${streakType === 'taken' ? 'W' : 'L'}${streakCount}` : '—';
+    document.getElementById('statBestBalance').textContent = formatMoney(bestBalance);
+    document.getElementById('statDiscipline').textContent = avgScore === '—' ? '—' : `${avgScore}/10`;
+  }
+
+  function renderTable() {
     const { levels, finalBalance } = compute();
     const tbody = document.getElementById('tableBody');
-    if (!tbody) return;
-
     let html = '';
 
     for (let i = 0; i < levels.length; i++) {
       const l = levels[i];
-      let rowClass = 'tr-neutral';
+      let rowClass = '';
       if (l.outcome === 'taken') rowClass = 'tr-taken';
       if (l.outcome === 'loss') rowClass = 'tr-loss';
 
       const isGoal = l.startBalance >= TARGET || (l.newBalance && l.newBalance >= TARGET);
       let levelDisplay = `<span class="level-chip">${i + 1}</span>`;
-
       if (isGoal) {
         levelDisplay = `<span class="goal-flag">🏆 ${i + 1}</span>`;
-        rowClass = 'tr-goal';
       } else if (i >= 9) {
         levelDisplay = `<span class="level-chip extra-chip">+${i + 1}</span>`;
-      } else if (i === 8) {
-        levelDisplay = `<span class="goal-flag">★ ${i + 1}</span>`;
       }
-
-      let newBalText = '—';
-      if (l.outcome === 'taken') newBalText = formatMoney(l.newBalance);
-      if (l.outcome === 'loss') newBalText = formatMoney(l.newBalance);
 
       const prevNull = i > 0 && outcomes[i - 1] === null;
       let actionHtml = '';
@@ -1206,6 +1133,7 @@
           </div>`;
       }
 
+      const newBalText = l.outcome ? formatMoney(l.newBalance) : '—';
       const balanceColor = l.outcome === 'taken' ? 'color: var(--green);' : (l.outcome === 'loss' ? 'color: #ffb0bc;' : 'color: rgba(255,255,255,0.55);');
 
       html += `
@@ -1223,11 +1151,6 @@
 
     tbody.innerHTML = html;
     updateDashboard(finalBalance, levels);
-
-    document.querySelectorAll('.btn-taken, .btn-loss, .btn-reset').forEach(btn => {
-      btn.removeEventListener('click', handleClick);
-      btn.addEventListener('click', handleClick);
-    });
   }
 
   function handleClick(e) {
@@ -1241,7 +1164,299 @@
     if (action === 'reset') resetOutcome(level);
   }
 
-  // ======================== MUSIC ========================
+  function bindButtons() {
+    document.querySelectorAll('.btn-taken, .btn-loss, .btn-reset').forEach(btn => {
+      btn.removeEventListener('click', handleClick);
+      btn.addEventListener('click', handleClick);
+    });
+  }
+
+  function initChecklist() {
+    const saved = loadJSON(CHECKLIST_KEY, {});
+    document.querySelectorAll('#entryChecklist input').forEach(input => {
+      input.checked = !!saved[input.dataset.check];
+      input.addEventListener('change', updateChecklist);
+    });
+    updateChecklist();
+  }
+
+  function updateChecklist() {
+    const inputs = Array.from(document.querySelectorAll('#entryChecklist input'));
+    const saved = {};
+    const checked = inputs.filter(i => i.checked).length;
+    inputs.forEach(i => { saved[i.dataset.check] = i.checked; });
+    saveJSON(CHECKLIST_KEY, saved);
+
+    const percent = inputs.length ? Math.round((checked / inputs.length) * 100) : 0;
+    document.getElementById('checkFill').style.width = `${percent}%`;
+    document.getElementById('checkStatus').textContent =
+      percent === 100 ? 'Бэлэн. Одоо зөвхөн plan дагуу execute.' : `${checked}/${inputs.length} checklist бөглөгдсөн.`;
+  }
+
+  function renderJournalList() {
+    const box = document.getElementById('journalList');
+    const recent = journalEntries.slice(-5).reverse();
+
+    if (!recent.length) {
+      box.innerHTML = '<div class="journal-item">Одоогоор journal note байхгүй.</div>';
+      return;
+    }
+
+    box.innerHTML = recent.map(j => `
+      <div class="journal-item">
+        <strong>Level ${j.level} · ${j.session} · ${j.setup}</strong><br>
+        Mood: ${j.mood} · Discipline: ${j.score}/10 · ${j.date}<br>
+        ${j.note ? j.note : 'Note бичээгүй.'}
+      </div>
+    `).join('');
+  }
+
+  function renderMilestone() {
+    const finalBalance = compute().finalBalance;
+    const milestones = [100, 200, 500, 700, 1000];
+    const hit = milestones.filter(m => finalBalance >= m).pop() || 0;
+
+    if (hit && hit > lastMilestone) {
+      lastMilestone = hit;
+      showMilestone(hit >= 1000 ? '🏆 Challenge complete: $1,000 reached!' : `🔥 Milestone reached: $${hit}`);
+    }
+  }
+
+  function showMilestone(message) {
+    const toast = document.getElementById('milestoneToast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3200);
+  }
+
+  function updateRevengeLock() {
+    const el = document.getElementById('revengeLock');
+    const left = revengeUntil - Date.now();
+
+    if (left <= 0) {
+      el.textContent = 'Ready';
+      el.style.background = 'linear-gradient(135deg, #bfffe4, #00f5a0 60%, #007a4d)';
+      return;
+    }
+
+    const min = Math.floor(left / 60000);
+    const sec = Math.floor((left % 60000) / 1000);
+    el.textContent = `${min}:${String(sec).padStart(2, '0')}`;
+    el.style.background = 'linear-gradient(135deg, #ffd2d9, #ff5d73 58%, #8a1628)';
+  }
+
+  function renderProfile() {
+    const name = currentUser?.displayName || 'Guest Trader';
+    const email = currentUser?.email || 'local browser mode';
+    document.getElementById('profileName').textContent = name;
+    const { finalBalance } = compute();
+    document.getElementById('profileMeta').textContent = `${email} · ${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`;
+  }
+
+  function render() {
+    renderTable();
+    bindButtons();
+    renderProStats();
+    renderJournalList();
+    updateRevengeLock();
+    renderProfile();
+  }
+
+  window.saveJournalEntry = function() {
+    const note = document.getElementById('journalNote').value.trim();
+    const session = document.getElementById('journalSession').value;
+    const setup = document.getElementById('journalSetup').value;
+    const mood = document.getElementById('journalMood').value;
+    const score = document.getElementById('journalScore').value;
+    const last = getLastCompletedLevel();
+
+    journalEntries.push({
+      level: last ? last.idx + 1 : getCurrentLevelNumber(),
+      outcome: last ? last.outcome : 'planned',
+      session,
+      setup,
+      mood,
+      score,
+      note,
+      date: new Date().toLocaleString()
+    });
+
+    document.getElementById('journalNote').value = '';
+    saveJSON(JOURNAL_KEY, journalEntries);
+    saveProgress();
+    render();
+  };
+
+  window.newDailyRule = function() {
+    const el = document.getElementById('dailyRule');
+    const current = el.textContent;
+    let next = current;
+    while (next === current && RULES.length > 1) {
+      next = RULES[Math.floor(Math.random() * RULES.length)];
+    }
+    el.textContent = next;
+  };
+
+  window.resetPlanProgress = function() {
+    const ok = confirm('Бүх level-ийн сонголтыг reset хийх үү? Journal note хэвээр үлдэнэ.');
+    if (!ok) return;
+    clearProgress();
+    goTop();
+  };
+
+  function setAuthStatus(message) {
+    const el = document.getElementById('authStatus');
+    if (el) el.textContent = message;
+  }
+
+  function updateAuthUI(user) {
+    const title = document.getElementById('authTitle');
+    const forms = document.getElementById('authForms');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    if (user) {
+      title.textContent = `${user.displayName || 'Trader'} · progress хадгалагдаж байна`;
+      forms.style.display = 'none';
+      logoutBtn.style.display = 'inline-flex';
+      setAuthStatus(`Нэвтэрсэн: ${user.email}`);
+    } else {
+      title.textContent = 'Нэвтэрч progress-оо хадгал';
+      forms.style.display = 'grid';
+      logoutBtn.style.display = 'none';
+      setAuthStatus('Нэвтрээгүй үед progress зөвхөн энэ browser дээр хадгалагдана.');
+    }
+
+    renderProfile();
+  }
+
+  function getAuthInputs() {
+    return {
+      name: document.getElementById('nameInput').value.trim(),
+      email: document.getElementById('emailInput').value.trim(),
+      password: document.getElementById('passwordInput').value.trim()
+    };
+  }
+
+  function initFirebase() {
+    try {
+      const hasConfig = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes('YOUR_');
+      if (!hasConfig || typeof firebase === 'undefined') {
+        setAuthStatus('Firebase config оруулаагүй байна. Одоогоор progress localStorage дээр хадгалагдана.');
+        return;
+      }
+
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+      auth = firebase.auth();
+      db = firebase.firestore();
+      firebaseReady = true;
+
+      auth.onAuthStateChanged(async (user) => {
+        currentUser = user;
+        updateAuthUI(user);
+        if (user) await loadCloudData();
+      });
+    } catch (error) {
+      console.warn('Firebase init error:', error);
+      setAuthStatus('Firebase эхлүүлэхэд алдаа гарлаа. Config-оо шалгаарай.');
+    }
+  }
+
+  async function loadCloudData() {
+    if (!firebaseReady || !currentUser || !db) return;
+
+    try {
+      const snap = await db.collection('users').doc(currentUser.uid).get();
+      const data = snap.exists ? snap.data() : null;
+      const challenge = data?.challenge || {};
+
+      if (Array.isArray(challenge.outcomes) && challenge.outcomes.length >= 9) {
+        outcomes = challenge.outcomes;
+        saveJSON(STORAGE_KEY, outcomes);
+        addLevelIfNeeded();
+      }
+
+      if (Array.isArray(challenge.journalEntries)) {
+        journalEntries = challenge.journalEntries;
+        saveJSON(JOURNAL_KEY, journalEntries);
+      }
+
+      if (challenge.revengeUntil) {
+        revengeUntil = Number(challenge.revengeUntil);
+        localStorage.setItem(REVENGE_KEY, String(revengeUntil));
+      }
+
+      setAuthStatus('Cloud progress ачааллаа. Энэ account дээр хадгалагдана.');
+      render();
+    } catch (error) {
+      console.warn('Cloud load error:', error);
+      setAuthStatus('Cloud progress уншихад алдаа гарлаа. Firestore rules/config-оо шалга.');
+    }
+  }
+
+  window.registerUser = async function() {
+    if (!firebaseReady || !auth || !db) {
+      alert('Эхлээд Firebase config-оо зөв оруулна уу.');
+      return;
+    }
+
+    const { name, email, password } = getAuthInputs();
+    if (!name || !email || !password) {
+      alert('Нэр, mail, code/password гурвууланг нь бөглөнө үү.');
+      return;
+    }
+
+    try {
+      const cred = await auth.createUserWithEmailAndPassword(email, password);
+      await cred.user.updateProfile({ displayName: name });
+      currentUser = cred.user;
+      await db.collection('users').doc(cred.user.uid).set({
+        name,
+        email,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        challenge: {
+          outcomes,
+          journalEntries,
+          revengeUntil,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }
+      }, { merge: true });
+      updateAuthUI(cred.user);
+      setAuthStatus('Бүртгэл амжилттай. Progress энэ account дээр хадгалагдлаа.');
+      render();
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  window.loginUser = async function() {
+    if (!firebaseReady || !auth) {
+      alert('Эхлээд Firebase config-оо зөв оруулна уу.');
+      return;
+    }
+
+    const { email, password } = getAuthInputs();
+    if (!email || !password) {
+      alert('Mail болон code/password-оо оруулна уу.');
+      return;
+    }
+
+    try {
+      const cred = await auth.signInWithEmailAndPassword(email, password);
+      currentUser = cred.user;
+      updateAuthUI(cred.user);
+      await loadCloudData();
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  window.logoutUser = async function() {
+    if (!auth) return;
+    await auth.signOut();
+    currentUser = null;
+    updateAuthUI(null);
+  };
+
   const audio = document.getElementById('bgMusic');
   const musicBtn = document.getElementById('musicBtn');
   let playing = false;
@@ -1260,13 +1475,6 @@
       });
   }
 
-  window.resetPlanProgress = function() {
-    const ok = confirm('Бүх level-ийн сонголтыг reset хийх үү?');
-    if (!ok) return;
-    clearProgress();
-    goTop();
-  };
-
   window.toggleMusic = function() {
     if (!audio) return;
 
@@ -1283,9 +1491,6 @@
         musicBtn.textContent = '🔇';
       });
     }
-
-    musicBtn.style.transform = 'scale(1.18)';
-    setTimeout(() => { musicBtn.style.transform = ''; }, 150);
   };
 
   if ('scrollRestoration' in history) {
@@ -1301,8 +1506,12 @@
   window.addEventListener('DOMContentLoaded', goTop);
 
   window.addEventListener('load', () => {
+    initFirebase();
     init();
+    initChecklist();
     render();
+    updateRevengeLock();
+    setInterval(updateRevengeLock, 1000);
     goTop();
     setTimeout(goTop, 80);
     document.addEventListener('click', () => { if (!playing) tryPlay(); }, { once: true });
