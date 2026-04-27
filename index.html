@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>Алтан зам · $50 → $1,000 НӨХӨХ БОНУСТАЙ ТӨЛӨВЛӨГӨӨ</title>
+<title>Алтан зам · $50 → $1,000 · Алдагдал бүр шинэ түвшин</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -11,11 +11,11 @@
     background: #020100;
     font-family: 'Rajdhani', sans-serif;
     color: #FFFDE7;
-    min-height: 100vh;
     padding: 12px 8px;
+    min-height: 100vh;
   }
   .poster {
-    max-width: 920px;
+    max-width: 1100px;
     margin: 0 auto;
     background: linear-gradient(170deg, #0E0B00 0%, #060500 50%, #0A0800 100%);
     border-left: 1.5px solid #B8860B;
@@ -42,7 +42,6 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    line-height: 1;
   }
   .plan-title {
     font-family: 'Cinzel', serif;
@@ -73,7 +72,7 @@
     width: 100%;
     border-collapse: collapse;
     font-size: 12px;
-    min-width: 780px;
+    min-width: 880px;
   }
   .trading-table th {
     font-family: 'Cinzel', serif;
@@ -95,12 +94,12 @@
   .tr-taken { background: rgba(0, 160, 60, 0.28); border-left: 3px solid #00E676; }
   .tr-loss { background: rgba(200, 40, 30, 0.28); border-left: 3px solid #FF5252; }
   .tr-neutral { background: rgba(30, 20, 5, 0.5); }
+  .tr-compound { background: rgba(90,0,110,0.22); border-left: 1px solid #b77cff; }
 
   .action-group {
     display: flex;
     gap: 6px;
     justify-content: center;
-    align-items: center;
     flex-wrap: wrap;
   }
   .btn-sm {
@@ -111,14 +110,13 @@
     border-radius: 30px;
     border: none;
     cursor: pointer;
-    transition: 0.1s linear;
     background: #2C2400;
     color: #FFD966;
     border: 1px solid #B8860B;
   }
   .btn-taken { background: #004d2e; color: #b9f6ca; border-color: #00E676; }
   .btn-loss { background: #5e1e1a; color: #ffb4a2; border-color: #FF5252; }
-  .btn-reset { background: #2a2a2a; color: #FFD966; border-color: #7A5500; font-size: 9px; }
+  .btn-reset { background: #2a2a2a; color: #FFD966; border-color: #7A5500; }
   .btn-sm:hover { transform: scale(1.02); filter: brightness(1.1); }
   .outcome-badge {
     display: inline-block;
@@ -139,16 +137,14 @@
     padding: 2px 8px;
     border-radius: 20px;
     font-weight: 900;
-    display: inline-block;
   }
-  .bonus-tag {
-    background: rgba(255,215,0,0.2);
-    padding: 2px 6px;
-    border-radius: 16px;
-    font-size: 9px;
-    color: #FFD966;
-    display: inline-block;
-    margin-left: 6px;
+  .extra-level-badge {
+    background: #9C27B0;
+    color: white;
+    font-size: 8px;
+    padding: 2px 5px;
+    border-radius: 12px;
+    margin-left: 4px;
   }
   .warning-prev {
     font-size: 9px;
@@ -212,7 +208,7 @@
     cursor: pointer;
     box-shadow: 0 0 12px #ffd700aa;
   }
-  @media (max-width: 650px) {
+  @media (max-width: 700px) {
     .btn-sm { padding: 3px 6px; font-size: 8px; }
     .action-group { gap: 4px; }
   }
@@ -224,20 +220,20 @@
 
 <div class="poster">
   <div class="header">
-    <div class="sub-label">XAUUSD · АЛТАН · LOSS RECOVERY БОНУС</div>
+    <div class="sub-label">XAUUSD · АЛТАН · ДИНАМИК ТҮВШИН</div>
     <div class="main-title">$50 → $1,000</div>
-    <div class="plan-title">НӨХӨХ БОНУСТАЙ ӨСӨЛТИЙН ТӨЛӨВЛӨГӨӨ</div>
+    <div class="plan-title">АЛДАХ БҮРТ ШИНЭ ТҮВШИН НЭМЭГДЭНЭ</div>
     <div class="badges">
       <span class="badge">⚖️ Эрсдэл : Ашиг = 1:2</span>
       <span class="badge">🛡️ 20% эрсдэл / хэлцэл</span>
-      <span class="badge">🏔️ 9 алхам + алдагдлын бонус</span>
+      <span class="badge">🏔️ Алдагдал → нэмэлт түвшин</span>
     </div>
   </div>
 
   <div class="table-wrapper">
     <table class="trading-table" id="tradeTable">
       <thead>
-        <tr><th>#</th><th>БАЛАНС ($)</th><th>LOT</th><th>ЭРСДЭЛ ($)</th><th>АШИГ ($)</th><th>НӨХӨХ БОНУС</th><th>ҮР ДҮН</th><th>ШИНЭ БАЛАНС ($)</th></tr>
+        <tr><th>#</th><th>БАЛАНС ($)</th><th>LOT</th><th>ЭРСДЭЛ ($)</th><th>АШИГ ($)</th><th>НӨХӨХ ЗОРИЛТ</th><th>ҮР ДҮН</th><th>ШИНЭ БАЛАНС ($)</th></tr>
       </thead>
       <tbody id="tableBody"></tbody>
     </table>
@@ -246,204 +242,202 @@
   <div class="divider"><div class="div-line"></div><div class="div-gem"></div><div class="div-line"></div></div>
   <div class="info-section">
     <div class="info-card">
-      <div class="ic-title">⚔️ Арилжааны дүрэм + НӨХӨХ МЕХАНИЗМ</div>
+      <div class="ic-title">⚔️ ХЭРХЭН АЖИЛЛАДАГ ВЭ?</div>
       <div class="rules-grid">
-        <div class="rule">⏱️ Таймфрейм: 5M / 15M</div>
-        <div class="rule">📈 Тренд чиглэл заавал</div>
-        <div class="rule">🛑 SL: 150-250 пункт</div>
-        <div class="rule">⚖️ RR = 1 : 2</div>
-        <div class="rule">📅 Өдөрт max 2 арилжаа</div>
-        <div class="rule">🚫 2 алдалт = зогсох</div>
+        <div class="rule">📌 АЛДАХ БҮРТ: шинэ түвшин нэмэгдэнэ (+1 level)</div>
+        <div class="rule">💰 Алдагдсан дүнг дараагийн түвшний ашигт нэмнэ</div>
+        <div class="rule">🎯 $1,000 хүрэх хүртэл үргэлжилнэ</div>
+        <div class="rule">🔄 "Болиулах" товч нь нэмэлт түвшнүүдийг устгана</div>
       </div>
-      <div class="patience">✨ АЛДАГДСАН ҮЕД: алдагдлын дүн дараагийн түвшний АШИГ дээр нэмэгдэнэ (нөхөх бонус). Ингэснээр алдсан дүнгээ эргүүлэн олох боломжтой.</div>
-    </div>
-    <div class="info-card">
-      <div class="ic-title">📊 Өсөлтийн үе шат + бонусын нөлөө</div>
-      <div class="phases-grid">
-        <div class="phase-item"><div class="phase-dot" style="background:#00E676;"></div><div><span style="color:#00E676;">БҮТЭЭХ ҮЕ</span><br>$50–$100</div></div>
-        <div class="phase-item"><div class="phase-dot" style="background:#2196F3;"></div><div><span style="color:#64B5F6;">ТОГТВОРЖИХ ҮЕ</span><br>$100–$527</div></div>
-        <div class="phase-item"><div class="phase-dot" style="background:#9C27B0;"></div><div><span style="color:#CE93D8;">КОМПАУНДИНГ</span><br>$527–$1,032</div></div>
-        <div class="phase-item"><div class="phase-dot" style="background:#FFD700;"></div><div><span style="color:#FFD700;">★ ЗОРИЛГО</span><br>9-р түвшин $1,000+</div></div>
-      </div>
+      <div class="patience">✨ Жишээ: 9-р түвшинд алдвал 10-р түвшин үүснэ. Алдагдсан мөнгөө нөхөх зорилт нэмэгдэнэ.</div>
     </div>
   </div>
 
   <div class="quote-section">
-    <div class="quote-text">Алдагдал бүр — дараагийн амжилтын <em>шатахуун</em>. Бонус нэмэгдэнэ.</div>
+    <div class="quote-text">Алдагдал бүр — шинэ боломж. <em>Нэмэлт түвшин, нэмэлт зорилт.</em></div>
   </div>
   <div class="values-row">
-    <div class="val-item">🎯 Анхаарал</div><div class="val-item">🧠 Тэвчээр</div>
-    <div class="val-item">🛡️ Эрсдэлийн менежмент</div><div class="val-item">🏆 Алдагдлаа нөхөх тактик</div>
+    <div class="val-item">📈 Тэвчээр</div><div class="val-item">🔁 Дасан зохицох</div>
+    <div class="val-item">🎯 Зорилгод тэмүүлэх</div><div class="val-item">⚡ Алдагдалаас суралцах</div>
   </div>
   <div class="footer">
-    <div>🔥 АЛДАХ БҮРТ НӨХӨХ БОНУС НЭМЭГДЭНЭ → ЗОРИЛГОД ОЙРТНО 🔥</div>
-    <div style="font-size:8px; margin-top:4px;">Сонголтоо өөрчлөх (Болиулах) товч — дараагийн бүх түвшний шийдвэрийг цуцална</div>
+    <div>⚡ АЛДАХ БҮР ДЭЭР ШИНЭ ТҮВШИН НЭМЭГДЭЖ, $1,000 ХҮРТЭЛ ҮРГЭЛЖЛҮҮЛНЭ ⚡</div>
   </div>
 </div>
 
 <script>
-  // ======================== Шинэ Логик: Алдагдлын бонус (дараагийн ашиг дээр нэмэгдэнэ) =========================
-  const TOTAL_LEVELS = 9;
-  const RISK_PERCENT = 0.20;      // 20%
-  const REWARD_RATIO = 2;         // 1:2
+  // ===================== ДИНАМИК ТҮВШИН + АЛДАГДЛЫН НӨХӨЛТ =====================
+  const RISK_PERCENT = 0.20;
+  const REWARD_RATIO = 2;
   const START_BALANCE = 50;
-
-  // outcomes: 'taken', 'loss', null
-  let levelOutcomes = new Array(TOTAL_LEVELS).fill(null);
+  const TARGET_BALANCE = 1000;
   
-  // Алдагдлын бонус хуримтлал: түвшин бүрийн эхэнд хэдэн төгрөгийн бонус нэмэгдсэн бэ?
-  // Энэ массивыг computeSequential-д динамикаар тооцоолно
+  // outcomes: 'taken', 'loss', null (шинэ түвшинд null)
+  let levelOutcomes = [];   // динамик урттай массив
   
-  // Үндсэн тооцоолуур: түвшин бүрийн эхлэх баланс, бонусын хэмжээ, ашиг, эрсдэл гэх мэт
-  function computeFullPlan() {
-    let startBalances = [START_BALANCE];
-    let cumulativeLossBonus = [0]; // i-р түвшинд хэр их бонус (нэмэгдэл ашиг) өгөх
+  // Суурь түвшинг 9-өөр эхлүүлэх (үндсэн план)
+  function initBaseLevels() {
+    levelOutcomes = new Array(9).fill(null);
+    // Хэрэглэгч эхний түвшнийг өөрөө шийднэ, урьдчилсан зүйлгүй.
+  }
+  
+  // Алдагдлын нийт дүнг тооцоолох (одоогийн бүх loss-уудын нийлбэр эрсдэл)
+  function getTotalLossAmountUpTo(indexExclusive) {
+    let totalLoss = 0;
+    for (let i = 0; i < indexExclusive; i++) {
+      if (levelOutcomes[i] === 'loss') {
+        // энэ түвшний эрсдэлийг тооцоолох хэрэгтэй, гэхдээ балансаас хамаардаг. Бид дараагийн функцэд тулгуурлана
+      }
+    }
+    return totalLoss;
+  }
+  
+  // Түвшний өгөгдлийг динамикаар тооцоолох (алдагдал бүрт шинэ түвшин нэмэгдэх)
+  // Энэ функц нь levelOutcomes-ын уртаас хамаарч, 9-с хэтэрсэн нэмэлт түвшинг автомат тооцно.
+  // Алдагдал гаргах бүрт шинэ түвшин нэмэгдэх ёстой. Гэхдээ levelOutcomes-ын урт нь хэрэглэгчийн loss-ийн тооноос хамаарна.
+  // Бид "алдагдал гаргасан тоо" бүрт нэмэлт түвшин нэмэх логоор: levelOutcomes-ын урт = 9 + (lossCount) гэж үзнэ.
+  // Харин loss гаргах үед шинэ түвшин (null) нэмэгдэнэ.
+  function addExtraLevelIfNeeded() {
+    // loss-ийн тоог тоол
+    let lossCount = levelOutcomes.filter(o => o === 'loss').length;
+    let expectedLength = 9 + lossCount;
+    while (levelOutcomes.length < expectedLength) {
+      levelOutcomes.push(null);
+    }
+    // Хэрэв ямар нэг шалтгаанаар урт хэтэрсэн бол таслах (жишээ нь reset хийхэд)
+    if (levelOutcomes.length > expectedLength && expectedLength >= 9) {
+      levelOutcomes = levelOutcomes.slice(0, expectedLength);
+    }
+  }
+  
+  // Түвшин бүрийн дэлгэрэнгүй тооцоолол (динамик, баланс болон хуримтлагдсан bonus-ыг бодно)
+  function computeFullLevels() {
+    addExtraLevelIfNeeded(); // loss тоогоор уртыг синхрончлох
+    const levels = [];
     let currentBalance = START_BALANCE;
-    let pendingBonus = 0;  // дараагийн түвшинд шилжих бонус (өмнөх алдагдлаас үүсэлтэй)
+    let pendingLossDebt = 0;   // өмнөх алдагдлуудын нийлбэр (нөхөх зорилт)
     
-    for (let i = 0; i < TOTAL_LEVELS; i++) {
-      // Энэ түвшний эхлэх баланс
-      let startBal = currentBalance;
-      startBalances[i] = startBal;
+    for (let i = 0; i < levelOutcomes.length; i++) {
+      const startBal = currentBalance;
+      const risk = startBal * RISK_PERCENT;
+      const baseProfit = risk * REWARD_RATIO;
+      // Нөхөх зорилт = өмнөх бүх алдагдлын дүн (pendingLossDebt)
+      const compensationTarget = pendingLossDebt;
+      const totalProfit = baseProfit + compensationTarget;   // нийт боломжит ашиг (нөхөөс орсон)
       
-      // Энэ түвшинд өгөх нийт бонус (өмнөх алдагдлуудаас хуримтлагдсан)
-      let bonusThisLevel = pendingBonus;
-      
-      // Эрсдэл (balance дээр суурилсан)
-      let riskAmount = startBal * RISK_PERCENT;
-      // Үндсэн ашиг (1:2)
-      let baseProfit = riskAmount * REWARD_RATIO;
-      // НИЙТ ашиг = үндсэн ашиг + бонус (алдагдлын нөхөн олговор)
-      let totalProfit = baseProfit + bonusThisLevel;
-      
-      // LOT тооцоо (эрсдэл дээр тулгуурласан, бонус нөлөөлөхгүй)
-      let lotVal = riskAmount / 1000;
+      let lotVal = risk / 1000;
       lotVal = Math.max(0.01, Math.min(0.3, lotVal));
       lotVal = Math.round(lotVal * 100) / 100;
       
       const outcome = levelOutcomes[i];
       let newBalance = null;
-      let nextBonus = 0;  // дараагийн түвшинд шилжих бонус
+      let nextDebt = pendingLossDebt;
       
       if (outcome === 'taken') {
         newBalance = startBal + totalProfit;
-        // Ашиг авсан: хуримтлагдсан бонусыг зарцуулсан, дараагийн түвшинд бонус 0
-        nextBonus = 0;
+        nextDebt = 0;   // ашиг авснаар өрийн үлдэгдэл 0 болно
       } 
       else if (outcome === 'loss') {
-        newBalance = startBal - riskAmount;
-        if (newBalance < 0) newBalance = 0;
-        // АЛДАГДСАН: энэ түвшний алдагдлын дүнг (riskAmount) дараагийн түвшний бонус дээр НЭМЭХ (шинэ зүйл нэмэгдэнэ)
-        nextBonus = pendingBonus + riskAmount;   // хуучин бонус + шинэ алдагдлын дүн
+        newBalance = Math.max(0, startBal - risk);
+        // Алдагдсан дүнг нэмэх (шинэ зүйл доор нэмэгдэнэ)
+        nextDebt = pendingLossDebt + risk;
+        // Энд алдагдал гарсан тул дараагийн түвшин нэмэгдэх ёстой -> addExtraLevelIfNeeded дараа дуудагдана
       } 
-      else { // null (шийдээгүй)
+      else { // null
         newBalance = null;
-        nextBonus = pendingBonus;  // бонус хэвээр үлдэнэ, гэхдээ баланс өөрчлөгдөхгүй
+        nextDebt = pendingLossDebt;
       }
       
-      // Хадгалах өгөгдөл
-      cumulativeLossBonus[i] = bonusThisLevel;
-      
-      // Дараагийн давталтад зориулж
-      if (outcome === 'taken' || outcome === 'loss') {
-        currentBalance = newBalance;
-        pendingBonus = nextBonus;
-      } else {
-        // шийдээгүй бол balance өөрчлөгдөхгүй, гэхдээ pendingBonus хэвээр (дараагийн түвшинд нөлөөлөхгүй, учир нь тэр түвшин null үед тооцоолол хийхдээ pendingBonus ашиглана)
-        // pendingBonus хадгална
-        pendingBonus = nextBonus;
-      }
-    }
-    
-    // Өгөгдлийн массив үүсгэх
-    let levels = [];
-    let tmpBalance = START_BALANCE;
-    let tmpBonus = 0;
-    for (let i = 0; i < TOTAL_LEVELS; i++) {
-      const startBal = (i === 0 ? START_BALANCE : (levels[i-1]?.newBalanceAfter ?? START_BALANCE));
-      // Илүү зөв арга: compute дээр хадгалсан утгаар давтах
-    }
-    // Дахин бодож гаргах
-    let bal = START_BALANCE;
-    let bonusAcc = 0;
-    for (let i = 0; i < TOTAL_LEVELS; i++) {
-      const risk = bal * RISK_PERCENT;
-      const baseProfit = risk * REWARD_RATIO;
-      const totalProfit = baseProfit + bonusAcc;
-      const lotVal2 = Math.max(0.01, Math.round((risk/1000)*100)/100);
-      const outcome = levelOutcomes[i];
-      let newBal = null;
-      let nextBonus = bonusAcc;
-      if (outcome === 'taken') {
-        newBal = bal + totalProfit;
-        nextBonus = 0;
-      } else if (outcome === 'loss') {
-        newBal = Math.max(0, bal - risk);
-        nextBonus = bonusAcc + risk;   // <<< алдагдлын дүнг дараагийн бонус дээр нэмэх (ШИНЭ ЗҮЙЛ)
-      } else {
-        newBal = null;
-        nextBonus = bonusAcc;
-      }
       levels.push({
         idx: i,
-        startBalance: bal,
+        startBalance: startBal,
         risk: risk,
         baseProfit: baseProfit,
-        bonusAmount: bonusAcc,
+        compensationTarget: compensationTarget,
         totalProfit: totalProfit,
-        lot: lotVal2,
+        lot: lotVal,
         outcome: outcome,
-        newBalance: newBal,
-        nextBonusWillBe: (outcome === 'loss' ? bonusAcc + risk : (outcome === 'taken' ? 0 : bonusAcc))
+        newBalance: newBalance,
       });
+      
       if (outcome === 'taken' || outcome === 'loss') {
-        bal = newBal;
-        bonusAcc = (outcome === 'loss' ? bonusAcc + risk : 0);
-      } else {
-        // balance өөрчлөгдөхгүй, bonusAcc хэвээр
+        currentBalance = newBalance;
+        pendingLossDebt = nextDebt;
       }
+      // Хэрэв currentBalance >= TARGET_BALANCE бол зогсоох боломжтой, гэхдээ харагдацад үлдэнэ.
     }
     return levels;
   }
   
-  // Сонголт хийх функц
+  // Сонголт хийх (АВСАН / АЛДСАН)
   function setOutcome(levelIndex, outcomeType) {
-    if (levelIndex < 0 || levelIndex >= TOTAL_LEVELS) return false;
+    if (levelIndex < 0 || levelIndex >= levelOutcomes.length) return false;
+    // Өмнөх түвшин шийдэгдсэн эсэх (null бол хориглох)
     if (levelIndex > 0 && levelOutcomes[levelIndex-1] === null) {
-      alert(`⚠️ ${levelIndex+1}-р түвшинд шилжихийн тулд эхлээд ${levelIndex}-р түвшний үр дүнг (АВСАН / АЛДСАН) сонгоно уу!`);
+      alert(`⚠️ ${levelIndex+1}-р түвшинд шилжихийн тулд эхлээд ${levelIndex}-р түвшний үр дүнг сонгоно уу!`);
       return false;
     }
     if (levelOutcomes[levelIndex] === outcomeType) return false;
+    
+    // Шинэ үр дүнг тохируулж, дараа бүх түвшнийг устгана (reset)
     levelOutcomes[levelIndex] = outcomeType;
-    for (let i = levelIndex+1; i < TOTAL_LEVELS; i++) {
-      levelOutcomes[i] = null;
+    // Хэрэв loss дарсан бол, шинэ түвшин нэмэгдэх ёстой
+    if (outcomeType === 'loss') {
+      // addExtraLevelIfNeeded дараагийн render-д дуудагдана
     }
+    // levelOutcomes-ийг таслах: index+1-ээс хойшхи бүх элементийг устгаж, null-ээр эхлүүлэхгүй
+    // Харин loss үед дараа нь нэмэлт түвшин автомат нэмэгдэнэ. Гэхдээ эхлээд одоогийн уртыг таслана.
+    let newLength = levelIndex + 1;
+    // Хэрэв loss байсан бол дараагийн түвшин байх ёстой (нэмэлт)
+    if (outcomeType === 'loss') {
+      // нэмэлт түвшин орон зайг нэмэх (дараагийн түвшин null байна)
+      newLength = levelIndex + 2;
+    }
+    if (levelOutcomes.length > newLength) {
+      levelOutcomes = levelOutcomes.slice(0, newLength);
+    } else if (levelOutcomes.length < newLength) {
+      while(levelOutcomes.length < newLength) levelOutcomes.push(null);
+    }
+    // Хэрэв loss-оос үүдэлтэй нэмэлт түвшин байгаа эсэхийг баталгаажуулах
+    if (outcomeType === 'loss' && levelOutcomes.length === levelIndex+1) {
+      levelOutcomes.push(null);
+    }
+    
     renderTable();
     return true;
   }
   
+  // Сонголтыг буцаах (reset) — тухайн түвшин болон дараа нь бүгдийг null болгох + нэмэлт түвшнүүдийг устгах
   function resetOutcome(levelIndex) {
-    if (levelIndex < 0 || levelIndex >= TOTAL_LEVELS) return;
+    if (levelIndex < 0 || levelIndex >= levelOutcomes.length) return;
     if (levelOutcomes[levelIndex] === null) return;
+    // Зөвхөн энэ түвшнийг null болгоод, дараа бүгдийг устгах (суурь 9 хүртэл)
     levelOutcomes[levelIndex] = null;
-    for (let i = levelIndex+1; i < TOTAL_LEVELS; i++) {
-      levelOutcomes[i] = null;
+    // Тохирох хэмжээнд хүртэл таслах (base 9 буюу 9-с багагүй байх)
+    let minBase = 9;
+    let newLen = levelIndex + 1;
+    if (newLen < minBase) newLen = minBase;
+    if (levelOutcomes.length > newLen) {
+      levelOutcomes = levelOutcomes.slice(0, newLen);
     }
+    // Хэрэв урт 9-с бага бол 9 хүртэл null-ээр дүүргэх
+    while(levelOutcomes.length < 9) levelOutcomes.push(null);
     renderTable();
   }
   
+  // Хүснэгтийг зурах
   function renderTable() {
+    const levelsData = computeFullLevels();
     const tbody = document.getElementById('tableBody');
     if (!tbody) return;
-    const levels = computeFullPlan();
     let rowsHtml = '';
     
-    for (let i = 0; i < levels.length; i++) {
-      const lvl = levels[i];
+    for (let i = 0; i < levelsData.length; i++) {
+      const lvl = levelsData[i];
       const startBal = lvl.startBalance;
       const risk = lvl.risk;
       const baseProfit = lvl.baseProfit;
-      const bonus = lvl.bonusAmount;
+      const compTarget = lvl.compensationTarget;
       const totalProfit = lvl.totalProfit;
       const lotVal = lvl.lot;
       const outcome = lvl.outcome;
@@ -452,22 +446,23 @@
       let rowClass = 'tr-neutral';
       if (outcome === 'taken') rowClass = 'tr-taken';
       else if (outcome === 'loss') rowClass = 'tr-loss';
+      else if (i >= 9) rowClass = 'tr-compound';
       
-      const isGoal = (i === TOTAL_LEVELS-1);
-      const levelDisplay = isGoal ? `<span class="goal-flag">★${i+1}</span>` : `${i+1}`;
+      const isOriginalGoal = (i === 8); // 9 дэх түвшин (index 8)
+      const isExtra = i >= 9;
+      let levelDisplay = `${i+1}`;
+      if (isOriginalGoal && !isExtra) levelDisplay = `<span class="goal-flag">★${i+1}</span>`;
+      else if (isExtra) levelDisplay = `<span class="goal-flag" style="background:#9C27B0;">+${i+1}</span>`;
       
       let displayNewBalance = '—';
       if (outcome === 'taken') displayNewBalance = `$${newBal.toFixed(2)}`;
       else if (outcome === 'loss') displayNewBalance = `$${newBal.toFixed(2)}`;
       
-      // Бонус багана (нэмэгдэл)
-      let bonusDisplay = bonus > 0 ? `<span class="bonus-tag">+$${bonus.toFixed(2)}</span>` : '—';
-      if (bonus === 0) bonusDisplay = '—';
+      // Нөхөх зорилт багана
+      let compDisplay = compTarget > 0 ? `$${compTarget.toFixed(2)}` : '—';
       
-      // Үр дүнгийн баганад товч + статус
-      let outcomeCellContent = '';
       const isPrevUnresolved = (i > 0 && levelOutcomes[i-1] === null);
-      
+      let outcomeCellContent = '';
       if (isPrevUnresolved && outcome === null) {
         outcomeCellContent = `<span class="warning-prev">⚡ Эхлээд ${i}-р түвшинг шийднэ үү</span>`;
       } else {
@@ -498,14 +493,14 @@
       }
       
       rowsHtml += `
-        <tr class="${rowClass}" data-level-index="${i}">
+        <tr class="${rowClass}">
           <td style="font-weight:800;">${levelDisplay}</td>
           <td class="bal-cell">$${startBal.toFixed(2)}</td>
           <td>${lotVal.toFixed(2)}</td>
           <td style="color:#FF9F8F;">$${risk.toFixed(2)}</td>
           <td style="color:#B9F6CA;">$${baseProfit.toFixed(2)}</td>
-          <td style="color:#FFD966; font-weight:bold;">${bonusDisplay}</td>
-          <td style="min-width: 170px;">${outcomeCellContent}</td>
+          <td style="color:#FFD966; font-weight:bold;">${compDisplay}</td>
+          <td style="min-width: 160px;">${outcomeCellContent}</td>
           <td style="font-weight:700; ${outcome === 'taken' ? 'color:#00E676;' : (outcome === 'loss' ? 'color:#FFAA88;' : 'color:#aaa')}">${displayNewBalance}</td>
         </tr>
       `;
@@ -529,7 +524,7 @@
     else if (action === 'reset') resetOutcome(level);
   }
   
-  // Дуу
+  // Дууны удирдлага
   const audio = document.getElementById('bgMusic');
   const musicBtn = document.getElementById('musicBtn');
   let musicPlaying = false;
@@ -561,7 +556,7 @@
   };
   
   window.addEventListener('load', () => {
-    // Бүх түвшин null эхэлнэ, хэрэглэгч өөрөө шийднэ
+    initBaseLevels();  // 9 түвшин null
     renderTable();
     tryPlayMusic();
     document.addEventListener('click', function onceTouch() {
