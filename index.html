@@ -606,12 +606,39 @@
     #resetPlanBtn { bottom: 74px; left: 16px; height: 44px; padding: 0 15px; }
     #musicBtn { bottom: 72px; right: 16px; width: 54px; height: 54px; }
   }
+
+  /* ===== AUTH LOCK MODE ===== */
+  body:not(.is-authenticated) .app-only {
+    display: none !important;
+  }
+
+  body:not(.is-authenticated) {
+    padding-bottom: 28px;
+  }
+
+  body:not(.is-authenticated) .poster {
+    max-width: 860px;
+  }
+
+  body:not(.is-authenticated) .auth-panel {
+    padding: 24px 18px 34px;
+  }
+
+  body:not(.is-authenticated) .auth-glass {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  body:not(.is-authenticated) .auth-status::after {
+    content: " · Нэвтэрсний дараа dashboard, levels, journal, rules бүгд нээгдэнэ.";
+  }
+
 </style>
 </head>
 <body>
 <audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg" /></audio>
-<button id="musicBtn" onclick="toggleMusic()" title="Дуу">🔇</button>
-<button id="resetPlanBtn" onclick="resetPlanProgress()" title="Progress reset">↺ Reset</button>
+<button class="app-only" id="musicBtn" onclick="toggleMusic()" title="Дуу">🔇</button>
+<button class="app-only" id="resetPlanBtn" onclick="resetPlanProgress()" title="Progress reset">↺ Reset</button>
 
 <div class="poster">
   <header class="header" id="top">
@@ -649,7 +676,7 @@
     </div>
   </section>
 
-  <section class="dashboard">
+  <section class="dashboard app-only">
     <div class="stat-card glass-card">
       <div class="stat-label">Одоогийн баланс</div>
       <div class="stat-value" id="currentBalance">$50.00</div>
@@ -672,7 +699,7 @@
     </div>
   </section>
 
-  <section class="progress-wrap" id="progressSection">
+  <section class="progress-wrap app-only" id="progressSection">
     <div class="progress-card glass-card">
       <div class="progress-head">
         <span>Өсөлтийн зам: $50 → $1,000</span>
@@ -682,7 +709,7 @@
     </div>
   </section>
 
-  <section class="profile-wrap" id="profileSection">
+  <section class="profile-wrap app-only" id="profileSection">
     <div class="profile-card glass-card">
       <div>
         <div class="auth-kicker">TRADER PROFILE</div>
@@ -693,7 +720,7 @@
     </div>
   </section>
 
-  <section class="pro-stats" id="statsSection">
+  <section class="pro-stats app-only" id="statsSection">
     <div class="mini-card glass-card"><span>Win</span><strong id="statWins">0</strong></div>
     <div class="mini-card glass-card"><span>Loss</span><strong id="statLosses">0</strong></div>
     <div class="mini-card glass-card"><span>Win Rate</span><strong id="statWinRate">0%</strong></div>
@@ -702,7 +729,7 @@
     <div class="mini-card glass-card"><span>Discipline</span><strong id="statDiscipline">—</strong></div>
   </section>
 
-  <section class="smart-grid" id="rulesSection">
+  <section class="smart-grid app-only" id="rulesSection">
     <div class="smart-card glass-card checklist-card">
       <div class="smart-title">✅ BEFORE ENTRY CHECKLIST</div>
       <div class="checklist" id="entryChecklist">
@@ -729,7 +756,7 @@
     </div>
   </section>
 
-  <div class="table-wrapper" id="levelsSection">
+  <div class="table-wrapper app-only" id="levelsSection">
     <table class="trading-table" id="tradeTable">
       <thead>
         <tr>
@@ -747,7 +774,7 @@
     </table>
   </div>
 
-  <section class="journal-panel glass-card" id="journalSection">
+  <section class="journal-panel glass-card app-only" id="journalSection">
     <div class="journal-head">
       <div>
         <div class="auth-kicker">TRADE JOURNAL</div>
@@ -787,7 +814,7 @@
     <div class="journal-list" id="journalList"></div>
   </section>
 
-  <section class="info-section">
+  <section class="info-section app-only">
     <div class="info-card glass-card">
       <div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div>
       <div class="rules-grid">
@@ -799,19 +826,19 @@
     </div>
   </section>
 
-  <section class="quote-section glass-card">
+  <section class="quote-section glass-card app-only">
     <div class="quote-text">“Зах зээл чамайг шагнах албагүй. Харин чи <em>дүрмээ хамгаалж</em> чадвал боломж ирэх мөчид бэлэн байна.”</div>
     <div class="quote-sub">Чухал нь хурд биш — дүрмээ эвдэхгүй, lot-оо хэтрүүлэхгүй байх.</div>
   </section>
 
-  <div class="risk-note">
+  <div class="risk-note app-only">
     Санамж: 20% risk бол өндөр эрсдэл. Бодит entry хийхээс өмнө XAUUSD-ийн stop-loss, spread, broker-ийн lot step-ээ заавал шалга.
   </div>
 
-  <footer class="footer">⚡ PLAN THE TRADE · CALCULATE THE LOT · EXECUTE WITHOUT EMOTION ⚡</footer>
+  <footer class="footer app-only">⚡ PLAN THE TRADE · CALCULATE THE LOT · EXECUTE WITHOUT EMOTION ⚡</footer>
 </div>
 
-<nav class="bottom-nav">
+<nav class="bottom-nav app-only">
   <a href="#top">Home</a>
   <a href="#statsSection">Stats</a>
   <a href="#levelsSection">Levels</a>
@@ -819,7 +846,7 @@
   <a href="#journalSection">Journal</a>
 </nav>
 
-<div class="milestone-toast" id="milestoneToast"></div>
+<div class="milestone-toast app-only" id="milestoneToast"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
@@ -840,7 +867,7 @@
   const REVENGE_KEY = 'xauusd_50_to_1000_revenge_v2';
 
   // Firebase Console → Project settings → Web app config-оо энд солино.
-const firebaseConfig = {
+  const firebaseConfig = {
   apiKey: "AIzaSyD1D0qWO8WfAHtP0CHFFNUtDQ2_eibH2xU",
   authDomain: "xauusd-plan.firebaseapp.com",
   projectId: "xauusd-plan",
@@ -1315,6 +1342,8 @@ const firebaseConfig = {
     const forms = document.getElementById('authForms');
     const logoutBtn = document.getElementById('logoutBtn');
 
+    document.body.classList.toggle('is-authenticated', !!user);
+
     if (user) {
       title.textContent = `${user.displayName || 'Trader'} · progress хадгалагдаж байна`;
       forms.style.display = 'none';
@@ -1324,7 +1353,7 @@ const firebaseConfig = {
       title.textContent = 'Нэвтэрч progress-оо хадгал';
       forms.style.display = 'grid';
       logoutBtn.style.display = 'none';
-      setAuthStatus('Нэвтрээгүй үед progress зөвхөн энэ browser дээр хадгалагдана.');
+      setAuthStatus('Эхлээд account-аараа нэвтэрнэ үү.');
     }
 
     renderProfile();
