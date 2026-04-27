@@ -633,11 +633,96 @@
     content: " · Нэвтэрсний дараа dashboard, levels, journal, rules бүгд нээгдэнэ.";
   }
 
+
+  /* ===== CLEAN AUTH LAYOUT OVERRIDE ===== */
+  .auth-mode-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .auth-tab {
+    height: 38px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,249,215,0.70);
+    background: rgba(0,0,0,0.18);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 900;
+    cursor: pointer;
+    transition: .2s ease;
+  }
+
+  .auth-tab.active {
+    color: #06120b;
+    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
+  }
+
+  .auth-login-wrap,
+  .auth-register-wrap {
+    display: grid;
+    grid-template-columns: minmax(260px, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .auth-stack {
+    display: grid;
+    gap: 10px;
+  }
+
+  .big-auth-btn {
+    min-width: 150px;
+    height: 98px !important;
+    font-size: 16px;
+  }
+
+  .auth-register-wrap .big-auth-btn {
+    height: 152px !important;
+  }
+
+  .auth-forms {
+    display: none !important;
+  }
+
+  .profile-wrap {
+    padding-top: 16px;
+  }
+
+  body:not(.is-authenticated) .profile-wrap {
+    display: none !important;
+  }
+
+  #musicBtn {
+    display: none !important;
+  }
+
+  @media (max-width: 700px) {
+    .auth-mode-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .auth-login-wrap,
+    .auth-register-wrap {
+      grid-template-columns: 1fr;
+    }
+
+    .big-auth-btn,
+    .auth-register-wrap .big-auth-btn {
+      width: 100%;
+      height: 48px !important;
+    }
+
+    .profile-wrap {
+      padding: 12px 12px 14px;
+    }
+  }
+
 </style>
 </head>
 <body>
-<audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg" /></audio>
-<button class="app-only" id="musicBtn" onclick="toggleMusic()" title="Дуу">🔇</button>
 <button class="app-only" id="resetPlanBtn" onclick="resetPlanProgress()" title="Progress reset">↺ Reset</button>
 
 <div class="poster">
@@ -663,20 +748,32 @@
         <button class="auth-ghost" id="logoutBtn" onclick="logoutUser()" style="display:none;">Гарах</button>
       </div>
 
-      <div class="auth-forms" id="authForms">
-        <input id="nameInput" class="auth-input" type="text" placeholder="Нэр" autocomplete="name" />
-        <input id="emailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
-        <input id="passwordInput" class="auth-input" type="password" placeholder="Code / Password" autocomplete="current-password" />
-        <div class="auth-actions">
-          <button class="auth-btn primary" onclick="loginUser()">Нэвтрэх</button>
-          <button class="auth-btn" onclick="registerUser()">Бүртгүүлэх</button>
-        </div>
+      <div class="auth-mode-tabs" id="authModeTabs">
+        <button class="auth-tab active" id="loginTab" onclick="showLoginMode()">Нэвтрэх</button>
+        <button class="auth-tab" id="registerTab" onclick="showRegisterMode()">Бүртгүүлэх</button>
       </div>
-      <div class="auth-status" id="authStatus">Нэвтрээгүй үед progress зөвхөн энэ browser дээр хадгалагдана.</div>
+
+      <div class="auth-login-wrap" id="loginForm">
+        <div class="auth-stack">
+          <input id="loginEmailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
+          <input id="loginPasswordInput" class="auth-input" type="password" placeholder="Code / Password" autocomplete="current-password" />
+        </div>
+        <button class="auth-btn primary big-auth-btn" onclick="loginUser()">Нэвтрэх</button>
+      </div>
+
+      <div class="auth-register-wrap" id="registerForm" style="display:none;">
+        <div class="auth-stack">
+          <input id="nameInput" class="auth-input" type="text" placeholder="Нэр" autocomplete="name" />
+          <input id="emailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
+          <input id="passwordInput" class="auth-input" type="password" placeholder="Password" autocomplete="new-password" />
+        </div>
+        <button class="auth-btn primary big-auth-btn" onclick="registerUser()">Бүртгүүлэх</button>
+      </div>
+
+      <div class="auth-status" id="authStatus">Эхлээд account-аараа нэвтэрнэ үү.</div>
     </div>
   </section>
-
-  <section class="dashboard app-only">
+<section class="dashboard app-only">
     <div class="stat-card glass-card">
       <div class="stat-label">Одоогийн баланс</div>
       <div class="stat-value" id="currentBalance">$50.00</div>
@@ -773,48 +870,7 @@
       <tbody id="tableBody"></tbody>
     </table>
   </div>
-
-  <section class="journal-panel glass-card app-only" id="journalSection">
-    <div class="journal-head">
-      <div>
-        <div class="auth-kicker">TRADE JOURNAL</div>
-        <div class="auth-title">Арилжаагаа тэмдэглэ</div>
-      </div>
-      <button class="soft-btn" onclick="saveJournalEntry()">Save note</button>
-    </div>
-    <div class="journal-form">
-      <select id="journalSession" class="auth-input">
-        <option value="Asia">Asia session</option>
-        <option value="London">London session</option>
-        <option value="New York">New York session</option>
-        <option value="NY Killzone">NY Killzone</option>
-      </select>
-      <select id="journalSetup" class="auth-input">
-        <option value="Liquidity Sweep">Liquidity Sweep</option>
-        <option value="Breakout">Breakout</option>
-        <option value="Reversal">Reversal</option>
-        <option value="Trend Continuation">Trend Continuation</option>
-      </select>
-      <select id="journalMood" class="auth-input">
-        <option value="Calm">Calm</option>
-        <option value="Confident">Confident</option>
-        <option value="FOMO">FOMO</option>
-        <option value="Revenge">Revenge</option>
-      </select>
-      <select id="journalScore" class="auth-input">
-        <option value="10">Discipline 10/10</option>
-        <option value="9">Discipline 9/10</option>
-        <option value="8">Discipline 8/10</option>
-        <option value="7">Discipline 7/10</option>
-        <option value="6">Discipline 6/10</option>
-        <option value="5">Discipline 5/10</option>
-      </select>
-      <textarea id="journalNote" class="journal-textarea" placeholder="Яагаад орсон, юу сайн/муу болсон, дараа юуг анхаарах вэ?"></textarea>
-    </div>
-    <div class="journal-list" id="journalList"></div>
-  </section>
-
-  <section class="info-section app-only">
+<section class="info-section app-only">
     <div class="info-card glass-card">
       <div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div>
       <div class="rules-grid">
@@ -843,7 +899,7 @@
   <a href="#statsSection">Stats</a>
   <a href="#levelsSection">Levels</a>
   <a href="#rulesSection">Rules</a>
-  <a href="#journalSection">Journal</a>
+  
 </nav>
 
 <div class="milestone-toast app-only" id="milestoneToast"></div>
@@ -1104,8 +1160,7 @@
       else break;
     }
 
-    const scores = journalEntries.map(j => Number(j.score)).filter(n => !Number.isNaN(n));
-    const avgScore = scores.length ? (scores.reduce((a, b) => a + b, 0) / scores.length).toFixed(1) : '—';
+    const avgScore = '—';
 
     document.getElementById('statWins').textContent = wins;
     document.getElementById('statLosses').textContent = losses;
@@ -1221,24 +1276,6 @@
       percent === 100 ? 'Бэлэн. Одоо зөвхөн plan дагуу execute.' : `${checked}/${inputs.length} checklist бөглөгдсөн.`;
   }
 
-  function renderJournalList() {
-    const box = document.getElementById('journalList');
-    const recent = journalEntries.slice(-5).reverse();
-
-    if (!recent.length) {
-      box.innerHTML = '<div class="journal-item">Одоогоор journal note байхгүй.</div>';
-      return;
-    }
-
-    box.innerHTML = recent.map(j => `
-      <div class="journal-item">
-        <strong>Level ${j.level} · ${j.session} · ${j.setup}</strong><br>
-        Mood: ${j.mood} · Discipline: ${j.score}/10 · ${j.date}<br>
-        ${j.note ? j.note : 'Note бичээгүй.'}
-      </div>
-    `).join('');
-  }
-
   function renderMilestone() {
     const finalBalance = compute().finalBalance;
     const milestones = [100, 200, 500, 700, 1000];
@@ -1285,35 +1322,9 @@
     renderTable();
     bindButtons();
     renderProStats();
-    renderJournalList();
     updateRevengeLock();
     renderProfile();
   }
-
-  window.saveJournalEntry = function() {
-    const note = document.getElementById('journalNote').value.trim();
-    const session = document.getElementById('journalSession').value;
-    const setup = document.getElementById('journalSetup').value;
-    const mood = document.getElementById('journalMood').value;
-    const score = document.getElementById('journalScore').value;
-    const last = getLastCompletedLevel();
-
-    journalEntries.push({
-      level: last ? last.idx + 1 : getCurrentLevelNumber(),
-      outcome: last ? last.outcome : 'planned',
-      session,
-      setup,
-      mood,
-      score,
-      note,
-      date: new Date().toLocaleString()
-    });
-
-    document.getElementById('journalNote').value = '';
-    saveJSON(JOURNAL_KEY, journalEntries);
-    saveProgress();
-    render();
-  };
 
   window.newDailyRule = function() {
     const el = document.getElementById('dailyRule');
@@ -1359,11 +1370,46 @@
     renderProfile();
   }
 
+
+  window.showLoginMode = function() {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const loginTab = document.getElementById('loginTab');
+    const registerTab = document.getElementById('registerTab');
+
+    if (loginForm) loginForm.style.display = 'grid';
+    if (registerForm) registerForm.style.display = 'none';
+    if (loginTab) loginTab.classList.add('active');
+    if (registerTab) registerTab.classList.remove('active');
+  };
+
+  window.showRegisterMode = function() {
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const loginTab = document.getElementById('loginTab');
+    const registerTab = document.getElementById('registerTab');
+
+    if (loginForm) loginForm.style.display = 'none';
+    if (registerForm) registerForm.style.display = 'grid';
+    if (loginTab) loginTab.classList.remove('active');
+    if (registerTab) registerTab.classList.add('active');
+  };
+
   function getAuthInputs() {
+    const isRegister = document.getElementById('registerForm')?.style.display !== 'none';
+
+    if (isRegister) {
+      return {
+        name: document.getElementById('nameInput')?.value.trim() || '',
+        email: document.getElementById('emailInput')?.value.trim() || '',
+        password: document.getElementById('passwordInput')?.value.trim() || ''
+      };
+    }
+
     return {
-      name: document.getElementById('nameInput').value.trim(),
-      email: document.getElementById('emailInput').value.trim(),
-      password: document.getElementById('passwordInput').value.trim()
+      name: '',
+      email: document.getElementById('loginEmailInput')?.value.trim() || '',
+      password: document.getElementById('loginPasswordInput')?.value.trim() || ''
     };
   }
 
@@ -1485,42 +1531,7 @@
     await auth.signOut();
     currentUser = null;
     updateAuthUI(null);
-  };
-
-  const audio = document.getElementById('bgMusic');
-  const musicBtn = document.getElementById('musicBtn');
-  let playing = false;
-
-  function tryPlay() {
-    if (!audio) return;
-    audio.volume = 0.38;
-    audio.play()
-      .then(() => {
-        playing = true;
-        musicBtn.textContent = '🔊';
-      })
-      .catch(() => {
-        playing = false;
-        musicBtn.textContent = '🔇';
-      });
-  }
-
-  window.toggleMusic = function() {
-    if (!audio) return;
-
-    if (playing) {
-      audio.pause();
-      playing = false;
-      musicBtn.textContent = '🔇';
-    } else {
-      audio.play().then(() => {
-        playing = true;
-        musicBtn.textContent = '🔊';
-      }).catch(() => {
-        playing = false;
-        musicBtn.textContent = '🔇';
-      });
-    }
+    showLoginMode();
   };
 
   if ('scrollRestoration' in history) {
