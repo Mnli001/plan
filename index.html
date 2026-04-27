@@ -1132,6 +1132,56 @@
     }
   }
 
+
+  /* ===== HOME LOGOUT BUTTON ===== */
+  .profile-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .home-logout-btn {
+    height: 44px;
+    padding: 0 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.22);
+    cursor: pointer;
+    color: #06120b;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 900;
+    letter-spacing: .5px;
+    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
+    box-shadow: 0 14px 34px rgba(255,215,0,0.16), inset 0 1px 0 rgba(255,255,255,0.28);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: .2s ease;
+  }
+
+  .home-logout-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+
+  .home-logout-section {
+    padding: 0 16px 12px;
+  }
+
+  .home-logout-section .home-logout-btn {
+    width: 100%;
+  }
+
+  @media (max-width: 700px) {
+    .profile-actions {
+      justify-content: flex-start;
+    }
+
+    .home-logout-btn {
+      width: 100%;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1194,7 +1244,10 @@
         <div class="profile-name" id="profileName">Guest Trader</div>
         <div class="profile-meta" id="profileMeta">Challenge эхлэхэд бэлэн</div>
       </div>
-      <div class="phase-badge" id="phaseBadge">Phase 1</div>
+      <div class="profile-actions">
+        <div class="phase-badge" id="phaseBadge">Phase 1</div>
+        <button class="home-logout-btn" id="homeLogoutBtn" onclick="logoutUser()">Гарах</button>
+      </div>
     </div>
   </section>
 
@@ -2142,8 +2195,9 @@
     if (!auth) return;
     await auth.signOut();
     currentUser = null;
+    document.body.dataset.page = '';
     updateAuthUI(null);
-    showLoginMode();
+    goTop();
   };
 
   if ('scrollRestoration' in history) {
