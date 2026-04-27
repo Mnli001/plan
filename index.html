@@ -1582,6 +1582,152 @@
     }
   }
 
+
+  /* ===== PAGE VISIBILITY HARD FIX ===== */
+  body.is-authenticated .page-section {
+    display: none !important;
+  }
+
+  body.is-authenticated[data-page="home"] .page-home,
+  body.is-authenticated[data-page="stats"] .page-stats,
+  body.is-authenticated[data-page="levels"] .page-levels,
+  body.is-authenticated[data-page="history"] .page-history,
+  body.is-authenticated[data-page="leaderboard"] .page-leaderboard {
+    display: grid !important;
+  }
+
+  body.is-authenticated[data-page="home"] .progress-wrap.page-home,
+  body.is-authenticated[data-page="home"] .next-trade-panel.page-home,
+  body.is-authenticated[data-page="home"] .home-settings-row.page-home,
+  body.is-authenticated[data-page="levels"] .table-wrapper.page-levels,
+  body.is-authenticated[data-page="history"] .history-panel.page-history,
+  body.is-authenticated[data-page="leaderboard"] .leaderboard-panel.page-leaderboard {
+    display: block !important;
+  }
+
+  body:not(.is-authenticated) .home-settings-row,
+  body:not(.is-authenticated) .settings-overlay {
+    display: none !important;
+  }
+
+  /* ===== HOME SETTINGS BUTTON ===== */
+  .home-settings-row {
+    padding: 14px 16px 0;
+  }
+
+  .home-settings-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.22);
+    cursor: pointer;
+    color: #06120b;
+    font-size: 22px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
+    box-shadow: 0 14px 34px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,255,255,0.28);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  /* ===== SETTINGS POPUP ===== */
+  .settings-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(0,0,0,0.48);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .settings-overlay.show {
+    display: flex !important;
+  }
+
+  .settings-modal {
+    width: min(520px, 100%);
+    padding: 18px;
+    border-radius: 30px;
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)),
+      radial-gradient(circle at 10% 0%, rgba(255,215,0,0.16), transparent 44%);
+    border: 1px solid rgba(255,255,255,0.20);
+    box-shadow: 0 30px 90px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+
+  .settings-modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .settings-close-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.18);
+    cursor: pointer;
+    color: #fff2a8;
+    background: rgba(255,255,255,0.08);
+    font-weight: 900;
+  }
+
+  .settings-actions {
+    display: grid;
+    gap: 10px;
+  }
+
+  .settings-action {
+    min-height: 48px;
+    padding: 0 14px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.16);
+    cursor: pointer;
+    color: #fff2a8;
+    text-align: left;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+    background: rgba(0,0,0,0.22);
+  }
+
+  .settings-action.danger {
+    color: #ffd2d9;
+    border-color: rgba(255,93,115,0.34);
+    background: rgba(255,93,115,0.10);
+  }
+
+  .settings-note {
+    margin-top: 12px;
+    color: rgba(255,249,215,0.62);
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 700px) {
+    .home-settings-row {
+      padding: 12px 12px 0;
+    }
+
+    .home-settings-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 17px;
+    }
+
+    .settings-modal {
+      border-radius: 26px;
+      padding: 16px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1651,6 +1797,11 @@
     </div>
   </section>
 
+  
+  <section class="home-settings-row app-only page-section page-home" id="homeSettingsRow">
+    <button class="home-settings-btn" onclick="openSettingsPopup()" aria-label="Settings">⚙️</button>
+  </section>
+
   <section class="profile-wrap app-only page-section page-home" id="profileSection">
     <div class="profile-card glass-card">
       <div class="profile-info">
@@ -1703,31 +1854,7 @@
       </div>
     </div>
   </section>
-
-  <section class="safety-panel app-only page-section page-home" id="safetySection">
-    <div class="safety-card glass-card">
-      <div class="safety-head">
-        <div>
-          <div class="auth-kicker">SAFETY ACTIONS</div>
-          <div class="auth-title">Undo / Reset хамгаалалт</div>
-        </div>
-      </div>
-
-      <div class="safety-grid">
-        <button class="safety-btn" onclick="restartLastLevel()">↺ Сүүлийн trade буцаах</button>
-        <button class="safety-btn" onclick="clearOnlyHistory()">History цэвэрлэх</button>
-        <button class="safety-btn danger" onclick="resetOnlyProgress()">Progress reset</button>
-        <button class="safety-btn danger" onclick="resetEverything()">Бүгдийг reset</button>
-      </div>
-
-      <div class="safety-note">
-        Санамсаргүй reset хийхээс хамгаалж бүх чухал action confirm асууна.
-      </div>
-    </div>
-  </section>
-
-
-  <section id="homeDashboard">
+<section id="homeDashboard" class="page-section page-home">
     <div class="stat-card glass-card">
       <div class="stat-label">Одоогийн баланс</div>
       <div class="stat-value" id="currentBalance">$50.00</div>
@@ -1863,6 +1990,22 @@
         showPage('home');
       }
     }, 250);
+  });
+
+
+  window.openSettingsPopup = function() {
+    const el = document.getElementById('settingsOverlay');
+    if (el) el.classList.add('show');
+  };
+
+  window.closeSettingsPopup = function(event) {
+    if (event && event.target && event.target.id !== 'settingsOverlay') return;
+    const el = document.getElementById('settingsOverlay');
+    if (el) el.classList.remove('show');
+  };
+
+  window.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeSettingsPopup();
   });
 
 </script>
@@ -2959,6 +3102,29 @@ service cloud.firestore {
   }
 }
 -->
+
+
+  <div class="settings-overlay" id="settingsOverlay" onclick="closeSettingsPopup(event)">
+    <div class="settings-modal glass-card" onclick="event.stopPropagation()">
+      <div class="settings-modal-head">
+        <div>
+          <div class="auth-kicker">SETTINGS</div>
+          <div class="auth-title">Safety / Reset menu</div>
+        </div>
+        <button class="settings-close-btn" onclick="closeSettingsPopup()" aria-label="Close">✕</button>
+      </div>
+
+      <div class="settings-actions">
+        <button class="settings-action" onclick="restartLastLevel(); closeSettingsPopup();">↺ Сүүлийн trade буцаах</button>
+        <button class="settings-action" onclick="clearOnlyHistory(); closeSettingsPopup();">History цэвэрлэх</button>
+        <button class="settings-action danger" onclick="resetOnlyProgress(); closeSettingsPopup();">Progress reset</button>
+        <button class="settings-action danger" onclick="resetEverything(); closeSettingsPopup();">Бүгд reset</button>
+        <button class="settings-action" onclick="changeStartBalance(); closeSettingsPopup();">Balance солих</button>
+      </div>
+
+      <div class="settings-note">Чухал action бүр confirm асууна. Санамсаргүй дарахад шууд устгахгүй.</div>
+    </div>
+  </div>
 
 </body>
 </html>
