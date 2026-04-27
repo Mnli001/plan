@@ -720,6 +720,116 @@
     }
   }
 
+
+  /* ===== CURRENT LEVEL ONLY + HISTORY ===== */
+  .current-level-title {
+    padding: 0 16px 10px;
+    color: rgba(255,249,215,0.78);
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  .history-panel {
+    margin: 0 16px 16px;
+    padding: 18px;
+    border-radius: 30px;
+  }
+
+  .history-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .history-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .history-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 13px 14px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+
+  .history-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: #06120b;
+  }
+
+  .history-item.win .history-badge {
+    background: linear-gradient(135deg, #bfffe4, #00f5a0 58%, #007a4d);
+  }
+
+  .history-item.loss .history-badge {
+    background: linear-gradient(135deg, #ffd2d9, #ff5d73 58%, #8a1628);
+    color: #1c0307;
+  }
+
+  .history-main strong {
+    display: block;
+    color: #fff0a8;
+    font-size: 14px;
+  }
+
+  .history-main span {
+    display: block;
+    margin-top: 3px;
+    color: rgba(255,249,215,0.62);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .history-money {
+    text-align: right;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+  }
+
+  .history-money.win { color: var(--green); }
+  .history-money.loss { color: var(--red); }
+
+  @media (max-width: 700px) {
+    .current-level-title {
+      padding: 0 12px 10px;
+    }
+
+    .history-panel {
+      margin: 0 12px 16px;
+      padding: 16px;
+      border-radius: 26px;
+    }
+
+    .history-head {
+      align-items: flex-start;
+    }
+
+    .history-item {
+      grid-template-columns: auto 1fr;
+    }
+
+    .history-money {
+      grid-column: 1 / -1;
+      text-align: left;
+      padding-left: 54px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -870,7 +980,20 @@
       <tbody id="tableBody"></tbody>
     </table>
   </div>
-<section class="info-section app-only">
+
+  <section class="history-panel glass-card app-only" id="historySection">
+    <div class="history-head">
+      <div>
+        <div class="auth-kicker">TRADE HISTORY</div>
+        <div class="auth-title">Хийсэн арилжааны түүх</div>
+      </div>
+      <button class="soft-btn" onclick="clearTradeHistory()">Clear history</button>
+    </div>
+    <div class="history-list" id="historyList"></div>
+  </section>
+
+
+  <section class="info-section app-only">
     <div class="info-card glass-card">
       <div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div>
       <div class="rules-grid">
@@ -898,6 +1021,7 @@
   <a href="#top">Home</a>
   <a href="#statsSection">Stats</a>
   <a href="#levelsSection">Levels</a>
+  <a href="#historySection">History</a>
   <a href="#rulesSection">Rules</a>
   
 </nav>
@@ -921,6 +1045,7 @@
   const JOURNAL_KEY = 'xauusd_50_to_1000_journal_v2';
   const CHECKLIST_KEY = 'xauusd_50_to_1000_checklist_v2';
   const REVENGE_KEY = 'xauusd_50_to_1000_revenge_v2';
+  const HISTORY_KEY = 'xauusd_50_to_1000_history_v2';
 
   // Firebase Console → Project settings → Web app config-оо энд солино.
   const firebaseConfig = {
@@ -935,6 +1060,7 @@
 
   let outcomes = [];
   let journalEntries = [];
+  let tradeHistory = [];
   let auth = null;
   let db = null;
   let currentUser = null;
@@ -993,6 +1119,8 @@
     outcomes = Array.isArray(saved) && saved.length >= 9 ? saved : new Array(9).fill(null);
     journalEntries = loadJSON(JOURNAL_KEY, []);
     if (!Array.isArray(journalEntries)) journalEntries = [];
+    tradeHistory = loadJSON(HISTORY_KEY, []);
+    if (!Array.isArray(tradeHistory)) tradeHistory = [];
   }
 
   function compute() {
@@ -1050,6 +1178,7 @@
         challenge: {
           outcomes,
           journalEntries,
+          tradeHistory,
           revengeUntil,
           updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         }
@@ -1060,6 +1189,63 @@
     }
   }
 
+
+  function recordTradeHistory(levelData, type) {
+    if (!levelData) return;
+
+    const id = `${Date.now()}_${levelData.idx}_${type}`;
+    const already = tradeHistory.some(item => item.level === levelData.idx + 1 && item.timestampKey === `${levelData.idx}_${type}_${Number(levelData.startBalance).toFixed(2)}`);
+    if (already) return;
+
+    tradeHistory.push({
+      id,
+      timestampKey: `${levelData.idx}_${type}_${Number(levelData.startBalance).toFixed(2)}`,
+      level: levelData.idx + 1,
+      outcome: type,
+      startBalance: levelData.startBalance,
+      risk: levelData.risk,
+      profit: levelData.profit,
+      lot: levelData.lot,
+      newBalance: type === 'taken' ? levelData.startBalance + levelData.profit : Math.max(0, levelData.startBalance - levelData.risk),
+      date: new Date().toLocaleString()
+    });
+
+    saveJSON(HISTORY_KEY, tradeHistory);
+  }
+
+  function renderHistory() {
+    const box = document.getElementById('historyList');
+    if (!box) return;
+
+    if (!tradeHistory.length) {
+      box.innerHTML = '<div class="history-item"><div class="history-main"><strong>Одоогоор history байхгүй</strong><span>Авсан/Алдсан дарахад энд хадгалагдана.</span></div></div>';
+      return;
+    }
+
+    box.innerHTML = tradeHistory.slice().reverse().map(item => {
+      const isWin = item.outcome === 'taken';
+      return `
+        <div class="history-item ${isWin ? 'win' : 'loss'}">
+          <div class="history-badge">${isWin ? 'W' : 'L'}</div>
+          <div class="history-main">
+            <strong>Level ${item.level} · ${isWin ? 'АВСАН' : 'АЛДСАН'}</strong>
+            <span>${item.date} · Balance ${formatMoney(item.startBalance)} · Lot ${Number(item.lot).toFixed(2)} · Risk ${formatMoney(item.risk)}</span>
+          </div>
+          <div class="history-money ${isWin ? 'win' : 'loss'}">${isWin ? '+' : '-'}${formatMoney(isWin ? item.profit : item.risk)}</div>
+        </div>`;
+    }).join('');
+  }
+
+  window.clearTradeHistory = function() {
+    const ok = confirm('Trade history-г бүгдийг устгах уу?');
+    if (!ok) return;
+    tradeHistory = [];
+    saveJSON(HISTORY_KEY, tradeHistory);
+    saveProgress();
+    renderHistory();
+  };
+
+
   function setOutcome(idx, type) {
     if (idx < 0 || idx >= outcomes.length) return false;
 
@@ -1068,7 +1254,9 @@
       return false;
     }
 
+    const beforeLevel = compute().levels[idx];
     outcomes[idx] = type;
+    recordTradeHistory(beforeLevel, type);
     if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1);
     while (outcomes.length < 9) outcomes.push(null);
 
@@ -1173,66 +1361,60 @@
   function renderTable() {
     const { levels, finalBalance } = compute();
     const tbody = document.getElementById('tableBody');
-    let html = '';
+    const wrapper = document.getElementById('levelsSection') || document.querySelector('.table-wrapper');
 
-    for (let i = 0; i < levels.length; i++) {
-      const l = levels[i];
-      let rowClass = '';
-      if (l.outcome === 'taken') rowClass = 'tr-taken';
-      if (l.outcome === 'loss') rowClass = 'tr-loss';
+    let currentIndex = outcomes.findIndex(o => o === null);
+    if (currentIndex === -1) currentIndex = Math.max(0, levels.length - 1);
 
-      const isGoal = l.startBalance >= TARGET || (l.newBalance && l.newBalance >= TARGET);
-      let levelDisplay = `<span class="level-chip">${i + 1}</span>`;
-      if (isGoal) {
-        levelDisplay = `<span class="goal-flag">🏆 ${i + 1}</span>`;
-      } else if (i >= 9) {
-        levelDisplay = `<span class="level-chip extra-chip">+${i + 1}</span>`;
-      }
+    const visibleLevel = levels[currentIndex];
+    if (!tbody || !visibleLevel) return;
 
-      const prevNull = i > 0 && outcomes[i - 1] === null;
-      let actionHtml = '';
-
-      if (prevNull && l.outcome === null) {
-        actionHtml = `<span class="warning-prev">⚡ Эхлээд ${i}-р түвшинг шийднэ үү</span>`;
-      } else if (l.outcome === 'taken') {
-        actionHtml = `
-          <div class="outcome-badge outcome-profit">✅ АВСАН (+${formatMoney(l.profit)})</div>
-          <div class="action-group">
-            <button class="btn-sm btn-loss" data-level="${i}" data-action="loss">❌ АЛДСАН</button>
-            <button class="btn-sm btn-reset" data-level="${i}" data-action="reset">↺ Болиулах</button>
-          </div>`;
-      } else if (l.outcome === 'loss') {
-        actionHtml = `
-          <div class="outcome-badge outcome-loss">❌ АЛДСАН (-${formatMoney(l.risk)})</div>
-          <div class="action-group">
-            <button class="btn-sm btn-taken" data-level="${i}" data-action="taken">✅ АВСАН</button>
-            <button class="btn-sm btn-reset" data-level="${i}" data-action="reset">↺ Болиулах</button>
-          </div>`;
-      } else {
-        actionHtml = `
-          <div class="action-group">
-            <button class="btn-sm btn-taken" data-level="${i}" data-action="taken">✅ АВСАН</button>
-            <button class="btn-sm btn-loss" data-level="${i}" data-action="loss">❌ АЛДСАН</button>
-          </div>`;
-      }
-
-      const newBalText = l.outcome ? formatMoney(l.newBalance) : '—';
-      const balanceColor = l.outcome === 'taken' ? 'color: var(--green);' : (l.outcome === 'loss' ? 'color: #ffb0bc;' : 'color: rgba(255,255,255,0.55);');
-
-      html += `
-        <tr class="${rowClass}">
-          <td data-label="#">${levelDisplay}</td>
-          <td data-label="Баланс" class="bal-cell">${formatMoney(l.startBalance)}</td>
-          <td data-label="SL pips">${l.slPips}</td>
-          <td data-label="20% risk" style="color:#ffcf7a;">${formatMoney(l.risk)}</td>
-          <td data-label="Lot" class="lot-cell">${l.lot.toFixed(2)}</td>
-          <td data-label="Ашиг" style="color:#b9ffd7;">${formatMoney(l.profit)}</td>
-          <td data-label="Үр дүн" style="min-width:190px;">${actionHtml}</td>
-          <td data-label="Шинэ баланс" style="font-weight:900; ${balanceColor}">${newBalText}</td>
-        </tr>`;
+    if (wrapper && !document.getElementById('currentLevelTitle')) {
+      const title = document.createElement('div');
+      title.className = 'current-level-title';
+      title.id = 'currentLevelTitle';
+      wrapper.parentNode.insertBefore(title, wrapper);
     }
 
-    tbody.innerHTML = html;
+    const titleEl = document.getElementById('currentLevelTitle');
+    if (titleEl) {
+      titleEl.textContent = `CURRENT LEVEL · ${currentIndex + 1}-р түвшин`;
+    }
+
+    const l = visibleLevel;
+    let rowClass = '';
+    if (l.outcome === 'taken') rowClass = 'tr-taken';
+    if (l.outcome === 'loss') rowClass = 'tr-loss';
+
+    const isGoal = l.startBalance >= TARGET || (l.newBalance && l.newBalance >= TARGET);
+    let levelDisplay = `<span class="level-chip">${currentIndex + 1}</span>`;
+    if (isGoal) {
+      levelDisplay = `<span class="goal-flag">🏆 ${currentIndex + 1}</span>`;
+    } else if (currentIndex >= 9) {
+      levelDisplay = `<span class="level-chip extra-chip">+${currentIndex + 1}</span>`;
+    }
+
+    let actionHtml = `
+      <div class="action-group">
+        <button class="btn-sm btn-taken" data-level="${currentIndex}" data-action="taken">✅ АВСАН</button>
+        <button class="btn-sm btn-loss" data-level="${currentIndex}" data-action="loss">❌ АЛДСАН</button>
+      </div>`;
+
+    const newBalText = l.outcome ? formatMoney(l.newBalance) : '—';
+    const balanceColor = l.outcome === 'taken' ? 'color: var(--green);' : (l.outcome === 'loss' ? 'color: #ffb0bc;' : 'color: rgba(255,255,255,0.55);');
+
+    tbody.innerHTML = `
+      <tr class="${rowClass}">
+        <td data-label="#">${levelDisplay}</td>
+        <td data-label="Баланс" class="bal-cell">${formatMoney(l.startBalance)}</td>
+        <td data-label="SL pips">${l.slPips}</td>
+        <td data-label="20% risk" style="color:#ffcf7a;">${formatMoney(l.risk)}</td>
+        <td data-label="Lot" class="lot-cell">${l.lot.toFixed(2)}</td>
+        <td data-label="Ашиг" style="color:#b9ffd7;">${formatMoney(l.profit)}</td>
+        <td data-label="Үр дүн" style="min-width:190px;">${actionHtml}</td>
+        <td data-label="Шинэ баланс" style="font-weight:900; ${balanceColor}">${newBalText}</td>
+      </tr>`;
+
     updateDashboard(finalBalance, levels);
   }
 
@@ -1322,6 +1504,7 @@
     renderTable();
     bindButtons();
     renderProStats();
+    renderHistory();
     updateRevengeLock();
     renderProfile();
   }
@@ -1462,6 +1645,11 @@
         saveJSON(JOURNAL_KEY, journalEntries);
       }
 
+      if (Array.isArray(challenge.tradeHistory)) {
+        tradeHistory = challenge.tradeHistory;
+        saveJSON(HISTORY_KEY, tradeHistory);
+      }
+
       if (challenge.revengeUntil) {
         revengeUntil = Number(challenge.revengeUntil);
         localStorage.setItem(REVENGE_KEY, String(revengeUntil));
@@ -1498,6 +1686,7 @@
         challenge: {
           outcomes,
           journalEntries,
+          tradeHistory,
           revengeUntil,
           updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         }
