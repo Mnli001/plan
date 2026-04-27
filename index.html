@@ -1182,6 +1182,20 @@
     }
   }
 
+
+  /* ===== FIX: HIDE LEVEL TITLE ON LOGIN ===== */
+  body:not(.is-authenticated) .current-level-title {
+    display: none !important;
+  }
+
+  body.is-authenticated:not([data-page="levels"]) .current-level-title {
+    display: none !important;
+  }
+
+  body.is-authenticated[data-page="levels"] .current-level-title {
+    display: flex !important;
+  }
+
 </style>
 </head>
 <body>
@@ -2196,6 +2210,8 @@
     await auth.signOut();
     currentUser = null;
     document.body.dataset.page = '';
+    const currentLevelTitle = document.getElementById('currentLevelTitle');
+    if (currentLevelTitle) currentLevelTitle.remove();
     updateAuthUI(null);
     goTop();
   };
