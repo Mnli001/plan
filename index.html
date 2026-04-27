@@ -1,517 +1,1053 @@
 <!DOCTYPE html>
 <html lang="mn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-<title>$50 → $1,000 · Алдагдал бүрт шинэ түвшин · Нөхөх бонусгүй</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+<title>$50 → $1,000 · Glass Liquid Trading Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
+  :root {
+    --bg: #050608;
+    --glass: rgba(255, 255, 255, 0.075);
+    --glass-strong: rgba(255, 255, 255, 0.12);
+    --stroke: rgba(255, 215, 0, 0.24);
+    --stroke-strong: rgba(255, 215, 0, 0.55);
+    --gold: #ffd700;
+    --gold-soft: #ffe98a;
+    --gold-dark: #936200;
+    --green: #00f5a0;
+    --red: #ff5d73;
+    --blue: #7dd3fc;
+    --purple: #c084fc;
+    --text: #fff9d7;
+    --muted: rgba(255, 249, 215, 0.68);
+    --shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
   body {
-    background: #020100;
-    font-family: 'Rajdhani', sans-serif;
-    color: #FFFDE7;
-    padding: 12px 8px;
     min-height: 100vh;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text);
+    padding: 18px 10px 88px;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255, 215, 0, 0.18), transparent 28%),
+      radial-gradient(circle at 82% 18%, rgba(0, 245, 160, 0.12), transparent 24%),
+      radial-gradient(circle at 52% 88%, rgba(192, 132, 252, 0.13), transparent 30%),
+      linear-gradient(140deg, #020203 0%, #080607 45%, #0d0a02 100%);
+    overflow-x: hidden;
   }
+
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    inset: auto;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    filter: blur(28px);
+    opacity: 0.23;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatOrb 12s ease-in-out infinite alternate;
+  }
+
+  body::before {
+    left: -120px;
+    top: 80px;
+    background: radial-gradient(circle, #ffd700, transparent 68%);
+  }
+
+  body::after {
+    right: -140px;
+    bottom: 80px;
+    background: radial-gradient(circle, #00f5a0, transparent 68%);
+    animation-delay: -4s;
+  }
+
+  @keyframes floatOrb {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to { transform: translate3d(30px, -24px, 0) scale(1.08); }
+  }
+
   .poster {
-    max-width: 1100px;
+    position: relative;
+    z-index: 1;
+    max-width: 1180px;
     margin: 0 auto;
-    background: linear-gradient(170deg, #0E0B00 0%, #060500 50%, #0A0800 100%);
-    border-left: 1.5px solid #B8860B;
-    border-right: 1.5px solid #B8860B;
-    border-radius: 6px;
-    box-shadow: 0 0 40px rgba(255,200,0,0.12);
+    overflow: hidden;
+    border-radius: 34px;
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.12), rgba(255,255,255,0.035)),
+      radial-gradient(circle at 50% -10%, rgba(255, 215, 0, 0.18), transparent 38%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,0.05);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
   }
+
+  .poster::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.12) 18%, transparent 34%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 90px);
+    pointer-events: none;
+    mix-blend-mode: screen;
+  }
+
   .header {
-    padding: 28px 20px 18px;
+    position: relative;
     text-align: center;
-    border-bottom: 1px solid rgba(184,134,11,0.3);
+    padding: 42px 22px 26px;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.16);
   }
-  .sub-label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: #B8860B;
+
+  .top-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    color: var(--gold-soft);
+    background: rgba(255, 215, 0, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.22);
+    box-shadow: inset 0 0 18px rgba(255, 215, 0, 0.08);
+    font-size: 11px;
+    letter-spacing: 2.6px;
     text-transform: uppercase;
   }
+
   .main-title {
+    margin-top: 12px;
     font-family: 'Cinzel', serif;
-    font-size: clamp(40px, 11vw, 72px);
+    font-size: clamp(46px, 11vw, 92px);
     font-weight: 900;
-    background: linear-gradient(180deg, #FFE566 0%, #FFD700 45%, #A06800 100%);
+    line-height: 1;
+    background: linear-gradient(180deg, #ffffff 0%, #fff1a6 20%, #ffd700 52%, #9f6900 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 32px rgba(255, 215, 0, 0.2);
   }
+
   .plan-title {
+    margin: 14px auto 18px;
+    max-width: 820px;
+    color: rgba(255, 249, 215, 0.84);
     font-family: 'Cinzel', serif;
-    font-size: clamp(13px, 4vw, 18px);
+    font-size: clamp(13px, 3.5vw, 18px);
     letter-spacing: 2px;
-    margin-bottom: 14px;
+    line-height: 1.45;
   }
+
   .badges {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
   }
+
   .badge {
-    background: rgba(184,134,11,0.2);
-    border: 1px solid rgba(255,215,0,0.4);
-    padding: 5px 14px;
-    font-size: 11px;
-    letter-spacing: 1px;
-    color: #FFD700;
-    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 999px;
+    padding: 8px 15px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff4b8;
+    background: linear-gradient(135deg, rgba(255,255,255,0.11), rgba(255,255,255,0.04));
+    border: 1px solid rgba(255, 215, 0, 0.28);
+    box-shadow: inset 0 0 18px rgba(255,255,255,0.04);
   }
+
+  .dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .stat-card {
+    position: relative;
+    min-height: 96px;
+    padding: 15px;
+    border-radius: 24px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.035));
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: inset 0 0 24px rgba(255,255,255,0.04);
+    overflow: hidden;
+  }
+
+  .stat-card::after {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    right: -54px;
+    top: -52px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.2), transparent 70%);
+  }
+
+  .stat-label {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  .stat-value {
+    margin-top: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 900;
+    color: var(--gold-soft);
+  }
+
+  .stat-note {
+    margin-top: 3px;
+    color: rgba(255,255,255,0.58);
+    font-size: 11px;
+  }
+
+  .progress-wrap {
+    padding: 0 16px 16px;
+  }
+
+  .progress-card {
+    padding: 16px;
+    border-radius: 24px;
+    background: rgba(0,0,0,0.26);
+    border: 1px solid rgba(255,215,0,0.16);
+  }
+
+  .progress-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .progress-track {
+    position: relative;
+    height: 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.07);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #00f5a0, #ffd700, #fff2a8);
+    box-shadow: 0 0 24px rgba(255,215,0,0.35);
+    transition: width 0.45s ease;
+  }
+
+  .phase-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    padding: 0 16px 16px;
+  }
+
+  .phase {
+    padding: 12px 10px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.11);
+    text-align: center;
+    transition: 0.25s ease;
+  }
+
+  .phase.active {
+    transform: translateY(-2px);
+    background: linear-gradient(145deg, rgba(255,215,0,0.16), rgba(255,255,255,0.06));
+    border-color: rgba(255,215,0,0.42);
+    box-shadow: 0 10px 28px rgba(255,215,0,0.12);
+  }
+
+  .phase span {
+    display: block;
+    color: var(--gold-soft);
+    font-weight: 800;
+    font-size: 13px;
+  }
+
+  .phase small {
+    display: block;
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 10px;
+  }
+
   .table-wrapper {
-    padding: 14px 12px;
+    padding: 0 16px 16px;
     overflow-x: auto;
   }
+
   .trading-table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-    min-width: 750px;
+    min-width: 920px;
+    border-collapse: separate;
+    border-spacing: 0 9px;
+    font-size: 13px;
   }
+
   .trading-table th {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    padding: 12px 8px;
+    color: #ffeaa0;
     font-family: 'Cinzel', serif;
-    background: linear-gradient(135deg, #1A1200, #2A1E00);
-    border: 1px solid #B8860B;
-    color: #FFD700;
-    padding: 10px 4px;
     font-size: 9px;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     text-align: center;
+    background: rgba(0,0,0,0.58);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255,215,0,0.18);
+    border-bottom: 1px solid rgba(255,215,0,0.18);
   }
+
+  .trading-table th:first-child { border-radius: 18px 0 0 18px; border-left: 1px solid rgba(255,215,0,0.18); }
+  .trading-table th:last-child { border-radius: 0 18px 18px 0; border-right: 1px solid rgba(255,215,0,0.18); }
+
   .trading-table td {
-    padding: 10px 4px;
+    padding: 13px 8px;
     text-align: center;
-    border-bottom: 1px solid rgba(184,134,11,0.2);
-    font-weight: 600;
-    vertical-align: middle;
+    font-weight: 700;
+    background: rgba(255,255,255,0.045);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transition: 0.25s ease;
   }
-  .tr-taken { background: rgba(0, 160, 60, 0.28); border-left: 3px solid #00E676; }
-  .tr-loss { background: rgba(200, 40, 30, 0.28); border-left: 3px solid #FF5252; }
-  .tr-neutral { background: rgba(30, 20, 5, 0.5); }
-  .tr-goal { background: linear-gradient(90deg, rgba(160,100,0,0.3), rgba(255,200,0,0.15)); border-left: 2px solid #FFD700; }
+
+  .trading-table td:first-child {
+    border-left: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px 0 0 20px;
+  }
+
+  .trading-table td:last-child {
+    border-right: 1px solid rgba(255,255,255,0.08);
+    border-radius: 0 20px 20px 0;
+  }
+
+  .trading-table tr:hover td {
+    background: rgba(255,255,255,0.075);
+    transform: translateY(-1px);
+  }
+
+  .tr-taken td {
+    background: linear-gradient(90deg, rgba(0,245,160,0.18), rgba(255,255,255,0.04));
+    border-color: rgba(0,245,160,0.22);
+  }
+
+  .tr-loss td {
+    background: linear-gradient(90deg, rgba(255,93,115,0.20), rgba(255,255,255,0.04));
+    border-color: rgba(255,93,115,0.22);
+  }
+
+  .tr-goal td {
+    background: linear-gradient(90deg, rgba(255,215,0,0.28), rgba(255,255,255,0.07));
+    border-color: rgba(255,215,0,0.4);
+  }
+
+  .level-chip,
+  .goal-flag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 28px;
+    border-radius: 999px;
+    font-weight: 900;
+    color: #0a0800;
+    background: linear-gradient(135deg, #fff2a8, #ffd700 55%, #a76e00);
+    box-shadow: 0 0 18px rgba(255,215,0,0.2);
+  }
+
+  .extra-chip {
+    color: white;
+    background: linear-gradient(135deg, #c084fc, #7c3aed);
+  }
+
+  .bal-cell {
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    color: var(--gold-soft);
+  }
+
+  .lot-cell {
+    color: var(--blue);
+  }
 
   .action-group {
     display: flex;
-    gap: 6px;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 7px;
   }
+
   .btn-sm {
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 700;
-    font-size: 10px;
-    padding: 4px 10px;
-    border-radius: 30px;
-    border: none;
+    border: 0;
     cursor: pointer;
-    background: #2C2400;
-    color: #FFD966;
-    border: 1px solid #B8860B;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: .4px;
+    color: white;
+    transition: 0.2s ease;
+    border: 1px solid rgba(255,255,255,0.18);
   }
-  .btn-taken { background: #004d2e; color: #b9f6ca; border-color: #00E676; }
-  .btn-loss { background: #5e1e1a; color: #ffb4a2; border-color: #FF5252; }
-  .btn-reset { background: #2a2a2a; color: #FFD966; border-color: #7A5500; }
-  .btn-sm:hover { transform: scale(1.02); filter: brightness(1.1); }
+
+  .btn-sm:hover {
+    transform: translateY(-2px) scale(1.025);
+    filter: brightness(1.1);
+  }
+
+  .btn-taken {
+    background: linear-gradient(135deg, rgba(0,245,160,0.95), rgba(0,116,78,0.9));
+    box-shadow: 0 8px 22px rgba(0,245,160,0.14);
+  }
+
+  .btn-loss {
+    background: linear-gradient(135deg, rgba(255,93,115,0.95), rgba(111,21,35,0.92));
+    box-shadow: 0 8px 22px rgba(255,93,115,0.14);
+  }
+
+  .btn-reset {
+    color: #fff2a8;
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,215,0,0.26);
+  }
+
   .outcome-badge {
     display: inline-block;
-    font-weight: 800;
-    padding: 4px 8px;
-    border-radius: 20px;
-    font-size: 10px;
-    background: rgba(0,0,0,0.6);
-    margin-bottom: 4px;
-  }
-  .outcome-profit { color: #00E676; }
-  .outcome-loss { color: #FF5252; }
-  .bal-cell { font-family: 'Cinzel', serif; font-weight: 900; color: #FFE484; }
-  .goal-flag {
-    background: linear-gradient(135deg, #7A5500, #FFD700);
-    color: #000;
-    font-size: 8px;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-weight: 900;
-  }
-  .warning-prev {
-    font-size: 9px;
-    color: #FFB347;
-    background: rgba(0,0,0,0.6);
-    padding: 4px 6px;
-    border-radius: 12px;
-  }
-  .info-section { padding: 12px 14px; display: flex; flex-direction: column; gap: 14px; }
-  .info-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,200,0,0.2);
-    border-radius: 8px;
-    padding: 12px 16px;
-  }
-  .ic-title {
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: #FFD700;
-    margin-bottom: 12px;
-  }
-  .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; }
-  .patience {
-    margin-top: 12px;
-    background: rgba(255,215,0,0.07);
-    border-left: 2px solid #B8860B;
-    padding: 8px 12px;
-    font-style: italic;
+    margin-bottom: 7px;
+    padding: 5px 10px;
+    border-radius: 999px;
     font-size: 11px;
-    color: #FFD966;
+    font-weight: 900;
+    background: rgba(0,0,0,0.34);
+    border: 1px solid rgba(255,255,255,0.12);
   }
-  .divider { display: flex; align-items: center; gap: 12px; margin: 6px 20px; }
-  .div-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, #B8860B, transparent); }
-  .div-gem { width: 6px; height: 6px; background: #FFD700; transform: rotate(45deg); }
-  .quote-section { text-align: center; padding: 16px 20px; }
-  .quote-text { font-size: clamp(13px, 4vw, 18px); font-weight: 700; }
-  .quote-text em { background: linear-gradient(180deg, #FFE566, #FFD700); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .values-row { display: flex; justify-content: space-around; padding: 10px 16px 20px; text-align: center; }
-  .val-item { font-size: 10px; color: #B8860B; }
-  .footer {
-    border-top: 1px solid rgba(255,200,0,0.2);
-    padding: 14px;
+
+  .outcome-profit { color: var(--green); }
+  .outcome-loss { color: var(--red); }
+
+  .warning-prev {
+    display: inline-block;
+    color: #ffcf7a;
+    background: rgba(0,0,0,0.36);
+    border: 1px solid rgba(255,207,122,0.18);
+    padding: 7px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+  }
+
+  .info-section {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 14px;
+    padding: 0 16px 18px;
+  }
+
+  .info-card {
+    position: relative;
+    overflow: hidden;
+    padding: 18px;
+    border-radius: 28px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.035));
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: inset 0 0 30px rgba(255,255,255,0.035);
+  }
+
+  .info-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 14% 0%, rgba(255,215,0,0.13), transparent 38%);
+    pointer-events: none;
+  }
+
+  .ic-title {
+    position: relative;
+    margin-bottom: 13px;
+    color: var(--gold-soft);
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  .rules-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .rule {
+    padding: 11px 12px;
+    border-radius: 18px;
+    color: rgba(255,249,215,0.84);
+    background: rgba(0,0,0,0.22);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .patience {
+    position: relative;
+    margin-top: 13px;
+    padding: 12px 14px;
+    border-left: 3px solid var(--gold);
+    border-radius: 16px;
+    color: #ffeaa0;
+    background: rgba(255,215,0,0.07);
+    font-style: italic;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .calculator-box {
+    position: relative;
+    display: grid;
+    gap: 10px;
+  }
+
+  .calc-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 12px;
+    border-radius: 16px;
+    background: rgba(0,0,0,0.24);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-size: 12px;
+  }
+
+  .calc-line strong { color: var(--gold-soft); }
+  .calc-line span:last-child { color: var(--blue); font-weight: 800; text-align: right; }
+
+  .quote-section {
+    margin: 0 16px 16px;
+    padding: 22px 18px;
     text-align: center;
-    font-size: 9px;
-    letter-spacing: 1px;
-    color: #B8860B;
+    border-radius: 30px;
+    background:
+      linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,255,255,0.04)),
+      radial-gradient(circle at 50% 0%, rgba(255,255,255,0.12), transparent 46%);
+    border: 1px solid rgba(255,215,0,0.22);
   }
+
+  .quote-text {
+    max-width: 840px;
+    margin: 0 auto;
+    font-size: clamp(17px, 4vw, 28px);
+    font-weight: 900;
+    line-height: 1.25;
+  }
+
+  .quote-text em {
+    font-style: normal;
+    background: linear-gradient(180deg, #fff6bd, #ffd700, #a56d00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .quote-sub {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+
+  .values-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    padding: 0 16px 18px;
+  }
+
+  .val-item {
+    padding: 13px 10px;
+    border-radius: 20px;
+    color: #ffeaa0;
+    background: rgba(255,255,255,0.055);
+    border: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    font-weight: 800;
+    font-size: 12px;
+  }
+
+  .footer {
+    position: relative;
+    padding: 18px 14px 22px;
+    text-align: center;
+    border-top: 1px solid rgba(255,215,0,0.16);
+    color: rgba(255,234,160,0.74);
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
+
   #musicBtn {
     position: fixed;
-    bottom: 20px;
-    right: 16px;
+    right: 18px;
+    bottom: 18px;
     z-index: 999;
-    width: 48px;
-    height: 48px;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 20%, #FFD700, #7A5500);
-    border: none;
-    font-size: 22px;
+    border: 1px solid rgba(255,255,255,0.24);
     cursor: pointer;
-    box-shadow: 0 0 12px #ffd700aa;
+    font-size: 22px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,215,0,0.38));
+    box-shadow: 0 16px 40px rgba(255,215,0,0.25), inset 0 0 18px rgba(255,255,255,0.17);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    transition: .2s ease;
   }
-  @media (max-width: 700px) {
-    .btn-sm { padding: 3px 6px; font-size: 8px; }
+
+  #musicBtn:hover { transform: translateY(-3px) scale(1.05); }
+
+  .risk-note {
+    max-width: 980px;
+    margin: 0 auto 18px;
+    padding: 0 16px;
+    color: rgba(255,249,215,0.62);
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  @media (max-width: 900px) {
+    .dashboard { grid-template-columns: repeat(2, 1fr); }
+    .phase-row { grid-template-columns: repeat(2, 1fr); }
+    .info-section { grid-template-columns: 1fr; }
+    .values-row { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px) {
+    body { padding: 10px 6px 78px; }
+    .poster { border-radius: 24px; }
+    .header { padding: 32px 14px 22px; }
+    .dashboard { grid-template-columns: 1fr; padding: 12px; }
+    .phase-row { grid-template-columns: 1fr; padding: 0 12px 12px; }
+    .table-wrapper { padding: 0 12px 12px; }
+    .info-section { padding: 0 12px 14px; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .values-row { grid-template-columns: 1fr; padding: 0 12px 14px; }
+    .quote-section { margin: 0 12px 14px; }
+    .btn-sm { padding: 6px 10px; font-size: 10px; }
   }
 </style>
 </head>
 <body>
-<audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg"></audio>
-<button id="musicBtn" onclick="toggleMusic()" title="Дуу">🔊</button>
+<audio id="bgMusic" loop><source src="music.mp3" type="audio/mpeg" /></audio>
+<button id="musicBtn" onclick="toggleMusic()" title="Дуу">🔇</button>
 
 <div class="poster">
-  <div class="header">
-    <div class="sub-label">XAUUSD · АЛТАН · ДИНАМИК ТҮВШИН</div>
-    <div class="main-title">$50 → $1,000</div>
-    <div class="plan-title">АЛДАХ БҮРТ ШИНЭ ТҮВШИН НЭМЭГДЭНЭ (НӨХӨХ БОНУСГҮЙ)</div>
+  <header class="header">
+    <div class="top-pill">XAUUSD · GLASS LIQUID · DISCIPLINE MODE</div>
+    <h1 class="main-title">$50 → $1,000</h1>
+    <div class="plan-title">АЛДАГДЛЫГ ХӨӨХГҮЙ · ЗӨВХӨН ТӨЛӨВЛӨГӨӨГӨӨ ДАГАНА · LOT-ОО ЗӨВ ТООЦООЛНО</div>
     <div class="badges">
-      <span class="badge">⚖️ Эрсдэл : Ашиг = 1:2</span>
+      <span class="badge">⚖️ RR 1:2</span>
       <span class="badge">🛡️ 20% эрсдэл / хэлцэл</span>
-      <span class="badge">🎯 $1,000 хүртэл түвшин хязгааргүй</span>
+      <span class="badge">🧮 Lot = Risk ÷ Stop-Loss Pips ÷ Pip Value</span>
+      <span class="badge">🎯 Зорилго: $1,000</span>
     </div>
-  </div>
+  </header>
+
+  <section class="dashboard">
+    <div class="stat-card">
+      <div class="stat-label">Одоогийн баланс</div>
+      <div class="stat-value" id="currentBalance">$50.00</div>
+      <div class="stat-note">Сүүлийн сонгосон үр дүнгээр</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Target Progress</div>
+      <div class="stat-value" id="progressPercent">5%</div>
+      <div class="stat-note">$1,000 хүртэлх зам</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Дараагийн эрсдэл</div>
+      <div class="stat-value" id="nextRisk">$10.00</div>
+      <div class="stat-note">Балансын 20%</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Зөв lot</div>
+      <div class="stat-value" id="nextLot">0.10</div>
+      <div class="stat-note" id="lotNote">SL 100 pips гэж тооцсон</div>
+    </div>
+  </section>
+
+  <section class="progress-wrap">
+    <div class="progress-card">
+      <div class="progress-head">
+        <span>Өсөлтийн зам: $50 → $1,000</span>
+        <span id="progressText">$50.00 / $1,000</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </section>
+
+  <section class="phase-row" id="phaseRow">
+    <div class="phase" data-min="0" data-max="100"><span>1-р үе</span><small>$50–$100 · Амьд үлдэх</small></div>
+    <div class="phase" data-min="100" data-max="200"><span>2-р үе</span><small>$100–$200 · Итгэлцэл</small></div>
+    <div class="phase" data-min="200" data-max="400"><span>3-р үе</span><small>$200–$400 · Хурд</small></div>
+    <div class="phase" data-min="400" data-max="700"><span>4-р үе</span><small>$400–$700 · Хяналт</small></div>
+    <div class="phase" data-min="700" data-max="1000"><span>5-р үе</span><small>$700–$1,000 · Finish</small></div>
+  </section>
 
   <div class="table-wrapper">
     <table class="trading-table" id="tradeTable">
       <thead>
-        <tr><th>#</th><th>БАЛАНС ($)</th><th>LOT</th><th>ЭРСДЭЛ ($)</th><th>АШИГ ($)</th><th>ҮР ДҮН / СОНГОЛТ</th><th>ШИНЭ БАЛАНС ($)</th></tr>
+        <tr>
+          <th>#</th>
+          <th>БАЛАНС</th>
+          <th>SL PIPS</th>
+          <th>PIP VALUE</th>
+          <th>LOT</th>
+          <th>ЭРСДЭЛ</th>
+          <th>АШИГ</th>
+          <th>ҮР ДҮН</th>
+          <th>ШИНЭ БАЛАНС</th>
+        </tr>
       </thead>
       <tbody id="tableBody"></tbody>
     </table>
   </div>
 
-  <div class="divider"><div class="div-line"></div><div class="div-gem"></div><div class="div-line"></div></div>
-  <div class="info-section">
+  <section class="info-section">
     <div class="info-card">
-      <div class="ic-title">⚔️ ХЭРХЭН АЖИЛЛАДАГ ВЭ?</div>
+      <div class="ic-title">⚔️ АРИЛЖААНЫ ДҮРЭМ</div>
       <div class="rules-grid">
-        <div class="rule">📌 АЛДАХ БҮРТ: Нэмэлт түвшин (+1 level) автоматаар нэмэгдэнэ</div>
-        <div class="rule">💰 Зөвхөн 20% эрсдэл, 1:2 ашиг. Нөхөх бонус байхгүй.</div>
-        <div class="rule">🎯 $1,000-д хүрэх хүртэл түвшний тоо хязгааргүй (9-с хэтрэнэ)</div>
-        <div class="rule">🔄 Болиулах товч — сонголтыг цуцалж, нэмэгдсэн түвшнүүдийг устгана</div>
+        <div class="rule">📌 Entry зөвхөн setup бүрэн болсон үед. FOMO entry хийхгүй.</div>
+        <div class="rule">🛡️ Нэг арилжаанд балансын 20%-иас илүү эрсдэл авахгүй.</div>
+        <div class="rule">⚖️ RR заавал 1:2 буюу түүнээс дээш байна. RR муу бол арилжаа авахгүй.</div>
+        <div class="rule">🧮 Lot-оо entry хийхээс өмнө SL pips + pip value-р заавал шалгана.</div>
+        <div class="rule">🚫 Алдсаны дараа шууд нөхөх гэж орохгүй. Дараагийн setup хүртэл хүлээнэ.</div>
+        <div class="rule">🧊 Сэтгэл хөдөлсөн үед арилжаа хийхгүй. Calm mind = clean execution.</div>
       </div>
-      <div class="patience">✨ ЖИШЭЭ: 9-р түвшинд алдахад 10, 11... гэх мэт $1,000 хүртэл нэмэгдсээр байна. Нэмэлт зорилт, бонус гэж байхгүй.</div>
+      <div class="patience">✨ Нэг trade амьдралыг өөрчлөхгүй. Харин нэг дүрмээ эвдэх нь account-ыг устгаж чадна.</div>
     </div>
+
+    <div class="info-card">
+      <div class="ic-title">🧮 LOT ЗӨВ ТООЦОХ САНАМЖ</div>
+      <div class="calculator-box">
+        <div class="calc-line"><strong>Risk $</strong><span>Balance × 20%</span></div>
+        <div class="calc-line"><strong>Lot formula</strong><span>Risk ÷ SL pips ÷ Pip value</span></div>
+        <div class="calc-line"><strong>Энэ plan дээр</strong><span>SL 100 pips · $1 / pip / 1 lot</span></div>
+        <div class="calc-line"><strong>Жишээ</strong><span>$50 × 20% = $10 → 0.10 lot</span></div>
+      </div>
+      <div class="patience">⚠️ Broker бүрийн XAUUSD pip value өөр байж болно. MT4/MT5 дээр position size calculator-аар давхар шалга.</div>
+    </div>
+  </section>
+
+  <section class="quote-section">
+    <div class="quote-text">“<em>Discipline</em> бол хурдан баяжих арга биш. Discipline бол account-оо амьд үлдээж, боломж ирэхэд бэлэн байх хүч.”</div>
+    <div class="quote-sub">Хугацааны таамаг: төгс дарааллаар 4–8 win хэрэгтэй. Loss орвол хугацаа уртасна. Чухал нь хурд биш, дүрмээ эвдэхгүй байх.</div>
+  </section>
+
+  <section class="values-row">
+    <div class="val-item">📈 Тэвчээр</div>
+    <div class="val-item">🧊 Сэтгэлзүй</div>
+    <div class="val-item">🧮 Зөв lot</div>
+    <div class="val-item">🎯 Зөв setup</div>
+  </section>
+
+  <div class="risk-note">
+    Санамж: Энэ нь зөвхөн төлөвлөгөөний dashboard загвар. 20% эрсдэл нь өндөр эрсдэлтэй тул бодит дансанд хэрэглэхээс өмнө demo/backtest дээр шалгаж, өөрийн stop-loss болон broker-ийн pip value-д тааруулж lot-оо бодоорой.
   </div>
 
-  <div class="quote-section">
-    <div class="quote-text">Алдагдал бүр — <em>шинэ түвшин</em>. Зорилго ижил: <em>$1,000</em></div>
-  </div>
-  <div class="values-row">
-    <div class="val-item">📈 Тэвчээр</div><div class="val-item">🔁 Дасан зохицох</div>
-    <div class="val-item">🎯 Зорилгод чиглэл</div><div class="val-item">⚡ Алдагдал → шинэ түвшин</div>
-  </div>
-  <div class="footer">
-    <div>⚡ АЛДАХ БҮРТ ШИНЭ ТҮВШИН НЭМЭГДЭНЭ · НӨХӨХ БОНУСГҮЙ ⚡</div>
-    <div style="font-size:8px; margin-top:4px;">Зөвхөн баланс, эрсдэл, ашиг — цэвэр механик</div>
-  </div>
+  <footer class="footer">⚡ PLAN THE TRADE · CALCULATE THE LOT · EXECUTE WITHOUT EMOTION ⚡</footer>
 </div>
 
 <script>
-  // ======================= ЦЭВЭР ЛОГИК: АЛДАХ БҮРТ ШИНЭ ТҮВШИН =======================
-  const RISK_PERCENT = 0.20;
-  const REWARD_RATIO = 2;
-  const START_BALANCE = 50;
-  const TARGET_BALANCE = 1000;
+  // ======================== TRADING PLAN LOGIC ========================
+  const RISK = 0.20;
+  const RR = 2;
+  const START = 50;
+  const TARGET = 1000;
 
-  // levelOutcomes: 'taken', 'loss', null (шийдээгүй)
-  let levelOutcomes = [];
+  // XAUUSD example settings. Өөрийн broker-ийн pip value болон SL-д тааруулж өөрчилж болно.
+  const STOP_LOSS_PIPS = 100;
+  const PIP_VALUE_PER_1_LOT = 1;
+  const MIN_LOT = 0.01;
+  const MAX_LOT = 3.00;
 
-  // Суурь 9 түвшин
-  function initLevels() {
-    levelOutcomes = new Array(9).fill(null);
+  let outcomes = [];
+
+  function init() {
+    outcomes = new Array(9).fill(null);
   }
 
-  // Төгсгөлд шинэ түвшин нэмэх (зөвхөн зорилтод хүрээгүй, сүүлийн түвшин шийдэгдсэн үед)
-  function addLevelIfNeeded(finalBalance, lastLevelDecided) {
-    if (finalBalance >= TARGET_BALANCE) return false;
-    if (lastLevelDecided && levelOutcomes.length > 0) {
-      const lastOutcome = levelOutcomes[levelOutcomes.length - 1];
-      if (lastOutcome === 'taken' || lastOutcome === 'loss') {
-        levelOutcomes.push(null);
-        return true;
-      }
-    }
-    return false;
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
   }
 
-  // Түвшнүүдийн тооцоолол (баланс дараалал)
-  function computeLevels() {
-    let currentBalance = START_BALANCE;
+  function round2(value) {
+    return Math.round((value + Number.EPSILON) * 100) / 100;
+  }
+
+  function calculateLot(risk, slPips = STOP_LOSS_PIPS, pipValue = PIP_VALUE_PER_1_LOT) {
+    const rawLot = risk / slPips / pipValue;
+    return round2(clamp(rawLot, MIN_LOT, MAX_LOT));
+  }
+
+  function compute() {
+    let balance = START;
     const levels = [];
-    for (let i = 0; i < levelOutcomes.length; i++) {
-      const startBal = currentBalance;
-      const risk = startBal * RISK_PERCENT;
-      const profit = risk * REWARD_RATIO;
-      let lotVal = risk / 1000;
-      lotVal = Math.max(0.01, Math.min(0.3, lotVal));
-      lotVal = Math.round(lotVal * 100) / 100;
-      
-      const outcome = levelOutcomes[i];
-      let newBalance = null;
-      if (outcome === 'taken') {
-        newBalance = startBal + profit;
-      } else if (outcome === 'loss') {
-        newBalance = Math.max(0, startBal - risk);
-      }
-      
+
+    for (let i = 0; i < outcomes.length; i++) {
+      const startBal = balance;
+      const risk = startBal * RISK;
+      const profit = risk * RR;
+      const lot = calculateLot(risk);
+      const outcome = outcomes[i];
+      let newBal = null;
+
+      if (outcome === 'taken') newBal = startBal + profit;
+      if (outcome === 'loss') newBal = Math.max(0, startBal - risk);
+
       levels.push({
         idx: i,
         startBalance: startBal,
-        risk: risk,
-        profit: profit,
-        lot: lotVal,
-        outcome: outcome,
-        newBalance: newBalance
+        risk,
+        profit,
+        lot,
+        slPips: STOP_LOSS_PIPS,
+        pipValue: PIP_VALUE_PER_1_LOT,
+        outcome,
+        newBalance: newBal
       });
-      
-      if (outcome === 'taken' || outcome === 'loss') {
-        currentBalance = newBalance;
-      }
+
+      if (outcome === 'taken' || outcome === 'loss') balance = newBal;
     }
-    const finalBalance = currentBalance;
-    return { levels, finalBalance };
+
+    return { levels, finalBalance: balance };
   }
 
-  // Шинэчлэх (нэмэлт түвшин шаардлагатай бол нэмэх)
-  function refreshAndAddLevels() {
-    const { finalBalance, levels } = computeLevels();
-    const lastIdx = levelOutcomes.length - 1;
-    const lastDecided = lastIdx >= 0 && (levelOutcomes[lastIdx] === 'taken' || levelOutcomes[lastIdx] === 'loss');
-    if (finalBalance < TARGET_BALANCE && lastDecided) {
-      levelOutcomes.push(null);
-      // Дахин тооцоолол хийхгүй, дараагийн рендерээр шинэчлэгдэнэ
-    }
+  function needMoreLevels() {
+    const { finalBalance } = compute();
+    if (finalBalance >= TARGET) return false;
+    const last = outcomes[outcomes.length - 1];
+    return last === 'taken' || last === 'loss';
   }
 
-  // Сонголт хийх
-  function setOutcome(levelIndex, outcomeType) {
-    if (levelIndex < 0 || levelIndex >= levelOutcomes.length) return false;
-    // Өмнөх түвшин null байж болохгүй
-    if (levelIndex > 0 && levelOutcomes[levelIndex-1] === null) {
-      alert(`⚠️ ${levelIndex+1}-р түвшинд шилжихийн тулд эхлээд ${levelIndex}-р түвшний үр дүнг сонгоно уу!`);
+  function addLevelIfNeeded() {
+    while (needMoreLevels()) outcomes.push(null);
+  }
+
+  function setOutcome(idx, type) {
+    if (idx < 0 || idx >= outcomes.length) return false;
+
+    if (idx > 0 && outcomes[idx - 1] === null) {
+      alert(`⚠️ ${idx + 1}-р түвшинд шилжихийн тулд эхлээд ${idx}-р түвшний үр дүнг сонгоно уу!`);
       return false;
     }
-    if (levelOutcomes[levelIndex] === outcomeType) return false;
-    
-    levelOutcomes[levelIndex] = outcomeType;
-    // Дараа бүх түвшнийг устгах
-    if (levelOutcomes.length > levelIndex + 1) {
-      levelOutcomes = levelOutcomes.slice(0, levelIndex + 1);
-    }
-    // Суурь 9-с доош бол 9 хүртэл дүүргэх
-    while (levelOutcomes.length < 9) levelOutcomes.push(null);
-    
-    // Нэмэлт түвшин шаардлагатай эсэхийг шалгах (зорилтод хүрээгүй, сүүлийн түвшин шийдэгдсэн)
-    const { finalBalance } = computeLevels();
-    const lastOutcome = levelOutcomes[levelOutcomes.length - 1];
-    if (finalBalance < TARGET_BALANCE && (lastOutcome === 'taken' || lastOutcome === 'loss')) {
-      levelOutcomes.push(null);
-    }
-    
-    renderTable();
+
+    outcomes[idx] = type;
+
+    if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1);
+    while (outcomes.length < 9) outcomes.push(null);
+
+    addLevelIfNeeded();
+    render();
     return true;
   }
-  
-  // Сонголтыг буцаах (болиулах)
-  function resetOutcome(levelIndex) {
-    if (levelIndex < 0 || levelIndex >= levelOutcomes.length) return;
-    if (levelOutcomes[levelIndex] === null) return;
-    
-    levelOutcomes[levelIndex] = null;
-    // Дараа бүх түвшнийг устгах
-    if (levelOutcomes.length > levelIndex + 1) {
-      levelOutcomes = levelOutcomes.slice(0, levelIndex + 1);
-    }
-    while (levelOutcomes.length < 9) levelOutcomes.push(null);
-    
-    renderTable();
+
+  function resetOutcome(idx) {
+    if (idx < 0 || idx >= outcomes.length) return;
+    outcomes[idx] = null;
+
+    if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1);
+    while (outcomes.length < 9) outcomes.push(null);
+
+    render();
   }
-  
-  // Хүснэгт зурах
-  function renderTable() {
-    const { levels, finalBalance } = computeLevels();
+
+  function formatMoney(value) {
+    return `$${Number(value).toFixed(2)}`;
+  }
+
+  function updateDashboard(finalBalance, levels) {
+    const progress = clamp((finalBalance / TARGET) * 100, 0, 100);
+    const nextLevel = levels.find(l => l.outcome === null) || levels[levels.length - 1];
+    const nextRisk = nextLevel ? nextLevel.risk : finalBalance * RISK;
+    const nextLot = calculateLot(nextRisk);
+
+    document.getElementById('currentBalance').textContent = formatMoney(finalBalance);
+    document.getElementById('progressPercent').textContent = `${progress.toFixed(1)}%`;
+    document.getElementById('nextRisk').textContent = formatMoney(nextRisk);
+    document.getElementById('nextLot').textContent = nextLot.toFixed(2);
+    document.getElementById('lotNote').textContent = `SL ${STOP_LOSS_PIPS} pips гэж тооцсон`;
+    document.getElementById('progressText').textContent = `${formatMoney(finalBalance)} / ${formatMoney(TARGET)}`;
+    document.getElementById('progressFill').style.width = `${progress}%`;
+
+    document.querySelectorAll('.phase').forEach(phase => {
+      const min = Number(phase.getAttribute('data-min'));
+      const max = Number(phase.getAttribute('data-max'));
+      const active = finalBalance >= min && finalBalance < max;
+      const finished = finalBalance >= TARGET && max === TARGET;
+      phase.classList.toggle('active', active || finished);
+    });
+  }
+
+  function render() {
+    const { levels, finalBalance } = compute();
     const tbody = document.getElementById('tableBody');
     if (!tbody) return;
-    let rowsHtml = '';
-    
+
+    let html = '';
+
     for (let i = 0; i < levels.length; i++) {
-      const lvl = levels[i];
-      const startBal = lvl.startBalance;
-      const risk = lvl.risk;
-      const profit = lvl.profit;
-      const lotVal = lvl.lot;
-      const outcome = lvl.outcome;
-      const newBal = lvl.newBalance;
-      
+      const l = levels[i];
       let rowClass = 'tr-neutral';
-      if (outcome === 'taken') rowClass = 'tr-taken';
-      else if (outcome === 'loss') rowClass = 'tr-loss';
-      
-      const isGoalReached = (startBal >= TARGET_BALANCE) || (newBal && newBal >= TARGET_BALANCE);
-      let levelDisplay = `${i+1}`;
-      if (isGoalReached) {
-        levelDisplay = `<span class="goal-flag">🏆${i+1}</span>`;
+      if (l.outcome === 'taken') rowClass = 'tr-taken';
+      if (l.outcome === 'loss') rowClass = 'tr-loss';
+
+      const isGoal = l.startBalance >= TARGET || (l.newBalance && l.newBalance >= TARGET);
+      let levelDisplay = `<span class="level-chip">${i + 1}</span>`;
+
+      if (isGoal) {
+        levelDisplay = `<span class="goal-flag">🏆 ${i + 1}</span>`;
         rowClass = 'tr-goal';
-      } else if (i >= 8) {
-        levelDisplay = `<span class="goal-flag" style="background:#9C27B0;">+${i+1}</span>`;
+      } else if (i >= 9) {
+        levelDisplay = `<span class="level-chip extra-chip">+${i + 1}</span>`;
       } else if (i === 8) {
-        levelDisplay = `<span class="goal-flag">★${i+1}</span>`;
+        levelDisplay = `<span class="goal-flag">★ ${i + 1}</span>`;
       }
-      
-      let displayNewBalance = '—';
-      if (outcome === 'taken') displayNewBalance = `$${newBal.toFixed(2)}`;
-      else if (outcome === 'loss') displayNewBalance = `$${newBal.toFixed(2)}`;
-      
-      const isPrevUnresolved = (i > 0 && levelOutcomes[i-1] === null);
-      let outcomeCellContent = '';
-      if (isPrevUnresolved && outcome === null) {
-        outcomeCellContent = `<span class="warning-prev">⚡ Эхлээд ${i}-р түвшинг шийднэ үү</span>`;
+
+      let newBalText = '—';
+      if (l.outcome === 'taken') newBalText = formatMoney(l.newBalance);
+      if (l.outcome === 'loss') newBalText = formatMoney(l.newBalance);
+
+      const prevNull = i > 0 && outcomes[i - 1] === null;
+      let actionHtml = '';
+
+      if (prevNull && l.outcome === null) {
+        actionHtml = `<span class="warning-prev">⚡ Эхлээд ${i}-р түвшинг шийднэ үү</span>`;
+      } else if (l.outcome === 'taken') {
+        actionHtml = `
+          <div class="outcome-badge outcome-profit">✅ АВСАН (+${formatMoney(l.profit)})</div>
+          <div class="action-group">
+            <button class="btn-sm btn-loss" data-level="${i}" data-action="loss">❌ АЛДСАН</button>
+            <button class="btn-sm btn-reset" data-level="${i}" data-action="reset">↺ Болиулах</button>
+          </div>`;
+      } else if (l.outcome === 'loss') {
+        actionHtml = `
+          <div class="outcome-badge outcome-loss">❌ АЛДСАН (-${formatMoney(l.risk)})</div>
+          <div class="action-group">
+            <button class="btn-sm btn-taken" data-level="${i}" data-action="taken">✅ АВСАН</button>
+            <button class="btn-sm btn-reset" data-level="${i}" data-action="reset">↺ Болиулах</button>
+          </div>`;
       } else {
-        if (outcome === 'taken') {
-          outcomeCellContent = `
-            <div class="outcome-badge outcome-profit">✅ АВСАН (+$${profit.toFixed(2)})</div>
-            <div class="action-group">
-              <button class="btn-sm btn-loss" data-level="${i}" data-action="loss">❌ АЛДСАН</button>
-              <button class="btn-sm btn-reset" data-level="${i}" data-action="reset">↺ Болиулах</button>
-            </div>
-          `;
-        } else if (outcome === 'loss') {
-          outcomeCellContent = `
-            <div class="outcome-badge outcome-loss">❌ АЛДСАН (-$${risk.toFixed(2)})</div>
-            <div class="action-group">
-              <button class="btn-sm btn-taken" data-level="${i}" data-action="taken">✅ АВСАН</button>
-              <button class="btn-sm btn-reset" data-level="${i}" data-action="reset">↺ Болиулах</button>
-            </div>
-          `;
-        } else {
-          outcomeCellContent = `
-            <div class="action-group">
-              <button class="btn-sm btn-taken" data-level="${i}" data-action="taken">✅ АВСАН</button>
-              <button class="btn-sm btn-loss" data-level="${i}" data-action="loss">❌ АЛДСАН</button>
-            </div>
-          `;
-        }
+        actionHtml = `
+          <div class="action-group">
+            <button class="btn-sm btn-taken" data-level="${i}" data-action="taken">✅ АВСАН</button>
+            <button class="btn-sm btn-loss" data-level="${i}" data-action="loss">❌ АЛДСАН</button>
+          </div>`;
       }
-      
-      rowsHtml += `
+
+      const balanceColor = l.outcome === 'taken' ? 'color: var(--green);' : (l.outcome === 'loss' ? 'color: #ffb0bc;' : 'color: rgba(255,255,255,0.55);');
+
+      html += `
         <tr class="${rowClass}">
-          <td style="font-weight:800;">${levelDisplay}</td>
-          <td class="bal-cell">$${startBal.toFixed(2)}</td>
-          <td>${lotVal.toFixed(2)}</td>
-          <td style="color:#FF9F8F;">$${risk.toFixed(2)}</td>
-          <td style="color:#B9F6CA;">$${profit.toFixed(2)}</td>
-          <td style="min-width: 160px;">${outcomeCellContent}</td>
-          <td style="font-weight:700; ${outcome === 'taken' ? 'color:#00E676;' : (outcome === 'loss' ? 'color:#FFAA88;' : 'color:#aaa')}">${displayNewBalance}</td>
-        </tr>
-      `;
+          <td>${levelDisplay}</td>
+          <td class="bal-cell">${formatMoney(l.startBalance)}</td>
+          <td>${l.slPips}</td>
+          <td>$${l.pipValue.toFixed(2)}</td>
+          <td class="lot-cell">${l.lot.toFixed(2)}</td>
+          <td style="color:#ffb0bc;">${formatMoney(l.risk)}</td>
+          <td style="color:#b9ffd7;">${formatMoney(l.profit)}</td>
+          <td style="min-width:190px;">${actionHtml}</td>
+          <td style="font-weight:900; ${balanceColor}">${newBalText}</td>
+        </tr>`;
     }
-    tbody.innerHTML = rowsHtml;
-    
+
+    tbody.innerHTML = html;
+    updateDashboard(finalBalance, levels);
+
     document.querySelectorAll('.btn-taken, .btn-loss, .btn-reset').forEach(btn => {
-      btn.removeEventListener('click', handleButtonClick);
-      btn.addEventListener('click', handleButtonClick);
+      btn.removeEventListener('click', handleClick);
+      btn.addEventListener('click', handleClick);
     });
   }
-  
-  function handleButtonClick(e) {
-    e.stopPropagation();
+
+  function handleClick(e) {
     const btn = e.currentTarget;
-    const level = parseInt(btn.getAttribute('data-level'));
+    const level = parseInt(btn.getAttribute('data-level'), 10);
     const action = btn.getAttribute('data-action');
-    if (isNaN(level)) return;
+
+    if (Number.isNaN(level)) return;
     if (action === 'taken') setOutcome(level, 'taken');
-    else if (action === 'loss') setOutcome(level, 'loss');
-    else if (action === 'reset') resetOutcome(level);
+    if (action === 'loss') setOutcome(level, 'loss');
+    if (action === 'reset') resetOutcome(level);
   }
-  
-  // Дууны удирдлага
+
+  // ======================== MUSIC ========================
   const audio = document.getElementById('bgMusic');
   const musicBtn = document.getElementById('musicBtn');
-  let musicPlaying = false;
-  function tryPlayMusic() {
+  let playing = false;
+
+  function tryPlay() {
     if (!audio) return;
-    audio.volume = 0.4;
-    audio.play().then(() => {
-      musicPlaying = true;
-      if(musicBtn) musicBtn.textContent = '🔊';
-    }).catch(() => {
-      musicPlaying = false;
-      if(musicBtn) musicBtn.textContent = '🔇';
-    });
+    audio.volume = 0.38;
+    audio.play()
+      .then(() => {
+        playing = true;
+        musicBtn.textContent = '🔊';
+      })
+      .catch(() => {
+        playing = false;
+        musicBtn.textContent = '🔇';
+      });
   }
+
   window.toggleMusic = function() {
     if (!audio) return;
-    if (musicPlaying) {
+
+    if (playing) {
       audio.pause();
-      musicPlaying = false;
+      playing = false;
       musicBtn.textContent = '🔇';
     } else {
       audio.play().then(() => {
-        musicPlaying = true;
+        playing = true;
         musicBtn.textContent = '🔊';
-      }).catch(() => {});
+      }).catch(() => {
+        playing = false;
+        musicBtn.textContent = '🔇';
+      });
     }
-    musicBtn.style.transform = 'scale(1.2)';
-    setTimeout(() => { if(musicBtn) musicBtn.style.transform = 'scale(1)'; }, 150);
+
+    musicBtn.style.transform = 'scale(1.18)';
+    setTimeout(() => { musicBtn.style.transform = ''; }, 150);
   };
-  
+
   window.addEventListener('load', () => {
-    initLevels();  // 9 түвшин null
-    renderTable();
-    tryPlayMusic();
-    document.addEventListener('click', function onceTouch() {
-      if (!musicPlaying) tryPlayMusic();
-    }, { once: true });
+    init();
+    render();
+    document.addEventListener('click', () => { if (!playing) tryPlay(); }, { once: true });
   });
 </script>
 </body>
