@@ -1006,6 +1006,57 @@
     }
   }
 
+
+  /* ===== APP PAGE SWITCH MODE ===== */
+  body.is-authenticated .page-section {
+    display: none !important;
+  }
+
+  body.is-authenticated[data-page="home"] .page-home,
+  body.is-authenticated[data-page="stats"] .page-stats,
+  body.is-authenticated[data-page="levels"] .page-levels,
+  body.is-authenticated[data-page="history"] .page-history,
+  body.is-authenticated[data-page="leaderboard"] .page-leaderboard {
+    display: grid !important;
+  }
+
+  body.is-authenticated[data-page="home"] .progress-wrap.page-home,
+  body.is-authenticated[data-page="home"] .info-section.page-home,
+  body.is-authenticated[data-page="home"] .quote-section.page-home,
+  body.is-authenticated[data-page="home"] .risk-note.page-home,
+  body.is-authenticated[data-page="home"] .footer.page-home,
+  body.is-authenticated[data-page="levels"] .table-wrapper.page-levels,
+  body.is-authenticated[data-page="history"] .history-panel.page-history,
+  body.is-authenticated[data-page="leaderboard"] .leaderboard-panel.page-leaderboard {
+    display: block !important;
+  }
+
+  .page-title-card {
+    margin: 16px 16px 10px;
+    padding: 16px 18px;
+    border-radius: 26px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .bottom-nav a.active {
+    color: #06120b;
+    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
+  }
+
+  body:not(.is-authenticated) .page-title-card {
+    display: none !important;
+  }
+
+  @media (max-width: 700px) {
+    .page-title-card {
+      margin: 12px 12px 10px;
+      padding: 14px 16px;
+      border-radius: 22px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1056,7 +1107,14 @@
     </div>
   </section>
 
-<section class="profile-wrap app-only" id="profileSection">
+  <section class="page-title-card app-only glass-card" id="pageTitleCard">
+    <div>
+      <div class="auth-kicker">CURRENT PAGE</div>
+      <div class="auth-title" id="pageTitleText">Home</div>
+    </div>
+  </section>
+
+  <section class="profile-wrap app-only page-section page-home" id="profileSection">
     <div class="profile-card glass-card">
       <div>
         <div class="auth-kicker">TRADER PROFILE</div>
@@ -1067,7 +1125,7 @@
     </div>
   </section>
 
-<section class="dashboard app-only">
+<section class="dashboard app-only page-section page-home" id="homeDashboard">
     <div class="stat-card glass-card">
       <div class="stat-label">Одоогийн баланс</div>
       <div class="stat-value" id="currentBalance">$50.00</div>
@@ -1090,7 +1148,7 @@
     </div>
   </section>
 
-  <section class="progress-wrap app-only" id="progressSection">
+  <section class="progress-wrap app-only page-section page-home" id="progressSection">
     <div class="progress-card glass-card">
       <div class="progress-head">
         <span>Өсөлтийн зам: $50 → $1,000</span>
@@ -1099,7 +1157,7 @@
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
   </section>
-<section class="pro-stats app-only" id="statsSection">
+<section class="pro-stats app-only page-section page-stats" id="statsSection">
     <div class="mini-card glass-card"><span>Win</span><strong id="statWins">0</strong></div>
     <div class="mini-card glass-card"><span>Loss</span><strong id="statLosses">0</strong></div>
     <div class="mini-card glass-card"><span>Win Rate</span><strong id="statWinRate">0%</strong></div>
@@ -1107,7 +1165,7 @@
     <div class="mini-card glass-card"><span>Best Balance</span><strong id="statBestBalance">$50.00</strong></div>
   </section>
 
-  <section class="smart-grid app-only" id="rulesSection">
+  <section class="smart-grid app-only page-section page-stats" id="rulesSection">
     <div class="smart-card glass-card">
       <div class="smart-title">🧊 REVENGE TRADE LOCK</div>
       <div class="lock-display" id="revengeLock">Ready</div>
@@ -1115,7 +1173,7 @@
     </div>
   </section>
 
-  <div class="table-wrapper app-only" id="levelsSection">
+  <div class="table-wrapper app-only page-section page-levels" id="levelsSection">
     <table class="trading-table" id="tradeTable">
       <thead>
         <tr>
@@ -1133,7 +1191,7 @@
     </table>
   </div>
 
-  <section class="history-panel glass-card app-only" id="historySection">
+  <section class="history-panel glass-card app-only page-section page-history" id="historySection">
     <div class="history-head">
       <div>
         <div class="auth-kicker">TRADE HISTORY</div>
@@ -1146,7 +1204,7 @@
 
 
   
-  <section class="leaderboard-panel glass-card app-only" id="leaderboardSection">
+  <section class="leaderboard-panel glass-card app-only page-section page-leaderboard" id="leaderboardSection">
     <div class="leaderboard-head">
       <div>
         <div class="auth-kicker">LEADERBOARD</div>
@@ -1159,7 +1217,7 @@
     </div>
   </section>
 
-<section class="info-section app-only">
+<section class="info-section app-only page-section page-home">
     <div class="info-card glass-card">
       <div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div>
       <div class="rules-grid">
@@ -1171,24 +1229,24 @@
     </div>
   </section>
 
-  <section class="quote-section glass-card app-only">
+  <section class="quote-section glass-card app-only page-section page-home">
     <div class="quote-text">“Зах зээл чамайг шагнах албагүй. Харин чи <em>дүрмээ хамгаалж</em> чадвал боломж ирэх мөчид бэлэн байна.”</div>
     <div class="quote-sub">Чухал нь хурд биш — дүрмээ эвдэхгүй, lot-оо хэтрүүлэхгүй байх.</div>
   </section>
 
-  <div class="risk-note app-only">
+  <div class="risk-note app-only page-section page-home">
     Санамж: 20% risk бол өндөр эрсдэл. Бодит entry хийхээс өмнө XAUUSD-ийн stop-loss, spread, broker-ийн lot step-ээ заавал шалга.
   </div>
 
-  <footer class="footer app-only">⚡ PLAN THE TRADE · CALCULATE THE LOT · EXECUTE WITHOUT EMOTION ⚡</footer>
+  <footer class="footer app-only page-section page-home">⚡ PLAN THE TRADE · CALCULATE THE LOT · EXECUTE WITHOUT EMOTION ⚡</footer>
 </div>
 
 <nav class="bottom-nav app-only">
-  <a href="#top">Home</a>
-  <a href="#statsSection">Stats</a>
-  <a href="#levelsSection">Levels</a>
-  <a href="#historySection">History</a>
-  <a href="#leaderboardSection">Leaderboard</a>
+  <a href="#home" data-page="home" class="active" onclick="showPage('home'); return false;">Home</a>
+  <a href="#stats" data-page="stats" onclick="showPage('stats'); return false;">Stats</a>
+  <a href="#levels" data-page="levels" onclick="showPage('levels'); return false;">Levels</a>
+  <a href="#history" data-page="history" onclick="showPage('history'); return false;">History</a>
+  <a href="#leaderboard" data-page="leaderboard" onclick="showPage('leaderboard'); return false;">Leaderboard</a>
   
 </nav>
 
@@ -1549,7 +1607,7 @@
 
     if (wrapper && !document.getElementById('currentLevelTitle')) {
       const title = document.createElement('div');
-      title.className = 'current-level-title';
+      title.className = 'current-level-title page-section page-levels';
       title.id = 'currentLevelTitle';
       wrapper.parentNode.insertBefore(title, wrapper);
     }
@@ -1792,6 +1850,7 @@
     const logoutBtn = document.getElementById('logoutBtn');
 
     document.body.classList.toggle('is-authenticated', !!user);
+    if (!user) document.body.dataset.page = '';
 
     if (user) {
       if (title) title.textContent = `${user.displayName || 'Trader'} · progress хадгалагдаж байна`;
@@ -1854,6 +1913,37 @@
       password: document.getElementById('loginPasswordInput')?.value.trim() || ''
     };
   }
+
+
+  window.showPage = function(page) {
+    const allowed = ['home', 'stats', 'levels', 'history', 'leaderboard'];
+    const nextPage = allowed.includes(page) ? page : 'home';
+
+    document.body.dataset.page = nextPage;
+
+    document.querySelectorAll('.bottom-nav a[data-page]').forEach(link => {
+      link.classList.toggle('active', link.dataset.page === nextPage);
+    });
+
+    const titles = {
+      home: 'Home',
+      stats: 'Stats',
+      levels: 'Levels',
+      history: 'History',
+      leaderboard: 'Leaderboard'
+    };
+
+    const title = document.getElementById('pageTitleText');
+    if (title) title.textContent = titles[nextPage] || 'Home';
+
+    if (nextPage === 'leaderboard' && typeof loadLeaderboard === 'function') {
+      loadLeaderboard();
+    }
+
+    const poster = document.querySelector('.poster');
+    if (poster) poster.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
 
   function initFirebase() {
     try {
