@@ -276,7 +276,7 @@
 
   .smart-grid {
     display: grid;
-    grid-template-columns: 1.2fr .9fr .9fr;
+    grid-template-columns: 1fr;
     gap: 14px;
     padding-bottom: 16px;
   }
@@ -830,6 +830,152 @@
     }
   }
 
+
+  /* ===== TOP ACCOUNT + PROFILE COMPACT LAYOUT ===== */
+  .top-account-grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 12px;
+    padding: 16px 16px 8px;
+  }
+
+  .top-account-grid .auth-panel,
+  .top-account-grid .profile-wrap {
+    padding: 0 !important;
+  }
+
+  .top-account-grid .auth-glass,
+  .top-account-grid .profile-card {
+    min-height: 138px;
+    height: 100%;
+  }
+
+  .top-account-grid .auth-glass {
+    padding: 14px !important;
+  }
+
+  .top-account-grid .auth-title {
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  .top-account-grid .auth-status {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .top-account-grid .auth-mode-tabs {
+    margin-bottom: 10px;
+  }
+
+  .top-account-grid .auth-tab {
+    height: 34px;
+    padding: 0 12px;
+  }
+
+  .top-account-grid .auth-login-wrap,
+  .top-account-grid .auth-register-wrap {
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+  }
+
+  .top-account-grid .auth-stack {
+    gap: 8px;
+  }
+
+  .top-account-grid .auth-input {
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .top-account-grid .big-auth-btn {
+    min-width: 118px;
+    height: 84px !important;
+    font-size: 14px;
+  }
+
+  .top-account-grid .auth-register-wrap .big-auth-btn {
+    height: 130px !important;
+  }
+
+  .top-account-grid .profile-card {
+    padding: 18px !important;
+    grid-template-columns: 1fr auto;
+  }
+
+  .top-account-grid .profile-name {
+    font-size: 24px;
+  }
+
+  .top-account-grid .profile-meta {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .pro-stats {
+    grid-template-columns: repeat(5, 1fr) !important;
+  }
+
+  .current-level-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .level-restart-btn {
+    min-height: 36px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 215, 0, 0.28);
+    cursor: pointer;
+    color: #fff2a8;
+    background: rgba(255,255,255,0.08);
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 900;
+    letter-spacing: .4px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .level-restart-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+  }
+
+  @media (max-width: 900px) {
+    .top-account-grid {
+      grid-template-columns: 1fr;
+      padding: 12px 12px 8px;
+    }
+
+    .top-account-grid .auth-login-wrap,
+    .top-account-grid .auth-register-wrap {
+      grid-template-columns: 1fr;
+    }
+
+    .top-account-grid .big-auth-btn,
+    .top-account-grid .auth-register-wrap .big-auth-btn {
+      width: 100%;
+      height: 46px !important;
+    }
+
+    .pro-stats {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    .current-level-title {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .level-restart-btn {
+      width: 100%;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -848,7 +994,8 @@
     </div>
   </header>
 
-  <section class="auth-panel" id="authPanel">
+  <section class="top-account-grid" id="accountTop">
+    <div class="auth-panel" id="authPanel">
     <div class="auth-glass glass-card">
       <div class="auth-head">
         <div>
@@ -914,9 +1061,9 @@
       </div>
       <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
     </div>
-  </section>
+    </div>
 
-  <section class="profile-wrap app-only" id="profileSection">
+    <div class="profile-wrap app-only" id="profileSection">
     <div class="profile-card glass-card">
       <div>
         <div class="auth-kicker">TRADER PROFILE</div>
@@ -933,33 +1080,13 @@
     <div class="mini-card glass-card"><span>Win Rate</span><strong id="statWinRate">0%</strong></div>
     <div class="mini-card glass-card"><span>Streak</span><strong id="statStreak">—</strong></div>
     <div class="mini-card glass-card"><span>Best Balance</span><strong id="statBestBalance">$50.00</strong></div>
-    <div class="mini-card glass-card"><span>Discipline</span><strong id="statDiscipline">—</strong></div>
   </section>
 
   <section class="smart-grid app-only" id="rulesSection">
-    <div class="smart-card glass-card checklist-card">
-      <div class="smart-title">✅ BEFORE ENTRY CHECKLIST</div>
-      <div class="checklist" id="entryChecklist">
-        <label><input type="checkbox" data-check="trend"> Trend тодорхой</label>
-        <label><input type="checkbox" data-check="setup"> Setup бүрэн</label>
-        <label><input type="checkbox" data-check="rr"> RR 1:2+</label>
-        <label><input type="checkbox" data-check="sl"> SL тодорхой</label>
-        <label><input type="checkbox" data-check="lot"> Lot шалгасан</label>
-      </div>
-      <div class="check-meter"><div id="checkFill"></div></div>
-      <div class="smart-note" id="checkStatus">Checklist бөглөөд entry ав.</div>
-    </div>
-
     <div class="smart-card glass-card">
       <div class="smart-title">🧊 REVENGE TRADE LOCK</div>
       <div class="lock-display" id="revengeLock">Ready</div>
       <div class="smart-note">Loss дараа шууд арилжаанд орохгүй. Тайван байж дараагийн setup хүлээнэ.</div>
-    </div>
-
-    <div class="smart-card glass-card">
-      <div class="smart-title">🔥 TODAY'S RULE</div>
-      <div class="daily-rule" id="dailyRule">Setup байхгүй бол trade байхгүй.</div>
-      <button class="soft-btn" onclick="newDailyRule()">Өөр rule</button>
     </div>
   </section>
 
@@ -1043,7 +1170,6 @@
 
   const STORAGE_KEY = 'xauusd_50_to_1000_outcomes_v2';
   const JOURNAL_KEY = 'xauusd_50_to_1000_journal_v2';
-  const CHECKLIST_KEY = 'xauusd_50_to_1000_checklist_v2';
   const REVENGE_KEY = 'xauusd_50_to_1000_revenge_v2';
   const HISTORY_KEY = 'xauusd_50_to_1000_history_v2';
 
@@ -1067,16 +1193,6 @@
   let firebaseReady = false;
   let lastMilestone = 0;
   let revengeUntil = Number(localStorage.getItem(REVENGE_KEY) || 0);
-
-  const RULES = [
-    'Setup байхгүй бол trade байхгүй.',
-    'FOMO бол entry биш, trap.',
-    'Lot буруу бол analysis зөв байсан ч trade буруу.',
-    'Loss дараа revenge биш, review хий.',
-    'Зах зээл боломж өгнө. Чи зөвхөн бэлэн байх ёстой.',
-    'Нэг trade биш, 100 trade-ийн discipline чамайг өсгөнө.',
-    'SL бол дайсан биш. SL бол account хамгаалагч.'
-  ];
 
   function clamp(value, min, max) {
     return Math.max(min, Math.min(max, value));
@@ -1213,6 +1329,35 @@
     saveJSON(HISTORY_KEY, tradeHistory);
   }
 
+
+  window.restartLastLevel = function() {
+    const lastIndex = outcomes.map((o, i) => o ? i : -1).filter(i => i >= 0).pop();
+
+    if (lastIndex === undefined || lastIndex === null || lastIndex < 0) {
+      alert('Буцаах сонголт алга байна.');
+      return;
+    }
+
+    const ok = confirm(`${lastIndex + 1}-р level-ийн сонголтыг буцаах уу?`);
+    if (!ok) return;
+
+    outcomes[lastIndex] = null;
+    if (outcomes.length > lastIndex + 1) outcomes = outcomes.slice(0, lastIndex + 1);
+    while (outcomes.length < 9) outcomes.push(null);
+
+    for (let i = tradeHistory.length - 1; i >= 0; i--) {
+      if (Number(tradeHistory[i].level) === lastIndex + 1) {
+        tradeHistory.splice(i, 1);
+        break;
+      }
+    }
+
+    saveJSON(HISTORY_KEY, tradeHistory);
+    saveProgress();
+    render();
+  };
+
+
   function renderHistory() {
     const box = document.getElementById('historyList');
     if (!box) return;
@@ -1348,14 +1493,11 @@
       else break;
     }
 
-    const avgScore = '—';
-
     document.getElementById('statWins').textContent = wins;
     document.getElementById('statLosses').textContent = losses;
     document.getElementById('statWinRate').textContent = `${winRate}%`;
     document.getElementById('statStreak').textContent = streakCount ? `${streakType === 'taken' ? 'W' : 'L'}${streakCount}` : '—';
     document.getElementById('statBestBalance').textContent = formatMoney(bestBalance);
-    document.getElementById('statDiscipline').textContent = avgScore === '—' ? '—' : `${avgScore}/10`;
   }
 
   function renderTable() {
@@ -1378,7 +1520,7 @@
 
     const titleEl = document.getElementById('currentLevelTitle');
     if (titleEl) {
-      titleEl.textContent = `CURRENT LEVEL · ${currentIndex + 1}-р түвшин`;
+      titleEl.innerHTML = `<span>CURRENT LEVEL · ${currentIndex + 1}-р түвшин</span><button class="level-restart-btn" onclick="restartLastLevel()">↺ Level restart</button>`;
     }
 
     const l = visibleLevel;
@@ -1436,28 +1578,6 @@
     });
   }
 
-  function initChecklist() {
-    const saved = loadJSON(CHECKLIST_KEY, {});
-    document.querySelectorAll('#entryChecklist input').forEach(input => {
-      input.checked = !!saved[input.dataset.check];
-      input.addEventListener('change', updateChecklist);
-    });
-    updateChecklist();
-  }
-
-  function updateChecklist() {
-    const inputs = Array.from(document.querySelectorAll('#entryChecklist input'));
-    const saved = {};
-    const checked = inputs.filter(i => i.checked).length;
-    inputs.forEach(i => { saved[i.dataset.check] = i.checked; });
-    saveJSON(CHECKLIST_KEY, saved);
-
-    const percent = inputs.length ? Math.round((checked / inputs.length) * 100) : 0;
-    document.getElementById('checkFill').style.width = `${percent}%`;
-    document.getElementById('checkStatus').textContent =
-      percent === 100 ? 'Бэлэн. Одоо зөвхөн plan дагуу execute.' : `${checked}/${inputs.length} checklist бөглөгдсөн.`;
-  }
-
   function renderMilestone() {
     const finalBalance = compute().finalBalance;
     const milestones = [100, 200, 500, 700, 1000];
@@ -1509,16 +1629,6 @@
     renderProfile();
   }
 
-  window.newDailyRule = function() {
-    const el = document.getElementById('dailyRule');
-    const current = el.textContent;
-    let next = current;
-    while (next === current && RULES.length > 1) {
-      next = RULES[Math.floor(Math.random() * RULES.length)];
-    }
-    el.textContent = next;
-  };
-
   window.resetPlanProgress = function() {
     const ok = confirm('Бүх level-ийн сонголтыг reset хийх үү? Journal note хэвээр үлдэнэ.');
     if (!ok) return;
@@ -1546,7 +1656,7 @@
       if (registerForm) registerForm.style.display = 'none';
       if (modeTabs) modeTabs.style.display = 'none';
       if (logoutBtn) logoutBtn.style.display = 'inline-flex';
-      setAuthStatus(`Нэвтэрсэн: ${user.email}`);
+      setAuthStatus('Нэвтэрсэн.');
     } else {
       if (title) title.textContent = 'Нэвтэрч progress-оо хадгал';
       if (modeTabs) modeTabs.style.display = 'flex';
@@ -1655,7 +1765,7 @@
         localStorage.setItem(REVENGE_KEY, String(revengeUntil));
       }
 
-      setAuthStatus('Cloud progress ачааллаа. Энэ account дээр хадгалагдана.');
+      setAuthStatus('Cloud sync on.');
       render();
     } catch (error) {
       console.warn('Cloud load error:', error);
@@ -1744,7 +1854,6 @@
   window.addEventListener('load', () => {
     initFirebase();
     init();
-    initChecklist();
     render();
     updateRevengeLock();
     setInterval(updateRevengeLock, 1000);
