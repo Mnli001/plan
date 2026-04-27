@@ -887,6 +887,125 @@
     .auth-mode-tabs { display: grid; grid-template-columns: 1fr 1fr; }
   }
 
+
+  /* ===== LEADERBOARD ===== */
+  .leaderboard-panel {
+    margin: 0 16px 16px;
+    padding: 18px;
+    border-radius: 30px;
+  }
+
+  .leaderboard-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .leaderboard-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .leaderboard-row {
+    display: grid;
+    grid-template-columns: 58px 1fr auto auto;
+    gap: 12px;
+    align-items: center;
+    padding: 13px 14px;
+    border-radius: 22px;
+    background: rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+
+  .leaderboard-row.my-rank {
+    border-color: rgba(255,215,0,0.42);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 0 24px rgba(255,215,0,0.10);
+  }
+
+  .leaderboard-rank {
+    width: 42px;
+    height: 42px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #06120b;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
+  }
+
+  .leaderboard-name strong {
+    display: block;
+    color: #fff0a8;
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+  }
+
+  .leaderboard-name span {
+    display: block;
+    margin-top: 3px;
+    color: rgba(255,249,215,0.62);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .leaderboard-balance {
+    text-align: right;
+    color: var(--green);
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+    font-size: 15px;
+  }
+
+  .leaderboard-record {
+    text-align: right;
+    color: rgba(255,249,215,0.70);
+    font-size: 12px;
+    font-weight: 900;
+    min-width: 82px;
+  }
+
+  .leaderboard-empty {
+    padding: 14px;
+    border-radius: 18px;
+    color: rgba(255,249,215,0.66);
+    background: rgba(0,0,0,0.18);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-weight: 800;
+  }
+
+  @media (max-width: 700px) {
+    .leaderboard-panel {
+      margin: 0 12px 16px;
+      padding: 16px;
+      border-radius: 26px;
+    }
+
+    .leaderboard-head {
+      align-items: flex-start;
+    }
+
+    .leaderboard-row {
+      grid-template-columns: 46px 1fr;
+      gap: 10px;
+    }
+
+    .leaderboard-balance,
+    .leaderboard-record {
+      grid-column: 2 / -1;
+      text-align: left;
+    }
+
+    .bottom-nav a {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1026,7 +1145,21 @@
   </section>
 
 
-  <section class="info-section app-only">
+  
+  <section class="leaderboard-panel glass-card app-only" id="leaderboardSection">
+    <div class="leaderboard-head">
+      <div>
+        <div class="auth-kicker">LEADERBOARD</div>
+        <div class="auth-title">Account balance ranking</div>
+      </div>
+      <button class="soft-btn" onclick="loadLeaderboard()">Refresh</button>
+    </div>
+    <div class="leaderboard-list" id="leaderboardList">
+      <div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>
+    </div>
+  </section>
+
+<section class="info-section app-only">
     <div class="info-card glass-card">
       <div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div>
       <div class="rules-grid">
@@ -1055,6 +1188,7 @@
   <a href="#statsSection">Stats</a>
   <a href="#levelsSection">Levels</a>
   <a href="#historySection">History</a>
+  <a href="#leaderboardSection">Leaderboard</a>
   
 </nav>
 
@@ -1208,6 +1342,8 @@
         setAuthStatus('Cloud дээр хадгалахад алдаа гарлаа. Firestore rules/config-оо шалга.');
       });
     }
+
+    saveLeaderboardStats();
   }
 
 
@@ -1529,6 +1665,97 @@
     renderProfile();
   }
 
+
+  function getPublicStats() {
+    const { finalBalance } = compute();
+    const completed = getCompletedLevels();
+    const wins = completed.filter(l => l.outcome === 'taken').length;
+    const losses = completed.filter(l => l.outcome === 'loss').length;
+    const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START);
+    const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0;
+
+    return {
+      name: currentUser?.displayName || 'Trader',
+      balance: Number(finalBalance.toFixed(2)),
+      bestBalance: Number(bestBalance.toFixed(2)),
+      wins,
+      losses,
+      winRate,
+      trades: wins + losses,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+  }
+
+  async function saveLeaderboardStats() {
+    if (!firebaseReady || !currentUser || !db) return;
+
+    try {
+      await db.collection('leaderboard').doc(currentUser.uid).set(getPublicStats(), { merge: true });
+    } catch (error) {
+      console.warn('Leaderboard хадгалах боломжгүй байна:', error);
+    }
+  }
+
+  window.loadLeaderboard = async function() {
+    const box = document.getElementById('leaderboardList');
+    if (!box) return;
+
+    if (!firebaseReady || !db) {
+      box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>';
+      return;
+    }
+
+    try {
+      box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>';
+
+      const snap = await db.collection('leaderboard')
+        .orderBy('balance', 'desc')
+        .limit(20)
+        .get();
+
+      if (snap.empty) {
+        box.innerHTML = '<div class="leaderboard-empty">Одоогоор leaderboard дээр account байхгүй байна.</div>';
+        return;
+      }
+
+      let rank = 0;
+      const rows = [];
+
+      snap.forEach(doc => {
+        rank++;
+        const data = doc.data() || {};
+        const isMe = currentUser && doc.id === currentUser.uid;
+
+        rows.push(`
+          <div class="leaderboard-row ${isMe ? 'my-rank' : ''}">
+            <div class="leaderboard-rank">#${rank}</div>
+            <div class="leaderboard-name">
+              <strong>${escapeHTML(data.name || 'Trader')}</strong>
+              <span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span>
+            </div>
+            <div class="leaderboard-balance">${formatMoney(Number(data.balance || 0))}</div>
+            <div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div>
+          </div>
+        `);
+      });
+
+      box.innerHTML = rows.join('');
+    } catch (error) {
+      console.warn('Leaderboard унших боломжгүй байна:', error);
+      box.innerHTML = '<div class="leaderboard-empty">Leaderboard уншихад permission/index алдаа гарлаа. Firestore rules шалгаарай.</div>';
+    }
+  };
+
+  function escapeHTML(value) {
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
+  }
+
+
   window.resetAllData = function() {
     const ok = confirm('Progress, history, local data бүгдийг reset хийх үү?');
     if (!ok) return;
@@ -1644,7 +1871,7 @@
       auth.onAuthStateChanged(async (user) => {
         currentUser = user;
         updateAuthUI(user);
-        if (user) await loadCloudData();
+        if (user) { await loadCloudData(); await saveLeaderboardStats(); loadLeaderboard(); }
       });
     } catch (error) {
       console.warn('Firebase init error:', error);
@@ -1718,6 +1945,7 @@
         }
       }, { merge: true });
       updateAuthUI(cred.user);
+      await saveLeaderboardStats();
       setAuthStatus('Бүртгэл амжилттай. Progress энэ account дээр хадгалагдлаа.');
       render();
     } catch (error) {
