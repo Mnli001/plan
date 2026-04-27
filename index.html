@@ -1977,6 +1977,142 @@
     line-height: 1.4 !important;
   }
 
+
+  .leaderboard-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .leaderboard-balance.negative-profit {
+    color: var(--red) !important;
+  }
+
+  @media (max-width: 700px) {
+    .leaderboard-buttons {
+      width: 100%;
+      justify-content: stretch;
+    }
+
+    .leaderboard-buttons .soft-btn {
+      flex: 1;
+      min-width: 0;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+
+  /* ===== ADMIN PANEL ===== */
+  .admin-panel {
+    margin: 0 16px 16px;
+    padding: 18px;
+    border-radius: 30px;
+  }
+  .admin-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .admin-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .danger-btn {
+    color: #ffd2d9 !important;
+    border-color: rgba(255,93,115,0.36) !important;
+    background: rgba(255,93,115,0.12) !important;
+  }
+  .admin-note {
+    margin-bottom: 14px;
+    color: rgba(255,249,215,0.68);
+    font-size: 12px;
+    line-height: 1.45;
+    font-weight: 800;
+  }
+  .admin-note code {
+    color: #fff0a8;
+    background: rgba(0,0,0,0.22);
+    padding: 2px 6px;
+    border-radius: 8px;
+  }
+  .admin-list {
+    display: grid;
+    gap: 10px;
+  }
+  .admin-user-row {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr .8fr .8fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 13px 14px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.10);
+  }
+  .admin-user-main strong {
+    display: block;
+    color: #fff0a8;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+  }
+  .admin-user-main span,
+  .admin-cell span {
+    display: block;
+    margin-top: 3px;
+    color: rgba(255,249,215,0.62);
+    font-size: 11px;
+    font-weight: 800;
+    word-break: break-all;
+  }
+  .admin-cell strong {
+    color: #fff9d7;
+    font-size: 14px;
+  }
+  .admin-profit {
+    color: var(--green) !important;
+    font-family: 'Cinzel', serif;
+    font-weight: 900;
+  }
+  .admin-profit.negative {
+    color: var(--red) !important;
+  }
+  body:not(.is-admin) .admin-only {
+    display: none !important;
+  }
+  body.is-authenticated[data-page="admin"].is-admin .page-admin,
+  body.is-authenticated[data-page="admin"].is-admin #adminSection {
+    display: block !important;
+  }
+  @media (max-width: 850px) {
+    .admin-user-row {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+    .admin-actions {
+      width: 100%;
+      justify-content: stretch;
+    }
+    .admin-actions .soft-btn {
+      flex: 1;
+    }
+  }
+  @media (max-width: 700px) {
+    .admin-panel {
+      margin: 0 12px 16px;
+      padding: 16px;
+      border-radius: 26px;
+    }
+    .admin-head {
+      display: grid;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -2186,9 +2322,9 @@
     <div class="leaderboard-head">
       <div>
         <div class="auth-kicker">LEADERBOARD</div>
-        <div class="auth-title">Account balance ranking</div>
+        <div class="auth-title">Net profit ranking</div>
       </div>
-      <button class="soft-btn" onclick="loadLeaderboard()">Refresh</button>
+      <div class="leaderboard-buttons"><button class="soft-btn" onclick="loadLeaderboard()">Refresh</button></div>
     </div>
     <div class="leaderboard-list" id="leaderboardList">
       <div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>
@@ -2219,6 +2355,29 @@
   <footer class="footer app-only page-section page-home">⚡ PLAN THE TRADE · CALCULATE THE LOT · EXECUTE WITHOUT EMOTION ⚡</footer>
 </div>
 
+
+  <section class="admin-panel glass-card app-only page-section page-admin admin-only" id="adminSection">
+    <div class="admin-head">
+      <div>
+        <div class="auth-kicker">ADMIN PANEL</div>
+        <div class="auth-title">Users / Leaderboard control</div>
+      </div>
+      <div class="admin-actions">
+        <button class="soft-btn" onclick="loadAdminUsers()">Refresh users</button>
+        <button class="soft-btn danger-btn" onclick="adminResetAllLeaderboard()">Reset leaderboard</button>
+      </div>
+    </div>
+
+    <div class="admin-note">
+      Зөвхөн Firebase дээр <code>admins/{uid}</code> document-той account энэ хэсгийг харж ашиглана.
+    </div>
+
+    <div class="admin-list" id="adminUsersList">
+      <div class="leaderboard-empty">Admin users ачааллахад бэлэн.</div>
+    </div>
+  </section>
+
+
 <nav class="bottom-nav app-only">
   <a href="#home" data-page="home" class="active" onclick="showPage('home'); return false;">Home</a>
   <a href="#stats" data-page="stats" onclick="showPage('stats'); return false;">Stats</a>
@@ -2226,6 +2385,7 @@
   <a href="#history" data-page="history" onclick="showPage('history'); return false;">History</a>
   <a href="#leaderboard" data-page="leaderboard" onclick="showPage('leaderboard'); return false;">Leaderboard</a>
   
+  <a href="#admin" data-page="admin" class="admin-only" onclick="showPage('admin'); return false;">Admin</a>
 </nav>
 
 <div class="milestone-toast app-only" id="milestoneToast"></div>
@@ -2259,6 +2419,7 @@
   const JOURNAL_KEY = 'xauusd_50_to_1000_journal_v2';
   const REVENGE_KEY = 'xauusd_50_to_1000_revenge_v2';
   const HISTORY_KEY = 'xauusd_50_to_1000_history_v2';
+  const LEADERBOARD_COLLECTION = 'leaderboard_profit_reset_v1';
 
   // Firebase Console → Project settings → Web app config-оо энд солино.
   const firebaseConfig = {
@@ -2868,17 +3029,208 @@
   }
 
 
-  function getPublicStats() {
+  async function checkAdminStatus() {
+    document.body.classList.remove('is-admin');
+
+    if (!firebaseReady || !currentUser || !db) return false;
+
+    try {
+      const snap = await db.collection('admins').doc(currentUser.uid).get();
+      const isAdmin = snap.exists;
+      document.body.classList.toggle('is-admin', isAdmin);
+      return isAdmin;
+    } catch (error) {
+      console.warn('Admin шалгах боломжгүй байна:', error);
+      return false;
+    }
+  }
+
+  function computeUserChallenge(startBalance, savedOutcomes) {
+    const safeStart = Number(startBalance || 0);
+    const safeOutcomes = Array.isArray(savedOutcomes) ? savedOutcomes : [];
+    let balance = safeStart > 0 ? safeStart : 0;
+    let wins = 0;
+    let losses = 0;
+    let currentLevel = 1;
+
+    for (let i = 0; i < Math.max(safeOutcomes.length, 9); i++) {
+      const outcome = safeOutcomes[i] || null;
+      if (!outcome) {
+        currentLevel = i + 1;
+        break;
+      }
+
+      const risk = round2(balance * RISK);
+      const profit = round2(risk * RR);
+
+      if (outcome === 'taken') {
+        balance = round2(balance + profit);
+        wins++;
+      } else if (outcome === 'loss') {
+        balance = round2(Math.max(0, balance - risk));
+        losses++;
+      }
+
+      currentLevel = i + 2;
+      if (balance >= TARGET || balance <= 0) break;
+    }
+
+    const start = safeStart || balance;
+    const profit = round2(balance - start);
+    const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0;
+
+    return { startBalance: start, balance, profit, wins, losses, trades: wins + losses, winRate, currentLevel };
+  }
+
+  window.loadAdminUsers = async function() {
+    const box = document.getElementById('adminUsersList');
+    if (!box) return;
+
+    if (!firebaseReady || !currentUser || !db) {
+      box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>';
+      return;
+    }
+
+    const isAdmin = await checkAdminStatus();
+    if (!isAdmin) {
+      box.innerHTML = '<div class="leaderboard-empty">Admin эрх байхгүй байна.</div>';
+      return;
+    }
+
+    try {
+      box.innerHTML = '<div class="leaderboard-empty">Users ачааллаж байна...</div>';
+
+      const snap = await db.collection('users').limit(200).get();
+
+      if (snap.empty) {
+        box.innerHTML = '<div class="leaderboard-empty">User байхгүй байна.</div>';
+        return;
+      }
+
+      const rows = [];
+      snap.forEach(doc => {
+        const data = doc.data() || {};
+        const challenge = data.challenge || {};
+        const stats = computeUserChallenge(Number(challenge.startBalance || data.startBalance || START || 0), challenge.outcomes || []);
+
+        rows.push(`
+          <div class="admin-user-row">
+            <div class="admin-user-main">
+              <strong>${escapeHTML(data.name || 'Trader')}</strong>
+              <span>${escapeHTML(data.email || doc.id)}</span>
+            </div>
+            <div class="admin-cell">
+              <strong>${formatMoney(stats.balance)}</strong>
+              <span>Balance</span>
+            </div>
+            <div class="admin-cell">
+              <strong class="admin-profit ${stats.profit < 0 ? 'negative' : ''}">${stats.profit >= 0 ? '+' : ''}${formatMoney(stats.profit)}</strong>
+              <span>Net profit</span>
+            </div>
+            <div class="admin-cell">
+              <strong>Level ${stats.currentLevel}</strong>
+              <span>${stats.wins}W / ${stats.losses}L · ${stats.winRate}%</span>
+            </div>
+            <button class="soft-btn" onclick="adminResetUserLeaderboard('${doc.id}')">Reset profit</button>
+          </div>
+        `);
+      });
+
+      box.innerHTML = rows.join('');
+    } catch (error) {
+      console.warn('Admin users уншихад алдаа:', error);
+      box.innerHTML = `<div class="leaderboard-empty">Admin data уншихад алдаа: ${escapeHTML(error.message)}</div>`;
+    }
+  };
+
+  window.adminResetAllLeaderboard = async function() {
+    const isAdmin = await checkAdminStatus();
+    if (!isAdmin) {
+      alert('Admin эрх байхгүй байна.');
+      return;
+    }
+
+    const ok = confirm('Бүх leaderboard net profit-ийг 0$ болгох уу? Хүмүүсийн progress өөрчлөгдөхгүй.');
+    if (!ok) return;
+
+    try {
+      const snap = await db.collection(LEADERBOARD_COLLECTION).limit(500).get();
+      const batch = db.batch();
+
+      snap.forEach(doc => {
+        const data = doc.data() || {};
+        const currentProfit = Number(data.currentProfit || 0);
+        batch.set(doc.ref, {
+          baseProfit: currentProfit,
+          netProfit: 0,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+      });
+
+      await batch.commit();
+      await loadLeaderboard();
+      await loadAdminUsers();
+      alert('Leaderboard reset хийгдлээ.');
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  window.adminResetUserLeaderboard = async function(userId) {
+    const isAdmin = await checkAdminStatus();
+    if (!isAdmin) {
+      alert('Admin эрх байхгүй байна.');
+      return;
+    }
+
+    const ok = confirm('Энэ user-ийн leaderboard net profit-ийг 0$ болгох уу?');
+    if (!ok) return;
+
+    try {
+      const ref = db.collection(LEADERBOARD_COLLECTION).doc(userId);
+      const snap = await ref.get();
+      const data = snap.exists ? snap.data() : {};
+      const currentProfit = Number(data.currentProfit || 0);
+
+      await ref.set({
+        baseProfit: currentProfit,
+        netProfit: 0,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+
+      await loadLeaderboard();
+      await loadAdminUsers();
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+
+  function getCurrentProfitValue() {
+    const { finalBalance } = compute();
+    const start = Number(START || 0);
+    const current = Number(finalBalance || 0);
+    if (!Number.isFinite(start) || !Number.isFinite(current)) return 0;
+    return round2(current - start);
+  }
+
+  function getPublicStats(baseProfit = 0) {
     const { finalBalance } = compute();
     const completed = getCompletedLevels();
     const wins = completed.filter(l => l.outcome === 'taken').length;
     const losses = completed.filter(l => l.outcome === 'loss').length;
-    const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START);
+    const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START || 0);
     const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0;
+    const currentProfit = getCurrentProfitValue();
+    const netProfit = round2(currentProfit - Number(baseProfit || 0));
 
     return {
       name: currentUser?.displayName || 'Trader',
+      startBalance: Number(START || 0),
       balance: Number(finalBalance.toFixed(2)),
+      currentProfit: Number(currentProfit.toFixed(2)),
+      baseProfit: Number(Number(baseProfit || 0).toFixed(2)),
+      netProfit: Number(netProfit.toFixed(2)),
       bestBalance: Number(bestBalance.toFixed(2)),
       wins,
       losses,
@@ -2892,7 +3244,20 @@
     if (!firebaseReady || !currentUser || !db) return;
 
     try {
-      await db.collection('leaderboard').doc(currentUser.uid).set(getPublicStats(), { merge: true });
+      const ref = db.collection(LEADERBOARD_COLLECTION).doc(currentUser.uid);
+      const snap = await ref.get();
+
+      let baseProfit;
+      if (snap.exists && Number.isFinite(Number(snap.data()?.baseProfit))) {
+        baseProfit = Number(snap.data().baseProfit);
+      } else {
+        // New leaderboard season reset:
+        // first time this version runs, user's current profit becomes baseline,
+        // so everyone starts from $0 net profit on this leaderboard.
+        baseProfit = getCurrentProfitValue();
+      }
+
+      await ref.set(getPublicStats(baseProfit), { merge: true });
     } catch (error) {
       console.warn('Leaderboard хадгалах боломжгүй байна:', error);
     }
@@ -2910,13 +3275,13 @@
     try {
       box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>';
 
-      const snap = await db.collection('leaderboard')
-        .orderBy('balance', 'desc')
+      const snap = await db.collection(LEADERBOARD_COLLECTION)
+        .orderBy('netProfit', 'desc')
         .limit(20)
         .get();
 
       if (snap.empty) {
-        box.innerHTML = '<div class="leaderboard-empty">Одоогоор leaderboard дээр account байхгүй байна.</div>';
+        box.innerHTML = '<div class="leaderboard-empty">Шинэ net profit leaderboard хоосон байна. Account-ууд login хийхэд 0$-оос эхэлж нэмэгдэнэ.</div>';
         return;
       }
 
@@ -2927,6 +3292,7 @@
         rank++;
         const data = doc.data() || {};
         const isMe = currentUser && doc.id === currentUser.uid;
+        const profit = Number(data.netProfit || 0);
 
         rows.push(`
           <div class="leaderboard-row ${isMe ? 'my-rank' : ''}">
@@ -2935,7 +3301,7 @@
               <strong>${escapeHTML(data.name || 'Trader')}</strong>
               <span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span>
             </div>
-            <div class="leaderboard-balance">${formatMoney(Number(data.balance || 0))}</div>
+            <div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${formatMoney(profit)}</div>
             <div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div>
           </div>
         `);
@@ -2956,6 +3322,7 @@
       .replaceAll('"', '&quot;')
       .replaceAll("'", '&#039;');
   }
+
 
 
   window.resetAllData = function() {
@@ -3061,7 +3428,7 @@
 
 
   window.showPage = function(page) {
-    const allowed = ['home', 'stats', 'levels', 'history', 'leaderboard'];
+    const allowed = ['home', 'stats', 'levels', 'history', 'leaderboard', 'admin'];
     const nextPage = allowed.includes(page) ? page : 'home';
 
     document.body.dataset.page = nextPage;
@@ -3075,7 +3442,8 @@
       stats: 'Stats',
       levels: 'Levels',
       history: 'History',
-      leaderboard: 'Leaderboard'
+      leaderboard: 'Leaderboard',
+      admin: 'Admin'
     };
 
     const title = document.getElementById('pageTitleText');
@@ -3083,6 +3451,10 @@
 
     if (nextPage === 'leaderboard' && typeof loadLeaderboard === 'function') {
       loadLeaderboard();
+    }
+
+    if (nextPage === 'admin' && typeof loadAdminUsers === 'function') {
+      loadAdminUsers();
     }
 
     const poster = document.querySelector('.poster');
@@ -3345,28 +3717,7 @@
 
 </script>
 
-<!--
-Recommended Firestore rules for this version:
 
-rules_version = '2';
-
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /users/{userId} {
-      allow read, write: if request.auth != null && request.auth.uid == userId;
-
-      match /trades/{tradeId} {
-        allow read, write: if request.auth != null && request.auth.uid == userId;
-      }
-    }
-
-    match /leaderboard/{userId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == userId;
-    }
-  }
-}
--->
 
 
   <div class="settings-overlay" id="settingsOverlay" onclick="closeSettingsPopup(event)">
@@ -3390,6 +3741,55 @@ service cloud.firestore {
       <div class="settings-note">Чухал action бүр confirm асууна. Санамсаргүй дарахад шууд устгахгүй.</div>
     </div>
   </div>
+
+
+
+
+
+<!--
+Recommended Firestore rules for admin version:
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() &&
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    match /admins/{adminId} {
+      allow read: if isSignedIn() && request.auth.uid == adminId;
+      allow write: if false;
+    }
+
+    match /users/{userId} {
+      allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+      allow write: if isSignedIn() && request.auth.uid == userId;
+
+      match /trades/{tradeId} {
+        allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+        allow write: if isSignedIn() && request.auth.uid == userId;
+      }
+    }
+
+    match /leaderboard_profit_reset_v1/{userId} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+    }
+  }
+}
+
+Admin болгох:
+1. Firebase Console → Authentication → Users → өөрийн admin account UID-г copy.
+2. Firestore Database → Start collection → admins
+3. Document ID дээр UID-гаа paste.
+4. Хоосон field нэмэх боломжгүй бол role: "admin" гэж field нэм.
+-->
 
 </body>
 </html>
