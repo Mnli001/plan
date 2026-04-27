@@ -1889,6 +1889,94 @@
     }
   }
 
+
+  /* ===== FINAL SETTINGS POPUP FIX ===== */
+  #settingsOverlay.settings-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 99999 !important;
+    display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 18px !important;
+    background: rgba(0,0,0,0.52) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+  }
+
+  #settingsOverlay.settings-overlay.show {
+    display: flex !important;
+  }
+
+  body.settings-open {
+    overflow: hidden !important;
+  }
+
+  #settingsOverlay .settings-modal {
+    width: min(520px, calc(100vw - 28px)) !important;
+    max-height: calc(100vh - 48px) !important;
+    overflow-y: auto !important;
+    padding: 18px !important;
+    border-radius: 30px !important;
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.20), rgba(255,255,255,0.07)),
+      radial-gradient(circle at 10% 0%, rgba(255,215,0,0.18), transparent 44%) !important;
+    border: 1px solid rgba(255,255,255,0.24) !important;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.58), inset 0 1px 0 rgba(255,255,255,0.25) !important;
+  }
+
+  #settingsOverlay .settings-modal-head {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+    margin-bottom: 14px !important;
+  }
+
+  #settingsOverlay .settings-close-btn {
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(255,255,255,0.20) !important;
+    cursor: pointer !important;
+    color: #fff2a8 !important;
+    background: rgba(255,255,255,0.10) !important;
+    font-weight: 900 !important;
+  }
+
+  #settingsOverlay .settings-actions {
+    display: grid !important;
+    gap: 10px !important;
+  }
+
+  #settingsOverlay .settings-action {
+    min-height: 50px !important;
+    padding: 0 14px !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
+    cursor: pointer !important;
+    color: #fff2a8 !important;
+    text-align: left !important;
+    font-family: 'Rajdhani', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    background: rgba(0,0,0,0.24) !important;
+  }
+
+  #settingsOverlay .settings-action.danger {
+    color: #ffd2d9 !important;
+    border-color: rgba(255,93,115,0.36) !important;
+    background: rgba(255,93,115,0.12) !important;
+  }
+
+  #settingsOverlay .settings-note {
+    margin-top: 12px !important;
+    color: rgba(255,249,215,0.66) !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    line-height: 1.4 !important;
+  }
+
 </style>
 </head>
 <body>
@@ -1960,7 +2048,7 @@
 
   
   <section class="home-settings-row app-only page-section page-home" id="homeSettingsRow">
-    <button class="home-settings-btn" onclick="openSettingsPopup()" aria-label="Settings">⚙️</button>
+    <button class="home-settings-btn" type="button" onclick="openSettingsPopup()" aria-label="Settings">⚙️</button>
   </section>
 
   <section class="profile-wrap app-only page-section page-home" id="profileSection">
@@ -2151,22 +2239,6 @@
         showPage('home');
       }
     }, 250);
-  });
-
-
-  window.openSettingsPopup = function() {
-    const el = document.getElementById('settingsOverlay');
-    if (el) el.classList.add('show');
-  };
-
-  window.closeSettingsPopup = function(event) {
-    if (event && event.target && event.target.id !== 'settingsOverlay') return;
-    const el = document.getElementById('settingsOverlay');
-    if (el) el.classList.remove('show');
-  };
-
-  window.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeSettingsPopup();
   });
 
 </script>
@@ -3241,6 +3313,36 @@
     setTimeout(goTop, 80);
     document.addEventListener('click', () => { if (!playing) tryPlay(); }, { once: true });
   });
+
+  window.openSettingsPopup = function() {
+    const overlay = document.getElementById('settingsOverlay');
+    if (!overlay) {
+      console.warn('settingsOverlay not found');
+      return;
+    }
+    overlay.classList.add('show');
+    overlay.style.display = 'flex';
+    document.body.classList.add('settings-open');
+  };
+
+  window.closeSettingsPopup = function() {
+    const overlay = document.getElementById('settingsOverlay');
+    if (!overlay) return;
+    overlay.classList.remove('show');
+    overlay.style.display = 'none';
+    document.body.classList.remove('settings-open');
+  };
+
+  document.addEventListener('click', function(event) {
+    const overlay = document.getElementById('settingsOverlay');
+    if (!overlay || !overlay.classList.contains('show')) return;
+    if (event.target === overlay) closeSettingsPopup();
+  });
+
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') closeSettingsPopup();
+  });
+
 </script>
 
 <!--
