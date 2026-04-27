@@ -1728,6 +1728,167 @@
     }
   }
 
+
+  /* ===== FINAL HARD LAYOUT / VISIBILITY FIX ===== */
+
+  /* Logged out: only header + login/register must be visible */
+  body:not(.is-authenticated) .page-section,
+  body:not(.is-authenticated) #homeDashboard,
+  body:not(.is-authenticated) #progressSection,
+  body:not(.is-authenticated) #statsSection,
+  body:not(.is-authenticated) #rulesSection,
+  body:not(.is-authenticated) #levelsSection,
+  body:not(.is-authenticated) #historySection,
+  body:not(.is-authenticated) #leaderboardSection,
+  body:not(.is-authenticated) #nextTradeSection,
+  body:not(.is-authenticated) #homeSettingsRow,
+  body:not(.is-authenticated) #pageTitleCard,
+  body:not(.is-authenticated) .bottom-nav {
+    display: none !important;
+  }
+
+  body:not(.is-authenticated) #authPanel {
+    display: block !important;
+  }
+
+  body.is-authenticated #authPanel {
+    display: none !important;
+  }
+
+  /* Page switch: hide all pages first */
+  body.is-authenticated .page-section {
+    display: none !important;
+  }
+
+  /* Then show selected page only */
+  body.is-authenticated[data-page="home"] .page-home,
+  body.is-authenticated[data-page="stats"] .page-stats,
+  body.is-authenticated[data-page="levels"] .page-levels,
+  body.is-authenticated[data-page="history"] .page-history,
+  body.is-authenticated[data-page="leaderboard"] .page-leaderboard {
+    display: grid !important;
+  }
+
+  /* Block sections that should not be CSS grid */
+  body.is-authenticated[data-page="home"] #progressSection,
+  body.is-authenticated[data-page="home"] #nextTradeSection,
+  body.is-authenticated[data-page="home"] #homeSettingsRow,
+  body.is-authenticated[data-page="levels"] #levelsSection,
+  body.is-authenticated[data-page="history"] #historySection,
+  body.is-authenticated[data-page="leaderboard"] #leaderboardSection {
+    display: block !important;
+  }
+
+  /* Dashboard must be compact grid, not giant full-width rows */
+  #homeDashboard.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    padding: 0 16px 14px !important;
+  }
+
+  #homeDashboard .stat-card {
+    width: 100% !important;
+    min-height: 112px !important;
+    max-height: none !important;
+    padding: 16px !important;
+    border-radius: 24px !important;
+  }
+
+  #homeDashboard .stat-value {
+    font-size: clamp(24px, 3vw, 32px) !important;
+    line-height: 1.05 !important;
+  }
+
+  #homeDashboard .stat-note {
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Make profile, summary and cards consistent */
+  .profile-card,
+  .next-trade-card,
+  .progress-card,
+  .leaderboard-panel,
+  .history-panel,
+  .smart-card,
+  .mini-card {
+    border-radius: 26px !important;
+  }
+
+  /* Settings popup only when explicitly opened */
+  .settings-overlay {
+    display: none !important;
+  }
+
+  .settings-overlay.show {
+    display: flex !important;
+  }
+
+  body:not(.is-authenticated) .settings-overlay {
+    display: none !important;
+  }
+
+  /* Mobile cleanup */
+  @media (max-width: 900px) {
+    #homeDashboard.dashboard {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+  }
+
+  @media (max-width: 700px) {
+    #homeDashboard.dashboard {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 10px !important;
+      padding: 0 12px 12px !important;
+    }
+
+    #homeDashboard .stat-card {
+      min-height: 104px !important;
+      padding: 14px !important;
+      border-radius: 22px !important;
+    }
+
+    #homeDashboard .stat-label {
+      font-size: 9.5px !important;
+      letter-spacing: 1px !important;
+      line-height: 1.1 !important;
+    }
+
+    #homeDashboard .stat-value {
+      margin-top: 8px !important;
+      font-size: clamp(22px, 8vw, 29px) !important;
+    }
+
+    #homeDashboard .stat-note {
+      font-size: 10px !important;
+    }
+
+    .page-title-card,
+    .profile-wrap,
+    .progress-wrap,
+    .next-trade-panel,
+    .home-settings-row {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+
+    .bottom-nav {
+      width: calc(100vw - 18px) !important;
+      max-width: 760px !important;
+      left: 50% !important;
+      right: auto !important;
+      transform: translateX(-50%) !important;
+      bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+  }
+
+  @media (max-width: 360px) {
+    #homeDashboard.dashboard {
+      grid-template-columns: 1fr !important;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1854,7 +2015,7 @@
       </div>
     </div>
   </section>
-<section id="homeDashboard" class="page-section page-home">
+<section class="dashboard app-only page-section page-home" id="homeDashboard">
     <div class="stat-card glass-card">
       <div class="stat-label">Одоогийн баланс</div>
       <div class="stat-value" id="currentBalance">$50.00</div>
@@ -3049,6 +3210,8 @@
     if (!auth) return;
     await auth.signOut();
     currentUser = null;
+    document.body.classList.remove('is-authenticated');
+    document.body.classList.remove('balance-ready');
     document.body.dataset.page = '';
     const currentLevelTitle = document.getElementById('currentLevelTitle');
     if (currentLevelTitle) currentLevelTitle.remove();
