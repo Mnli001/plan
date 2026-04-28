@@ -204,6 +204,9 @@
   .leaderboard-record { text-align: right; color: rgba(255,249,215,0.70); font-size: 12px; font-weight: 900; min-width: 82px; }
   .leaderboard-empty { padding: 14px; border-radius: 18px; color: rgba(255,249,215,0.66); background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.08); font-weight: 800; }
   .leaderboard-buttons, .admin-actions, .admin-row-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .leaderboard-top-right { display: grid; gap: 8px; justify-items: end; }
+  .leaderboard-countdown { padding: 9px 13px; border-radius: 999px; color: #fff0a8; background: rgba(0,0,0,0.22); border: 1px solid rgba(255,215,0,0.22); font-size: 12px; font-weight: 900; white-space: nowrap; }
+  .leaderboard-countdown span { color: rgba(255,249,215,0.62); margin-right: 5px; }
 
   .admin-user-row { display: grid; grid-template-columns: 1.2fr .8fr .8fr .8fr auto; gap: 10px; align-items: center; }
   .admin-cell strong { color: #fff9d7; font-size: 14px; }
@@ -351,6 +354,18 @@
     }
   }
 
+  @media (max-width: 700px) {
+    .leaderboard-top-right {
+      width: 100%;
+      justify-items: stretch;
+    }
+    .leaderboard-countdown {
+      text-align: center;
+      white-space: normal;
+      line-height: 1.3;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -453,7 +468,7 @@
 
   <section class="history-panel glass-card app-only page-section page-history" id="historySection"><div class="history-head"><div><div class="auth-kicker">TRADE HISTORY</div><div class="auth-title">Хийсэн арилжааны түүх</div></div><button class="soft-btn" onclick="clearTradeHistory()">Clear history</button></div><div class="history-list" id="historyList"></div></section>
 
-  <section class="leaderboard-panel glass-card app-only page-section page-leaderboard" id="leaderboardSection"><div class="leaderboard-head"><div><div class="auth-kicker">LEADERBOARD</div><div class="auth-title">Net profit ranking</div></div><div class="leaderboard-buttons"><button class="soft-btn" onclick="loadLeaderboard()">Refresh</button></div></div><div class="leaderboard-list" id="leaderboardList"><div class="leaderboard-empty">Leaderboard ачааллаж байна...</div></div></section>
+  <section class="leaderboard-panel glass-card app-only page-section page-leaderboard" id="leaderboardSection"><div class="leaderboard-head"><div><div class="auth-kicker">LEADERBOARD</div><div class="auth-title">Monthly net profit ranking</div></div><div class="leaderboard-top-right"><div class="leaderboard-countdown" id="leaderboardCountdown"><span>Leaderboard / account reset хүртэл:</span> --</div><div class="leaderboard-buttons"><button class="soft-btn" onclick="loadLeaderboard()">Refresh</button></div></div></div><div class="leaderboard-list" id="leaderboardList"><div class="leaderboard-empty">Leaderboard ачааллаж байна...</div></div></section>
 
   <section class="info-section app-only page-section page-home"><div class="info-card glass-card"><div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div><div class="rules-grid"><div class="rule">🛡️ Эрсдэл: балансын 20%-д ойртуулж lot-оор бодит risk тооцно.</div><div class="rule">⚖️ Ашиг: actual risk × 2 буюу RR 1:2.</div><div class="rule">🧮 Lot: 20% risk-д тааруулж бодоод 0.01 алхам руу доош тайрна.</div><div class="rule">🚫 Loss дараа нөхөх гэж орохгүй. Дараагийн setup хүртэл хүлээнэ.</div></div></div></section>
   <section class="quote-section glass-card app-only page-section page-home"><div class="quote-text">“Зах зээл чамайг шагнах албагүй. Харин чи <em>дүрмээ хамгаалж</em> чадвал боломж ирэх мөчид бэлэн байна.”</div><div class="quote-sub">Чухал нь хурд биш — дүрмээ эвдэхгүй, lot-оо хэтрүүлэхгүй байх.</div></section>
@@ -461,8 +476,8 @@
   <footer class="footer app-only page-section page-home">⚡ PLAN THE TRADE · CALCULATE THE LOT · EXECUTE WITHOUT EMOTION ⚡</footer>
 
   <section class="admin-panel glass-card app-only page-section page-admin admin-only" id="adminSection">
-    <div class="admin-head"><div><div class="auth-kicker">ADMIN PANEL</div><div class="auth-title">Users / Reset / Leaderboard control</div></div><div class="admin-actions"><button class="soft-btn" onclick="loadAdminUsers()">Refresh users</button><button class="soft-btn" onclick="adminResetLeaderboardSeason()">Season reset</button><button class="soft-btn" onclick="adminClearLeaderboard()">Clear leaderboard</button><button class="soft-btn danger-btn" onclick="adminResetAllUsersChallenge()">Reset all users</button></div></div>
-    <div class="admin-note">Зөвхөн Firebase дээр <code>admins/{uid}</code> document-той account энэ хэсгийг харж ашиглана.</div>
+    <div class="admin-head"><div><div class="auth-kicker">ADMIN PANEL</div><div class="auth-title">Users / Reset / Leaderboard control</div></div><div class="admin-actions"><button class="soft-btn" onclick="loadAdminUsers()">Refresh users</button><button class="soft-btn" onclick="adminResetLeaderboardSeason()">LB season reset</button><button class="soft-btn danger-btn" onclick="adminMonthlyResetAllAccountsNow()">Monthly reset now</button><button class="soft-btn" onclick="adminClearLeaderboard()">Clear leaderboard</button><button class="soft-btn danger-btn" onclick="adminResetAllUsersChallenge()">Reset all users</button></div></div>
+    <div class="admin-note">Зөвхөн Firebase дээр <code>admins/{uid}</code> document-той account энэ хэсгийг харж ашиглана. Сар солигдоход login хийсэн user автоматаар reset болно. Static web тул бүх user-ийг яг тухайн мөчид server талаас reset хийх бол Cloud Functions хэрэгтэй; энд admin-аас Monthly reset now товчоор шууд trigger хийж болно.</div>
     <div class="admin-list" id="adminUsersList"><div class="leaderboard-empty">Admin users ачааллахад бэлэн.</div></div>
   </section>
 </div>
@@ -510,8 +525,26 @@
   const JOURNAL_KEY = 'xauusd_50_to_1000_journal_v2';
   const REVENGE_KEY = 'xauusd_50_to_1000_revenge_v2';
   const HISTORY_KEY = 'xauusd_50_to_1000_history_v2';
-  const LEADERBOARD_COLLECTION = 'leaderboard_profit_reset_v1';
+  const LEADERBOARD_PREFIX = 'leaderboard_monthly';
   const ADMIN_RESET_TOKEN_KEY = 'xauusd_admin_reset_token_v1';
+  const CHALLENGE_MONTH_LOCAL_KEY = 'xauusd_challenge_month_key_v1';
+  let activeLeaderboardMonthKey = '';
+
+  function getLeaderboardMonthKey(date = new Date()) {
+    return `${date.getFullYear()}_${String(date.getMonth() + 1).padStart(2, '0')}`;
+  }
+
+  function getLeaderboardCollectionName(date = new Date()) {
+    return `${LEADERBOARD_PREFIX}_${getLeaderboardMonthKey(date)}`;
+  }
+
+  function getCurrentChallengeMonthKey() {
+    return getLeaderboardMonthKey();
+  }
+
+  function getNextLeaderboardResetDate(now = new Date()) {
+    return new Date(now.getFullYear(), now.getMonth() + 1, 1, 0, 0, 0, 0);
+  }
 
   const firebaseConfig = {
     apiKey: "AIzaSyD1D0qWO8WfAHtP0CHFFNUtDQ2_eibH2xU",
@@ -541,6 +574,37 @@
     return round2(clamp(flooredLot, MIN_LOT, MAX_LOT));
   }
   function formatMoney(value) { return `$${Number(value || 0).toFixed(2)}`; }
+
+  function updateLeaderboardCountdown() {
+    const el = document.getElementById('leaderboardCountdown');
+    if (!el) return;
+
+    const now = new Date();
+    const next = getNextLeaderboardResetDate(now);
+    const diff = Math.max(0, next.getTime() - now.getTime());
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    el.innerHTML = `<span>Leaderboard / account reset хүртэл:</span> ${days}d ${String(hours).padStart(2, '0')}h ${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`;
+  }
+
+  async function checkMonthlyLeaderboardRollover() {
+    const monthKey = getLeaderboardMonthKey();
+    if (!activeLeaderboardMonthKey) { activeLeaderboardMonthKey = monthKey; return; }
+    if (activeLeaderboardMonthKey !== monthKey) {
+      activeLeaderboardMonthKey = monthKey;
+      if (firebaseReady && currentUser && db) {
+        await db.collection('users').doc(currentUser.uid).set(getMonthlyAccountResetPayload(monthKey), { merge: true }).catch(() => {});
+        clearLocalChallengeAfterAdminReset(`monthly_${monthKey}`);
+        setAuthStatus('Шинэ сар эхэлсэн тул account reset хийгдлээ. Эхлэх balance-аа дахин сонгоно уу.');
+        render();
+      }
+      await loadLeaderboard();
+    }
+  }
+
   function loadJSON(key, fallback) { try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch (_) { return fallback; } }
   function saveJSON(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (error) { console.warn('localStorage save error:', error); } }
   function escapeHTML(value) { return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;'); }
@@ -609,7 +673,7 @@
     if (firebaseReady && currentUser && db) {
       db.collection('users').doc(currentUser.uid).set({
         name: currentUser.displayName || '', email: currentUser.email || '',
-        challenge: { startBalance: START, outcomes, journalEntries, tradeHistory, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }
+        challenge: { adminForceSetup: false, challengeMonthKey: getCurrentChallengeMonthKey(), startBalance: START, outcomes, journalEntries, tradeHistory, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }
       }, { merge: true }).catch((error) => { console.warn('Cloud save error:', error); setAuthStatus('Cloud дээр хадгалахад алдаа гарлаа. Firestore rules/config-оо шалга.'); });
     }
     saveLeaderboardStats();
@@ -871,21 +935,64 @@
 
   function clearLocalChallengeAfterAdminReset(resetToken = '') {
     START = 0; outcomes = new Array(9).fill(null); journalEntries = []; tradeHistory = []; revengeUntil = 0;
-    try { localStorage.removeItem(START_BALANCE_KEY); localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(JOURNAL_KEY); localStorage.removeItem(HISTORY_KEY); localStorage.removeItem(REVENGE_KEY); if (resetToken) localStorage.setItem(ADMIN_RESET_TOKEN_KEY, resetToken); } catch (_) {}
+    try {
+      localStorage.removeItem(START_BALANCE_KEY); localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(JOURNAL_KEY); localStorage.removeItem(HISTORY_KEY); localStorage.removeItem(REVENGE_KEY);
+      localStorage.setItem(CHALLENGE_MONTH_LOCAL_KEY, getCurrentChallengeMonthKey());
+      if (resetToken) localStorage.setItem(ADMIN_RESET_TOKEN_KEY, resetToken);
+    } catch (_) {}
     document.body.classList.remove('balance-ready'); document.body.dataset.page = '';
   }
+
+  function getMonthlyAccountResetPayload(monthKey = getCurrentChallengeMonthKey()) {
+    const token = `monthly_${monthKey}`;
+    return { challenge: { startBalance: 0, outcomes: [], tradeHistory: [], journalEntries: [], revengeUntil: 0, adminForceSetup: true, monthlyAutoReset: true, challengeMonthKey: monthKey, adminResetToken: token, resetAt: firebase.firestore.FieldValue.serverTimestamp(), monthlyResetAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() } };
+  }
+
   function isAdminForcedResetChallenge(challenge) { return !!(challenge && (challenge.adminForceSetup === true || challenge.forceSetup === true || Number(challenge.startBalance || 0) <= 0)); }
+
+  function shouldAutoMonthlyReset(challenge) {
+    if (!challenge) return false;
+    const currentMonth = getCurrentChallengeMonthKey();
+    const savedMonth = String(challenge.challengeMonthKey || '');
+    return !!(savedMonth && savedMonth !== currentMonth && Number(challenge.startBalance || 0) > 0);
+  }
 
   async function loadCloudData() {
     if (!firebaseReady || !currentUser || !db) return;
     try {
-      const snap = await db.collection('users').doc(currentUser.uid).get(); const data = snap.exists ? snap.data() : null; const challenge = data?.challenge || {};
-      if (isAdminForcedResetChallenge(challenge)) { const token = String(challenge.adminResetToken || challenge.resetAt || ''); const localToken = localStorage.getItem(ADMIN_RESET_TOKEN_KEY) || ''; if (token !== localToken || Number(challenge.startBalance || 0) <= 0) clearLocalChallengeAfterAdminReset(token); setAuthStatus('Admin reset хийгдсэн байна. Эхлэх balance-аа дахин сонгоно уу.'); render(); return; }
+      const userRef = db.collection('users').doc(currentUser.uid);
+      const snap = await userRef.get();
+      const data = snap.exists ? snap.data() : null;
+      const challenge = data?.challenge || {};
+      const currentMonth = getCurrentChallengeMonthKey();
+
+      if (shouldAutoMonthlyReset(challenge)) {
+        await userRef.set(getMonthlyAccountResetPayload(currentMonth), { merge: true });
+        clearLocalChallengeAfterAdminReset(`monthly_${currentMonth}`);
+        setAuthStatus('Шинэ сар эхэлсэн тул account reset хийгдлээ. Эхлэх balance-аа дахин сонгоно уу.');
+        render();
+        return;
+      }
+
+      if (isAdminForcedResetChallenge(challenge)) {
+        const token = String(challenge.adminResetToken || challenge.resetAt || '');
+        const localToken = localStorage.getItem(ADMIN_RESET_TOKEN_KEY) || '';
+        if (token !== localToken || Number(challenge.startBalance || 0) <= 0) clearLocalChallengeAfterAdminReset(token);
+        setAuthStatus(challenge.monthlyAutoReset ? 'Шинэ сарын reset хийгдсэн байна. Эхлэх balance-аа дахин сонгоно уу.' : 'Admin reset хийгдсэн байна. Эхлэх balance-аа дахин сонгоно уу.');
+        render();
+        return;
+      }
+
+      if (!challenge.challengeMonthKey && Number(challenge.startBalance || 0) > 0) {
+        await userRef.set({ challenge: { challengeMonthKey: currentMonth, updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }, { merge: true });
+      }
+
       if (Number(challenge.startBalance) > 0) setStartBalance(Number(challenge.startBalance), false);
       if (Array.isArray(challenge.outcomes) && challenge.outcomes.length >= 9) { outcomes = challenge.outcomes; saveJSON(STORAGE_KEY, outcomes); addLevelIfNeeded(); }
       if (Array.isArray(challenge.journalEntries)) { journalEntries = challenge.journalEntries; saveJSON(JOURNAL_KEY, journalEntries); }
       if (Array.isArray(challenge.tradeHistory)) { tradeHistory = challenge.tradeHistory; saveJSON(HISTORY_KEY, tradeHistory); }
       if (challenge.revengeUntil) { revengeUntil = Number(challenge.revengeUntil); localStorage.setItem(REVENGE_KEY, String(revengeUntil)); }
+      try { localStorage.setItem(CHALLENGE_MONTH_LOCAL_KEY, currentMonth); } catch (_) {}
       setAuthStatus('Cloud sync on.'); render();
     } catch (error) { console.warn('Cloud load error:', error); setAuthStatus('Cloud progress уншихад алдаа гарлаа. Firestore rules/config-оо шалга.'); }
   }
@@ -893,10 +1000,10 @@
   window.registerUser = async function() {
     if (!firebaseReady || !auth || !db) return alert('Эхлээд Firebase config-оо зөв оруулна уу.');
     const { name, email, password } = getAuthInputs(); if (!name || !email || !password) return alert('Нэр, mail, password гурвууланг нь бөглөнө үү.');
-    try { const cred = await auth.createUserWithEmailAndPassword(email, password); await cred.user.updateProfile({ displayName: name }); currentUser = cred.user; await db.collection('users').doc(cred.user.uid).set({ name, email, createdAt: firebase.firestore.FieldValue.serverTimestamp(), challenge: { outcomes, journalEntries, tradeHistory, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }, { merge: true }); updateAuthUI(cred.user); await checkAdminStatus(); await saveLeaderboardStats(); setAuthStatus('Бүртгэл амжилттай. Одоо эхлэх balance-аа сонго.'); render(); } catch (error) { alert(error.message); }
+    try { const cred = await auth.createUserWithEmailAndPassword(email, password); await cred.user.updateProfile({ displayName: name }); currentUser = cred.user; await db.collection('users').doc(cred.user.uid).set({ name, email, createdAt: firebase.firestore.FieldValue.serverTimestamp(), challenge: { adminForceSetup: true, challengeMonthKey: getCurrentChallengeMonthKey(), outcomes, journalEntries, tradeHistory, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }, { merge: true }); updateAuthUI(cred.user); await checkAdminStatus(); await saveLeaderboardStats(); setAuthStatus('Бүртгэл амжилттай. Одоо эхлэх balance-аа сонго.'); render(); } catch (error) { alert(error.message); }
   };
   window.loginUser = async function() { if (!firebaseReady || !auth) return alert('Эхлээд Firebase config-оо зөв оруулна уу.'); const { email, password } = getAuthInputs(); if (!email || !password) return alert('Mail болон code/password-оо оруулна уу.'); try { const cred = await auth.signInWithEmailAndPassword(email, password); currentUser = cred.user; updateAuthUI(cred.user); await checkAdminStatus(); await loadCloudData(); openHomeOrBalanceSetup(); } catch (error) { alert(error.message); } };
-  window.saveInitialBalance = async function() { const value = getStartBalanceInputValue(); if (!value) return alert('Эхлэх balance-аа зөв оруулна уу.'); setStartBalance(value, true); if (firebaseReady && currentUser && db) await db.collection('users').doc(currentUser.uid).set({ challenge: { adminForceSetup: false, startBalance: START, outcomes, tradeHistory, journalEntries, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }, { merge: true }); saveProgress(); render(); await saveLeaderboardStats(); showPage('home'); };
+  window.saveInitialBalance = async function() { const value = getStartBalanceInputValue(); if (!value) return alert('Эхлэх balance-аа зөв оруулна уу.'); setStartBalance(value, true); if (firebaseReady && currentUser && db) await db.collection('users').doc(currentUser.uid).set({ challenge: { adminForceSetup: false, challengeMonthKey: getCurrentChallengeMonthKey(), startBalance: START, outcomes, tradeHistory, journalEntries, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }, { merge: true }); saveProgress(); render(); await saveLeaderboardStats(); showPage('home'); };
   window.changeStartBalance = function() { if (!currentUser) return alert('Эхлээд нэвтэрнэ үү.'); const raw = prompt('Шинэ эхлэх balance оруулна уу:', START > 0 ? String(START) : ''); if (raw === null) return; const value = Number(raw); if (!Number.isFinite(value) || value <= 0) return alert('Зөв balance оруулна уу.'); if (!confirm('Balance солиход current progress болон history reset болно. Үргэлжлүүлэх үү?')) return; setStartBalance(value, true); saveProgress(); render(); saveLeaderboardStats(); showPage('home'); };
   window.logoutUser = async function() { if (!auth) return; await auth.signOut(); currentUser = null; document.body.classList.remove('is-authenticated', 'balance-ready', 'is-admin'); document.body.dataset.page = ''; const currentLevelTitle = document.getElementById('currentLevelTitle'); if (currentLevelTitle) currentLevelTitle.remove(); updateAuthUI(null); goTop(); };
 
@@ -916,13 +1023,13 @@
   }
 
   function getCurrentProfitValue() { const { finalBalance } = compute(); const start = Number(START || 0); const current = Number(finalBalance || 0); if (!Number.isFinite(start) || !Number.isFinite(current)) return 0; return round2(current - start); }
-  function getPublicStats(baseProfit = 0) { const { finalBalance } = compute(); const completed = getCompletedLevels(); const wins = completed.filter(l => l.outcome === 'taken').length; const losses = completed.filter(l => l.outcome === 'loss').length; const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START || 0); const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0; const currentProfit = getCurrentProfitValue(); const netProfit = round2(currentProfit - Number(baseProfit || 0)); return { name: currentUser?.displayName || 'Trader', startBalance: Number(START || 0), balance: Number(finalBalance.toFixed(2)), currentProfit: Number(currentProfit.toFixed(2)), baseProfit: Number(Number(baseProfit || 0).toFixed(2)), netProfit: Number(netProfit.toFixed(2)), bestBalance: Number(bestBalance.toFixed(2)), wins, losses, winRate, trades: wins + losses, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }; }
-  async function saveLeaderboardStats() { if (!firebaseReady || !currentUser || !db || !(START > 0)) return; try { const ref = db.collection(LEADERBOARD_COLLECTION).doc(currentUser.uid); const snap = await ref.get(); let baseProfit = 0; if (snap.exists && Number.isFinite(Number(snap.data()?.baseProfit))) baseProfit = Number(snap.data().baseProfit); await ref.set(getPublicStats(baseProfit), { merge: true }); } catch (error) { console.warn('Leaderboard хадгалах боломжгүй байна:', error); } }
+  function getPublicStats(baseProfit = 0) { const { finalBalance } = compute(); const completed = getCompletedLevels(); const wins = completed.filter(l => l.outcome === 'taken').length; const losses = completed.filter(l => l.outcome === 'loss').length; const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START || 0); const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0; const currentProfit = getCurrentProfitValue(); const netProfit = round2(currentProfit - Number(baseProfit || 0)); const monthKey = getLeaderboardMonthKey(); return { name: currentUser?.displayName || 'Trader', startBalance: Number(START || 0), balance: Number(finalBalance.toFixed(2)), currentProfit: Number(currentProfit.toFixed(2)), baseProfit: Number(Number(baseProfit || 0).toFixed(2)), netProfit: Number(netProfit.toFixed(2)), bestBalance: Number(bestBalance.toFixed(2)), wins, losses, winRate, trades: wins + losses, monthKey, collectionName: getLeaderboardCollectionName(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }; }
+  async function saveLeaderboardStats() { if (!firebaseReady || !currentUser || !db || !(START > 0)) return; try { const ref = db.collection(getLeaderboardCollectionName()).doc(currentUser.uid); const snap = await ref.get(); let baseProfit = getCurrentProfitValue(); if (snap.exists && Number.isFinite(Number(snap.data()?.baseProfit))) baseProfit = Number(snap.data().baseProfit); await ref.set(getPublicStats(baseProfit), { merge: true }); } catch (error) { console.warn('Leaderboard хадгалах боломжгүй байна:', error); } }
 
   window.loadLeaderboard = async function() {
     const box = document.getElementById('leaderboardList'); if (!box) return;
     if (!firebaseReady || !db) { box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>'; return; }
-    try { box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>'; const snap = await db.collection(LEADERBOARD_COLLECTION).orderBy('netProfit', 'desc').limit(20).get(); if (snap.empty) { box.innerHTML = '<div class="leaderboard-empty">Leaderboard хоосон байна.</div>'; return; } let rank = 0; const rows = []; snap.forEach(doc => { rank++; const data = doc.data() || {}; const isMe = currentUser && doc.id === currentUser.uid; const profit = Number(data.netProfit || 0); rows.push(`<div class="leaderboard-row ${isMe ? 'my-rank' : ''}"><div class="leaderboard-rank">#${rank}</div><div class="leaderboard-name"><strong>${escapeHTML(data.name || 'Trader')}</strong><span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span></div><div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${formatMoney(profit)}</div><div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div></div>`); }); box.innerHTML = rows.join(''); } catch (error) { console.warn('Leaderboard унших боломжгүй байна:', error); box.innerHTML = '<div class="leaderboard-empty">Leaderboard уншихад permission/index алдаа гарлаа. Firestore rules шалгаарай.</div>'; }
+    try { box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>'; const snap = await db.collection(getLeaderboardCollectionName()).orderBy('netProfit', 'desc').limit(20).get(); if (snap.empty) { box.innerHTML = '<div class="leaderboard-empty">Энэ сарын leaderboard хоосон байна. User login хийхэд энэ сарын оноо 0$-оос эхэлнэ.</div>'; return; } let rank = 0; const rows = []; snap.forEach(doc => { rank++; const data = doc.data() || {}; const isMe = currentUser && doc.id === currentUser.uid; const profit = Number(data.netProfit || 0); rows.push(`<div class="leaderboard-row ${isMe ? 'my-rank' : ''}"><div class="leaderboard-rank">#${rank}</div><div class="leaderboard-name"><strong>${escapeHTML(data.name || 'Trader')}</strong><span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span></div><div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${formatMoney(profit)}</div><div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div></div>`); }); box.innerHTML = rows.join(''); } catch (error) { console.warn('Leaderboard унших боломжгүй байна:', error); box.innerHTML = '<div class="leaderboard-empty">Leaderboard уншихад permission/index алдаа гарлаа. Firestore rules шалгаарай.</div>'; }
   };
 
   window.loadAdminUsers = async function() {
@@ -932,12 +1039,13 @@
     try { box.innerHTML = '<div class="leaderboard-empty">Users ачааллаж байна...</div>'; const snap = await db.collection('users').limit(200).get(); if (snap.empty) { box.innerHTML = '<div class="leaderboard-empty">User байхгүй байна.</div>'; return; } const rows = []; snap.forEach(doc => { const data = doc.data() || {}; const challenge = data.challenge || {}; const stats = computeUserChallenge(Number(challenge.startBalance || data.startBalance || 0), challenge.outcomes || []); rows.push(`<div class="admin-user-row"><div class="admin-user-main"><strong>${escapeHTML(data.name || 'Trader')}</strong><span>${escapeHTML(data.email || doc.id)}</span></div><div class="admin-cell"><strong>${formatMoney(stats.balance)}</strong><span>Balance</span></div><div class="admin-cell"><strong class="admin-profit ${stats.profit < 0 ? 'negative' : ''}">${stats.profit >= 0 ? '+' : ''}${formatMoney(stats.profit)}</strong><span>Net profit</span></div><div class="admin-cell"><strong>Level ${stats.currentLevel}</strong><span>${stats.wins}W / ${stats.losses}L · ${stats.winRate}%</span></div><div class="admin-row-actions"><button class="soft-btn danger-btn" onclick="adminResetUserChallenge('${doc.id}')">Reset account</button><button class="soft-btn" onclick="adminDeleteFromLeaderboard('${doc.id}')">Delete LB</button></div></div>`); }); box.innerHTML = rows.join(''); } catch (error) { console.warn('Admin users уншихад алдаа:', error); box.innerHTML = `<div class="leaderboard-empty">Admin data уншихад алдаа: ${escapeHTML(error.message)}</div>`; }
   };
 
-  function getAdminResetPayload() { const token = String(Date.now()); return { challenge: { startBalance: 0, outcomes: [], tradeHistory: [], journalEntries: [], revengeUntil: 0, adminForceSetup: true, adminResetToken: token, resetAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }; }
-  window.adminResetUserChallenge = async function(userId) { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Энэ user-ийн balance/profit/progress/history бүгдийг reset хийгээд Start Balance сонгох төлөвт буцаах уу?')) return; try { await db.collection('users').doc(userId).set(getAdminResetPayload(), { merge: true }); await db.collection(LEADERBOARD_COLLECTION).doc(userId).delete().catch(() => {}); await loadLeaderboard(); await loadAdminUsers(); alert('User reset хийгдлээ. Дараа login хийхэд Start Balance сонгоно.'); } catch (error) { alert(error.message); } };
-  window.adminResetAllUsersChallenge = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('БҮХ user-ийн balance/profit/progress/history reset хийгээд leaderboard-оос бүгдийг устгах уу? Энэ action буцаах боломжгүй.')) return; try { const usersSnap = await db.collection('users').limit(500).get(); let batch = db.batch(), count = 0; usersSnap.forEach(doc => { batch.set(doc.ref, getAdminResetPayload(), { merge: true }); count++; }); await batch.commit(); const lbSnap = await db.collection(LEADERBOARD_COLLECTION).limit(500).get(); batch = db.batch(); let lbCount = 0; lbSnap.forEach(doc => { batch.delete(doc.ref); lbCount++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} user reset, ${lbCount} leaderboard item устгалаа.`); } catch (error) { alert(error.message); } };
-  window.adminClearLeaderboard = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Leaderboard дээр байгаа бүх хүнийг устгах уу? Users progress өөрчлөгдөхгүй.')) return; try { const snap = await db.collection(LEADERBOARD_COLLECTION).limit(500).get(); const batch = db.batch(); let count = 0; snap.forEach(doc => { batch.delete(doc.ref); count++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} leaderboard item устгалаа.`); } catch (error) { alert(error.message); } };
-  window.adminDeleteFromLeaderboard = async function(userId) { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Энэ user-ийг leaderboard-оос устгах уу? Account progress өөрчлөгдөхгүй.')) return; try { await db.collection(LEADERBOARD_COLLECTION).doc(userId).delete(); await loadLeaderboard(); await loadAdminUsers(); } catch (error) { alert(error.message); } };
-  window.adminResetLeaderboardSeason = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Leaderboard season reset хийх үү? User progress өөрчлөгдөхгүй. Одоогийн profit нь baseline болж, бүгд $0 net profit-оос дахин эхэлнэ.')) return; try { const usersSnap = await db.collection('users').limit(500).get(); const batch = db.batch(); let count = 0; usersSnap.forEach(doc => { const data = doc.data() || {}; const challenge = data.challenge || {}; const stats = computeUserChallenge(Number(challenge.startBalance || data.startBalance || 0), challenge.outcomes || []); const ref = db.collection(LEADERBOARD_COLLECTION).doc(doc.id); batch.set(ref, { name: data.name || 'Trader', startBalance: Number(stats.startBalance || 0), balance: Number(stats.balance || 0), currentProfit: Number(stats.profit || 0), baseProfit: Number(stats.profit || 0), netProfit: 0, bestBalance: Number(stats.balance || 0), wins: Number(stats.wins || 0), losses: Number(stats.losses || 0), winRate: Number(stats.winRate || 0), trades: Number(stats.trades || 0), updatedAt: firebase.firestore.FieldValue.serverTimestamp(), seasonResetAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); count++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} user leaderboard season reset хийгдлээ.`); } catch (error) { alert(error.message); } };
+  function getAdminResetPayload() { const token = String(Date.now()); return { challenge: { startBalance: 0, outcomes: [], tradeHistory: [], journalEntries: [], revengeUntil: 0, adminForceSetup: true, challengeMonthKey: getCurrentChallengeMonthKey(), adminResetToken: token, resetAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }; }
+  window.adminResetUserChallenge = async function(userId) { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Энэ user-ийн balance/profit/progress/history бүгдийг reset хийгээд Start Balance сонгох төлөвт буцаах уу?')) return; try { await db.collection('users').doc(userId).set(getAdminResetPayload(), { merge: true }); await db.collection(getLeaderboardCollectionName()).doc(userId).delete().catch(() => {}); await loadLeaderboard(); await loadAdminUsers(); alert('User reset хийгдлээ. Дараа login хийхэд Start Balance сонгоно.'); } catch (error) { alert(error.message); } };
+  window.adminResetAllUsersChallenge = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('БҮХ user-ийн balance/profit/progress/history reset хийгээд leaderboard-оос бүгдийг устгах уу? Энэ action буцаах боломжгүй.')) return; try { const usersSnap = await db.collection('users').limit(500).get(); let batch = db.batch(), count = 0; usersSnap.forEach(doc => { batch.set(doc.ref, getAdminResetPayload(), { merge: true }); count++; }); await batch.commit(); const lbSnap = await db.collection(getLeaderboardCollectionName()).limit(500).get(); batch = db.batch(); let lbCount = 0; lbSnap.forEach(doc => { batch.delete(doc.ref); lbCount++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} user reset, ${lbCount} leaderboard item устгалаа.`); } catch (error) { alert(error.message); } };
+  window.adminMonthlyResetAllAccountsNow = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Энэ сарын monthly account reset-ийг ОДОО бүх user дээр хийх үү? Бүх user дахин start balance сонгоно.')) return; try { const monthKey = getCurrentChallengeMonthKey(); const usersSnap = await db.collection('users').limit(500).get(); let batch = db.batch(), count = 0; usersSnap.forEach(doc => { batch.set(doc.ref, getMonthlyAccountResetPayload(monthKey), { merge: true }); count++; }); await batch.commit(); const lbSnap = await db.collection(getLeaderboardCollectionName()).limit(500).get(); batch = db.batch(); let lbCount = 0; lbSnap.forEach(doc => { batch.delete(doc.ref); lbCount++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} user monthly account reset, ${lbCount} leaderboard item устгалаа.`); } catch (error) { alert(error.message); } };
+  window.adminClearLeaderboard = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Leaderboard дээр байгаа бүх хүнийг устгах уу? Users progress өөрчлөгдөхгүй.')) return; try { const snap = await db.collection(getLeaderboardCollectionName()).limit(500).get(); const batch = db.batch(); let count = 0; snap.forEach(doc => { batch.delete(doc.ref); count++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} leaderboard item устгалаа.`); } catch (error) { alert(error.message); } };
+  window.adminDeleteFromLeaderboard = async function(userId) { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Энэ user-ийг leaderboard-оос устгах уу? Account progress өөрчлөгдөхгүй.')) return; try { await db.collection(getLeaderboardCollectionName()).doc(userId).delete(); await loadLeaderboard(); await loadAdminUsers(); } catch (error) { alert(error.message); } };
+  window.adminResetLeaderboardSeason = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Leaderboard season reset хийх үү? User progress өөрчлөгдөхгүй. Одоогийн profit нь baseline болж, бүгд $0 net profit-оос дахин эхэлнэ.')) return; try { const usersSnap = await db.collection('users').limit(500).get(); const batch = db.batch(); let count = 0; usersSnap.forEach(doc => { const data = doc.data() || {}; const challenge = data.challenge || {}; const stats = computeUserChallenge(Number(challenge.startBalance || data.startBalance || 0), challenge.outcomes || []); const ref = db.collection(getLeaderboardCollectionName()).doc(doc.id); batch.set(ref, { name: data.name || 'Trader', startBalance: Number(stats.startBalance || 0), balance: Number(stats.balance || 0), currentProfit: Number(stats.profit || 0), baseProfit: Number(stats.profit || 0), netProfit: 0, bestBalance: Number(stats.balance || 0), wins: Number(stats.wins || 0), losses: Number(stats.losses || 0), winRate: Number(stats.winRate || 0), trades: Number(stats.trades || 0), updatedAt: firebase.firestore.FieldValue.serverTimestamp(), seasonResetAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); count++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} user leaderboard season reset хийгдлээ.`); } catch (error) { alert(error.message); } };
 
   window.resetAllData = function() { if (!confirm('Progress, history, local data бүгдийг reset хийх үү?')) return; outcomes = new Array(9).fill(null); tradeHistory = []; try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(HISTORY_KEY); localStorage.removeItem(REVENGE_KEY); } catch (_) {} revengeUntil = 0; saveProgress(); render(); goTop(); };
   window.resetPlanProgress = function() { if (!confirm('Бүх level-ийн сонголтыг reset хийх үү? Journal note хэвээр үлдэнэ.')) return; clearProgress(); goTop(); };
@@ -951,7 +1059,22 @@
   function goTop() { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); const top = document.getElementById('top'); if (top) top.scrollIntoView({ block: 'start', behavior: 'instant' }); }
 
   window.addEventListener('DOMContentLoaded', goTop);
-  window.addEventListener('load', () => { initFirebase(); init(); render(); updateRevengeLock(); setInterval(updateRevengeLock, 1000); goTop(); setTimeout(goTop, 80); setTimeout(() => { if (document.body.classList.contains('is-authenticated') && !document.body.dataset.page) showPage('home'); }, 250); });
+  window.addEventListener('load', () => {
+    initFirebase();
+    init();
+    render();
+    updateRevengeLock();
+    activeLeaderboardMonthKey = getLeaderboardMonthKey();
+    updateLeaderboardCountdown();
+    setInterval(() => {
+      updateRevengeLock();
+      updateLeaderboardCountdown();
+      checkMonthlyLeaderboardRollover();
+    }, 1000);
+    goTop();
+    setTimeout(goTop, 80);
+    setTimeout(() => { if (document.body.classList.contains('is-authenticated') && !document.body.dataset.page) showPage('home'); }, 250);
+  });
 </script>
 
 <!--
@@ -988,6 +1111,8 @@ service cloud.firestore {
           'losses',
           'winRate',
           'trades',
+          'monthKey',
+          'collectionName',
           'updatedAt'
         ])
         && request.resource.data.startBalance is number
@@ -1026,6 +1151,13 @@ service cloud.firestore {
       }
     }
 
+    match /{leaderboardCollection}/{userId} {
+      allow read: if isSignedIn() && leaderboardCollection.matches('leaderboard_monthly_.*');
+      allow create, update: if leaderboardCollection.matches('leaderboard_monthly_.*') && (isAdmin() || validLeaderboardWrite(userId));
+      allow delete: if leaderboardCollection.matches('leaderboard_monthly_.*') && (isAdmin() || isOwnUser(userId));
+    }
+
+    /* Legacy leaderboard collection, optional. You can delete this block after old data is no longer used. */
     match /leaderboard_profit_reset_v1/{userId} {
       allow read: if isSignedIn();
       allow create, update: if isAdmin() || validLeaderboardWrite(userId);
