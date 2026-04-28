@@ -246,8 +246,8 @@
   body.is-authenticated.balance-ready #balanceSetupPanel, body:not(.is-authenticated) #balanceSetupPanel { display: none !important; }
   body.is-authenticated:not(.balance-ready) .page-title-card, body.is-authenticated:not(.balance-ready) .page-section, body.is-authenticated:not(.balance-ready) .bottom-nav { display: none !important; }
   body.is-authenticated .page-section { display: none !important; }
-  body.is-authenticated[data-page="home"] .page-home, body.is-authenticated[data-page="stats"] .page-stats, body.is-authenticated[data-page="levels"] .page-levels, body.is-authenticated[data-page="history"] .page-history, body.is-authenticated[data-page="leaderboard"] .page-leaderboard { display: grid !important; }
-  body.is-authenticated[data-page="home"] #progressSection, body.is-authenticated[data-page="home"] #nextTradeSection, body.is-authenticated[data-page="home"] #homeSettingsRow, body.is-authenticated[data-page="home"] .info-section, body.is-authenticated[data-page="home"] .quote-section, body.is-authenticated[data-page="home"] .risk-note, body.is-authenticated[data-page="home"] .footer, body.is-authenticated[data-page="levels"] #levelsSection, body.is-authenticated[data-page="history"] #historySection, body.is-authenticated[data-page="leaderboard"] #leaderboardSection { display: block !important; }
+  body.is-authenticated[data-page="home"] .page-home, body.is-authenticated[data-page="stats"] .page-stats, body.is-authenticated[data-page="levels"] .page-levels, body.is-authenticated[data-page="history"] .page-history, body.is-authenticated[data-page="leaderboard"] .page-leaderboard, body.is-authenticated[data-page="chat"] .page-chat { display: grid !important; }
+  body.is-authenticated[data-page="home"] #progressSection, body.is-authenticated[data-page="home"] #nextTradeSection, body.is-authenticated[data-page="home"] #homeSettingsRow, body.is-authenticated[data-page="home"] .info-section, body.is-authenticated[data-page="home"] .quote-section, body.is-authenticated[data-page="home"] .risk-note, body.is-authenticated[data-page="home"] .footer, body.is-authenticated[data-page="levels"] #levelsSection, body.is-authenticated[data-page="history"] #historySection, body.is-authenticated[data-page="leaderboard"] #leaderboardSection, body.is-authenticated[data-page="chat"] #chatSection { display: block !important; }
   body:not(.is-admin) .admin-only { display: none !important; }
   body.is-authenticated.is-admin .bottom-nav .admin-only { display: inline-flex !important; }
   body.is-authenticated[data-page="admin"].is-admin #adminSection, body.is-authenticated[data-page="admin"].is-admin .page-admin { display: block !important; }
@@ -366,6 +366,86 @@
     }
   }
 
+
+  /* ===== GLOBAL CHAT ===== */
+  .chat-panel {
+    margin: 0 16px 16px;
+    padding: 18px;
+    border-radius: 30px;
+  }
+  .chat-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .chat-list {
+    display: grid;
+    gap: 10px;
+    max-height: 430px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .chat-message {
+    padding: 12px 14px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.20);
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+  .chat-message.mine {
+    border-color: rgba(255,215,0,0.38);
+    background: rgba(255,215,0,0.08);
+  }
+  .chat-message-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .chat-message-name {
+    color: #fff0a8;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .chat-message-time {
+    color: rgba(255,249,215,0.48);
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .chat-message-text {
+    color: rgba(255,249,215,0.82);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+  .chat-form {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .chat-note {
+    margin-top: 10px;
+    color: rgba(255,249,215,0.60);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  body.is-authenticated[data-page="chat"] .page-chat,
+  body.is-authenticated[data-page="chat"] #chatSection {
+    display: block !important;
+  }
+  @media (max-width: 700px) {
+    .chat-panel { margin: 0 12px 16px; padding: 16px; border-radius: 26px; }
+    .chat-head { display: grid; }
+    .chat-form { grid-template-columns: 1fr; }
+    .chat-list { max-height: 460px; }
+  }
+
 </style>
 </head>
 <body>
@@ -470,6 +550,27 @@
 
   <section class="leaderboard-panel glass-card app-only page-section page-leaderboard" id="leaderboardSection"><div class="leaderboard-head"><div><div class="auth-kicker">LEADERBOARD</div><div class="auth-title">Monthly net profit ranking</div></div><div class="leaderboard-top-right"><div class="leaderboard-countdown" id="leaderboardCountdown"><span>Leaderboard / account reset хүртэл:</span> --</div><div class="leaderboard-buttons"><button class="soft-btn" onclick="loadLeaderboard()">Refresh</button></div></div></div><div class="leaderboard-list" id="leaderboardList"><div class="leaderboard-empty">Leaderboard ачааллаж байна...</div></div></section>
 
+  <section class="chat-panel glass-card app-only page-section page-chat" id="chatSection">
+    <div class="chat-head">
+      <div>
+        <div class="auth-kicker">GLOBAL CHAT</div>
+        <div class="auth-title">Traders chat</div>
+      </div>
+      <button class="soft-btn" onclick="loadGlobalChat()">Refresh</button>
+    </div>
+
+    <div class="chat-list" id="chatList">
+      <div class="leaderboard-empty">Chat ачааллаж байна...</div>
+    </div>
+
+    <div class="chat-form">
+      <input id="chatInput" class="auth-input" type="text" maxlength="300" placeholder="Message бичих..." autocomplete="off" onkeydown="if(event.key === 'Enter') sendGlobalChatMessage();" />
+      <button class="auth-btn primary" onclick="sendGlobalChatMessage()">Send</button>
+    </div>
+
+    <div class="chat-note">Global chat зөвхөн login хийсэн хэрэглэгчдэд харагдана. 300 тэмдэгт хүртэл message бичнэ.</div>
+  </section>
+
   <section class="info-section app-only page-section page-home"><div class="info-card glass-card"><div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div><div class="rules-grid"><div class="rule">🛡️ Эрсдэл: балансын 20%-д ойртуулж lot-оор бодит risk тооцно.</div><div class="rule">⚖️ Ашиг: actual risk × 2 буюу RR 1:2.</div><div class="rule">🧮 Lot: 20% risk-д тааруулж бодоод 0.01 алхам руу доош тайрна.</div><div class="rule">🚫 Loss дараа нөхөх гэж орохгүй. Дараагийн setup хүртэл хүлээнэ.</div></div></div></section>
   <section class="quote-section glass-card app-only page-section page-home"><div class="quote-text">“Зах зээл чамайг шагнах албагүй. Харин чи <em>дүрмээ хамгаалж</em> чадвал боломж ирэх мөчид бэлэн байна.”</div><div class="quote-sub">Чухал нь хурд биш — дүрмээ эвдэхгүй, lot-оо хэтрүүлэхгүй байх.</div></section>
   <div class="risk-note app-only page-section page-home">Санамж: 20% risk бол өндөр эрсдэл. Бодит entry хийхээс өмнө XAUUSD-ийн stop-loss, spread, broker-ийн lot step-ээ заавал шалга.</div>
@@ -488,6 +589,7 @@
   <a href="#levels" data-page="levels" onclick="showPage('levels'); return false;">Levels</a>
   <a href="#history" data-page="history" onclick="showPage('history'); return false;">History</a>
   <a href="#leaderboard" data-page="leaderboard" onclick="showPage('leaderboard'); return false;">Leaderboard</a>
+  <a href="#chat" data-page="chat" onclick="showPage('chat'); return false;">Chat</a>
   <a href="#admin" data-page="admin" class="admin-only" onclick="showPage('admin'); return false;">Admin</a>
 </nav>
 
@@ -911,12 +1013,13 @@
   function getAuthInputs() { const registerForm = document.getElementById('registerForm'); const isRegister = registerForm && registerForm.style.display !== 'none'; if (isRegister) return { name: document.getElementById('nameInput')?.value.trim() || '', email: document.getElementById('emailInput')?.value.trim() || '', password: document.getElementById('passwordInput')?.value.trim() || '' }; return { name: '', email: document.getElementById('loginEmailInput')?.value.trim() || '', password: document.getElementById('loginPasswordInput')?.value.trim() || '' }; }
 
   window.showPage = function(page) {
-    const allowed = ['home', 'stats', 'levels', 'history', 'leaderboard', 'admin']; const nextPage = allowed.includes(page) ? page : 'home';
+    const allowed = ['home', 'stats', 'levels', 'history', 'leaderboard', 'chat', 'admin']; const nextPage = allowed.includes(page) ? page : 'home';
     document.body.dataset.page = nextPage;
     document.querySelectorAll('.bottom-nav a[data-page]').forEach(link => link.classList.toggle('active', link.dataset.page === nextPage));
-    const titles = { home: 'Home', stats: 'Stats', levels: 'Levels', history: 'History', leaderboard: 'Leaderboard', admin: 'Admin' };
+    const titles = { home: 'Home', stats: 'Stats', levels: 'Levels', history: 'History', leaderboard: 'Leaderboard', chat: 'Chat', admin: 'Admin' };
     const title = document.getElementById('pageTitleText'); if (title) title.textContent = titles[nextPage] || 'Home';
     if (nextPage === 'leaderboard') loadLeaderboard();
+    if (nextPage === 'chat') loadGlobalChat();
     if (nextPage === 'admin') loadAdminUsers();
     const poster = document.querySelector('.poster'); if (poster) poster.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
@@ -1005,7 +1108,7 @@
   window.loginUser = async function() { if (!firebaseReady || !auth) return alert('Эхлээд Firebase config-оо зөв оруулна уу.'); const { email, password } = getAuthInputs(); if (!email || !password) return alert('Mail болон code/password-оо оруулна уу.'); try { const cred = await auth.signInWithEmailAndPassword(email, password); currentUser = cred.user; updateAuthUI(cred.user); await checkAdminStatus(); await loadCloudData(); openHomeOrBalanceSetup(); } catch (error) { alert(error.message); } };
   window.saveInitialBalance = async function() { const value = getStartBalanceInputValue(); if (!value) return alert('Эхлэх balance-аа зөв оруулна уу.'); setStartBalance(value, true); if (firebaseReady && currentUser && db) await db.collection('users').doc(currentUser.uid).set({ challenge: { adminForceSetup: false, challengeMonthKey: getCurrentChallengeMonthKey(), startBalance: START, outcomes, tradeHistory, journalEntries, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }, { merge: true }); saveProgress(); render(); await saveLeaderboardStats(); showPage('home'); };
   window.changeStartBalance = function() { if (!currentUser) return alert('Эхлээд нэвтэрнэ үү.'); const raw = prompt('Шинэ эхлэх balance оруулна уу:', START > 0 ? String(START) : ''); if (raw === null) return; const value = Number(raw); if (!Number.isFinite(value) || value <= 0) return alert('Зөв balance оруулна уу.'); if (!confirm('Balance солиход current progress болон history reset болно. Үргэлжлүүлэх үү?')) return; setStartBalance(value, true); saveProgress(); render(); saveLeaderboardStats(); showPage('home'); };
-  window.logoutUser = async function() { if (!auth) return; await auth.signOut(); currentUser = null; document.body.classList.remove('is-authenticated', 'balance-ready', 'is-admin'); document.body.dataset.page = ''; const currentLevelTitle = document.getElementById('currentLevelTitle'); if (currentLevelTitle) currentLevelTitle.remove(); updateAuthUI(null); goTop(); };
+  window.logoutUser = async function() { if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe = null; } if (!auth) return; await auth.signOut(); currentUser = null; document.body.classList.remove('is-authenticated', 'balance-ready', 'is-admin'); document.body.dataset.page = ''; const currentLevelTitle = document.getElementById('currentLevelTitle'); if (currentLevelTitle) currentLevelTitle.remove(); updateAuthUI(null); goTop(); };
 
   async function checkAdminStatus() { document.body.classList.remove('is-admin'); if (!firebaseReady || !currentUser || !db) return false; try { const snap = await db.collection('admins').doc(currentUser.uid).get(); const isAdmin = snap.exists; document.body.classList.toggle('is-admin', isAdmin); return isAdmin; } catch (error) { console.warn('Admin шалгах боломжгүй байна:', error); return false; } }
 
@@ -1031,6 +1134,111 @@
     if (!firebaseReady || !db) { box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>'; return; }
     try { box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>'; const snap = await db.collection(getLeaderboardCollectionName()).orderBy('netProfit', 'desc').limit(20).get(); if (snap.empty) { box.innerHTML = '<div class="leaderboard-empty">Энэ сарын leaderboard хоосон байна. User login хийхэд энэ сарын оноо 0$-оос эхэлнэ.</div>'; return; } let rank = 0; const rows = []; snap.forEach(doc => { rank++; const data = doc.data() || {}; const isMe = currentUser && doc.id === currentUser.uid; const profit = Number(data.netProfit || 0); rows.push(`<div class="leaderboard-row ${isMe ? 'my-rank' : ''}"><div class="leaderboard-rank">#${rank}</div><div class="leaderboard-name"><strong>${escapeHTML(data.name || 'Trader')}</strong><span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span></div><div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${formatMoney(profit)}</div><div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div></div>`); }); box.innerHTML = rows.join(''); } catch (error) { console.warn('Leaderboard унших боломжгүй байна:', error); box.innerHTML = '<div class="leaderboard-empty">Leaderboard уншихад permission/index алдаа гарлаа. Firestore rules шалгаарай.</div>'; }
   };
+
+
+
+  let chatUnsubscribe = null;
+
+  function formatChatTime(value) {
+    try {
+      if (!value) return '';
+      const date = value.toDate ? value.toDate() : new Date(value);
+      return date.toLocaleString('mn-MN', {
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch (_) {
+      return '';
+    }
+  }
+
+  window.loadGlobalChat = function() {
+    const box = document.getElementById('chatList');
+    if (!box) return;
+
+    if (!firebaseReady || !db || !currentUser) {
+      box.innerHTML = '<div class="leaderboard-empty">Chat ашиглахын тулд login хийнэ үү.</div>';
+      return;
+    }
+
+    if (chatUnsubscribe) {
+      chatUnsubscribe();
+      chatUnsubscribe = null;
+    }
+
+    box.innerHTML = '<div class="leaderboard-empty">Chat ачааллаж байна...</div>';
+
+    chatUnsubscribe = db.collection('global_chat')
+      .doc('main')
+      .collection('messages')
+      .orderBy('createdAt', 'desc')
+      .limit(50)
+      .onSnapshot((snap) => {
+        if (snap.empty) {
+          box.innerHTML = '<div class="leaderboard-empty">Одоогоор message байхгүй байна.</div>';
+          return;
+        }
+
+        const rows = [];
+        snap.forEach(doc => {
+          const data = doc.data() || {};
+          const isMine = currentUser && data.uid === currentUser.uid;
+          rows.push(`
+            <div class="chat-message ${isMine ? 'mine' : ''}">
+              <div class="chat-message-head">
+                <div class="chat-message-name">${escapeHTML(data.name || 'Trader')}</div>
+                <div class="chat-message-time">${formatChatTime(data.createdAt)}</div>
+              </div>
+              <div class="chat-message-text">${escapeHTML(data.text || '')}</div>
+            </div>
+          `);
+        });
+
+        box.innerHTML = rows.join('');
+      }, (error) => {
+        console.warn('Chat уншихад алдаа:', error);
+        box.innerHTML = '<div class="leaderboard-empty">Chat уншихад permission/index алдаа гарлаа. Firestore rules шалгаарай.</div>';
+      });
+  };
+
+  window.sendGlobalChatMessage = async function() {
+    const input = document.getElementById('chatInput');
+    if (!input) return;
+
+    if (!firebaseReady || !db || !currentUser) {
+      alert('Chat бичихийн тулд login хийнэ үү.');
+      return;
+    }
+
+    const text = String(input.value || '').trim();
+    if (!text) {
+      alert('Message хоосон байна.');
+      return;
+    }
+
+    if (text.length > 300) {
+      alert('Message 300 тэмдэгтээс урт байж болохгүй.');
+      return;
+    }
+
+    try {
+      input.value = '';
+      await db.collection('global_chat')
+        .doc('main')
+        .collection('messages')
+        .add({
+          uid: currentUser.uid,
+          name: currentUser.displayName || 'Trader',
+          text,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
 
   window.loadAdminUsers = async function() {
     const box = document.getElementById('adminUsersList'); if (!box) return;
@@ -1149,6 +1357,26 @@ service cloud.firestore {
         allow create, update: if isOwnUser(userId);
         allow delete: if isAdmin();
       }
+    }
+
+
+    match /global_chat/main/messages/{messageId} {
+      allow read: if isSignedIn();
+
+      allow create: if isSignedIn()
+        && request.resource.data.keys().hasOnly([
+          'uid',
+          'name',
+          'text',
+          'createdAt'
+        ])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.name is string
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 300;
+
+      allow update, delete: if isAdmin();
     }
 
     match /{leaderboardCollection}/{userId} {
