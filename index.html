@@ -14,8 +14,6 @@
     --blue: #7dd3fc;
     --text: #fff9d7;
     --muted: rgba(255, 249, 215, 0.66);
-    --glass: rgba(255,255,255,0.10);
-    --stroke: rgba(255,255,255,0.18);
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,7 +23,7 @@
     min-height: 100vh;
     font-family: 'Rajdhani', sans-serif;
     color: var(--text);
-    padding: 18px 10px 96px;
+    padding: 18px 10px 118px;
     background:
       linear-gradient(180deg, rgba(255,255,255,0.10), transparent 18%),
       radial-gradient(circle at 18% 8%, rgba(255, 230, 120, 0.26), transparent 28%),
@@ -47,14 +45,9 @@
     z-index: 0;
     animation: orb 12s ease-in-out infinite alternate;
   }
-
   body::before { left: -140px; top: 70px; background: radial-gradient(circle, #ffd700, transparent 68%); }
   body::after { right: -150px; bottom: 70px; background: radial-gradient(circle, #00f5a0, transparent 68%); animation-delay: -4s; }
-
-  @keyframes orb {
-    from { transform: translate3d(0,0,0) scale(1); }
-    to { transform: translate3d(30px,-24px,0) scale(1.08); }
-  }
+  @keyframes orb { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(30px,-24px,0) scale(1.08); } }
 
   .poster {
     position: relative;
@@ -67,10 +60,7 @@
       linear-gradient(145deg, rgba(255,255,255,0.18), rgba(255,255,255,0.045) 48%, rgba(255,255,255,0.08)),
       radial-gradient(circle at 50% -10%, rgba(255, 215, 0, 0.18), transparent 38%);
     border: 1px solid rgba(255,255,255,0.20);
-    box-shadow:
-      0 34px 90px rgba(0,0,0,0.55),
-      inset 0 1px 0 rgba(255,255,255,0.34),
-      inset 0 -1px 0 rgba(255,255,255,0.07);
+    box-shadow: 0 34px 90px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.34), inset 0 -1px 0 rgba(255,255,255,0.07);
     backdrop-filter: blur(30px) saturate(1.55);
     -webkit-backdrop-filter: blur(30px) saturate(1.55);
   }
@@ -88,2077 +78,224 @@
 
   section, header, footer { position: relative; z-index: 1; }
 
-  .header {
-    text-align: center;
-    padding: 42px 22px 26px;
-    border-bottom: 1px solid rgba(255,215,0,0.16);
-  }
-
+  .header { text-align: center; padding: 42px 22px 26px; border-bottom: 1px solid rgba(255,215,0,0.16); }
   .top-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    border-radius: 999px;
-    color: var(--gold-soft);
-    background: rgba(255,215,0,0.08);
-    border: 1px solid rgba(255,215,0,0.22);
-    box-shadow: inset 0 0 18px rgba(255,215,0,0.08);
-    font-size: 11px;
-    letter-spacing: 2.4px;
-    text-transform: uppercase;
-    font-weight: 900;
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px;
+    color: var(--gold-soft); background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.22);
+    box-shadow: inset 0 0 18px rgba(255,215,0,0.08); font-size: 11px; letter-spacing: 2.4px; text-transform: uppercase; font-weight: 900;
   }
-
   .main-title {
-    margin-top: 14px;
-    font-family: 'Cinzel', serif;
-    font-size: clamp(46px, 11vw, 92px);
-    font-weight: 900;
-    line-height: 1;
+    margin-top: 14px; font-family: 'Cinzel', serif; font-size: clamp(46px, 11vw, 92px); font-weight: 900; line-height: 1;
     background: linear-gradient(180deg, #ffffff 0%, #fff1a6 20%, #ffd700 52%, #9f6900 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
-
-  .plan-title {
-    margin: 14px auto 18px;
-    max-width: 860px;
-    color: rgba(255,249,215,0.84);
-    font-family: 'Cinzel', serif;
-    font-size: clamp(13px, 3.5vw, 18px);
-    letter-spacing: 2px;
-    line-height: 1.45;
-  }
-
-  .badges {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .badge {
-    border-radius: 999px;
-    padding: 8px 15px;
-    font-size: 12px;
-    font-weight: 800;
-    color: #fff4b8;
-    background: linear-gradient(135deg, rgba(255,255,255,0.11), rgba(255,255,255,0.04));
-    border: 1px solid rgba(255,215,0,0.28);
-    box-shadow: inset 0 0 18px rgba(255,255,255,0.04);
-  }
+  .plan-title { margin: 14px auto 18px; max-width: 860px; color: rgba(255,249,215,0.84); font-family: 'Cinzel', serif; font-size: clamp(13px, 3.5vw, 18px); letter-spacing: 2px; line-height: 1.45; }
+  .badges { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+  .badge { border-radius: 999px; padding: 8px 15px; font-size: 12px; font-weight: 800; color: #fff4b8; background: linear-gradient(135deg, rgba(255,255,255,0.11), rgba(255,255,255,0.04)); border: 1px solid rgba(255,215,0,0.28); }
 
   .glass-card {
     border-radius: 30px;
-    background:
-      linear-gradient(145deg, rgba(255,255,255,0.17), rgba(255,255,255,0.045)),
-      radial-gradient(circle at 10% 0%, rgba(255,215,0,0.12), transparent 38%);
+    background: linear-gradient(145deg, rgba(255,255,255,0.17), rgba(255,255,255,0.045)), radial-gradient(circle at 10% 0%, rgba(255,215,0,0.12), transparent 38%);
     border: 1px solid rgba(255,255,255,0.18);
-    box-shadow:
-      0 20px 54px rgba(0,0,0,0.28),
-      inset 0 1px 0 rgba(255,255,255,0.25),
-      inset 0 -1px 0 rgba(255,255,255,0.06);
+    box-shadow: 0 20px 54px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 -1px 0 rgba(255,255,255,0.06);
     backdrop-filter: blur(26px) saturate(1.45);
     -webkit-backdrop-filter: blur(26px) saturate(1.45);
   }
 
-  .auth-panel, .dashboard, .progress-wrap, .pro-stats, .smart-grid, .table-wrapper, .info-section, .profile-wrap {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
-
-  .auth-panel { padding-top: 16px; padding-bottom: 8px; }
-  .auth-glass { padding: 16px; }
-  .auth-head { display: flex; justify-content: space-between; gap: 14px; align-items: center; margin-bottom: 12px; }
+  .auth-panel, .dashboard, .progress-wrap, .pro-stats, .smart-grid, .table-wrapper, .info-section, .profile-wrap, .next-trade-panel, .home-settings-row { padding-left: 16px; padding-right: 16px; }
+  .auth-panel { padding: 16px !important; }
+  .auth-glass { padding: 18px !important; }
+  .auth-head, .journal-head, .history-head, .leaderboard-head, .admin-head, .next-trade-head, .settings-modal-head { display: flex; justify-content: space-between; gap: 14px; align-items: flex-start; margin-bottom: 14px; }
   .auth-kicker { color: rgba(255,249,215,0.58); font-size: 10px; font-weight: 900; letter-spacing: 2px; }
   .auth-title { margin-top: 3px; color: #fff0a8; font-family: 'Cinzel', serif; font-size: 15px; font-weight: 900; letter-spacing: 1px; }
 
-  .auth-forms, .journal-form {
-    display: grid;
-    gap: 10px;
+  .auth-mode-tabs { display: flex; gap: 10px; margin-bottom: 14px; }
+  .auth-tab, .auth-btn, .auth-ghost, .soft-btn, .btn-sm, .profile-action-btn, .level-restart-btn, .home-settings-btn, .settings-close-btn, .settings-action {
+    border-radius: 999px; border: 1px solid rgba(255,255,255,0.20); cursor: pointer; font-family: 'Rajdhani', sans-serif; font-weight: 900; transition: .2s ease;
   }
-
-  .auth-forms { grid-template-columns: 1fr 1fr 1fr auto; align-items: center; }
-
-  .auth-input, .journal-textarea {
-    width: 100%;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.18);
-    outline: none;
-    color: #fff9d7;
-    background: rgba(0,0,0,0.22);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.09);
+  .auth-tab { height: 38px; padding: 0 16px; color: rgba(255,249,215,0.70); background: rgba(0,0,0,0.18); }
+  .auth-tab.active, .auth-btn.primary, .profile-action-btn, .phase-badge, .next-level-pill, .bottom-nav a.active, .home-settings-btn { color: #06120b !important; background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00) !important; }
+  .auth-login-wrap, .auth-register-wrap { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .auth-input {
+    width: 100%; height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.18); outline: none;
+    color: #fff9d7; background: rgba(0,0,0,0.22); font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 700;
   }
-
-  .auth-input { height: 44px; padding: 0 14px; }
-  .auth-input::placeholder, .journal-textarea::placeholder { color: rgba(255,249,215,0.42); }
-  .auth-input:focus, .journal-textarea:focus { border-color: rgba(255,215,0,0.48); box-shadow: 0 0 0 3px rgba(255,215,0,0.08); }
-
-  .auth-actions { display: flex; gap: 8px; justify-content: flex-end; }
-
-  .auth-btn, .auth-ghost, .soft-btn, .btn-sm {
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.20);
-    cursor: pointer;
-    color: #fff2a8;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 900;
-    letter-spacing: .5px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    transition: .2s ease;
-  }
-
-  .auth-btn, .auth-ghost { height: 44px; padding: 0 16px; }
-  .auth-btn.primary { color: #06120b; background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00); }
-  .auth-btn:hover, .auth-ghost:hover, .soft-btn:hover, .btn-sm:hover { transform: translateY(-2px); filter: brightness(1.08); }
+  .auth-input::placeholder { color: rgba(255,249,215,0.42); }
+  .auth-input:focus { border-color: rgba(255,215,0,0.48); box-shadow: 0 0 0 3px rgba(255,215,0,0.08); }
+  .auth-btn, .auth-ghost, .soft-btn, .btn-sm, .profile-action-btn, .level-restart-btn { min-height: 42px; padding: 0 16px; color: #fff2a8; background: rgba(255,255,255,0.08); backdrop-filter: blur(16px); }
+  .auth-btn:hover, .auth-ghost:hover, .soft-btn:hover, .btn-sm:hover, .profile-action-btn:hover, .level-restart-btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
   .auth-status { margin-top: 10px; color: rgba(255,249,215,0.62); font-size: 12px; font-weight: 700; }
 
-  .dashboard {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 12px;
-    padding-top: 16px;
-    padding-bottom: 16px;
-  }
+  .balance-setup-panel, .admin-panel, .history-panel, .leaderboard-panel, .journal-panel { margin: 16px; padding: 18px; border-radius: 30px; }
+  .balance-setup-inner { display: grid; grid-template-columns: 1fr minmax(260px, 360px); gap: 16px; align-items: center; }
+  .balance-setup-note, .smart-note, .next-trade-note, .risk-note, .settings-note, .admin-note { color: rgba(255,249,215,0.66); font-size: 13px; font-weight: 800; line-height: 1.45; }
+  .balance-setup-note { margin-top: 8px; }
+  .balance-setup-form { display: grid; gap: 10px; }
 
-  .stat-card {
-    min-height: 104px;
-    padding: 17px;
-    overflow: hidden;
-  }
+  .page-title-card { margin: 16px; padding: 16px 18px; border-radius: 26px; display: flex; justify-content: space-between; align-items: center; }
+  .profile-wrap { padding-top: 16px !important; padding-bottom: 12px !important; }
+  .profile-card { display: grid !important; grid-template-columns: minmax(0, 1fr) auto !important; align-items: center !important; gap: 16px !important; min-height: 118px !important; padding: 18px 20px !important; border-radius: 30px !important; }
+  .profile-name { margin-top: 4px; color: var(--gold-soft); font-family: 'Cinzel', serif; font-size: clamp(22px, 4vw, 32px); font-weight: 900; line-height: 1.05; overflow-wrap: anywhere; }
+  .profile-meta { margin-top: 8px; color: rgba(255,249,215,0.70); font-size: 13px; font-weight: 800; line-height: 1.35; overflow-wrap: anywhere; }
+  .profile-side { display: grid; justify-items: end; gap: 10px; min-width: 210px; }
+  .profile-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+  .profile-action-btn.secondary, .home-logout-btn.secondary { color: #fff2a8 !important; background: rgba(255,255,255,0.08) !important; }
+  .phase-badge { border-radius: 999px; padding: 10px 14px; font-weight: 900; }
 
-  .stat-label {
-    color: var(--muted);
-    font-size: 11px;
-    font-weight: 900;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-  }
+  .home-settings-row { padding-top: 14px; padding-bottom: 0; }
+  .home-settings-btn { width: 52px; height: 52px; border-radius: 18px; font-size: 22px; box-shadow: 0 14px 34px rgba(255,215,0,0.15); }
 
-  .stat-value {
-    margin-top: 8px;
-    font-family: 'Cinzel', serif;
-    font-size: clamp(22px,4vw,34px);
-    font-weight: 900;
-    color: var(--gold-soft);
-  }
+  .dashboard { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding-top: 0; padding-bottom: 14px; }
+  .stat-card { min-height: 112px; padding: 16px; border-radius: 24px; }
+  .stat-label { color: var(--muted); font-size: 11px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; }
+  .stat-value { margin-top: 8px; font-family: 'Cinzel', serif; font-size: clamp(24px,3vw,32px); line-height: 1.05; font-weight: 900; color: var(--gold-soft); }
+  .stat-note { margin-top: 3px; color: rgba(255,255,255,0.58); font-size: 11px; font-weight: 700; }
 
-  .stat-note {
-    margin-top: 3px;
-    color: rgba(255,255,255,0.58);
-    font-size: 11px;
-    font-weight: 700;
-  }
-
-  .progress-wrap { padding-bottom: 16px; }
-  .progress-card { padding: 18px; }
+  .next-trade-panel, .progress-wrap { padding-bottom: 14px; }
+  .next-trade-card, .progress-card, .smart-card { padding: 18px; border-radius: 30px; }
+  .next-level-pill { min-height: 38px; padding: 0 14px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-weight: 900; white-space: nowrap; }
+  .next-trade-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .next-mini { padding: 13px 12px; border-radius: 20px; background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.09); }
+  .next-mini span, .mini-card span { display: block; color: rgba(255,249,215,0.58); font-size: 10px; font-weight: 900; letter-spacing: 1.1px; text-transform: uppercase; }
+  .next-mini strong, .mini-card strong { display: block; margin-top: 7px; color: #fff0a8; font-family: 'Cinzel', serif; font-size: 20px; font-weight: 900; }
   .progress-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 10px; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: 1px; }
   .progress-track { height: 16px; border-radius: 999px; background: rgba(255,255,255,0.07); overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
   .progress-fill { height: 100%; width: 0%; border-radius: inherit; background: linear-gradient(90deg, #00f5a0, #ffd700, #fff2a8); box-shadow: 0 0 24px rgba(255,215,0,0.35); transition: width .45s ease; }
 
-  .pro-stats {
-    display: grid;
-    grid-template-columns: repeat(6,1fr);
-    gap: 10px;
-    padding-bottom: 16px;
-  }
-
-  .mini-card { min-height: 82px; padding: 14px; }
-  .mini-card span { display: block; color: rgba(255,249,215,0.58); font-size: 10px; font-weight: 900; letter-spacing: 1.2px; text-transform: uppercase; }
-  .mini-card strong { display: block; margin-top: 8px; color: #fff0a8; font-family: 'Cinzel', serif; font-size: 21px; }
-
-  .smart-grid {
-    display: grid;
-    grid-template-columns: 1.2fr .9fr .9fr;
-    gap: 14px;
-    padding-bottom: 16px;
-  }
-
-  .smart-card { padding: 18px; }
-  .smart-title { color: #fff0a8; font-family: 'Cinzel', serif; font-size: 13px; font-weight: 900; letter-spacing: 1.5px; margin-bottom: 12px; }
-  .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
-  .checklist label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 11px;
-    border-radius: 16px;
-    background: rgba(0,0,0,0.20);
-    border: 1px solid rgba(255,255,255,0.08);
-    color: rgba(255,249,215,0.78);
-    font-size: 12px;
-    font-weight: 800;
-  }
-  .checklist input { accent-color: #00f5a0; }
-  .check-meter { margin-top: 12px; height: 10px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; }
-  .check-meter div { width: 0%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #ff5d73, #ffd700, #00f5a0); transition: .25s ease; }
-  .smart-note { margin-top: 10px; color: rgba(255,249,215,0.62); font-size: 12px; line-height: 1.4; font-weight: 700; }
+  .pro-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; padding-bottom: 16px; }
+  .mini-card { min-height: 82px; padding: 14px; border-radius: 26px; }
+  .smart-grid { display: grid; grid-template-columns: 1fr; gap: 14px; padding-bottom: 16px; }
+  .smart-title, .ic-title { color: #fff0a8; font-family: 'Cinzel', serif; font-size: 13px; font-weight: 900; letter-spacing: 1.5px; margin-bottom: 12px; }
   .lock-display { display: inline-flex; align-items: center; justify-content: center; min-width: 120px; min-height: 52px; padding: 0 18px; border-radius: 999px; color: #03140d; background: linear-gradient(135deg, #bfffe4, #00f5a0 60%, #007a4d); font-family: 'Cinzel', serif; font-size: 18px; font-weight: 900; }
-  .daily-rule { color: #fff9d7; font-size: 16px; font-weight: 900; line-height: 1.35; min-height: 52px; }
-  .soft-btn { margin-top: 10px; min-height: 38px; padding: 0 14px; }
-
-  .profile-wrap { padding-bottom: 16px; }
-  .profile-card { padding: 18px; display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
-  .profile-name { font-family: 'Cinzel', serif; color: var(--gold-soft); font-size: 18px; font-weight: 900; }
-  .profile-meta { color: var(--muted); font-size: 12px; font-weight: 800; margin-top: 4px; }
-  .phase-badge { border-radius: 999px; padding: 10px 14px; color: #06120b; background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00); font-weight: 900; }
 
   .table-wrapper { padding-bottom: 16px; overflow-x: auto; border-radius: 30px; }
+  .current-level-title { padding: 0 16px 10px; color: rgba(255,249,215,0.78); font-family: 'Cinzel', serif; font-size: 14px; font-weight: 900; letter-spacing: 1.4px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
   .trading-table { width: 100%; min-width: 850px; border-collapse: separate; border-spacing: 0 9px; font-size: 13px; }
-  .trading-table th {
-    position: sticky;
-    top: 0;
-    z-index: 3;
-    padding: 12px 8px;
-    color: #ffeaa0;
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 1.2px;
-    text-align: center;
-    background: rgba(0,0,0,0.58);
-    backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(255,215,0,0.18);
-    border-bottom: 1px solid rgba(255,215,0,0.18);
-  }
+  .trading-table th { position: sticky; top: 0; z-index: 3; padding: 12px 8px; color: #ffeaa0; font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 1.2px; text-align: center; background: rgba(0,0,0,0.58); backdrop-filter: blur(12px); border-top: 1px solid rgba(255,215,0,0.18); border-bottom: 1px solid rgba(255,215,0,0.18); }
   .trading-table th:first-child { border-radius: 18px 0 0 18px; border-left: 1px solid rgba(255,215,0,0.18); }
   .trading-table th:last-child { border-radius: 0 18px 18px 0; border-right: 1px solid rgba(255,215,0,0.18); }
-
-  .trading-table td {
-    padding: 13px 8px;
-    text-align: center;
-    font-weight: 800;
-    background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.035));
-    border-top: 1px solid rgba(255,255,255,0.08);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.13);
-    backdrop-filter: blur(18px) saturate(1.3);
-    -webkit-backdrop-filter: blur(18px) saturate(1.3);
-    transition: .25s ease;
-  }
-
+  .trading-table td { padding: 13px 8px; text-align: center; font-weight: 800; background: linear-gradient(145deg, rgba(255,255,255,0.105), rgba(255,255,255,0.035)); border-top: 1px solid rgba(255,255,255,0.08); border-bottom: 1px solid rgba(255,255,255,0.08); box-shadow: inset 0 1px 0 rgba(255,255,255,0.13); backdrop-filter: blur(18px) saturate(1.3); transition: .25s ease; }
   .trading-table td:first-child { border-left: 1px solid rgba(255,255,255,0.08); border-radius: 20px 0 0 20px; }
   .trading-table td:last-child { border-right: 1px solid rgba(255,255,255,0.08); border-radius: 0 20px 20px 0; }
-  .trading-table tr:hover td { transform: translateY(-1px); filter: brightness(1.07); }
-
-  .trading-table tr.tr-taken td {
-    background: linear-gradient(90deg, rgba(0,245,160,0.34), rgba(255,255,255,0.055)) !important;
-    border-top-color: rgba(0,245,160,0.45) !important;
-    border-bottom-color: rgba(0,245,160,0.36) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 0 26px rgba(0,245,160,0.13) !important;
-  }
-
-  .trading-table tr.tr-loss td {
-    background: linear-gradient(90deg, rgba(255,93,115,0.38), rgba(255,255,255,0.055)) !important;
-    border-top-color: rgba(255,93,115,0.50) !important;
-    border-bottom-color: rgba(255,93,115,0.40) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 0 26px rgba(255,93,115,0.14) !important;
-  }
-
-  .level-chip, .goal-flag {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 34px;
-    height: 28px;
-    border-radius: 999px;
-    font-weight: 900;
-    color: #0a0800;
-    background: linear-gradient(135deg, #fff2a8, #ffd700 55%, #a76e00);
-    box-shadow: 0 0 18px rgba(255,215,0,0.2);
-  }
-
+  .trading-table tr.tr-taken td { background: linear-gradient(90deg, rgba(0,245,160,0.34), rgba(255,255,255,0.055)) !important; border-top-color: rgba(0,245,160,0.45) !important; border-bottom-color: rgba(0,245,160,0.36) !important; }
+  .trading-table tr.tr-loss td { background: linear-gradient(90deg, rgba(255,93,115,0.38), rgba(255,255,255,0.055)) !important; border-top-color: rgba(255,93,115,0.50) !important; border-bottom-color: rgba(255,93,115,0.40) !important; }
+  .level-chip, .goal-flag { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; height: 28px; border-radius: 999px; font-weight: 900; color: #0a0800; background: linear-gradient(135deg, #fff2a8, #ffd700 55%, #a76e00); }
   .extra-chip { color: #fff; background: linear-gradient(135deg, #c084fc, #7c3aed); }
   .bal-cell { font-family: 'Cinzel', serif; font-weight: 900; color: var(--gold-soft); }
   .lot-cell { color: var(--blue); }
   .action-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
-
   .btn-sm { padding: 7px 12px; font-size: 11px; color: #fff; }
   .btn-taken { background: linear-gradient(135deg, rgba(0,245,160,0.95), rgba(0,116,78,0.9)); }
   .btn-loss { background: linear-gradient(135deg, rgba(255,93,115,0.95), rgba(111,21,35,0.92)); }
-  .btn-reset { color: #fff2a8; background: rgba(255,255,255,0.07); border-color: rgba(255,215,0,0.26); }
 
-  .outcome-badge {
-    display: inline-block;
-    margin-bottom: 7px;
-    padding: 5px 10px;
-    border-radius: 999px;
-    font-size: 11px;
-    font-weight: 900;
-    background: rgba(0,0,0,0.34);
-    border: 1px solid rgba(255,255,255,0.12);
-  }
-  .outcome-profit { color: var(--green); }
-  .outcome-loss { color: var(--red); }
-  .warning-prev { display: inline-block; color: #ffcf7a; background: rgba(0,0,0,0.36); border: 1px solid rgba(255,207,122,0.18); padding: 7px 10px; border-radius: 999px; font-size: 10px; }
+  .history-list, .leaderboard-list, .admin-list { display: grid; gap: 10px; }
+  .history-item, .leaderboard-row, .admin-user-row { padding: 13px 14px; border-radius: 20px; background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.10); }
+  .history-item { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; }
+  .history-badge, .leaderboard-rank { width: 42px; height: 42px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; color: #06120b; background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00); }
+  .history-item.win .history-badge { background: linear-gradient(135deg, #bfffe4, #00f5a0 58%, #007a4d); }
+  .history-item.loss .history-badge { background: linear-gradient(135deg, #ffd2d9, #ff5d73 58%, #8a1628); color: #1c0307; }
+  .history-main strong, .leaderboard-name strong, .admin-user-main strong { display: block; color: #fff0a8; font-size: 14px; }
+  .history-main span, .leaderboard-name span, .admin-user-main span, .admin-cell span { display: block; margin-top: 3px; color: rgba(255,249,215,0.62); font-size: 12px; font-weight: 800; word-break: break-all; }
+  .history-money, .leaderboard-balance, .admin-profit { text-align: right; font-family: 'Cinzel', serif; font-weight: 900; }
+  .history-money.win, .leaderboard-balance, .admin-profit { color: var(--green); }
+  .history-money.loss, .leaderboard-balance.negative-profit, .admin-profit.negative { color: var(--red) !important; }
+  .leaderboard-row { display: grid; grid-template-columns: 58px 1fr auto auto; gap: 12px; align-items: center; border-radius: 22px; }
+  .leaderboard-row.my-rank { border-color: rgba(255,215,0,0.42); box-shadow: 0 0 24px rgba(255,215,0,0.10); }
+  .leaderboard-record { text-align: right; color: rgba(255,249,215,0.70); font-size: 12px; font-weight: 900; min-width: 82px; }
+  .leaderboard-empty { padding: 14px; border-radius: 18px; color: rgba(255,249,215,0.66); background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.08); font-weight: 800; }
+  .leaderboard-buttons, .admin-actions, .admin-row-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
 
-  .journal-panel { margin: 0 16px 16px; padding: 18px; }
-  .journal-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
-  .journal-form { grid-template-columns: repeat(4,1fr); }
-  .journal-textarea { grid-column: 1 / -1; min-height: 92px; resize: vertical; padding: 14px; border-radius: 22px; }
-  .journal-list { display: grid; gap: 10px; margin-top: 14px; }
-  .journal-item { padding: 12px; border-radius: 18px; background: rgba(0,0,0,0.20); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,249,215,0.78); font-size: 12px; font-weight: 700; }
-  .journal-item strong { color: #fff0a8; }
+  .admin-user-row { display: grid; grid-template-columns: 1.2fr .8fr .8fr .8fr auto; gap: 10px; align-items: center; }
+  .admin-cell strong { color: #fff9d7; font-size: 14px; }
+  .danger-btn, .settings-action.danger { color: #ffd2d9 !important; border-color: rgba(255,93,115,0.36) !important; background: rgba(255,93,115,0.12) !important; }
+  .admin-note code { color: #fff0a8; background: rgba(0,0,0,0.22); padding: 2px 6px; border-radius: 8px; }
 
   .info-section { display: grid; grid-template-columns: 1fr; gap: 14px; padding-bottom: 18px; }
   .info-card { padding: 18px; }
-  .ic-title { margin-bottom: 13px; color: var(--gold-soft); font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px; }
   .rules-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
   .rule { padding: 12px; border-radius: 18px; color: rgba(255,249,215,0.84); background: rgba(0,0,0,0.22); border: 1px solid rgba(255,255,255,0.08); font-size: 12px; line-height: 1.35; font-weight: 800; }
-
   .quote-section { margin: 0 16px 16px; padding: 24px 18px; text-align: center; }
   .quote-text { max-width: 840px; margin: 0 auto; font-size: clamp(17px,4vw,28px); font-weight: 900; line-height: 1.25; }
   .quote-text em { font-style: normal; background: linear-gradient(180deg, #fff6bd, #ffd700, #a56d00); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
   .quote-sub { margin-top: 10px; color: var(--muted); font-size: 13px; letter-spacing: 1px; font-weight: 800; }
-
-  .risk-note { max-width: 980px; margin: 0 auto 18px; padding: 0 16px; color: rgba(255,249,215,0.62); text-align: center; font-size: 11px; line-height: 1.45; font-weight: 700; }
+  .risk-note { max-width: 980px; margin: 0 auto 18px; padding: 0 16px; text-align: center; font-size: 11px; }
   .footer { padding: 18px 14px 22px; text-align: center; border-top: 1px solid rgba(255,215,0,0.16); color: rgba(255,234,160,0.74); font-size: 10px; letter-spacing: 1.4px; font-weight: 900; }
 
-  #musicBtn, #resetPlanBtn {
-    position: fixed;
-    bottom: 18px;
-    z-index: 999;
-    border: 1px solid rgba(255,255,255,0.24);
-    cursor: pointer;
-    background: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,215,0,0.26));
-    box-shadow: 0 16px 40px rgba(0,0,0,0.25), inset 0 0 18px rgba(255,255,255,0.17);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    transition: .2s ease;
-  }
+  .bottom-nav { position: fixed; left: 50%; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 998; display: flex; min-height: 64px; gap: 8px; padding: 10px 12px; border-radius: 999px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 16px 44px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.24); backdrop-filter: blur(22px) saturate(1.45); }
+  .bottom-nav a { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; color: #fff2a8; text-decoration: none; font-size: 14px; font-weight: 900; padding: 0 18px; border-radius: 999px; white-space: nowrap; }
 
-  #musicBtn { right: 18px; width: 54px; height: 54px; border-radius: 50%; font-size: 22px; }
-  #resetPlanBtn { left: 18px; height: 46px; padding: 0 18px; border-radius: 999px; color: #fff2a8; font-family: 'Rajdhani'; font-weight: 900; letter-spacing: .6px; }
-
-  .milestone-toast {
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-130px);
-    z-index: 1200;
-    max-width: min(520px, calc(100vw - 28px));
-    padding: 14px 18px;
-    border-radius: 999px;
-    color: #071109;
-    background: linear-gradient(135deg, #fff6bd, #ffd700, #00f5a0);
-    box-shadow: 0 18px 50px rgba(255,215,0,0.24);
-    font-weight: 900;
-    text-align: center;
-    transition: .35s ease;
-  }
+  .milestone-toast { position: fixed; top: 18px; left: 50%; transform: translateX(-50%) translateY(-130px); z-index: 1200; max-width: min(520px, calc(100vw - 28px)); padding: 14px 18px; border-radius: 999px; color: #071109; background: linear-gradient(135deg, #fff6bd, #ffd700, #00f5a0); box-shadow: 0 18px 50px rgba(255,215,0,0.24); font-weight: 900; text-align: center; transition: .35s ease; }
   .milestone-toast.show { transform: translateX(-50%) translateY(0); }
 
-  .bottom-nav {
-    position: fixed;
-    left: 50%;
-    bottom: 18px;
-    transform: translateX(-50%);
-    z-index: 998;
-    display: flex;
-    gap: 4px;
-    padding: 7px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.18);
-    box-shadow: 0 16px 44px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.24);
-    backdrop-filter: blur(22px) saturate(1.45);
-    -webkit-backdrop-filter: blur(22px) saturate(1.45);
-  }
-  .bottom-nav a { color: #fff2a8; text-decoration: none; font-size: 12px; font-weight: 900; padding: 10px 13px; border-radius: 999px; }
-  .bottom-nav a:hover { background: rgba(255,255,255,0.12); }
+  .settings-overlay { position: fixed; inset: 0; z-index: 99999; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(0,0,0,0.52); backdrop-filter: blur(14px); }
+  .settings-overlay.show { display: flex !important; }
+  body.settings-open { overflow: hidden; }
+  .settings-modal { width: min(520px, calc(100vw - 28px)); max-height: calc(100vh - 48px); overflow-y: auto; padding: 18px; border-radius: 30px; }
+  .settings-close-btn { width: 42px; height: 42px; color: #fff2a8; background: rgba(255,255,255,0.10); }
+  .settings-actions { display: grid; gap: 10px; }
+  .settings-action { min-height: 50px; padding: 0 14px; border-radius: 18px; color: #fff2a8; text-align: left; font-size: 14px; background: rgba(0,0,0,0.24); }
 
-  @media (max-width: 980px) {
-    .dashboard { grid-template-columns: repeat(2,1fr); }
-    .pro-stats { grid-template-columns: repeat(3,1fr); }
-    .smart-grid { grid-template-columns: 1fr; }
-    .rules-grid { grid-template-columns: 1fr 1fr; }
-    .journal-form { grid-template-columns: 1fr 1fr; }
-    .auth-forms { grid-template-columns: 1fr 1fr; }
+  body:not(.is-authenticated) .app-only, body:not(.is-authenticated) .page-title-card, body:not(.is-authenticated) .bottom-nav, body:not(.is-authenticated) .settings-overlay { display: none !important; }
+  body:not(.is-authenticated) #authPanel { display: block !important; }
+  body.is-authenticated #authPanel { display: none !important; }
+  body:not(.is-authenticated) .poster { max-width: 980px; margin-top: 24px; }
+  body.is-authenticated:not(.balance-ready) #balanceSetupPanel { display: block !important; }
+  body.is-authenticated.balance-ready #balanceSetupPanel, body:not(.is-authenticated) #balanceSetupPanel { display: none !important; }
+  body.is-authenticated:not(.balance-ready) .page-title-card, body.is-authenticated:not(.balance-ready) .page-section, body.is-authenticated:not(.balance-ready) .bottom-nav { display: none !important; }
+  body.is-authenticated .page-section { display: none !important; }
+  body.is-authenticated[data-page="home"] .page-home, body.is-authenticated[data-page="stats"] .page-stats, body.is-authenticated[data-page="levels"] .page-levels, body.is-authenticated[data-page="history"] .page-history, body.is-authenticated[data-page="leaderboard"] .page-leaderboard { display: grid !important; }
+  body.is-authenticated[data-page="home"] #progressSection, body.is-authenticated[data-page="home"] #nextTradeSection, body.is-authenticated[data-page="home"] #homeSettingsRow, body.is-authenticated[data-page="home"] .info-section, body.is-authenticated[data-page="home"] .quote-section, body.is-authenticated[data-page="home"] .risk-note, body.is-authenticated[data-page="home"] .footer, body.is-authenticated[data-page="levels"] #levelsSection, body.is-authenticated[data-page="history"] #historySection, body.is-authenticated[data-page="leaderboard"] #leaderboardSection { display: block !important; }
+  body:not(.is-admin) .admin-only { display: none !important; }
+  body.is-authenticated.is-admin .bottom-nav .admin-only { display: inline-flex !important; }
+  body.is-authenticated[data-page="admin"].is-admin #adminSection, body.is-authenticated[data-page="admin"].is-admin .page-admin { display: block !important; }
+
+  @media (max-width: 900px) {
+    .dashboard { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pro-stats { grid-template-columns: repeat(2, 1fr); }
+    .next-trade-grid, .rules-grid { grid-template-columns: repeat(2, 1fr); }
+    .profile-card { grid-template-columns: 1fr !important; }
+    .admin-user-row { grid-template-columns: 1fr; align-items: stretch; }
+    .admin-actions, .admin-row-actions { width: 100%; justify-content: stretch; }
+    .admin-actions .soft-btn, .admin-row-actions .soft-btn { flex: 1; }
   }
 
   @media (max-width: 700px) {
-    body { padding: 10px 6px 92px; }
+    body { padding: 10px 6px 118px !important; }
     .poster { border-radius: 28px; }
     .header { padding: 34px 14px 22px; }
     .top-pill { font-size: 9px; letter-spacing: 1.7px; padding: 7px 12px; }
     .main-title { font-size: clamp(42px,14vw,68px); }
     .plan-title { font-size: 12px; letter-spacing: 1.3px; }
-
-    .auth-panel, .dashboard, .progress-wrap, .pro-stats, .smart-grid, .table-wrapper, .info-section, .profile-wrap { padding-left: 12px; padding-right: 12px; }
-    .dashboard, .pro-stats { grid-template-columns: 1fr; }
-    .mini-card { min-height: 76px; border-radius: 22px; }
-    .auth-forms, .journal-form { grid-template-columns: 1fr; }
-    .auth-actions { justify-content: stretch; }
-    .auth-btn { flex: 1; }
-    .progress-head { flex-direction: column; gap: 4px; }
-    .checklist, .rules-grid { grid-template-columns: 1fr; }
-    .profile-card { grid-template-columns: 1fr; }
-
+    .auth-panel, .dashboard, .progress-wrap, .pro-stats, .smart-grid, .table-wrapper, .info-section, .profile-wrap, .next-trade-panel, .home-settings-row { padding-left: 12px; padding-right: 12px; }
+    .auth-mode-tabs { display: grid; grid-template-columns: 1fr 1fr; }
+    .balance-setup-panel, .history-panel, .leaderboard-panel, .admin-panel { margin: 12px; padding: 16px; border-radius: 26px; }
+    .balance-setup-inner { grid-template-columns: 1fr; }
+    .dashboard { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .stat-card { min-height: 104px; padding: 14px; border-radius: 22px; }
+    .stat-label { font-size: 9.5px; letter-spacing: 1px; line-height: 1.1; }
+    .stat-value { font-size: clamp(22px, 8vw, 29px); }
+    .pro-stats, .next-trade-grid, .rules-grid { grid-template-columns: 1fr; }
+    .profile-side { min-width: 0; width: 100%; justify-items: stretch; }
+    .profile-actions { display: grid; grid-template-columns: 1fr 1fr; width: 100%; }
+    .phase-badge { width: 100%; justify-content: center; text-align: center; }
     .table-wrapper { padding-bottom: 24px; overflow: visible; }
     .trading-table { min-width: 0; width: 100%; border-spacing: 0 22px; }
     .trading-table thead { display: none; }
     .trading-table, .trading-table tbody, .trading-table tr, .trading-table td { display: block; }
-
-    .trading-table tr {
-      position: relative;
-      padding: 22px 18px;
-      margin-bottom: 26px;
-      border-radius: 30px;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.045)),
-        radial-gradient(circle at 0% 0%, rgba(255,215,0,0.13), transparent 42%);
-      border: 1px solid rgba(255,255,255,0.16);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.24),
-        0 18px 46px rgba(0,0,0,0.26);
-      backdrop-filter: blur(28px) saturate(1.55);
-      -webkit-backdrop-filter: blur(28px) saturate(1.55);
-      overflow: hidden;
-    }
-
-    .trading-table tr::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: linear-gradient(120deg, rgba(255,255,255,0.16), transparent 36%, rgba(255,255,255,0.04));
-      pointer-events: none;
-    }
-
-    .trading-table tr.tr-taken {
-      background:
-        linear-gradient(145deg, rgba(0,245,160,0.20), rgba(255,255,255,0.075) 52%, rgba(255,255,255,0.045)),
-        radial-gradient(circle at 18% 0%, rgba(0,245,160,0.24), transparent 42%) !important;
-      border: 1px solid rgba(0,245,160,0.42) !important;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.26),
-        inset 0 -1px 0 rgba(0,245,160,0.11),
-        0 16px 38px rgba(0,0,0,0.24),
-        0 0 18px rgba(0,245,160,0.09) !important;
-    }
-
-    .trading-table tr.tr-loss {
-      background:
-        linear-gradient(145deg, rgba(255,93,115,0.20), rgba(255,255,255,0.075) 52%, rgba(255,255,255,0.045)),
-        radial-gradient(circle at 18% 0%, rgba(255,93,115,0.22), transparent 42%) !important;
-      border: 1px solid rgba(255,93,115,0.42) !important;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.26),
-        inset 0 -1px 0 rgba(255,93,115,0.11),
-        0 16px 38px rgba(0,0,0,0.24),
-        0 0 18px rgba(255,93,115,0.09) !important;
-    }
-
-    .trading-table td,
-    .trading-table td:first-child,
-    .trading-table td:last-child,
-    .trading-table tr.tr-taken td,
-    .trading-table tr.tr-loss td {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      padding: 13px 2px;
-      min-width: 0 !important;
-      text-align: right;
-      background: transparent !important;
-      border: 0 !important;
-      border-radius: 0 !important;
-      box-shadow: none !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-      border-bottom: 1px solid rgba(255,255,255,0.075) !important;
-    }
-
+    .trading-table tr { position: relative; padding: 22px 18px; margin-bottom: 26px; border-radius: 30px; background: linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.045)), radial-gradient(circle at 0% 0%, rgba(255,215,0,0.13), transparent 42%); border: 1px solid rgba(255,255,255,0.16); box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 18px 46px rgba(0,0,0,0.26); }
+    .trading-table td, .trading-table td:first-child, .trading-table td:last-child { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 13px 2px; text-align: right; background: transparent !important; border: 0 !important; border-radius: 0 !important; box-shadow: none !important; backdrop-filter: none !important; border-bottom: 1px solid rgba(255,255,255,0.075) !important; }
     .trading-table td:last-child { border-bottom: 0 !important; }
-    .trading-table td::before {
-      content: attr(data-label);
-      flex: 0 0 auto;
-      color: rgba(255,249,215,0.58);
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      text-align: left;
-    }
-
-    .trading-table td[data-label="#"] {
-      justify-content: center;
-      padding-bottom: 14px;
-      margin-bottom: 4px;
-      border-bottom-color: rgba(255,215,0,0.18) !important;
-    }
+    .trading-table td::before { content: attr(data-label); flex: 0 0 auto; color: rgba(255,249,215,0.58); font-size: 11px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; text-align: left; }
+    .trading-table td[data-label="#"] { justify-content: center; padding-bottom: 14px; margin-bottom: 4px; border-bottom-color: rgba(255,215,0,0.18) !important; }
     .trading-table td[data-label="#"]::before { display: none; }
     .level-chip, .goal-flag { min-width: 52px; height: 52px; font-size: 18px; }
     .action-group { justify-content: flex-end; gap: 10px; }
-    .journal-panel { margin: 0 12px 16px; border-radius: 26px; }
-    .journal-head { align-items: flex-start; }
-
-    .bottom-nav { bottom: 12px; max-width: calc(100vw - 18px); }
-    .bottom-nav a { padding: 9px 10px; font-size: 11px; }
-    #resetPlanBtn { bottom: 74px; left: 16px; height: 44px; padding: 0 15px; }
-    #musicBtn { bottom: 72px; right: 16px; width: 54px; height: 54px; }
+    .history-item, .leaderboard-row { grid-template-columns: auto 1fr; }
+    .history-money, .leaderboard-balance, .leaderboard-record { grid-column: 2 / -1; text-align: left; }
+    .bottom-nav { width: calc(100vw - 18px); max-width: 760px; min-height: 70px; padding: 11px 10px; gap: 7px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
+    .bottom-nav::-webkit-scrollbar { display: none; }
+    .bottom-nav a { flex: 0 0 auto; min-width: 82px; min-height: 48px; padding: 0 16px; font-size: 13px; }
   }
-
-  /* ===== AUTH LOCK MODE ===== */
-  body:not(.is-authenticated) .app-only {
-    display: none !important;
-  }
-
-  body:not(.is-authenticated) {
-    padding-bottom: 28px;
-  }
-
-  body:not(.is-authenticated) .poster {
-    max-width: 860px;
-  }
-
-  body:not(.is-authenticated) .auth-panel {
-    padding: 24px 18px 34px;
-  }
-
-  body:not(.is-authenticated) .auth-glass {
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
-  body:not(.is-authenticated) .auth-status::after {
-    content: " · Нэвтэрсний дараа dashboard, levels, journal, rules бүгд нээгдэнэ.";
-  }
-
-
-  /* ===== CLEAN AUTH LAYOUT OVERRIDE ===== */
-  .auth-mode-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-
-  .auth-tab {
-    height: 38px;
-    padding: 0 16px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.18);
-    color: rgba(255,249,215,0.70);
-    background: rgba(0,0,0,0.18);
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 900;
-    cursor: pointer;
-    transition: .2s ease;
-  }
-
-  .auth-tab.active {
-    color: #06120b;
-    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
-  }
-
-  .auth-login-wrap,
-  .auth-register-wrap {
-    display: grid;
-    grid-template-columns: minmax(260px, 1fr) auto;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .auth-stack {
-    display: grid;
-    gap: 10px;
-  }
-
-  .big-auth-btn {
-    min-width: 150px;
-    height: 98px !important;
-    font-size: 16px;
-  }
-
-  .auth-register-wrap .big-auth-btn {
-    height: 152px !important;
-  }
-
-  .auth-forms {
-    display: none !important;
-  }
-
-  .profile-wrap {
-    padding-top: 16px;
-  }
-
-  body:not(.is-authenticated) .profile-wrap {
-    display: none !important;
-  }
-
-  #musicBtn {
-    display: none !important;
-  }
-
-  @media (max-width: 700px) {
-    .auth-mode-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .auth-login-wrap,
-    .auth-register-wrap {
-      grid-template-columns: 1fr;
-    }
-
-    .big-auth-btn,
-    .auth-register-wrap .big-auth-btn {
-      width: 100%;
-      height: 48px !important;
-    }
-
-    .profile-wrap {
-      padding: 12px 12px 14px;
-    }
-  }
-
-
-  /* ===== CURRENT LEVEL ONLY + HISTORY ===== */
-  .current-level-title {
-    padding: 0 16px 10px;
-    color: rgba(255,249,215,0.78);
-    font-family: 'Cinzel', serif;
-    font-size: 14px;
-    font-weight: 900;
-    letter-spacing: 1.4px;
-  }
-
-  .history-panel {
-    margin: 0 16px 16px;
-    padding: 18px;
-    border-radius: 30px;
-  }
-
-  .history-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-
-  .history-list {
-    display: grid;
-    gap: 10px;
-  }
-
-  .history-item {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 12px;
-    align-items: center;
-    padding: 13px 14px;
-    border-radius: 20px;
-    background: rgba(0,0,0,0.20);
-    border: 1px solid rgba(255,255,255,0.10);
-  }
-
-  .history-badge {
-    width: 42px;
-    height: 42px;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    color: #06120b;
-  }
-
-  .history-item.win .history-badge {
-    background: linear-gradient(135deg, #bfffe4, #00f5a0 58%, #007a4d);
-  }
-
-  .history-item.loss .history-badge {
-    background: linear-gradient(135deg, #ffd2d9, #ff5d73 58%, #8a1628);
-    color: #1c0307;
-  }
-
-  .history-main strong {
-    display: block;
-    color: #fff0a8;
-    font-size: 14px;
-  }
-
-  .history-main span {
-    display: block;
-    margin-top: 3px;
-    color: rgba(255,249,215,0.62);
-    font-size: 12px;
-    font-weight: 800;
-  }
-
-  .history-money {
-    text-align: right;
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-  }
-
-  .history-money.win { color: var(--green); }
-  .history-money.loss { color: var(--red); }
-
-  @media (max-width: 700px) {
-    .current-level-title {
-      padding: 0 12px 10px;
-    }
-
-    .history-panel {
-      margin: 0 12px 16px;
-      padding: 16px;
-      border-radius: 26px;
-    }
-
-    .history-head {
-      align-items: flex-start;
-    }
-
-    .history-item {
-      grid-template-columns: auto 1fr;
-    }
-
-    .history-money {
-      grid-column: 1 / -1;
-      text-align: left;
-      padding-left: 54px;
-    }
-  }
-
-  /* ===== CLEAN STABLE LAYOUT FIX ===== */
-  body:not(.is-authenticated) .app-only { display: none !important; }
-  body:not(.is-authenticated) .poster { max-width: 980px; margin-top: 24px; }
-  body:not(.is-authenticated) .auth-panel { padding: 28px 18px 36px !important; }
-  body:not(.is-authenticated) .auth-glass { max-width: 640px; margin: 0 auto; }
-
-  .auth-panel { padding: 16px !important; }
-  .auth-glass { padding: 18px !important; }
-
-  .auth-mode-tabs { display: flex; gap: 10px; margin-bottom: 14px; }
-  .auth-tab {
-    height: 38px; padding: 0 16px; border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.18);
-    color: rgba(255,249,215,0.70); background: rgba(0,0,0,0.18);
-    font-family: 'Rajdhani', sans-serif; font-weight: 900; cursor: pointer;
-  }
-  .auth-tab.active { color: #06120b; background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00); }
-
-  .auth-login-wrap, .auth-register-wrap { display: grid; grid-template-columns: 1fr; gap: 10px; }
-  .auth-login-wrap .big-auth-btn, .auth-register-wrap .big-auth-btn {
-    width: 100%; height: 48px !important; font-size: 15px;
-  }
-
-  .profile-wrap { padding: 16px 16px 12px !important; }
-  .profile-card {
-    min-height: auto !important; display: grid; grid-template-columns: 1fr auto;
-    align-items: center; gap: 14px; padding: 18px !important;
-  }
-  .profile-name { font-size: 24px !important; }
-  .profile-meta { font-size: 13px !important; line-height: 1.35; }
-
-  .pro-stats { grid-template-columns: repeat(5, 1fr) !important; }
-  .smart-grid { grid-template-columns: 1fr !important; }
-
-  .current-level-title { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-  .level-restart-btn {
-    min-height: 36px; padding: 0 14px; border-radius: 999px;
-    border: 1px solid rgba(255, 215, 0, 0.28); cursor: pointer;
-    color: #fff2a8; background: rgba(255,255,255,0.08);
-    font-family: 'Rajdhani', sans-serif; font-weight: 900; letter-spacing: .4px;
-    backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  }
-
-  #resetPlanBtn { left: 18px !important; bottom: 18px !important; }
-
-  @media (max-width: 900px) {
-    .pro-stats { grid-template-columns: repeat(2, 1fr) !important; }
-    .profile-card { grid-template-columns: 1fr; }
-    .current-level-title { flex-direction: column; align-items: stretch; }
-    .level-restart-btn { width: 100%; }
-  }
-
-  @media (max-width: 700px) {
-    body:not(.is-authenticated) .poster { margin-top: 0; }
-    .auth-mode-tabs { display: grid; grid-template-columns: 1fr 1fr; }
-  }
-
-
-  /* ===== LEADERBOARD ===== */
-  .leaderboard-panel {
-    margin: 0 16px 16px;
-    padding: 18px;
-    border-radius: 30px;
-  }
-
-  .leaderboard-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-
-  .leaderboard-list {
-    display: grid;
-    gap: 10px;
-  }
-
-  .leaderboard-row {
-    display: grid;
-    grid-template-columns: 58px 1fr auto auto;
-    gap: 12px;
-    align-items: center;
-    padding: 13px 14px;
-    border-radius: 22px;
-    background: rgba(0,0,0,0.20);
-    border: 1px solid rgba(255,255,255,0.10);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
-  }
-
-  .leaderboard-row.my-rank {
-    border-color: rgba(255,215,0,0.42);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 0 24px rgba(255,215,0,0.10);
-  }
-
-  .leaderboard-rank {
-    width: 42px;
-    height: 42px;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #06120b;
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
-  }
-
-  .leaderboard-name strong {
-    display: block;
-    color: #fff0a8;
-    font-family: 'Cinzel', serif;
-    font-size: 14px;
-  }
-
-  .leaderboard-name span {
-    display: block;
-    margin-top: 3px;
-    color: rgba(255,249,215,0.62);
-    font-size: 12px;
-    font-weight: 800;
-  }
-
-  .leaderboard-balance {
-    text-align: right;
-    color: var(--green);
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-    font-size: 15px;
-  }
-
-  .leaderboard-record {
-    text-align: right;
-    color: rgba(255,249,215,0.70);
-    font-size: 12px;
-    font-weight: 900;
-    min-width: 82px;
-  }
-
-  .leaderboard-empty {
-    padding: 14px;
-    border-radius: 18px;
-    color: rgba(255,249,215,0.66);
-    background: rgba(0,0,0,0.18);
-    border: 1px solid rgba(255,255,255,0.08);
-    font-weight: 800;
-  }
-
-  @media (max-width: 700px) {
-    .leaderboard-panel {
-      margin: 0 12px 16px;
-      padding: 16px;
-      border-radius: 26px;
-    }
-
-    .leaderboard-head {
-      align-items: flex-start;
-    }
-
-    .leaderboard-row {
-      grid-template-columns: 46px 1fr;
-      gap: 10px;
-    }
-
-    .leaderboard-balance,
-    .leaderboard-record {
-      grid-column: 2 / -1;
-      text-align: left;
-    }
-
-    .bottom-nav a {
-      padding-left: 8px;
-      padding-right: 8px;
-    }
-  }
-
-
-  /* ===== APP PAGE SWITCH MODE ===== */
-  body.is-authenticated .page-section {
-    display: none !important;
-  }
-
-  body.is-authenticated[data-page="home"] .page-home,
-  body.is-authenticated[data-page="stats"] .page-stats,
-  body.is-authenticated[data-page="levels"] .page-levels,
-  body.is-authenticated[data-page="history"] .page-history,
-  body.is-authenticated[data-page="leaderboard"] .page-leaderboard {
-    display: grid !important;
-  }
-
-  body.is-authenticated[data-page="home"] .progress-wrap.page-home,
-  body.is-authenticated[data-page="home"] .info-section.page-home,
-  body.is-authenticated[data-page="home"] .quote-section.page-home,
-  body.is-authenticated[data-page="home"] .risk-note.page-home,
-  body.is-authenticated[data-page="home"] .footer.page-home,
-  body.is-authenticated[data-page="levels"] .table-wrapper.page-levels,
-  body.is-authenticated[data-page="history"] .history-panel.page-history,
-  body.is-authenticated[data-page="leaderboard"] .leaderboard-panel.page-leaderboard {
-    display: block !important;
-  }
-
-  .page-title-card {
-    margin: 16px 16px 10px;
-    padding: 16px 18px;
-    border-radius: 26px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .bottom-nav a.active {
-    color: #06120b;
-    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
-  }
-
-  body:not(.is-authenticated) .page-title-card {
-    display: none !important;
-  }
-
-  @media (max-width: 700px) {
-    .page-title-card {
-      margin: 12px 12px 10px;
-      padding: 14px 16px;
-      border-radius: 22px;
-    }
-  }
-
-
-  /* ===== FINAL MOBILE/PAGE SWITCH FIX ===== */
-  #resetPlanBtn { display: none !important; }
-
-  body.is-authenticated #authPanel {
-    display: none !important;
-  }
-
-  body:not(.is-authenticated) #authPanel {
-    display: block !important;
-  }
-
-  body:not(.is-authenticated) .page-title-card,
-  body:not(.is-authenticated) .bottom-nav {
-    display: none !important;
-  }
-
-  body.is-authenticated .page-section {
-    display: none !important;
-  }
-
-  body.is-authenticated[data-page="home"] .page-home,
-  body.is-authenticated[data-page="stats"] .page-stats,
-  body.is-authenticated[data-page="levels"] .page-levels,
-  body.is-authenticated[data-page="history"] .page-history,
-  body.is-authenticated[data-page="leaderboard"] .page-leaderboard {
-    display: grid !important;
-  }
-
-  body.is-authenticated[data-page="home"] .progress-wrap.page-home,
-  body.is-authenticated[data-page="home"] .info-section.page-home,
-  body.is-authenticated[data-page="home"] .quote-section.page-home,
-  body.is-authenticated[data-page="home"] .risk-note.page-home,
-  body.is-authenticated[data-page="home"] .footer.page-home,
-  body.is-authenticated[data-page="levels"] .table-wrapper.page-levels,
-  body.is-authenticated[data-page="history"] .history-panel.page-history,
-  body.is-authenticated[data-page="leaderboard"] .leaderboard-panel.page-leaderboard {
-    display: block !important;
-  }
-
-  .page-title-card {
-    margin: 16px 16px 10px;
-    padding: 16px 18px;
-    border-radius: 26px;
-  }
-
-  .bottom-nav a.active {
-    color: #06120b !important;
-    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00) !important;
-  }
-
-  @media (max-width: 700px) {
-    .bottom-nav {
-      left: 50% !important;
-      right: auto !important;
-      transform: translateX(-50%) !important;
-      bottom: 12px !important;
-      width: calc(100vw - 22px);
-      justify-content: center;
-      overflow-x: auto;
-    }
-
-    .bottom-nav a {
-      white-space: nowrap;
-      padding: 9px 9px !important;
-      font-size: 10.5px !important;
-    }
-
-    .page-title-card {
-      margin: 12px 12px 10px;
-      padding: 14px 16px;
-      border-radius: 22px;
-    }
-  }
-
-
-
-  /* ===== FIX: HIDE LEVEL TITLE ON LOGIN ===== */
-  body:not(.is-authenticated) .current-level-title {
-    display: none !important;
-  }
-
-  body.is-authenticated:not([data-page="levels"]) .current-level-title {
-    display: none !important;
-  }
-
-  body.is-authenticated[data-page="levels"] .current-level-title {
-    display: flex !important;
-  }
-
-
-  /* ===== FIX: LOGIN AFTER OPEN HOME BY DEFAULT ===== */
-  body.is-authenticated:not([data-page]) .page-home,
-  body.is-authenticated[data-page=""] .page-home {
-    display: grid !important;
-  }
-
-  body.is-authenticated:not([data-page]) .progress-wrap.page-home,
-  body.is-authenticated[data-page=""] .progress-wrap.page-home,
-  body.is-authenticated:not([data-page]) .info-section.page-home,
-  body.is-authenticated[data-page=""] .info-section.page-home,
-  body.is-authenticated:not([data-page]) .quote-section.page-home,
-  body.is-authenticated[data-page=""] .quote-section.page-home,
-  body.is-authenticated:not([data-page]) .risk-note.page-home,
-  body.is-authenticated[data-page=""] .risk-note.page-home,
-  body.is-authenticated:not([data-page]) .footer.page-home,
-  body.is-authenticated[data-page=""] .footer.page-home {
-    display: block !important;
-  }
-
-
-  /* ===== BIGGER MOBILE BOTTOM NAV ===== */
-  .bottom-nav {
-    min-height: 64px;
-    padding: 10px 12px !important;
-    gap: 8px !important;
-  }
-
-  .bottom-nav a {
-    min-height: 46px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 18px !important;
-    font-size: 14px !important;
-    border-radius: 999px;
-  }
-
-  @media (max-width: 700px) {
-    body {
-      padding-bottom: 118px !important;
-    }
-
-    .bottom-nav {
-      width: calc(100vw - 18px) !important;
-      max-width: 760px !important;
-      min-height: 70px !important;
-      padding: 11px 10px !important;
-      gap: 7px !important;
-      bottom: 14px !important;
-      border-radius: 999px !important;
-      overflow-x: auto;
-      justify-content: flex-start !important;
-      scrollbar-width: none;
-    }
-
-    .bottom-nav::-webkit-scrollbar {
-      display: none;
-    }
-
-    .bottom-nav a {
-      flex: 0 0 auto;
-      min-width: 82px;
-      min-height: 48px;
-      padding: 0 16px !important;
-      font-size: 13px !important;
-      font-weight: 900 !important;
-      border-radius: 999px !important;
-    }
-
-    .bottom-nav a.active {
-      min-width: 98px;
-      box-shadow: 0 12px 28px rgba(255, 215, 0, 0.22);
-    }
-  }
-
-  @media (max-width: 390px) {
-    .bottom-nav a {
-      min-width: 76px;
-      padding: 0 14px !important;
-      font-size: 12.5px !important;
-    }
-
-    .bottom-nav a.active {
-      min-width: 92px;
-    }
-  }
-
-
-  .home-logout-btn.secondary {
-    color: #fff2a8 !important;
-    background: rgba(255,255,255,0.08) !important;
-  }
-
-
-  /* ===== POST-LOGIN BALANCE SETUP ===== */
-  .balance-setup-panel {
-    margin: 16px 16px 16px;
-    padding: 18px;
-    border-radius: 30px;
-  }
-
-  .balance-setup-inner {
-    display: grid;
-    grid-template-columns: 1fr minmax(260px, 360px);
-    gap: 16px;
-    align-items: center;
-  }
-
-  .balance-setup-note {
-    margin-top: 8px;
-    color: rgba(255,249,215,0.66);
-    font-size: 13px;
-    font-weight: 800;
-    line-height: 1.45;
-  }
-
-  .balance-setup-form {
-    display: grid;
-    gap: 10px;
-  }
-
-  body:not(.is-authenticated) #balanceSetupPanel {
-    display: none !important;
-  }
-
-  body.is-authenticated.balance-ready #balanceSetupPanel {
-    display: none !important;
-  }
-
-  body.is-authenticated:not(.balance-ready) #balanceSetupPanel {
-    display: block !important;
-  }
-
-  body.is-authenticated:not(.balance-ready) .page-title-card,
-  body.is-authenticated:not(.balance-ready) .page-section,
-  body.is-authenticated:not(.balance-ready) .bottom-nav {
-    display: none !important;
-  }
-
-  @media (max-width: 700px) {
-    .balance-setup-panel {
-      margin: 12px 12px 16px;
-      padding: 16px;
-      border-radius: 26px;
-    }
-
-    .balance-setup-inner {
-      grid-template-columns: 1fr;
-    }
-  }
-
-
-  /* ===== FIXED PROFILE LAYOUT + BALANCE CHANGE ===== */
-  .profile-wrap {
-    padding: 16px 16px 12px !important;
-  }
-
-  .profile-card {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) auto !important;
-    align-items: center !important;
-    gap: 16px !important;
-    min-height: 118px !important;
-    padding: 18px 20px !important;
-    border-radius: 30px !important;
-  }
-
-  .profile-info {
-    min-width: 0;
-  }
-
-  .profile-name {
-    margin-top: 4px;
-    color: var(--gold-soft, #ffe98a) !important;
-    font-family: 'Cinzel', serif !important;
-    font-size: clamp(22px, 4vw, 32px) !important;
-    font-weight: 900 !important;
-    line-height: 1.05 !important;
-    overflow-wrap: anywhere;
-  }
-
-  .profile-meta {
-    margin-top: 8px !important;
-    color: rgba(255,249,215,0.70) !important;
-    font-size: 13px !important;
-    font-weight: 800 !important;
-    line-height: 1.35 !important;
-    overflow-wrap: anywhere;
-  }
-
-  .profile-side {
-    display: grid;
-    justify-items: end;
-    gap: 10px;
-    min-width: 210px;
-  }
-
-  .profile-actions {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .profile-action-btn {
-    height: 42px;
-    padding: 0 16px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.22);
-    cursor: pointer;
-    color: #06120b;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 13px;
-    font-weight: 900;
-    letter-spacing: .4px;
-    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
-    box-shadow: 0 12px 30px rgba(255,215,0,0.14), inset 0 1px 0 rgba(255,255,255,0.28);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    transition: .2s ease;
-    white-space: nowrap;
-  }
-
-  .profile-action-btn.secondary {
-    color: #fff2a8;
-    background: rgba(255,255,255,0.08);
-  }
-
-  .profile-action-btn:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.08);
-  }
-
-  @media (max-width: 700px) {
-    .profile-wrap {
-      padding: 12px 12px 10px !important;
-    }
-
-    .profile-card {
-      grid-template-columns: 1fr !important;
-      gap: 14px !important;
-      padding: 17px !important;
-      min-height: auto !important;
-      border-radius: 26px !important;
-    }
-
-    .profile-side {
-      min-width: 0;
-      width: 100%;
-      justify-items: stretch;
-    }
-
-    .profile-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      width: 100%;
-    }
-
-    .profile-action-btn {
-      width: 100%;
-      padding: 0 10px;
-      font-size: 12.5px;
-    }
-
-    .phase-badge {
-      width: 100%;
-      justify-content: center;
-      text-align: center;
-    }
-  }
-
-
-  /* ===== HOME SUMMARY + SAFETY SYSTEM ===== */
-  .next-trade-panel,
-  .safety-panel {
-    padding: 0 16px 14px;
-  }
-
-  .next-trade-card,
-  .safety-card {
-    padding: 18px;
-    border-radius: 30px;
-  }
-
-  .next-trade-head,
-  .safety-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 14px;
-  }
-
-  .next-level-pill {
-    min-height: 38px;
-    padding: 0 14px;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: #06120b;
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
-    white-space: nowrap;
-  }
-
-  .next-trade-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
-
-  .next-mini {
-    padding: 13px 12px;
-    border-radius: 20px;
-    background: rgba(0,0,0,0.20);
-    border: 1px solid rgba(255,255,255,0.09);
-  }
-
-  .next-mini span {
-    display: block;
-    color: rgba(255,249,215,0.58);
-    font-size: 10px;
-    font-weight: 900;
-    letter-spacing: 1.1px;
-    text-transform: uppercase;
-  }
-
-  .next-mini strong {
-    display: block;
-    margin-top: 7px;
-    color: #fff0a8;
-    font-family: 'Cinzel', serif;
-    font-size: 20px;
-    font-weight: 900;
-  }
-
-  .next-trade-note,
-  .safety-note {
-    margin-top: 12px;
-    color: rgba(255,249,215,0.64);
-    font-size: 12px;
-    line-height: 1.45;
-    font-weight: 800;
-  }
-
-  .safety-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
-
-  .safety-btn {
-    min-height: 44px;
-    padding: 0 12px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.18);
-    cursor: pointer;
-    color: #fff2a8;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 900;
-    letter-spacing: .35px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    transition: .2s ease;
-  }
-
-  .safety-btn.danger {
-    color: #ffd2d9;
-    border-color: rgba(255,93,115,0.32);
-    background: rgba(255,93,115,0.10);
-  }
-
-  .safety-btn:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.08);
-  }
-
-  /* ===== iOS / MOBILE SAFE AREA FIX ===== */
-  body {
-    padding-bottom: calc(118px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-
-  .bottom-nav {
-    bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
-  }
-
-  @supports (padding: max(0px)) {
-    body {
-      padding-bottom: max(118px, calc(96px + env(safe-area-inset-bottom))) !important;
-    }
-
-    .bottom-nav {
-      bottom: max(14px, env(safe-area-inset-bottom)) !important;
-    }
-  }
-
-  @media (max-width: 900px) {
-    .next-trade-grid,
-    .safety-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
-  @media (max-width: 700px) {
-    .next-trade-panel,
-    .safety-panel {
-      padding: 0 12px 12px;
-    }
-
-    .next-trade-card,
-    .safety-card {
-      padding: 16px;
-      border-radius: 26px;
-    }
-
-    .next-trade-head,
-    .safety-head {
-      align-items: flex-start;
-    }
-
-    .next-trade-grid,
-    .safety-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .next-mini strong {
-      font-size: 19px;
-    }
-  }
-
-
-  /* ===== PAGE VISIBILITY HARD FIX ===== */
-  body.is-authenticated .page-section {
-    display: none !important;
-  }
-
-  body.is-authenticated[data-page="home"] .page-home,
-  body.is-authenticated[data-page="stats"] .page-stats,
-  body.is-authenticated[data-page="levels"] .page-levels,
-  body.is-authenticated[data-page="history"] .page-history,
-  body.is-authenticated[data-page="leaderboard"] .page-leaderboard {
-    display: grid !important;
-  }
-
-  body.is-authenticated[data-page="home"] .progress-wrap.page-home,
-  body.is-authenticated[data-page="home"] .next-trade-panel.page-home,
-  body.is-authenticated[data-page="home"] .home-settings-row.page-home,
-  body.is-authenticated[data-page="levels"] .table-wrapper.page-levels,
-  body.is-authenticated[data-page="history"] .history-panel.page-history,
-  body.is-authenticated[data-page="leaderboard"] .leaderboard-panel.page-leaderboard {
-    display: block !important;
-  }
-
-  body:not(.is-authenticated) .home-settings-row,
-  body:not(.is-authenticated) .settings-overlay {
-    display: none !important;
-  }
-
-  /* ===== HOME SETTINGS BUTTON ===== */
-  .home-settings-row {
-    padding: 14px 16px 0;
-  }
-
-  .home-settings-btn {
-    width: 52px;
-    height: 52px;
-    border-radius: 18px;
-    border: 1px solid rgba(255,255,255,0.22);
-    cursor: pointer;
-    color: #06120b;
-    font-size: 22px;
-    font-weight: 900;
-    background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
-    box-shadow: 0 14px 34px rgba(255,215,0,0.15), inset 0 1px 0 rgba(255,255,255,0.28);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-
-  /* ===== SETTINGS POPUP ===== */
-  .settings-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 3000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 18px;
-    background: rgba(0,0,0,0.48);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-  }
-
-  .settings-overlay.show {
-    display: flex !important;
-  }
-
-  .settings-modal {
-    width: min(520px, 100%);
-    padding: 18px;
-    border-radius: 30px;
-    background:
-      linear-gradient(145deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06)),
-      radial-gradient(circle at 10% 0%, rgba(255,215,0,0.16), transparent 44%);
-    border: 1px solid rgba(255,255,255,0.20);
-    box-shadow: 0 30px 90px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.25);
-  }
-
-  .settings-modal-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 14px;
-    margin-bottom: 14px;
-  }
-
-  .settings-close-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,0.18);
-    cursor: pointer;
-    color: #fff2a8;
-    background: rgba(255,255,255,0.08);
-    font-weight: 900;
-  }
-
-  .settings-actions {
-    display: grid;
-    gap: 10px;
-  }
-
-  .settings-action {
-    min-height: 48px;
-    padding: 0 14px;
-    border-radius: 18px;
-    border: 1px solid rgba(255,255,255,0.16);
-    cursor: pointer;
-    color: #fff2a8;
-    text-align: left;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 14px;
-    font-weight: 900;
-    background: rgba(0,0,0,0.22);
-  }
-
-  .settings-action.danger {
-    color: #ffd2d9;
-    border-color: rgba(255,93,115,0.34);
-    background: rgba(255,93,115,0.10);
-  }
-
-  .settings-note {
-    margin-top: 12px;
-    color: rgba(255,249,215,0.62);
-    font-size: 12px;
-    font-weight: 800;
-    line-height: 1.4;
-  }
-
-  @media (max-width: 700px) {
-    .home-settings-row {
-      padding: 12px 12px 0;
-    }
-
-    .home-settings-btn {
-      width: 50px;
-      height: 50px;
-      border-radius: 17px;
-    }
-
-    .settings-modal {
-      border-radius: 26px;
-      padding: 16px;
-    }
-  }
-
-
-  /* ===== FINAL HARD LAYOUT / VISIBILITY FIX ===== */
-
-  /* Logged out: only header + login/register must be visible */
-  body:not(.is-authenticated) .page-section,
-  body:not(.is-authenticated) #homeDashboard,
-  body:not(.is-authenticated) #progressSection,
-  body:not(.is-authenticated) #statsSection,
-  body:not(.is-authenticated) #rulesSection,
-  body:not(.is-authenticated) #levelsSection,
-  body:not(.is-authenticated) #historySection,
-  body:not(.is-authenticated) #leaderboardSection,
-  body:not(.is-authenticated) #nextTradeSection,
-  body:not(.is-authenticated) #homeSettingsRow,
-  body:not(.is-authenticated) #pageTitleCard,
-  body:not(.is-authenticated) .bottom-nav {
-    display: none !important;
-  }
-
-  body:not(.is-authenticated) #authPanel {
-    display: block !important;
-  }
-
-  body.is-authenticated #authPanel {
-    display: none !important;
-  }
-
-  /* Page switch: hide all pages first */
-  body.is-authenticated .page-section {
-    display: none !important;
-  }
-
-  /* Then show selected page only */
-  body.is-authenticated[data-page="home"] .page-home,
-  body.is-authenticated[data-page="stats"] .page-stats,
-  body.is-authenticated[data-page="levels"] .page-levels,
-  body.is-authenticated[data-page="history"] .page-history,
-  body.is-authenticated[data-page="leaderboard"] .page-leaderboard {
-    display: grid !important;
-  }
-
-  /* Block sections that should not be CSS grid */
-  body.is-authenticated[data-page="home"] #progressSection,
-  body.is-authenticated[data-page="home"] #nextTradeSection,
-  body.is-authenticated[data-page="home"] #homeSettingsRow,
-  body.is-authenticated[data-page="levels"] #levelsSection,
-  body.is-authenticated[data-page="history"] #historySection,
-  body.is-authenticated[data-page="leaderboard"] #leaderboardSection {
-    display: block !important;
-  }
-
-  /* Dashboard must be compact grid, not giant full-width rows */
-  #homeDashboard.dashboard {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-    gap: 12px !important;
-    padding: 0 16px 14px !important;
-  }
-
-  #homeDashboard .stat-card {
-    width: 100% !important;
-    min-height: 112px !important;
-    max-height: none !important;
-    padding: 16px !important;
-    border-radius: 24px !important;
-  }
-
-  #homeDashboard .stat-value {
-    font-size: clamp(24px, 3vw, 32px) !important;
-    line-height: 1.05 !important;
-  }
-
-  #homeDashboard .stat-note {
-    font-size: 11px !important;
-    line-height: 1.25 !important;
-  }
-
-  /* Make profile, summary and cards consistent */
-  .profile-card,
-  .next-trade-card,
-  .progress-card,
-  .leaderboard-panel,
-  .history-panel,
-  .smart-card,
-  .mini-card {
-    border-radius: 26px !important;
-  }
-
-  /* Settings popup only when explicitly opened */
-  .settings-overlay {
-    display: none !important;
-  }
-
-  .settings-overlay.show {
-    display: flex !important;
-  }
-
-  body:not(.is-authenticated) .settings-overlay {
-    display: none !important;
-  }
-
-  /* Mobile cleanup */
-  @media (max-width: 900px) {
-    #homeDashboard.dashboard {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-  }
-
-  @media (max-width: 700px) {
-    #homeDashboard.dashboard {
-      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-      gap: 10px !important;
-      padding: 0 12px 12px !important;
-    }
-
-    #homeDashboard .stat-card {
-      min-height: 104px !important;
-      padding: 14px !important;
-      border-radius: 22px !important;
-    }
-
-    #homeDashboard .stat-label {
-      font-size: 9.5px !important;
-      letter-spacing: 1px !important;
-      line-height: 1.1 !important;
-    }
-
-    #homeDashboard .stat-value {
-      margin-top: 8px !important;
-      font-size: clamp(22px, 8vw, 29px) !important;
-    }
-
-    #homeDashboard .stat-note {
-      font-size: 10px !important;
-    }
-
-    .page-title-card,
-    .profile-wrap,
-    .progress-wrap,
-    .next-trade-panel,
-    .home-settings-row {
-      margin-left: 0 !important;
-      margin-right: 0 !important;
-    }
-
-    .bottom-nav {
-      width: calc(100vw - 18px) !important;
-      max-width: 760px !important;
-      left: 50% !important;
-      right: auto !important;
-      transform: translateX(-50%) !important;
-      bottom: calc(14px + env(safe-area-inset-bottom, 0px)) !important;
-    }
-  }
-
-  @media (max-width: 360px) {
-    #homeDashboard.dashboard {
-      grid-template-columns: 1fr !important;
-    }
-  }
-
-
-  /* ===== FINAL SETTINGS POPUP FIX ===== */
-  #settingsOverlay.settings-overlay {
-    position: fixed !important;
-    inset: 0 !important;
-    z-index: 99999 !important;
-    display: none !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 18px !important;
-    background: rgba(0,0,0,0.52) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-  }
-
-  #settingsOverlay.settings-overlay.show {
-    display: flex !important;
-  }
-
-  body.settings-open {
-    overflow: hidden !important;
-  }
-
-  #settingsOverlay .settings-modal {
-    width: min(520px, calc(100vw - 28px)) !important;
-    max-height: calc(100vh - 48px) !important;
-    overflow-y: auto !important;
-    padding: 18px !important;
-    border-radius: 30px !important;
-    background:
-      linear-gradient(145deg, rgba(255,255,255,0.20), rgba(255,255,255,0.07)),
-      radial-gradient(circle at 10% 0%, rgba(255,215,0,0.18), transparent 44%) !important;
-    border: 1px solid rgba(255,255,255,0.24) !important;
-    box-shadow: 0 30px 90px rgba(0,0,0,0.58), inset 0 1px 0 rgba(255,255,255,0.25) !important;
-  }
-
-  #settingsOverlay .settings-modal-head {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: flex-start !important;
-    gap: 14px !important;
-    margin-bottom: 14px !important;
-  }
-
-  #settingsOverlay .settings-close-btn {
-    width: 42px !important;
-    height: 42px !important;
-    border-radius: 999px !important;
-    border: 1px solid rgba(255,255,255,0.20) !important;
-    cursor: pointer !important;
-    color: #fff2a8 !important;
-    background: rgba(255,255,255,0.10) !important;
-    font-weight: 900 !important;
-  }
-
-  #settingsOverlay .settings-actions {
-    display: grid !important;
-    gap: 10px !important;
-  }
-
-  #settingsOverlay .settings-action {
-    min-height: 50px !important;
-    padding: 0 14px !important;
-    border-radius: 18px !important;
-    border: 1px solid rgba(255,255,255,0.18) !important;
-    cursor: pointer !important;
-    color: #fff2a8 !important;
-    text-align: left !important;
-    font-family: 'Rajdhani', sans-serif !important;
-    font-size: 14px !important;
-    font-weight: 900 !important;
-    background: rgba(0,0,0,0.24) !important;
-  }
-
-  #settingsOverlay .settings-action.danger {
-    color: #ffd2d9 !important;
-    border-color: rgba(255,93,115,0.36) !important;
-    background: rgba(255,93,115,0.12) !important;
-  }
-
-  #settingsOverlay .settings-note {
-    margin-top: 12px !important;
-    color: rgba(255,249,215,0.66) !important;
-    font-size: 12px !important;
-    font-weight: 800 !important;
-    line-height: 1.4 !important;
-  }
-
-
-  .leaderboard-buttons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-
-  .leaderboard-balance.negative-profit {
-    color: var(--red) !important;
-  }
-
-  @media (max-width: 700px) {
-    .leaderboard-buttons {
-      width: 100%;
-      justify-content: stretch;
-    }
-
-    .leaderboard-buttons .soft-btn {
-      flex: 1;
-      min-width: 0;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  }
-
-
-  /* ===== ADMIN PANEL ===== */
-  .admin-panel {
-    margin: 0 16px 16px;
-    padding: 18px;
-    border-radius: 30px;
-  }
-  .admin-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 14px;
-    margin-bottom: 14px;
-  }
-  .admin-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-  .danger-btn {
-    color: #ffd2d9 !important;
-    border-color: rgba(255,93,115,0.36) !important;
-    background: rgba(255,93,115,0.12) !important;
-  }
-  .admin-note {
-    margin-bottom: 14px;
-    color: rgba(255,249,215,0.68);
-    font-size: 12px;
-    line-height: 1.45;
-    font-weight: 800;
-  }
-  .admin-note code {
-    color: #fff0a8;
-    background: rgba(0,0,0,0.22);
-    padding: 2px 6px;
-    border-radius: 8px;
-  }
-  .admin-list {
-    display: grid;
-    gap: 10px;
-  }
-  .admin-user-row {
-    display: grid;
-    grid-template-columns: 1.2fr .8fr .8fr .8fr auto;
-    gap: 10px;
-    align-items: center;
-    padding: 13px 14px;
-    border-radius: 20px;
-    background: rgba(0,0,0,0.20);
-    border: 1px solid rgba(255,255,255,0.10);
-  }
-  .admin-user-main strong {
-    display: block;
-    color: #fff0a8;
-    font-family: 'Cinzel', serif;
-    font-size: 13px;
-  }
-  .admin-user-main span,
-  .admin-cell span {
-    display: block;
-    margin-top: 3px;
-    color: rgba(255,249,215,0.62);
-    font-size: 11px;
-    font-weight: 800;
-    word-break: break-all;
-  }
-  .admin-cell strong {
-    color: #fff9d7;
-    font-size: 14px;
-  }
-  .admin-profit {
-    color: var(--green) !important;
-    font-family: 'Cinzel', serif;
-    font-weight: 900;
-  }
-  .admin-profit.negative {
-    color: var(--red) !important;
-  }
-  body:not(.is-admin) .admin-only {
-    display: none !important;
-  }
-  body.is-authenticated[data-page="admin"].is-admin .page-admin,
-  body.is-authenticated[data-page="admin"].is-admin #adminSection {
-    display: block !important;
-  }
-  @media (max-width: 850px) {
-    .admin-user-row {
-      grid-template-columns: 1fr;
-      align-items: stretch;
-    }
-    .admin-actions {
-      width: 100%;
-      justify-content: stretch;
-    }
-    .admin-actions .soft-btn {
-      flex: 1;
-    }
-  }
-  @media (max-width: 700px) {
-    .admin-panel {
-      margin: 0 12px 16px;
-      padding: 16px;
-      border-radius: 26px;
-    }
-    .admin-head {
-      display: grid;
-    }
-  }
-
-
-  /* ===== FINAL ADMIN TAB VISIBILITY FIX ===== */
-  body:not(.is-admin) .admin-only {
-    display: none !important;
-  }
-
-  body.is-authenticated.is-admin .bottom-nav .admin-only {
-    display: inline-flex !important;
-  }
-
-  body.is-authenticated[data-page="admin"].is-admin #adminSection,
-  body.is-authenticated[data-page="admin"].is-admin .page-admin {
-    display: block !important;
-  }
-
-  body.is-authenticated[data-page="admin"]:not(.is-admin) #adminSection,
-  body.is-authenticated[data-page="admin"]:not(.is-admin) .page-admin {
-    display: none !important;
-  }
-
-
-  /* ===== ADMIN FULL CONTROL FIX ===== */
-  .admin-row-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-  }
-
-  .admin-row-actions .soft-btn {
-    margin-top: 0 !important;
-    min-height: 36px;
-    padding: 0 12px;
-    font-size: 12px;
-  }
-
-  @media (max-width: 850px) {
-    .admin-row-actions {
-      justify-content: stretch;
-    }
-
-    .admin-row-actions .soft-btn {
-      flex: 1;
-    }
-  }
-
 </style>
 </head>
 <body>
@@ -2169,7 +306,7 @@
     <div class="plan-title">АЛДАГДЛЫГ ХӨӨХГҮЙ · ЗӨВХӨН ТӨЛӨВЛӨГӨӨГӨӨ ДАГАНА · LOT-ОО ЗӨВ ТООЦООЛНО</div>
     <div class="badges">
       <span class="badge">⚖️ RR 1:2</span>
-      <span class="badge">🛡️ Risk = Balance × 20%</span>
+      <span class="badge">🛡️ Risk ≈ Balance × 20%</span>
       <span class="badge">🧮 Lot 0.01 алхамтай</span>
       <span class="badge">🎯 Challenge: $1,000</span>
     </div>
@@ -2178,49 +315,35 @@
   <section class="auth-panel" id="authPanel">
     <div class="auth-glass glass-card">
       <div class="auth-head">
-        <div>
-          <div class="auth-kicker">ACCOUNT SAVE</div>
-          <div class="auth-title" id="authTitle">Challenge account</div>
-        </div>
+        <div><div class="auth-kicker">ACCOUNT SAVE</div><div class="auth-title" id="authTitle">Challenge account</div></div>
         <button class="auth-ghost" id="logoutBtn" onclick="logoutUser()" style="display:none;">Гарах</button>
       </div>
-
       <div class="auth-mode-tabs" id="authModeTabs">
         <button class="auth-tab active" id="loginTab" onclick="showLoginMode()">Нэвтрэх</button>
         <button class="auth-tab" id="registerTab" onclick="showRegisterMode()">Бүртгүүлэх</button>
       </div>
-
       <div class="auth-login-wrap" id="loginForm">
         <input id="loginEmailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
         <input id="loginPasswordInput" class="auth-input" type="password" placeholder="Password" autocomplete="current-password" />
         <button class="auth-btn primary big-auth-btn" onclick="loginUser()">Нэвтрэх</button>
       </div>
-
       <div class="auth-register-wrap" id="registerForm" style="display:none;">
         <input id="nameInput" class="auth-input" type="text" placeholder="Нэр" autocomplete="name" />
         <input id="emailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
         <input id="passwordInput" class="auth-input" type="password" placeholder="Password" autocomplete="new-password" />
         <button class="auth-btn primary big-auth-btn" onclick="registerUser()">Бүртгүүлэх</button>
       </div>
-
       <div class="auth-status" id="authStatus">Эхлээд account-аараа нэвтэрнэ үү.</div>
     </div>
   </section>
 
   <section class="page-title-card app-only glass-card" id="pageTitleCard">
-    <div>
-      <div class="auth-kicker">CURRENT PAGE</div>
-      <div class="auth-title" id="pageTitleText">Home</div>
-    </div>
+    <div><div class="auth-kicker">CURRENT PAGE</div><div class="auth-title" id="pageTitleText">Home</div></div>
   </section>
 
   <section class="balance-setup-panel app-only glass-card" id="balanceSetupPanel">
     <div class="balance-setup-inner">
-      <div>
-        <div class="auth-kicker">START BALANCE</div>
-        <div class="auth-title">Эхлэх balance-аа сонго</div>
-        <div class="balance-setup-note">Энэ balance-аас 20% risk, RR 1:2 profit, lot болон $1000 хүртэлх level автоматаар тооцогдоно.</div>
-      </div>
+      <div><div class="auth-kicker">START BALANCE</div><div class="auth-title">Эхлэх balance-аа сонго</div><div class="balance-setup-note">Энэ balance-аас 20%-д ойр risk, RR 1:2 profit, lot болон $1000 хүртэлх level автоматаар тооцогдоно.</div></div>
       <div class="balance-setup-form">
         <input id="startBalanceSetupInput" class="auth-input" type="number" min="1" step="0.01" placeholder="Жишээ: 50" inputmode="decimal" />
         <button class="auth-btn primary" onclick="saveInitialBalance()">Start Challenge</button>
@@ -2228,202 +351,66 @@
     </div>
   </section>
 
-  
-  <section class="home-settings-row app-only page-section page-home" id="homeSettingsRow">
-    <button class="home-settings-btn" type="button" onclick="openSettingsPopup()" aria-label="Settings">⚙️</button>
-  </section>
+  <section class="home-settings-row app-only page-section page-home" id="homeSettingsRow"><button class="home-settings-btn" type="button" onclick="openSettingsPopup()" aria-label="Settings">⚙️</button></section>
 
   <section class="profile-wrap app-only page-section page-home" id="profileSection">
     <div class="profile-card glass-card">
-      <div class="profile-info">
-        <div class="auth-kicker">TRADER PROFILE</div>
-        <div class="profile-name" id="profileName">Guest Trader</div>
-        <div class="profile-meta" id="profileMeta">Challenge эхлэхэд бэлэн</div>
-      </div>
-
-      <div class="profile-side">
-        <div class="phase-badge" id="phaseBadge">Phase 1</div>
-        <div class="profile-actions">
-          <button class="profile-action-btn secondary" onclick="changeStartBalance()">Balance солих</button>
-          <button class="profile-action-btn" id="homeLogoutBtn" onclick="logoutUser()">Гарах</button>
-        </div>
-      </div>
+      <div class="profile-info"><div class="auth-kicker">TRADER PROFILE</div><div class="profile-name" id="profileName">Guest Trader</div><div class="profile-meta" id="profileMeta">Challenge эхлэхэд бэлэн</div></div>
+      <div class="profile-side"><div class="phase-badge" id="phaseBadge">Phase 1</div><div class="profile-actions"><button class="profile-action-btn secondary" onclick="changeStartBalance()">Balance солих</button><button class="profile-action-btn" id="homeLogoutBtn" onclick="logoutUser()">Гарах</button></div></div>
     </div>
   </section>
 
   <section class="next-trade-panel app-only page-section page-home" id="nextTradeSection">
     <div class="next-trade-card glass-card">
-      <div class="next-trade-head">
-        <div>
-          <div class="auth-kicker">NEXT TRADE SUMMARY</div>
-          <div class="auth-title">Дараагийн арилжааны тооцоо</div>
-        </div>
-        <div class="next-level-pill" id="nextLevelPill">Level 1</div>
-      </div>
-
+      <div class="next-trade-head"><div><div class="auth-kicker">NEXT TRADE SUMMARY</div><div class="auth-title">Дараагийн арилжааны тооцоо</div></div><div class="next-level-pill" id="nextLevelPill">Level 1</div></div>
       <div class="next-trade-grid">
-        <div class="next-mini">
-          <span>Balance</span>
-          <strong id="summaryBalance">$0.00</strong>
-        </div>
-        <div class="next-mini">
-          <span>20% Risk</span>
-          <strong id="summaryRisk">$0.00</strong>
-        </div>
-        <div class="next-mini">
-          <span>RR 1:2 Profit</span>
-          <strong id="summaryProfit">$0.00</strong>
-        </div>
-        <div class="next-mini">
-          <span>Lot</span>
-          <strong id="summaryLot">0.01</strong>
-        </div>
+        <div class="next-mini"><span>Balance</span><strong id="summaryBalance">$0.00</strong></div>
+        <div class="next-mini"><span>Actual Risk</span><strong id="summaryRisk">$0.00</strong></div>
+        <div class="next-mini"><span>RR 1:2 Profit</span><strong id="summaryProfit">$0.00</strong></div>
+        <div class="next-mini"><span>Lot</span><strong id="summaryLot">0.01</strong></div>
       </div>
-
-      <div class="next-trade-note" id="summaryNote">
-        Setup байхгүй бол trade байхгүй. Lot-оо шалгаад зөвхөн plan дагуу execute.
-      </div>
-    </div>
-  </section>
-<section class="dashboard app-only page-section page-home" id="homeDashboard">
-    <div class="stat-card glass-card">
-      <div class="stat-label">Одоогийн баланс</div>
-      <div class="stat-value" id="currentBalance">$50.00</div>
-      <div class="stat-note">Сүүлийн сонгосон үр дүнгээр</div>
-    </div>
-    <div class="stat-card glass-card">
-      <div class="stat-label">Target Progress</div>
-      <div class="stat-value" id="progressPercent">5%</div>
-      <div class="stat-note">$1,000 хүртэлх зам</div>
-    </div>
-    <div class="stat-card glass-card">
-      <div class="stat-label">Дараагийн эрсдэл</div>
-      <div class="stat-value" id="nextRisk">$10.00</div>
-      <div class="stat-note">Балансын 20%</div>
-    </div>
-    <div class="stat-card glass-card">
-      <div class="stat-label">Одоогийн lot</div>
-      <div class="stat-value" id="nextLot">0.01</div>
-      <div class="stat-note" id="lotNote">0.01 алхмаар доош тайрна</div>
+      <div class="next-trade-note" id="summaryNote">Setup байхгүй бол trade байхгүй. Lot-оо шалгаад зөвхөн plan дагуу execute.</div>
     </div>
   </section>
 
-  <section class="progress-wrap app-only page-section page-home" id="progressSection">
-    <div class="progress-card glass-card">
-      <div class="progress-head">
-        <span>Өсөлтийн зам: Start balance → $1,000</span>
-        <span id="progressText">$0.00 / $1,000</span>
-      </div>
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-    </div>
+  <section class="dashboard app-only page-section page-home" id="homeDashboard">
+    <div class="stat-card glass-card"><div class="stat-label">Одоогийн баланс</div><div class="stat-value" id="currentBalance">$0.00</div><div class="stat-note">Сүүлийн сонгосон үр дүнгээр</div></div>
+    <div class="stat-card glass-card"><div class="stat-label">Target Progress</div><div class="stat-value" id="progressPercent">0%</div><div class="stat-note">$1,000 хүртэлх зам</div></div>
+    <div class="stat-card glass-card"><div class="stat-label">Дараагийн эрсдэл</div><div class="stat-value" id="nextRisk">$0.00</div><div class="stat-note">Lot-based actual risk</div></div>
+    <div class="stat-card glass-card"><div class="stat-label">Одоогийн lot</div><div class="stat-value" id="nextLot">0.01</div><div class="stat-note" id="lotNote">0.01 алхмаар доош тайрна</div></div>
   </section>
-<section class="pro-stats app-only page-section page-stats" id="statsSection">
+
+  <section class="progress-wrap app-only page-section page-home" id="progressSection"><div class="progress-card glass-card"><div class="progress-head"><span>Өсөлтийн зам: Start balance → $1,000</span><span id="progressText">$0.00 / $1,000</span></div><div class="progress-track"><div class="progress-fill" id="progressFill"></div></div></div></section>
+
+  <section class="pro-stats app-only page-section page-stats" id="statsSection">
     <div class="mini-card glass-card"><span>Win</span><strong id="statWins">0</strong></div>
     <div class="mini-card glass-card"><span>Loss</span><strong id="statLosses">0</strong></div>
     <div class="mini-card glass-card"><span>Win Rate</span><strong id="statWinRate">0%</strong></div>
     <div class="mini-card glass-card"><span>Streak</span><strong id="statStreak">—</strong></div>
-    <div class="mini-card glass-card"><span>Best Balance</span><strong id="statBestBalance">$50.00</strong></div>
+    <div class="mini-card glass-card"><span>Best Balance</span><strong id="statBestBalance">$0.00</strong></div>
   </section>
 
-  <section class="smart-grid app-only page-section page-stats" id="rulesSection">
-    <div class="smart-card glass-card">
-      <div class="smart-title">🧊 REVENGE TRADE LOCK</div>
-      <div class="lock-display" id="revengeLock">Ready</div>
-      <div class="smart-note">Loss дараа шууд арилжаанд орохгүй. Тайван байж дараагийн setup хүлээнэ.</div>
-    </div>
-  </section>
+  <section class="smart-grid app-only page-section page-stats" id="rulesSection"><div class="smart-card glass-card"><div class="smart-title">🧊 REVENGE TRADE LOCK</div><div class="lock-display" id="revengeLock">Ready</div><div class="smart-note">Loss дараа шууд арилжаанд орохгүй. Тайван байж дараагийн setup хүлээнэ.</div></div></section>
 
   <div class="table-wrapper app-only page-section page-levels" id="levelsSection">
-    <table class="trading-table" id="tradeTable">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>БАЛАНС</th>
-          <th>SL PIPS</th>
-          <th>20% RISK</th>
-          <th>LOT</th>
-          <th>АШИГ</th>
-          <th>ҮР ДҮН</th>
-          <th>ШИНЭ БАЛАНС</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody"></tbody>
-    </table>
+    <table class="trading-table" id="tradeTable"><thead><tr><th>#</th><th>БАЛАНС</th><th>SL PIPS</th><th>ACTUAL RISK</th><th>LOT</th><th>АШИГ</th><th>ҮР ДҮН</th><th>ШИНЭ БАЛАНС</th></tr></thead><tbody id="tableBody"></tbody></table>
   </div>
 
-  <section class="history-panel glass-card app-only page-section page-history" id="historySection">
-    <div class="history-head">
-      <div>
-        <div class="auth-kicker">TRADE HISTORY</div>
-        <div class="auth-title">Хийсэн арилжааны түүх</div>
-      </div>
-      <button class="soft-btn" onclick="clearTradeHistory()">Clear history</button>
-    </div>
-    <div class="history-list" id="historyList"></div>
-  </section>
+  <section class="history-panel glass-card app-only page-section page-history" id="historySection"><div class="history-head"><div><div class="auth-kicker">TRADE HISTORY</div><div class="auth-title">Хийсэн арилжааны түүх</div></div><button class="soft-btn" onclick="clearTradeHistory()">Clear history</button></div><div class="history-list" id="historyList"></div></section>
 
+  <section class="leaderboard-panel glass-card app-only page-section page-leaderboard" id="leaderboardSection"><div class="leaderboard-head"><div><div class="auth-kicker">LEADERBOARD</div><div class="auth-title">Net profit ranking</div></div><div class="leaderboard-buttons"><button class="soft-btn" onclick="loadLeaderboard()">Refresh</button></div></div><div class="leaderboard-list" id="leaderboardList"><div class="leaderboard-empty">Leaderboard ачааллаж байна...</div></div></section>
 
-  
-  <section class="leaderboard-panel glass-card app-only page-section page-leaderboard" id="leaderboardSection">
-    <div class="leaderboard-head">
-      <div>
-        <div class="auth-kicker">LEADERBOARD</div>
-        <div class="auth-title">Net profit ranking</div>
-      </div>
-      <div class="leaderboard-buttons"><button class="soft-btn" onclick="loadLeaderboard()">Refresh</button></div>
-    </div>
-    <div class="leaderboard-list" id="leaderboardList">
-      <div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>
-    </div>
-  </section>
-
-<section class="info-section app-only page-section page-home">
-    <div class="info-card glass-card">
-      <div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div>
-      <div class="rules-grid">
-        <div class="rule">🛡️ Эрсдэл: тухайн үеийн баланс × 20%.</div>
-        <div class="rule">⚖️ Ашиг: risk × 2 буюу RR 1:2.</div>
-        <div class="rule">🧮 Lot: 20% risk-д тааруулж бодоод 0.01 алхам руу доош тайрна.</div>
-        <div class="rule">🚫 Loss дараа нөхөх гэж орохгүй. Дараагийн setup хүртэл хүлээнэ.</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="quote-section glass-card app-only page-section page-home">
-    <div class="quote-text">“Зах зээл чамайг шагнах албагүй. Харин чи <em>дүрмээ хамгаалж</em> чадвал боломж ирэх мөчид бэлэн байна.”</div>
-    <div class="quote-sub">Чухал нь хурд биш — дүрмээ эвдэхгүй, lot-оо хэтрүүлэхгүй байх.</div>
-  </section>
-
-  <div class="risk-note app-only page-section page-home">
-    Санамж: 20% risk бол өндөр эрсдэл. Бодит entry хийхээс өмнө XAUUSD-ийн stop-loss, spread, broker-ийн lot step-ээ заавал шалга.
-  </div>
-
+  <section class="info-section app-only page-section page-home"><div class="info-card glass-card"><div class="ic-title">⚔️ ҮНДСЭН ДҮРЭМ</div><div class="rules-grid"><div class="rule">🛡️ Эрсдэл: балансын 20%-д ойртуулж lot-оор бодит risk тооцно.</div><div class="rule">⚖️ Ашиг: actual risk × 2 буюу RR 1:2.</div><div class="rule">🧮 Lot: 20% risk-д тааруулж бодоод 0.01 алхам руу доош тайрна.</div><div class="rule">🚫 Loss дараа нөхөх гэж орохгүй. Дараагийн setup хүртэл хүлээнэ.</div></div></div></section>
+  <section class="quote-section glass-card app-only page-section page-home"><div class="quote-text">“Зах зээл чамайг шагнах албагүй. Харин чи <em>дүрмээ хамгаалж</em> чадвал боломж ирэх мөчид бэлэн байна.”</div><div class="quote-sub">Чухал нь хурд биш — дүрмээ эвдэхгүй, lot-оо хэтрүүлэхгүй байх.</div></section>
+  <div class="risk-note app-only page-section page-home">Санамж: 20% risk бол өндөр эрсдэл. Бодит entry хийхээс өмнө XAUUSD-ийн stop-loss, spread, broker-ийн lot step-ээ заавал шалга.</div>
   <footer class="footer app-only page-section page-home">⚡ PLAN THE TRADE · CALCULATE THE LOT · EXECUTE WITHOUT EMOTION ⚡</footer>
-</div>
-
 
   <section class="admin-panel glass-card app-only page-section page-admin admin-only" id="adminSection">
-    <div class="admin-head">
-      <div>
-        <div class="auth-kicker">ADMIN PANEL</div>
-        <div class="auth-title">Users / Reset / Leaderboard control</div>
-      </div>
-      <div class="admin-actions">
-        <button class="soft-btn" onclick="loadAdminUsers()">Refresh users</button>
-        <button class="soft-btn" onclick="adminClearLeaderboard()">Clear leaderboard</button>
-        <button class="soft-btn danger-btn" onclick="adminResetAllUsersChallenge()">Reset all users</button>
-      </div>
-    </div>
-
-    <div class="admin-note">
-      Зөвхөн Firebase дээр <code>admins/{uid}</code> document-той account энэ хэсгийг харж ашиглана.
-    </div>
-
-    <div class="admin-list" id="adminUsersList">
-      <div class="leaderboard-empty">Admin users ачааллахад бэлэн.</div>
-    </div>
+    <div class="admin-head"><div><div class="auth-kicker">ADMIN PANEL</div><div class="auth-title">Users / Reset / Leaderboard control</div></div><div class="admin-actions"><button class="soft-btn" onclick="loadAdminUsers()">Refresh users</button><button class="soft-btn" onclick="adminResetLeaderboardSeason()">Season reset</button><button class="soft-btn" onclick="adminClearLeaderboard()">Clear leaderboard</button><button class="soft-btn danger-btn" onclick="adminResetAllUsersChallenge()">Reset all users</button></div></div>
+    <div class="admin-note">Зөвхөн Firebase дээр <code>admins/{uid}</code> document-той account энэ хэсгийг харж ашиглана.</div>
+    <div class="admin-list" id="adminUsersList"><div class="leaderboard-empty">Admin users ачааллахад бэлэн.</div></div>
   </section>
-
+</div>
 
 <nav class="bottom-nav app-only">
   <a href="#home" data-page="home" class="active" onclick="showPage('home'); return false;">Home</a>
@@ -2431,24 +418,26 @@
   <a href="#levels" data-page="levels" onclick="showPage('levels'); return false;">Levels</a>
   <a href="#history" data-page="history" onclick="showPage('history'); return false;">History</a>
   <a href="#leaderboard" data-page="leaderboard" onclick="showPage('leaderboard'); return false;">Leaderboard</a>
-  
   <a href="#admin" data-page="admin" class="admin-only" onclick="showPage('admin'); return false;">Admin</a>
 </nav>
 
 <div class="milestone-toast app-only" id="milestoneToast"></div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js">
-  // FIX_AUTH_HOME_LOAD
+<div class="settings-overlay" id="settingsOverlay" onclick="closeSettingsPopup(event)">
+  <div class="settings-modal glass-card" onclick="event.stopPropagation()">
+    <div class="settings-modal-head"><div><div class="auth-kicker">SETTINGS</div><div class="auth-title">Safety / Reset menu</div></div><button class="settings-close-btn" onclick="closeSettingsPopup()" aria-label="Close">✕</button></div>
+    <div class="settings-actions">
+      <button class="settings-action" onclick="restartLastLevel(); closeSettingsPopup();">↺ Сүүлийн trade буцаах</button>
+      <button class="settings-action" onclick="clearOnlyHistory(); closeSettingsPopup();">History цэвэрлэх</button>
+      <button class="settings-action danger" onclick="resetOnlyProgress(); closeSettingsPopup();">Progress reset</button>
+      <button class="settings-action danger" onclick="resetEverything(); closeSettingsPopup();">Бүгд reset</button>
+      <button class="settings-action" onclick="changeStartBalance(); closeSettingsPopup();">Balance солих</button>
+    </div>
+    <div class="settings-note">Чухал action бүр confirm асууна. Санамсаргүй дарахад шууд устгахгүй.</div>
+  </div>
+</div>
 
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      if (document.body.classList.contains('is-authenticated') && !document.body.dataset.page) {
-        showPage('home');
-      }
-    }, 250);
-  });
-
-</script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script>
@@ -2469,16 +458,15 @@
   const LEADERBOARD_COLLECTION = 'leaderboard_profit_reset_v1';
   const ADMIN_RESET_TOKEN_KEY = 'xauusd_admin_reset_token_v1';
 
-  // Firebase Console → Project settings → Web app config-оо энд солино.
   const firebaseConfig = {
-  apiKey: "AIzaSyD1D0qWO8WfAHtP0CHFFNUtDQ2_eibH2xU",
-  authDomain: "xauusd-plan.firebaseapp.com",
-  projectId: "xauusd-plan",
-  storageBucket: "xauusd-plan.firebasestorage.app",
-  messagingSenderId: "560779660310",
-  appId: "1:560779660310:web:a57a97cdd7514108e27937",
-  measurementId: "G-1M7TM3ENV8"
-};
+    apiKey: "AIzaSyD1D0qWO8WfAHtP0CHFFNUtDQ2_eibH2xU",
+    authDomain: "xauusd-plan.firebaseapp.com",
+    projectId: "xauusd-plan",
+    storageBucket: "xauusd-plan.firebasestorage.app",
+    messagingSenderId: "560779660310",
+    appId: "1:560779660310:web:a57a97cdd7514108e27937",
+    measurementId: "G-1M7TM3ENV8"
+  };
 
   let outcomes = [];
   let journalEntries = [];
@@ -2490,88 +478,44 @@
   let lastMilestone = 0;
   let revengeUntil = Number(localStorage.getItem(REVENGE_KEY) || 0);
 
-  function clamp(value, min, max) {
-    return Math.max(min, Math.min(max, value));
-  }
-
-  function round2(value) {
-    return Math.round((value + Number.EPSILON) * 100) / 100;
-  }
-
+  function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
+  function round2(value) { return Math.round((Number(value || 0) + Number.EPSILON) * 100) / 100; }
   function calculateLot(risk, slPips = STOP_LOSS_PIPS, pipValue = PIP_VALUE_PER_1_LOT) {
-    const rawLot = risk / slPips / pipValue;
+    const rawLot = Number(risk || 0) / slPips / pipValue;
     const flooredLot = Math.floor(rawLot * 100) / 100;
     return round2(clamp(flooredLot, MIN_LOT, MAX_LOT));
   }
+  function formatMoney(value) { return `$${Number(value || 0).toFixed(2)}`; }
+  function loadJSON(key, fallback) { try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch (_) { return fallback; } }
+  function saveJSON(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch (error) { console.warn('localStorage save error:', error); } }
+  function escapeHTML(value) { return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;'); }
 
-  function formatMoney(value) {
-    return `$${Number(value || 0).toFixed(2)}`;
-  }
-
-  function loadJSON(key, fallback) {
-    try {
-      const raw = localStorage.getItem(key);
-      if (!raw) return fallback;
-      return JSON.parse(raw);
-    } catch (_) {
-      return fallback;
-    }
-  }
-
-  function saveJSON(key, value) {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.warn('localStorage save error:', error);
-    }
-  }
   function getStartBalanceInputValue() {
-    const setupInput = document.getElementById('startBalanceSetupInput');
-    const value = Number(setupInput?.value || 0);
+    const value = Number(document.getElementById('startBalanceSetupInput')?.value || 0);
     return Number.isFinite(value) && value > 0 ? round2(value) : null;
   }
 
   function setStartBalance(value, shouldReset = true) {
     const next = Number(value);
     if (!Number.isFinite(next) || next <= 0) return false;
-
     START = round2(next);
     document.body.classList.add('balance-ready');
-
-    try {
-      localStorage.setItem(START_BALANCE_KEY, String(START));
-    } catch (_) {}
-
+    try { localStorage.setItem(START_BALANCE_KEY, String(START)); } catch (_) {}
     if (shouldReset) {
       outcomes = new Array(9).fill(null);
-      if (typeof tradeHistory !== 'undefined') {
-        tradeHistory = [];
-        if (typeof HISTORY_KEY !== 'undefined') saveJSON(HISTORY_KEY, tradeHistory);
-      }
+      tradeHistory = [];
+      saveJSON(HISTORY_KEY, tradeHistory);
     }
-
     return true;
   }
 
   function loadStartBalance() {
     try {
-      const raw = localStorage.getItem(START_BALANCE_KEY);
-      const parsed = Number(raw);
-      if (Number.isFinite(parsed) && parsed > 0) {
-        START = round2(parsed);
-        document.body.classList.add('balance-ready');
-      } else {
-        START = 0;
-        document.body.classList.remove('balance-ready');
-      }
-    } catch (_) {
-      START = 0;
-      document.body.classList.remove('balance-ready');
-    }
+      const parsed = Number(localStorage.getItem(START_BALANCE_KEY));
+      if (Number.isFinite(parsed) && parsed > 0) { START = round2(parsed); document.body.classList.add('balance-ready'); }
+      else { START = 0; document.body.classList.remove('balance-ready'); }
+    } catch (_) { START = 0; document.body.classList.remove('balance-ready'); }
   }
-
-
-
 
   function init() {
     loadStartBalance();
@@ -2586,236 +530,93 @@
   function compute() {
     let balance = START;
     const levels = [];
-
     for (let i = 0; i < outcomes.length; i++) {
-      const startBal = balance;
-      const risk = startBal * RISK;
-      const lot = calculateLot(risk);
-      const actualRisk = lot * STOP_LOSS_PIPS * PIP_VALUE_PER_1_LOT;
-      const profit = risk * RR;
+      const startBal = round2(balance);
+      const planRisk = round2(startBal * RISK);
+      const lot = calculateLot(planRisk);
+      const actualRisk = round2(lot * STOP_LOSS_PIPS * PIP_VALUE_PER_1_LOT);
+      const profit = round2(actualRisk * RR);
       const outcome = outcomes[i];
       let newBal = null;
-
-      if (outcome === 'taken') newBal = startBal + profit;
-      if (outcome === 'loss') newBal = Math.max(0, startBal - risk);
-
-      levels.push({
-        idx: i,
-        startBalance: startBal,
-        risk,
-        actualRisk,
-        profit,
-        lot,
-        slPips: STOP_LOSS_PIPS,
-        outcome,
-        newBalance: newBal
-      });
-
+      if (outcome === 'taken') newBal = round2(startBal + profit);
+      if (outcome === 'loss') newBal = round2(Math.max(0, startBal - actualRisk));
+      levels.push({ idx: i, startBalance: startBal, risk: actualRisk, planRisk, actualRisk, profit, lot, slPips: STOP_LOSS_PIPS, outcome, newBalance: newBal });
       if (outcome === 'taken' || outcome === 'loss') balance = newBal;
     }
-
-    return { levels, finalBalance: balance };
+    return { levels, finalBalance: round2(balance) };
   }
 
-  function needMoreLevels() {
-    const { finalBalance } = compute();
-    if (finalBalance >= TARGET) return false;
-    const last = outcomes[outcomes.length - 1];
-    return last === 'taken' || last === 'loss';
-  }
-
-  function addLevelIfNeeded() {
-    while (needMoreLevels()) outcomes.push(null);
-  }
+  function needMoreLevels() { const { finalBalance } = compute(); if (finalBalance >= TARGET) return false; const last = outcomes[outcomes.length - 1]; return last === 'taken' || last === 'loss'; }
+  function addLevelIfNeeded() { while (needMoreLevels()) outcomes.push(null); }
 
   function saveProgress() {
     saveJSON(STORAGE_KEY, outcomes);
-
     if (firebaseReady && currentUser && db) {
       db.collection('users').doc(currentUser.uid).set({
-        name: currentUser.displayName || '',
-        email: currentUser.email || '',
-        challenge: {
-          startBalance: START,
-          outcomes,
-          journalEntries,
-          tradeHistory,
-          revengeUntil,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        }
-      }, { merge: true }).catch((error) => {
-        console.warn('Cloud save error:', error);
-        setAuthStatus('Cloud дээр хадгалахад алдаа гарлаа. Firestore rules/config-оо шалга.');
-      });
+        name: currentUser.displayName || '', email: currentUser.email || '',
+        challenge: { startBalance: START, outcomes, journalEntries, tradeHistory, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }
+      }, { merge: true }).catch((error) => { console.warn('Cloud save error:', error); setAuthStatus('Cloud дээр хадгалахад алдаа гарлаа. Firestore rules/config-оо шалга.'); });
     }
-
     saveLeaderboardStats();
   }
 
-
   function recordTradeHistory(levelData, type) {
     if (!levelData) return;
-
-    const id = `${Date.now()}_${levelData.idx}_${type}`;
-    const already = tradeHistory.some(item => item.level === levelData.idx + 1 && item.timestampKey === `${levelData.idx}_${type}_${Number(levelData.startBalance).toFixed(2)}`);
-    if (already) return;
-
+    const timestampKey = `${levelData.idx}_${type}_${Number(levelData.startBalance).toFixed(2)}`;
+    if (tradeHistory.some(item => item.level === levelData.idx + 1 && item.timestampKey === timestampKey)) return;
     tradeHistory.push({
-      id,
-      timestampKey: `${levelData.idx}_${type}_${Number(levelData.startBalance).toFixed(2)}`,
-      level: levelData.idx + 1,
-      outcome: type,
-      startBalance: levelData.startBalance,
-      risk: levelData.risk,
-      profit: levelData.profit,
-      lot: levelData.lot,
-      newBalance: type === 'taken' ? levelData.startBalance + levelData.profit : Math.max(0, levelData.startBalance - levelData.risk),
-      date: new Date().toLocaleString()
+      id: `${Date.now()}_${levelData.idx}_${type}`, timestampKey, level: levelData.idx + 1, outcome: type,
+      startBalance: levelData.startBalance, risk: levelData.risk, planRisk: levelData.planRisk, profit: levelData.profit,
+      lot: levelData.lot, newBalance: type === 'taken' ? round2(levelData.startBalance + levelData.profit) : round2(Math.max(0, levelData.startBalance - levelData.risk)),
+      date: new Date().toLocaleString('mn-MN')
     });
-
     saveJSON(HISTORY_KEY, tradeHistory);
   }
 
   window.restartLastLevel = function() {
     const lastIndex = outcomes.map((o, i) => o ? i : -1).filter(i => i >= 0).pop();
-    if (lastIndex === undefined || lastIndex === null || lastIndex < 0) {
-      alert('Буцаах сонголт алга байна.');
-      return;
-    }
-    const ok = confirm(`${lastIndex + 1}-р level-ийн сонголтыг буцаах уу?`);
-    if (!ok) return;
+    if (lastIndex === undefined || lastIndex === null || lastIndex < 0) return alert('Буцаах сонголт алга байна.');
+    if (!confirm(`${lastIndex + 1}-р level-ийн сонголтыг буцаах уу?`)) return;
     outcomes[lastIndex] = null;
     if (outcomes.length > lastIndex + 1) outcomes = outcomes.slice(0, lastIndex + 1);
     while (outcomes.length < 9) outcomes.push(null);
-    if (typeof tradeHistory !== 'undefined' && Array.isArray(tradeHistory)) {
-      for (let i = tradeHistory.length - 1; i >= 0; i--) {
-        if (Number(tradeHistory[i].level) === lastIndex + 1) {
-          tradeHistory.splice(i, 1);
-          break;
-        }
-      }
-      saveJSON(HISTORY_KEY, tradeHistory);
-    }
-    saveProgress();
-    render();
-  };
-
-  function renderHistory() {
-    const box = document.getElementById('historyList');
-    if (!box) return;
-
-    if (!tradeHistory.length) {
-      box.innerHTML = '<div class="history-item"><div class="history-main"><strong>Одоогоор history байхгүй</strong><span>Авсан/Алдсан дарахад энд хадгалагдана.</span></div></div>';
-      return;
-    }
-
-    box.innerHTML = tradeHistory.slice().reverse().map(item => {
-      const isWin = item.outcome === 'taken';
-      return `
-        <div class="history-item ${isWin ? 'win' : 'loss'}">
-          <div class="history-badge">${isWin ? 'W' : 'L'}</div>
-          <div class="history-main">
-            <strong>Level ${item.level} · ${isWin ? 'АВСАН' : 'АЛДСАН'}</strong>
-            <span>${item.date} · Balance ${formatMoney(item.startBalance)} · Lot ${Number(item.lot).toFixed(2)} · Risk ${formatMoney(item.risk)}</span>
-          </div>
-          <div class="history-money ${isWin ? 'win' : 'loss'}">${isWin ? '+' : '-'}${formatMoney(isWin ? item.profit : item.risk)}</div>
-        </div>`;
-    }).join('');
-  }
-
-  window.clearTradeHistory = function() {
-    const ok = confirm('Trade history-г бүгдийг устгах уу?');
-    if (!ok) return;
-    tradeHistory = [];
+    for (let i = tradeHistory.length - 1; i >= 0; i--) { if (Number(tradeHistory[i].level) === lastIndex + 1) { tradeHistory.splice(i, 1); break; } }
     saveJSON(HISTORY_KEY, tradeHistory);
-    saveProgress();
-    renderHistory();
+    saveProgress(); render();
   };
-
 
   function setOutcome(idx, type) {
     if (idx < 0 || idx >= outcomes.length) return false;
-
-    if (idx > 0 && outcomes[idx - 1] === null) {
-      alert(`⚠️ ${idx + 1}-р түвшинд шилжихийн тулд эхлээд ${idx}-р түвшний үр дүнг сонгоно уу!`);
-      return false;
-    }
-
+    if (idx > 0 && outcomes[idx - 1] === null) return alert(`⚠️ ${idx + 1}-р түвшинд шилжихийн тулд эхлээд ${idx}-р түвшний үр дүнг сонгоно уу!`), false;
     const beforeLevel = compute().levels[idx];
     outcomes[idx] = type;
     recordTradeHistory(beforeLevel, type);
     savePrivateTradeLog(beforeLevel, type);
     if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1);
     while (outcomes.length < 9) outcomes.push(null);
-
     addLevelIfNeeded();
-
-    if (type === 'loss') {
-      revengeUntil = Date.now() + 10 * 60 * 1000;
-      localStorage.setItem(REVENGE_KEY, String(revengeUntil));
-    }
-
-    saveProgress();
-    render();
-    renderMilestone();
-    return true;
+    if (type === 'loss') { revengeUntil = Date.now() + 10 * 60 * 1000; localStorage.setItem(REVENGE_KEY, String(revengeUntil)); }
+    saveProgress(); render(); renderMilestone(); return true;
   }
 
-  function resetOutcome(idx) {
-    if (idx < 0 || idx >= outcomes.length) return;
-    outcomes[idx] = null;
-    if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1);
-    while (outcomes.length < 9) outcomes.push(null);
-    saveProgress();
-    render();
-  }
-
-  function clearProgress() {
-    localStorage.removeItem(STORAGE_KEY);
-    outcomes = new Array(9).fill(null);
-    saveProgress();
-    render();
-  }
-
-  function getCompletedLevels() {
-    return compute().levels.filter(l => l.outcome === 'taken' || l.outcome === 'loss');
-  }
-
-  function getLastCompletedLevel() {
-    const completed = getCompletedLevels();
-    return completed.length ? completed[completed.length - 1] : null;
-  }
-
-  function getCurrentLevelNumber() {
-    const openIndex = outcomes.findIndex(o => o === null);
-    return openIndex === -1 ? outcomes.length : openIndex + 1;
-  }
-
-  function getPhase(balance) {
-    if (balance >= 1000) return 'Complete';
-    if (balance >= 700) return 'Phase 5';
-    if (balance >= 400) return 'Phase 4';
-    if (balance >= 200) return 'Phase 3';
-    if (balance >= 100) return 'Phase 2';
-    return 'Phase 1';
-  }
+  function resetOutcome(idx) { if (idx < 0 || idx >= outcomes.length) return; outcomes[idx] = null; if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1); while (outcomes.length < 9) outcomes.push(null); saveProgress(); render(); }
+  function clearProgress() { localStorage.removeItem(STORAGE_KEY); outcomes = new Array(9).fill(null); saveProgress(); render(); }
+  function getCompletedLevels() { return compute().levels.filter(l => l.outcome === 'taken' || l.outcome === 'loss'); }
+  function getPhase(balance) { if (balance >= 1000) return 'Complete'; if (balance >= 700) return 'Phase 5'; if (balance >= 400) return 'Phase 4'; if (balance >= 200) return 'Phase 3'; if (balance >= 100) return 'Phase 2'; return 'Phase 1'; }
 
   function updateDashboard(finalBalance, levels) {
     const progress = clamp((finalBalance / TARGET) * 100, 0, 100);
     const nextLevel = levels.find(l => l.outcome === null) || levels[levels.length - 1];
-    const nextRisk = nextLevel ? nextLevel.risk : finalBalance * RISK;
-    const nextLot = calculateLot(nextRisk);
-
+    const nextRisk = nextLevel ? nextLevel.risk : calculateLot(finalBalance * RISK) * STOP_LOSS_PIPS * PIP_VALUE_PER_1_LOT;
+    const nextLot = nextLevel ? nextLevel.lot : calculateLot(finalBalance * RISK);
     document.getElementById('currentBalance').textContent = formatMoney(finalBalance);
     document.getElementById('progressPercent').textContent = `${progress.toFixed(1)}%`;
     document.getElementById('nextRisk').textContent = formatMoney(nextRisk);
-    document.getElementById('nextLot').textContent = nextLot.toFixed(2);
+    document.getElementById('nextLot').textContent = Number(nextLot || 0).toFixed(2);
     document.getElementById('lotNote').textContent = '0.01 lot алхмаар доош тайрсан';
     document.getElementById('progressText').textContent = `${formatMoney(finalBalance)} / ${formatMoney(TARGET)}`;
     document.getElementById('progressFill').style.width = `${progress}%`;
-
-    const phase = getPhase(finalBalance);
-    document.getElementById('phaseBadge').textContent = phase;
+    document.getElementById('phaseBadge').textContent = getPhase(finalBalance);
     document.getElementById('profileMeta').textContent = `${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`;
   }
 
@@ -2826,16 +627,8 @@
     const total = wins + losses;
     const winRate = total ? Math.round((wins / total) * 100) : 0;
     const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START);
-
-    let streakType = null;
-    let streakCount = 0;
-    for (let i = outcomes.length - 1; i >= 0; i--) {
-      if (!outcomes[i]) continue;
-      if (!streakType) streakType = outcomes[i];
-      if (outcomes[i] === streakType) streakCount++;
-      else break;
-    }
-
+    let streakType = null, streakCount = 0;
+    for (let i = outcomes.length - 1; i >= 0; i--) { if (!outcomes[i]) continue; if (!streakType) streakType = outcomes[i]; if (outcomes[i] === streakType) streakCount++; else break; }
     document.getElementById('statWins').textContent = wins;
     document.getElementById('statLosses').textContent = losses;
     document.getElementById('statWinRate').textContent = `${winRate}%`;
@@ -2846,1100 +639,185 @@
   function renderTable() {
     const { levels, finalBalance } = compute();
     const tbody = document.getElementById('tableBody');
-    const wrapper = document.getElementById('levelsSection') || document.querySelector('.table-wrapper');
-
+    const wrapper = document.getElementById('levelsSection');
     let currentIndex = outcomes.findIndex(o => o === null);
     if (currentIndex === -1) currentIndex = Math.max(0, levels.length - 1);
-
-    const visibleLevel = levels[currentIndex];
-    if (!tbody || !visibleLevel) return;
-
+    const l = levels[currentIndex];
+    if (!tbody || !l) return;
     if (wrapper && !document.getElementById('currentLevelTitle')) {
-      const title = document.createElement('div');
-      title.className = 'current-level-title page-section page-levels';
-      title.id = 'currentLevelTitle';
-      wrapper.parentNode.insertBefore(title, wrapper);
+      const title = document.createElement('div'); title.className = 'current-level-title page-section page-levels'; title.id = 'currentLevelTitle'; wrapper.parentNode.insertBefore(title, wrapper);
     }
-
     const titleEl = document.getElementById('currentLevelTitle');
-    if (titleEl) {
-      titleEl.innerHTML = `<span>CURRENT LEVEL · ${currentIndex + 1}-р түвшин</span><button class="level-restart-btn" onclick="restartLastLevel()">↺ Level restart</button>`;
-    }
-
-    const l = visibleLevel;
-    let rowClass = '';
-    if (l.outcome === 'taken') rowClass = 'tr-taken';
-    if (l.outcome === 'loss') rowClass = 'tr-loss';
-
+    if (titleEl) titleEl.innerHTML = `<span>CURRENT LEVEL · ${currentIndex + 1}-р түвшин</span><button class="level-restart-btn" onclick="restartLastLevel()">↺ Level restart</button>`;
+    let rowClass = l.outcome === 'taken' ? 'tr-taken' : (l.outcome === 'loss' ? 'tr-loss' : '');
     const isGoal = l.startBalance >= TARGET || (l.newBalance && l.newBalance >= TARGET);
-    let levelDisplay = `<span class="level-chip">${currentIndex + 1}</span>`;
-    if (isGoal) {
-      levelDisplay = `<span class="goal-flag">🏆 ${currentIndex + 1}</span>`;
-    } else if (currentIndex >= 9) {
-      levelDisplay = `<span class="level-chip extra-chip">+${currentIndex + 1}</span>`;
-    }
-
-    let actionHtml = `
-      <div class="action-group">
-        <button class="btn-sm btn-taken" data-level="${currentIndex}" data-action="taken">✅ АВСАН</button>
-        <button class="btn-sm btn-loss" data-level="${currentIndex}" data-action="loss">❌ АЛДСАН</button>
-      </div>`;
-
+    let levelDisplay = isGoal ? `<span class="goal-flag">🏆 ${currentIndex + 1}</span>` : (currentIndex >= 9 ? `<span class="level-chip extra-chip">+${currentIndex + 1}</span>` : `<span class="level-chip">${currentIndex + 1}</span>`);
+    const actionHtml = `<div class="action-group"><button class="btn-sm btn-taken" data-level="${currentIndex}" data-action="taken">✅ АВСАН</button><button class="btn-sm btn-loss" data-level="${currentIndex}" data-action="loss">❌ АЛДСАН</button></div>`;
     const newBalText = l.outcome ? formatMoney(l.newBalance) : '—';
     const balanceColor = l.outcome === 'taken' ? 'color: var(--green);' : (l.outcome === 'loss' ? 'color: #ffb0bc;' : 'color: rgba(255,255,255,0.55);');
-
-    tbody.innerHTML = `
-      <tr class="${rowClass}">
-        <td data-label="#">${levelDisplay}</td>
-        <td data-label="Баланс" class="bal-cell">${formatMoney(l.startBalance)}</td>
-        <td data-label="SL pips">${l.slPips}</td>
-        <td data-label="20% risk" style="color:#ffcf7a;">${formatMoney(l.risk)}</td>
-        <td data-label="Lot" class="lot-cell">${l.lot.toFixed(2)}</td>
-        <td data-label="Ашиг" style="color:#b9ffd7;">${formatMoney(l.profit)}</td>
-        <td data-label="Үр дүн" style="min-width:190px;">${actionHtml}</td>
-        <td data-label="Шинэ баланс" style="font-weight:900; ${balanceColor}">${newBalText}</td>
-      </tr>`;
-
+    tbody.innerHTML = `<tr class="${rowClass}">
+      <td data-label="#">${levelDisplay}</td>
+      <td data-label="Баланс" class="bal-cell">${formatMoney(l.startBalance)}</td>
+      <td data-label="SL pips">${l.slPips}</td>
+      <td data-label="Actual risk" style="color:#ffcf7a;">${formatMoney(l.risk)}<div style="margin-top:4px;color:rgba(255,249,215,0.48);font-size:10px;font-weight:800;">Plan: ${formatMoney(l.planRisk)}</div></td>
+      <td data-label="Lot" class="lot-cell">${l.lot.toFixed(2)}</td>
+      <td data-label="Ашиг" style="color:#b9ffd7;">${formatMoney(l.profit)}</td>
+      <td data-label="Үр дүн" style="min-width:190px;">${actionHtml}</td>
+      <td data-label="Шинэ баланс" style="font-weight:900; ${balanceColor}">${newBalText}</td>
+    </tr>`;
     updateDashboard(finalBalance, levels);
   }
 
-  function handleClick(e) {
-    const btn = e.currentTarget;
-    const level = parseInt(btn.getAttribute('data-level'), 10);
-    const action = btn.getAttribute('data-action');
+  function handleClick(e) { const btn = e.currentTarget; const level = parseInt(btn.getAttribute('data-level'), 10); const action = btn.getAttribute('data-action'); if (Number.isNaN(level)) return; if (action === 'taken') setOutcome(level, 'taken'); if (action === 'loss') setOutcome(level, 'loss'); if (action === 'reset') resetOutcome(level); }
+  function bindButtons() { document.querySelectorAll('.btn-taken, .btn-loss, .btn-reset').forEach(btn => { btn.removeEventListener('click', handleClick); btn.addEventListener('click', handleClick); }); }
 
-    if (Number.isNaN(level)) return;
-    if (action === 'taken') setOutcome(level, 'taken');
-    if (action === 'loss') setOutcome(level, 'loss');
-    if (action === 'reset') resetOutcome(level);
+  function renderHistory() {
+    const box = document.getElementById('historyList'); if (!box) return;
+    if (!tradeHistory.length) { box.innerHTML = '<div class="history-item"><div class="history-main"><strong>Одоогоор history байхгүй</strong><span>Авсан/Алдсан дарахад энд хадгалагдана.</span></div></div>'; return; }
+    box.innerHTML = tradeHistory.slice().reverse().map(item => { const isWin = item.outcome === 'taken'; return `<div class="history-item ${isWin ? 'win' : 'loss'}"><div class="history-badge">${isWin ? 'W' : 'L'}</div><div class="history-main"><strong>Level ${item.level} · ${isWin ? 'АВСАН' : 'АЛДСАН'}</strong><span>${item.date} · Balance ${formatMoney(item.startBalance)} · Lot ${Number(item.lot).toFixed(2)} · Risk ${formatMoney(item.risk)}</span></div><div class="history-money ${isWin ? 'win' : 'loss'}">${isWin ? '+' : '-'}${formatMoney(isWin ? item.profit : item.risk)}</div></div>`; }).join('');
   }
+  window.clearTradeHistory = function() { if (!confirm('Trade history-г бүгдийг устгах уу?')) return; tradeHistory = []; saveJSON(HISTORY_KEY, tradeHistory); saveProgress(); renderHistory(); };
 
-  function bindButtons() {
-    document.querySelectorAll('.btn-taken, .btn-loss, .btn-reset').forEach(btn => {
-      btn.removeEventListener('click', handleClick);
-      btn.addEventListener('click', handleClick);
-    });
-  }
-
-  function renderMilestone() {
-    const finalBalance = compute().finalBalance;
-    const milestones = [100, 200, 500, 700, 1000];
-    const hit = milestones.filter(m => finalBalance >= m).pop() || 0;
-
-    if (hit && hit > lastMilestone) {
-      lastMilestone = hit;
-      showMilestone(hit >= 1000 ? '🏆 Challenge complete: $1,000 reached!' : `🔥 Milestone reached: $${hit}`);
-    }
-  }
-
-  function showMilestone(message) {
-    const toast = document.getElementById('milestoneToast');
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3200);
-  }
-
-  function updateRevengeLock() {
-    const el = document.getElementById('revengeLock');
-    const left = revengeUntil - Date.now();
-
-    if (left <= 0) {
-      el.textContent = 'Ready';
-      el.style.background = 'linear-gradient(135deg, #bfffe4, #00f5a0 60%, #007a4d)';
-      return;
-    }
-
-    const min = Math.floor(left / 60000);
-    const sec = Math.floor((left % 60000) / 1000);
-    el.textContent = `${min}:${String(sec).padStart(2, '0')}`;
-    el.style.background = 'linear-gradient(135deg, #ffd2d9, #ff5d73 58%, #8a1628)';
-  }
-
-  function renderProfile() {
-    const name = currentUser?.displayName || 'Guest Trader';
-    const email = currentUser?.email || 'local browser mode';
-    document.getElementById('profileName').textContent = name;
-    const { finalBalance } = compute();
-    document.getElementById('profileMeta').textContent = `${email} · ${START > 0 ? `Start ${formatMoney(START)} · ` : ''}${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`;
-  }
-
-
-  function getOpenLevelData() {
-    const data = compute();
-    let currentIndex = outcomes.findIndex(o => o === null);
-    if (currentIndex === -1) currentIndex = Math.max(0, data.levels.length - 1);
-    return data.levels[currentIndex] || data.levels[data.levels.length - 1] || null;
-  }
-
-  function updateNextTradeSummary() {
-    const level = getOpenLevelData();
-    if (!level) return;
-
-    const setText = (id, text) => {
-      const el = document.getElementById(id);
-      if (el) el.textContent = text;
-    };
-
-    setText('nextLevelPill', `Level ${level.idx + 1}`);
-    setText('summaryBalance', formatMoney(level.startBalance));
-    setText('summaryRisk', formatMoney(level.risk));
-    setText('summaryProfit', formatMoney(level.profit));
-    setText('summaryLot', Number(level.lot || 0).toFixed(2));
-
-    const note = document.getElementById('summaryNote');
-    if (note) {
-      note.textContent = `Next trade: risk ${formatMoney(level.risk)}, target profit ${formatMoney(level.profit)}, lot ${Number(level.lot || 0).toFixed(2)}.`;
-    }
-  }
+  function renderMilestone() { const finalBalance = compute().finalBalance; const milestones = [100, 200, 500, 700, 1000]; const hit = milestones.filter(m => finalBalance >= m).pop() || 0; if (hit && hit > lastMilestone) { lastMilestone = hit; showMilestone(hit >= 1000 ? '🏆 Challenge complete: $1,000 reached!' : `🔥 Milestone reached: $${hit}`); } }
+  function showMilestone(message) { const toast = document.getElementById('milestoneToast'); toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3200); }
+  function updateRevengeLock() { const el = document.getElementById('revengeLock'); if (!el) return; const left = revengeUntil - Date.now(); if (left <= 0) { el.textContent = 'Ready'; el.style.background = 'linear-gradient(135deg, #bfffe4, #00f5a0 60%, #007a4d)'; return; } const min = Math.floor(left / 60000); const sec = Math.floor((left % 60000) / 1000); el.textContent = `${min}:${String(sec).padStart(2, '0')}`; el.style.background = 'linear-gradient(135deg, #ffd2d9, #ff5d73 58%, #8a1628)'; }
+  function renderProfile() { const name = currentUser?.displayName || 'Guest Trader'; const email = currentUser?.email || 'local browser mode'; const el = document.getElementById('profileName'); if (el) el.textContent = name; const { finalBalance } = compute(); const meta = document.getElementById('profileMeta'); if (meta) meta.textContent = `${email} · ${START > 0 ? `Start ${formatMoney(START)} · ` : ''}${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`; }
+  function getOpenLevelData() { const data = compute(); let currentIndex = outcomes.findIndex(o => o === null); if (currentIndex === -1) currentIndex = Math.max(0, data.levels.length - 1); return data.levels[currentIndex] || data.levels[data.levels.length - 1] || null; }
+  function updateNextTradeSummary() { const level = getOpenLevelData(); if (!level) return; const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; }; setText('nextLevelPill', `Level ${level.idx + 1}`); setText('summaryBalance', formatMoney(level.startBalance)); setText('summaryRisk', formatMoney(level.risk)); setText('summaryProfit', formatMoney(level.profit)); setText('summaryLot', Number(level.lot || 0).toFixed(2)); const note = document.getElementById('summaryNote'); if (note) note.textContent = `Next trade: actual risk ${formatMoney(level.risk)}, plan risk ${formatMoney(level.planRisk)}, target profit ${formatMoney(level.profit)}, lot ${Number(level.lot || 0).toFixed(2)}.`; }
 
   async function savePrivateTradeLog(levelData, type) {
     if (!firebaseReady || !currentUser || !db || !levelData) return;
-
-    try {
-      const tradeId = `${Date.now()}_${levelData.idx + 1}_${type}`;
-      await db.collection('users')
-        .doc(currentUser.uid)
-        .collection('trades')
-        .doc(tradeId)
-        .set({
-          level: levelData.idx + 1,
-          outcome: type,
-          startBalance: Number(levelData.startBalance || 0),
-          risk: Number(levelData.risk || 0),
-          profit: Number(levelData.profit || 0),
-          lot: Number(levelData.lot || 0),
-          newBalance: type === 'taken'
-            ? Number(levelData.startBalance + levelData.profit)
-            : Math.max(0, Number(levelData.startBalance - levelData.risk)),
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-    } catch (error) {
-      console.warn('Private trade log хадгалах боломжгүй байна:', error);
-    }
+    try { await db.collection('users').doc(currentUser.uid).collection('trades').doc(`${Date.now()}_${levelData.idx + 1}_${type}`).set({ level: levelData.idx + 1, outcome: type, startBalance: Number(levelData.startBalance || 0), planRisk: Number(levelData.planRisk || 0), risk: Number(levelData.risk || 0), profit: Number(levelData.profit || 0), lot: Number(levelData.lot || 0), newBalance: type === 'taken' ? Number(levelData.startBalance + levelData.profit) : Math.max(0, Number(levelData.startBalance - levelData.risk)), createdAt: firebase.firestore.FieldValue.serverTimestamp() }); } catch (error) { console.warn('Private trade log хадгалах боломжгүй байна:', error); }
   }
 
-  window.clearOnlyHistory = function() {
-    const ok = confirm('Зөвхөн trade history-г цэвэрлэх үү? Progress хэвээр үлдэнэ.');
-    if (!ok) return;
+  window.clearOnlyHistory = function() { if (!confirm('Зөвхөн trade history-г цэвэрлэх үү? Progress хэвээр үлдэнэ.')) return; tradeHistory = []; saveJSON(HISTORY_KEY, tradeHistory); saveProgress(); render(); };
+  window.resetOnlyProgress = function() { if (!confirm('Зөвхөн progress reset хийх үү? Balance хэвээр, history хэвээр үлдэнэ.')) return; outcomes = new Array(9).fill(null); saveProgress(); render(); showPage('home'); };
+  window.resetEverything = function() { if (!confirm('Progress + history бүгд reset хийх үү? Balance хэвээр үлдэнэ.')) return; outcomes = new Array(9).fill(null); tradeHistory = []; try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(HISTORY_KEY); localStorage.removeItem(REVENGE_KEY); } catch (_) {} revengeUntil = 0; saveProgress(); render(); showPage('home'); };
 
-    if (typeof tradeHistory !== 'undefined') {
-      tradeHistory = [];
-      if (typeof HISTORY_KEY !== 'undefined') saveJSON(HISTORY_KEY, tradeHistory);
-    }
+  function render() { renderTable(); bindButtons(); renderProStats(); updateNextTradeSummary(); renderHistory(); updateRevengeLock(); renderProfile(); }
 
-    saveProgress();
-    render();
-  };
-
-  window.resetOnlyProgress = function() {
-    const ok = confirm('Зөвхөн progress reset хийх үү? Balance хэвээр, history хэвээр үлдэнэ.');
-    if (!ok) return;
-
-    outcomes = new Array(9).fill(null);
-    saveProgress();
-    render();
-    if (typeof showPage === 'function') showPage('home');
-  };
-
-  window.resetEverything = function() {
-    const ok = confirm('Progress + history бүгд reset хийх үү? Balance хэвээр үлдэнэ.');
-    if (!ok) return;
-
-    outcomes = new Array(9).fill(null);
-
-    if (typeof tradeHistory !== 'undefined') {
-      tradeHistory = [];
-      if (typeof HISTORY_KEY !== 'undefined') saveJSON(HISTORY_KEY, tradeHistory);
-    }
-
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-      if (typeof HISTORY_KEY !== 'undefined') localStorage.removeItem(HISTORY_KEY);
-      if (typeof REVENGE_KEY !== 'undefined') localStorage.removeItem(REVENGE_KEY);
-    } catch (_) {}
-
-    if (typeof revengeUntil !== 'undefined') revengeUntil = 0;
-
-    saveProgress();
-    render();
-    if (typeof showPage === 'function') showPage('home');
-  };
-
-
-  function render() {
-    renderTable();
-    bindButtons();
-    renderProStats();
-    updateNextTradeSummary();
-    renderHistory();
-    updateRevengeLock();
-    renderProfile();
-  }
-
-
-  async function checkAdminStatus() {
-    document.body.classList.remove('is-admin');
-
-    if (!firebaseReady || !currentUser || !db) return false;
-
-    try {
-      const snap = await db.collection('admins').doc(currentUser.uid).get();
-      const isAdmin = snap.exists;
-      document.body.classList.toggle('is-admin', isAdmin);
-      return isAdmin;
-    } catch (error) {
-      console.warn('Admin шалгах боломжгүй байна:', error);
-      return false;
-    }
-  }
-
-  function computeUserChallenge(startBalance, savedOutcomes) {
-    const safeStart = Number(startBalance || 0);
-    const safeOutcomes = Array.isArray(savedOutcomes) ? savedOutcomes : [];
-    let balance = safeStart > 0 ? safeStart : 0;
-    let wins = 0;
-    let losses = 0;
-    let currentLevel = 1;
-
-    for (let i = 0; i < Math.max(safeOutcomes.length, 9); i++) {
-      const outcome = safeOutcomes[i] || null;
-      if (!outcome) {
-        currentLevel = i + 1;
-        break;
-      }
-
-      const risk = round2(balance * RISK);
-      const profit = round2(risk * RR);
-
-      if (outcome === 'taken') {
-        balance = round2(balance + profit);
-        wins++;
-      } else if (outcome === 'loss') {
-        balance = round2(Math.max(0, balance - risk));
-        losses++;
-      }
-
-      currentLevel = i + 2;
-      if (balance >= TARGET || balance <= 0) break;
-    }
-
-    const start = safeStart || balance;
-    const profit = round2(balance - start);
-    const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0;
-
-    return { startBalance: start, balance, profit, wins, losses, trades: wins + losses, winRate, currentLevel };
-  }
-
-  window.loadAdminUsers = async function() {
-    const box = document.getElementById('adminUsersList');
-    if (!box) return;
-
-    if (!firebaseReady || !currentUser || !db) {
-      box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>';
-      return;
-    }
-
-    const isAdmin = await checkAdminStatus();
-    if (!isAdmin) {
-      box.innerHTML = '<div class="leaderboard-empty">Admin эрх байхгүй байна.</div>';
-      return;
-    }
-
-    try {
-      box.innerHTML = '<div class="leaderboard-empty">Users ачааллаж байна...</div>';
-
-      const snap = await db.collection('users').limit(200).get();
-
-      if (snap.empty) {
-        box.innerHTML = '<div class="leaderboard-empty">User байхгүй байна.</div>';
-        return;
-      }
-
-      const rows = [];
-      snap.forEach(doc => {
-        const data = doc.data() || {};
-        const challenge = data.challenge || {};
-        const stats = computeUserChallenge(Number(challenge.startBalance || data.startBalance || START || 0), challenge.outcomes || []);
-
-        rows.push(`
-          <div class="admin-user-row">
-            <div class="admin-user-main">
-              <strong>${escapeHTML(data.name || 'Trader')}</strong>
-              <span>${escapeHTML(data.email || doc.id)}</span>
-            </div>
-            <div class="admin-cell">
-              <strong>${formatMoney(stats.balance)}</strong>
-              <span>Balance</span>
-            </div>
-            <div class="admin-cell">
-              <strong class="admin-profit ${stats.profit < 0 ? 'negative' : ''}">${stats.profit >= 0 ? '+' : ''}${formatMoney(stats.profit)}</strong>
-              <span>Net profit</span>
-            </div>
-            <div class="admin-cell">
-              <strong>Level ${stats.currentLevel}</strong>
-              <span>${stats.wins}W / ${stats.losses}L · ${stats.winRate}%</span>
-            </div>
-            <div class="admin-row-actions">
-              <button class="soft-btn danger-btn" onclick="adminResetUserChallenge('${doc.id}')">Reset account</button>
-              <button class="soft-btn" onclick="adminDeleteFromLeaderboard('${doc.id}')">Delete LB</button>
-            </div>
-          </div>
-        `);
-      });
-
-      box.innerHTML = rows.join('');
-    } catch (error) {
-      console.warn('Admin users уншихад алдаа:', error);
-      box.innerHTML = `<div class="leaderboard-empty">Admin data уншихад алдаа: ${escapeHTML(error.message)}</div>`;
-    }
-  };
-
-
-
-  function getAdminResetPayload() {
-    const token = String(Date.now());
-    return {
-      challenge: {
-        startBalance: 0,
-        outcomes: [],
-        tradeHistory: [],
-        journalEntries: [],
-        revengeUntil: 0,
-        adminForceSetup: true,
-        adminResetToken: token,
-        resetAt: firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      }
-    };
-  }
-
-  window.adminResetUserChallenge = async function(userId) {
-    const isAdmin = await checkAdminStatus();
-    if (!isAdmin) {
-      alert('Admin эрх байхгүй байна.');
-      return;
-    }
-
-    const ok = confirm('Энэ user-ийн balance/profit/progress/history бүгдийг reset хийгээд Start Balance сонгох төлөвт буцаах уу?');
-    if (!ok) return;
-
-    try {
-      await db.collection('users').doc(userId).set(getAdminResetPayload(), { merge: true });
-      await db.collection(LEADERBOARD_COLLECTION).doc(userId).delete().catch(() => {});
-      await loadLeaderboard();
-      await loadAdminUsers();
-      alert('User reset хийгдлээ. Дараа login хийхэд Start Balance сонгоно.');
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  window.adminResetAllUsersChallenge = async function() {
-    const isAdmin = await checkAdminStatus();
-    if (!isAdmin) {
-      alert('Admin эрх байхгүй байна.');
-      return;
-    }
-
-    const ok = confirm('БҮХ user-ийн balance/profit/progress/history reset хийгээд leaderboard-оос бүгдийг устгах уу? Энэ action буцаах боломжгүй.');
-    if (!ok) return;
-
-    try {
-      const usersSnap = await db.collection('users').limit(500).get();
-      let batch = db.batch();
-      let count = 0;
-
-      usersSnap.forEach(doc => {
-        batch.set(doc.ref, getAdminResetPayload(), { merge: true });
-        count++;
-      });
-
-      await batch.commit();
-
-      const lbSnap = await db.collection(LEADERBOARD_COLLECTION).limit(500).get();
-      batch = db.batch();
-      let lbCount = 0;
-
-      lbSnap.forEach(doc => {
-        batch.delete(doc.ref);
-        lbCount++;
-      });
-
-      await batch.commit();
-
-      await loadLeaderboard();
-      await loadAdminUsers();
-      alert(`${count} user reset, ${lbCount} leaderboard item устгалаа.`);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  window.adminClearLeaderboard = async function() {
-    const isAdmin = await checkAdminStatus();
-    if (!isAdmin) {
-      alert('Admin эрх байхгүй байна.');
-      return;
-    }
-
-    const ok = confirm('Leaderboard дээр байгаа бүх хүнийг устгах уу? Users progress өөрчлөгдөхгүй.');
-    if (!ok) return;
-
-    try {
-      const snap = await db.collection(LEADERBOARD_COLLECTION).limit(500).get();
-      const batch = db.batch();
-      let count = 0;
-
-      snap.forEach(doc => {
-        batch.delete(doc.ref);
-        count++;
-      });
-
-      await batch.commit();
-      await loadLeaderboard();
-      await loadAdminUsers();
-      alert(`${count} leaderboard item устгалаа.`);
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-  window.adminDeleteFromLeaderboard = async function(userId) {
-    const isAdmin = await checkAdminStatus();
-    if (!isAdmin) {
-      alert('Admin эрх байхгүй байна.');
-      return;
-    }
-
-    const ok = confirm('Энэ user-ийг leaderboard-оос устгах уу? Account progress өөрчлөгдөхгүй.');
-    if (!ok) return;
-
-    try {
-      await db.collection(LEADERBOARD_COLLECTION).doc(userId).delete();
-      await loadLeaderboard();
-      await loadAdminUsers();
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-
-  function getCurrentProfitValue() {
-    const { finalBalance } = compute();
-    const start = Number(START || 0);
-    const current = Number(finalBalance || 0);
-    if (!Number.isFinite(start) || !Number.isFinite(current)) return 0;
-    return round2(current - start);
-  }
-
-  function getPublicStats(baseProfit = 0) {
-    const { finalBalance } = compute();
-    const completed = getCompletedLevels();
-    const wins = completed.filter(l => l.outcome === 'taken').length;
-    const losses = completed.filter(l => l.outcome === 'loss').length;
-    const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START || 0);
-    const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0;
-    const currentProfit = getCurrentProfitValue();
-    const netProfit = round2(currentProfit - Number(baseProfit || 0));
-
-    return {
-      name: currentUser?.displayName || 'Trader',
-      startBalance: Number(START || 0),
-      balance: Number(finalBalance.toFixed(2)),
-      currentProfit: Number(currentProfit.toFixed(2)),
-      baseProfit: Number(Number(baseProfit || 0).toFixed(2)),
-      netProfit: Number(netProfit.toFixed(2)),
-      bestBalance: Number(bestBalance.toFixed(2)),
-      wins,
-      losses,
-      winRate,
-      trades: wins + losses,
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
-  }
-
-  async function saveLeaderboardStats() {
-    if (!firebaseReady || !currentUser || !db) return;
-    if (!(START > 0)) return;
-
-    try {
-      const ref = db.collection(LEADERBOARD_COLLECTION).doc(currentUser.uid);
-      const snap = await ref.get();
-
-      let baseProfit;
-      if (snap.exists && Number.isFinite(Number(snap.data()?.baseProfit))) {
-        baseProfit = Number(snap.data().baseProfit);
-      } else {
-        // New leaderboard season reset:
-        // first time this version runs, user's current profit becomes baseline,
-        // so everyone starts from $0 net profit on this leaderboard.
-        baseProfit = getCurrentProfitValue();
-      }
-
-      await ref.set(getPublicStats(baseProfit), { merge: true });
-    } catch (error) {
-      console.warn('Leaderboard хадгалах боломжгүй байна:', error);
-    }
-  }
-
-  window.loadLeaderboard = async function() {
-    const box = document.getElementById('leaderboardList');
-    if (!box) return;
-
-    if (!firebaseReady || !db) {
-      box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>';
-      return;
-    }
-
-    try {
-      box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>';
-
-      const snap = await db.collection(LEADERBOARD_COLLECTION)
-        .orderBy('netProfit', 'desc')
-        .limit(20)
-        .get();
-
-      if (snap.empty) {
-        box.innerHTML = '<div class="leaderboard-empty">Шинэ net profit leaderboard хоосон байна. Account-ууд login хийхэд 0$-оос эхэлж нэмэгдэнэ.</div>';
-        return;
-      }
-
-      let rank = 0;
-      const rows = [];
-
-      snap.forEach(doc => {
-        rank++;
-        const data = doc.data() || {};
-        const isMe = currentUser && doc.id === currentUser.uid;
-        const profit = Number(data.netProfit || 0);
-
-        rows.push(`
-          <div class="leaderboard-row ${isMe ? 'my-rank' : ''}">
-            <div class="leaderboard-rank">#${rank}</div>
-            <div class="leaderboard-name">
-              <strong>${escapeHTML(data.name || 'Trader')}</strong>
-              <span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span>
-            </div>
-            <div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${formatMoney(profit)}</div>
-            <div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div>
-          </div>
-        `);
-      });
-
-      box.innerHTML = rows.join('');
-    } catch (error) {
-      console.warn('Leaderboard унших боломжгүй байна:', error);
-      box.innerHTML = '<div class="leaderboard-empty">Leaderboard уншихад permission/index алдаа гарлаа. Firestore rules шалгаарай.</div>';
-    }
-  };
-
-  function escapeHTML(value) {
-    return String(value)
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#039;');
-  }
-
-
-
-  window.resetAllData = function() {
-    const ok = confirm('Progress, history, local data бүгдийг reset хийх үү?');
-    if (!ok) return;
-    outcomes = new Array(9).fill(null);
-    if (typeof tradeHistory !== 'undefined') tradeHistory = [];
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(HISTORY_KEY);
-      localStorage.removeItem(REVENGE_KEY);
-    } catch (_) {}
-    revengeUntil = 0;
-    saveProgress();
-    render();
-    goTop();
-  };
-
-  window.resetPlanProgress = function() {
-    const ok = confirm('Бүх level-ийн сонголтыг reset хийх үү? Journal note хэвээр үлдэнэ.');
-    if (!ok) return;
-    clearProgress();
-    goTop();
-  };
-
-  function setAuthStatus(message) {
-    const el = document.getElementById('authStatus');
-    if (el) el.textContent = message;
-  }
-
+  function setAuthStatus(message) { const el = document.getElementById('authStatus'); if (el) el.textContent = message; }
   function updateAuthUI(user) {
-    const title = document.getElementById('authTitle');
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const modeTabs = document.getElementById('authModeTabs');
-    const logoutBtn = document.getElementById('logoutBtn');
-
-    document.body.classList.toggle('is-authenticated', !!user);
-    if (!user) document.body.dataset.page = '';
-    document.body.classList.remove('balance-ready');
-
-    if (user) {
-      if (title) title.textContent = `${user.displayName || 'Trader'} · progress хадгалагдаж байна`;
-      if (loginForm) loginForm.style.display = 'none';
-      if (registerForm) registerForm.style.display = 'none';
-      if (modeTabs) modeTabs.style.display = 'none';
-      if (logoutBtn) logoutBtn.style.display = 'inline-flex';
-      setAuthStatus('Нэвтэрсэн.');
-    } else {
-      if (title) title.textContent = 'Challenge account';
-      if (modeTabs) modeTabs.style.display = 'flex';
-      if (logoutBtn) logoutBtn.style.display = 'none';
-      showLoginMode();
-      setAuthStatus('Эхлээд account-аараа нэвтэрнэ үү.');
-    }
-
+    const title = document.getElementById('authTitle'), loginForm = document.getElementById('loginForm'), registerForm = document.getElementById('registerForm'), modeTabs = document.getElementById('authModeTabs'), logoutBtn = document.getElementById('logoutBtn');
+    document.body.classList.toggle('is-authenticated', !!user); if (!user) document.body.dataset.page = ''; document.body.classList.remove('balance-ready');
+    if (user) { if (title) title.textContent = `${user.displayName || 'Trader'} · progress хадгалагдаж байна`; if (loginForm) loginForm.style.display = 'none'; if (registerForm) registerForm.style.display = 'none'; if (modeTabs) modeTabs.style.display = 'none'; if (logoutBtn) logoutBtn.style.display = 'inline-flex'; setAuthStatus('Нэвтэрсэн.'); }
+    else { if (title) title.textContent = 'Challenge account'; if (modeTabs) modeTabs.style.display = 'flex'; if (logoutBtn) logoutBtn.style.display = 'none'; showLoginMode(); setAuthStatus('Эхлээд account-аараа нэвтэрнэ үү.'); }
     renderProfile();
   }
-
-
-  window.showLoginMode = function() {
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const loginTab = document.getElementById('loginTab');
-    const registerTab = document.getElementById('registerTab');
-
-    if (loginForm) loginForm.style.display = 'grid';
-    if (registerForm) registerForm.style.display = 'none';
-    if (loginTab) loginTab.classList.add('active');
-    if (registerTab) registerTab.classList.remove('active');
-  };
-
-  window.showRegisterMode = function() {
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-    const loginTab = document.getElementById('loginTab');
-    const registerTab = document.getElementById('registerTab');
-
-    if (loginForm) loginForm.style.display = 'none';
-    if (registerForm) registerForm.style.display = 'grid';
-    if (loginTab) loginTab.classList.remove('active');
-    if (registerTab) registerTab.classList.add('active');
-  };
-
-  function getAuthInputs() {
-    const registerForm = document.getElementById('registerForm');
-    const isRegister = registerForm && registerForm.style.display !== 'none';
-
-    if (isRegister) {
-      return {
-        name: document.getElementById('nameInput')?.value.trim() || '',
-        email: document.getElementById('emailInput')?.value.trim() || '',
-        password: document.getElementById('passwordInput')?.value.trim() || ''
-      };
-    }
-
-    return {
-      name: '',
-      email: document.getElementById('loginEmailInput')?.value.trim() || '',
-      password: document.getElementById('loginPasswordInput')?.value.trim() || ''
-    };
-  }
-
+  window.showLoginMode = function() { const loginForm = document.getElementById('loginForm'), registerForm = document.getElementById('registerForm'), loginTab = document.getElementById('loginTab'), registerTab = document.getElementById('registerTab'); if (loginForm) loginForm.style.display = 'grid'; if (registerForm) registerForm.style.display = 'none'; if (loginTab) loginTab.classList.add('active'); if (registerTab) registerTab.classList.remove('active'); };
+  window.showRegisterMode = function() { const loginForm = document.getElementById('loginForm'), registerForm = document.getElementById('registerForm'), loginTab = document.getElementById('loginTab'), registerTab = document.getElementById('registerTab'); if (loginForm) loginForm.style.display = 'none'; if (registerForm) registerForm.style.display = 'grid'; if (loginTab) loginTab.classList.remove('active'); if (registerTab) registerTab.classList.add('active'); };
+  function getAuthInputs() { const registerForm = document.getElementById('registerForm'); const isRegister = registerForm && registerForm.style.display !== 'none'; if (isRegister) return { name: document.getElementById('nameInput')?.value.trim() || '', email: document.getElementById('emailInput')?.value.trim() || '', password: document.getElementById('passwordInput')?.value.trim() || '' }; return { name: '', email: document.getElementById('loginEmailInput')?.value.trim() || '', password: document.getElementById('loginPasswordInput')?.value.trim() || '' }; }
 
   window.showPage = function(page) {
-    const allowed = ['home', 'stats', 'levels', 'history', 'leaderboard', 'admin'];
-    const nextPage = allowed.includes(page) ? page : 'home';
-
+    const allowed = ['home', 'stats', 'levels', 'history', 'leaderboard', 'admin']; const nextPage = allowed.includes(page) ? page : 'home';
     document.body.dataset.page = nextPage;
-
-    document.querySelectorAll('.bottom-nav a[data-page]').forEach(link => {
-      link.classList.toggle('active', link.dataset.page === nextPage);
-    });
-
-    const titles = {
-      home: 'Home',
-      stats: 'Stats',
-      levels: 'Levels',
-      history: 'History',
-      leaderboard: 'Leaderboard',
-      admin: 'Admin'
-    };
-
-    const title = document.getElementById('pageTitleText');
-    if (title) title.textContent = titles[nextPage] || 'Home';
-
-    if (nextPage === 'leaderboard' && typeof loadLeaderboard === 'function') {
-      loadLeaderboard();
-    }
-
-    if (nextPage === 'admin' && typeof loadAdminUsers === 'function') {
-      loadAdminUsers();
-    }
-
-    const poster = document.querySelector('.poster');
-    if (poster) poster.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.querySelectorAll('.bottom-nav a[data-page]').forEach(link => link.classList.toggle('active', link.dataset.page === nextPage));
+    const titles = { home: 'Home', stats: 'Stats', levels: 'Levels', history: 'History', leaderboard: 'Leaderboard', admin: 'Admin' };
+    const title = document.getElementById('pageTitleText'); if (title) title.textContent = titles[nextPage] || 'Home';
+    if (nextPage === 'leaderboard') loadLeaderboard();
+    if (nextPage === 'admin') loadAdminUsers();
+    const poster = document.querySelector('.poster'); if (poster) poster.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-
-
-  function openHomeOrBalanceSetup() {
-    if (START > 0) {
-      document.body.classList.add('balance-ready');
-      showPage('home');
-    } else {
-      document.body.classList.remove('balance-ready');
-      document.body.dataset.page = '';
-    }
-  }
-
+  function openHomeOrBalanceSetup() { if (START > 0) { document.body.classList.add('balance-ready'); showPage('home'); } else { document.body.classList.remove('balance-ready'); document.body.dataset.page = ''; } }
 
   function initFirebase() {
     try {
       const hasConfig = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes('YOUR_');
-      if (!hasConfig || typeof firebase === 'undefined') {
-        setAuthStatus('Firebase config оруулаагүй байна. Одоогоор progress localStorage дээр хадгалагдана.');
-        return;
-      }
-
+      if (!hasConfig || typeof firebase === 'undefined') { setAuthStatus('Firebase config оруулаагүй байна. Одоогоор progress localStorage дээр хадгалагдана.'); return; }
       if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-      auth = firebase.auth();
-      db = firebase.firestore();
-      firebaseReady = true;
-
-      auth.onAuthStateChanged(async (user) => {
-        currentUser = user;
-        updateAuthUI(user);
-
-        if (user) {
-          await checkAdminStatus();
-          await loadCloudData();
-          await saveLeaderboardStats();
-          openHomeOrBalanceSetup();
-        } else {
-          document.body.classList.remove('is-admin');
-        }
-      });
-    } catch (error) {
-      console.warn('Firebase init error:', error);
-      setAuthStatus('Firebase эхлүүлэхэд алдаа гарлаа. Config-оо шалгаарай.');
-    }
+      auth = firebase.auth(); db = firebase.firestore(); firebaseReady = true;
+      auth.onAuthStateChanged(async (user) => { currentUser = user; updateAuthUI(user); if (user) { await checkAdminStatus(); await loadCloudData(); await saveLeaderboardStats(); openHomeOrBalanceSetup(); } else { document.body.classList.remove('is-admin'); } });
+    } catch (error) { console.warn('Firebase init error:', error); setAuthStatus('Firebase эхлүүлэхэд алдаа гарлаа. Config-оо шалгаарай.'); }
   }
-
 
   function clearLocalChallengeAfterAdminReset(resetToken = '') {
-    START = 0;
-    outcomes = new Array(9).fill(null);
-    journalEntries = [];
-    tradeHistory = [];
-    revengeUntil = 0;
-
-    try {
-      localStorage.removeItem(START_BALANCE_KEY);
-      localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(JOURNAL_KEY);
-      localStorage.removeItem(HISTORY_KEY);
-      localStorage.removeItem(REVENGE_KEY);
-      if (resetToken) localStorage.setItem(ADMIN_RESET_TOKEN_KEY, resetToken);
-    } catch (_) {}
-
-    document.body.classList.remove('balance-ready');
-    document.body.dataset.page = '';
+    START = 0; outcomes = new Array(9).fill(null); journalEntries = []; tradeHistory = []; revengeUntil = 0;
+    try { localStorage.removeItem(START_BALANCE_KEY); localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(JOURNAL_KEY); localStorage.removeItem(HISTORY_KEY); localStorage.removeItem(REVENGE_KEY); if (resetToken) localStorage.setItem(ADMIN_RESET_TOKEN_KEY, resetToken); } catch (_) {}
+    document.body.classList.remove('balance-ready'); document.body.dataset.page = '';
   }
-
-  function isAdminForcedResetChallenge(challenge) {
-    return !!(
-      challenge &&
-      (
-        challenge.adminForceSetup === true ||
-        challenge.forceSetup === true ||
-        Number(challenge.startBalance || 0) <= 0
-      )
-    );
-  }
-
+  function isAdminForcedResetChallenge(challenge) { return !!(challenge && (challenge.adminForceSetup === true || challenge.forceSetup === true || Number(challenge.startBalance || 0) <= 0)); }
 
   async function loadCloudData() {
     if (!firebaseReady || !currentUser || !db) return;
-
     try {
-      const snap = await db.collection('users').doc(currentUser.uid).get();
-      const data = snap.exists ? snap.data() : null;
-      const challenge = data?.challenge || {};
-
-      if (isAdminForcedResetChallenge(challenge)) {
-        const token = String(challenge.adminResetToken || challenge.resetAt || '');
-        const localToken = localStorage.getItem(ADMIN_RESET_TOKEN_KEY) || '';
-
-        // If admin reset exists, force this device back to first-time setup too.
-        if (token !== localToken || Number(challenge.startBalance || 0) <= 0) {
-          clearLocalChallengeAfterAdminReset(token);
-        }
-
-        setAuthStatus('Admin reset хийгдсэн байна. Эхлэх balance-аа дахин сонгоно уу.');
-        render();
-        return;
-      }
-
-      if (Number(challenge.startBalance) > 0) {
-        setStartBalance(Number(challenge.startBalance), false);
-      }
-
-      if (Array.isArray(challenge.outcomes) && challenge.outcomes.length >= 9) {
-        outcomes = challenge.outcomes;
-        saveJSON(STORAGE_KEY, outcomes);
-        addLevelIfNeeded();
-      }
-
-      if (Array.isArray(challenge.journalEntries)) {
-        journalEntries = challenge.journalEntries;
-        saveJSON(JOURNAL_KEY, journalEntries);
-      }
-
-      if (Array.isArray(challenge.tradeHistory)) {
-        tradeHistory = challenge.tradeHistory;
-        saveJSON(HISTORY_KEY, tradeHistory);
-      }
-
-      if (challenge.revengeUntil) {
-        revengeUntil = Number(challenge.revengeUntil);
-        localStorage.setItem(REVENGE_KEY, String(revengeUntil));
-      }
-
-      setAuthStatus('Cloud sync on.');
-      render();
-    } catch (error) {
-      console.warn('Cloud load error:', error);
-      setAuthStatus('Cloud progress уншихад алдаа гарлаа. Firestore rules/config-оо шалга.');
-    }
+      const snap = await db.collection('users').doc(currentUser.uid).get(); const data = snap.exists ? snap.data() : null; const challenge = data?.challenge || {};
+      if (isAdminForcedResetChallenge(challenge)) { const token = String(challenge.adminResetToken || challenge.resetAt || ''); const localToken = localStorage.getItem(ADMIN_RESET_TOKEN_KEY) || ''; if (token !== localToken || Number(challenge.startBalance || 0) <= 0) clearLocalChallengeAfterAdminReset(token); setAuthStatus('Admin reset хийгдсэн байна. Эхлэх balance-аа дахин сонгоно уу.'); render(); return; }
+      if (Number(challenge.startBalance) > 0) setStartBalance(Number(challenge.startBalance), false);
+      if (Array.isArray(challenge.outcomes) && challenge.outcomes.length >= 9) { outcomes = challenge.outcomes; saveJSON(STORAGE_KEY, outcomes); addLevelIfNeeded(); }
+      if (Array.isArray(challenge.journalEntries)) { journalEntries = challenge.journalEntries; saveJSON(JOURNAL_KEY, journalEntries); }
+      if (Array.isArray(challenge.tradeHistory)) { tradeHistory = challenge.tradeHistory; saveJSON(HISTORY_KEY, tradeHistory); }
+      if (challenge.revengeUntil) { revengeUntil = Number(challenge.revengeUntil); localStorage.setItem(REVENGE_KEY, String(revengeUntil)); }
+      setAuthStatus('Cloud sync on.'); render();
+    } catch (error) { console.warn('Cloud load error:', error); setAuthStatus('Cloud progress уншихад алдаа гарлаа. Firestore rules/config-оо шалга.'); }
   }
 
   window.registerUser = async function() {
-    if (!firebaseReady || !auth || !db) {
-      alert('Эхлээд Firebase config-оо зөв оруулна уу.');
-      return;
-    }
-
-    const { name, email, password } = getAuthInputs();
-    if (!name || !email || !password) {
-      alert('Нэр, mail, password гурвууланг нь бөглөнө үү.');
-      return;
-    }
-
-    try {
-      const cred = await auth.createUserWithEmailAndPassword(email, password);
-      await cred.user.updateProfile({ displayName: name });
-      currentUser = cred.user;
-      await db.collection('users').doc(cred.user.uid).set({
-        name,
-        email,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-        challenge: {
-          outcomes,
-          journalEntries,
-          tradeHistory,
-          revengeUntil,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        }
-      }, { merge: true });
-      updateAuthUI(cred.user);
-      await checkAdminStatus();
-      await saveLeaderboardStats();
-      setAuthStatus('Бүртгэл амжилттай. Одоо эхлэх balance-аа сонго.');
-      render();
-    } catch (error) {
-      alert(error.message);
-    }
+    if (!firebaseReady || !auth || !db) return alert('Эхлээд Firebase config-оо зөв оруулна уу.');
+    const { name, email, password } = getAuthInputs(); if (!name || !email || !password) return alert('Нэр, mail, password гурвууланг нь бөглөнө үү.');
+    try { const cred = await auth.createUserWithEmailAndPassword(email, password); await cred.user.updateProfile({ displayName: name }); currentUser = cred.user; await db.collection('users').doc(cred.user.uid).set({ name, email, createdAt: firebase.firestore.FieldValue.serverTimestamp(), challenge: { outcomes, journalEntries, tradeHistory, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }, { merge: true }); updateAuthUI(cred.user); await checkAdminStatus(); await saveLeaderboardStats(); setAuthStatus('Бүртгэл амжилттай. Одоо эхлэх balance-аа сонго.'); render(); } catch (error) { alert(error.message); }
   };
+  window.loginUser = async function() { if (!firebaseReady || !auth) return alert('Эхлээд Firebase config-оо зөв оруулна уу.'); const { email, password } = getAuthInputs(); if (!email || !password) return alert('Mail болон code/password-оо оруулна уу.'); try { const cred = await auth.signInWithEmailAndPassword(email, password); currentUser = cred.user; updateAuthUI(cred.user); await checkAdminStatus(); await loadCloudData(); openHomeOrBalanceSetup(); } catch (error) { alert(error.message); } };
+  window.saveInitialBalance = async function() { const value = getStartBalanceInputValue(); if (!value) return alert('Эхлэх balance-аа зөв оруулна уу.'); setStartBalance(value, true); if (firebaseReady && currentUser && db) await db.collection('users').doc(currentUser.uid).set({ challenge: { adminForceSetup: false, startBalance: START, outcomes, tradeHistory, journalEntries, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }, { merge: true }); saveProgress(); render(); await saveLeaderboardStats(); showPage('home'); };
+  window.changeStartBalance = function() { if (!currentUser) return alert('Эхлээд нэвтэрнэ үү.'); const raw = prompt('Шинэ эхлэх balance оруулна уу:', START > 0 ? String(START) : ''); if (raw === null) return; const value = Number(raw); if (!Number.isFinite(value) || value <= 0) return alert('Зөв balance оруулна уу.'); if (!confirm('Balance солиход current progress болон history reset болно. Үргэлжлүүлэх үү?')) return; setStartBalance(value, true); saveProgress(); render(); saveLeaderboardStats(); showPage('home'); };
+  window.logoutUser = async function() { if (!auth) return; await auth.signOut(); currentUser = null; document.body.classList.remove('is-authenticated', 'balance-ready', 'is-admin'); document.body.dataset.page = ''; const currentLevelTitle = document.getElementById('currentLevelTitle'); if (currentLevelTitle) currentLevelTitle.remove(); updateAuthUI(null); goTop(); };
 
-  window.loginUser = async function() {
-    if (!firebaseReady || !auth) {
-      alert('Эхлээд Firebase config-оо зөв оруулна уу.');
-      return;
+  async function checkAdminStatus() { document.body.classList.remove('is-admin'); if (!firebaseReady || !currentUser || !db) return false; try { const snap = await db.collection('admins').doc(currentUser.uid).get(); const isAdmin = snap.exists; document.body.classList.toggle('is-admin', isAdmin); return isAdmin; } catch (error) { console.warn('Admin шалгах боломжгүй байна:', error); return false; } }
+
+  function computeUserChallenge(startBalance, savedOutcomes) {
+    const safeStart = Number(startBalance || 0); const safeOutcomes = Array.isArray(savedOutcomes) ? savedOutcomes : [];
+    let balance = safeStart > 0 ? round2(safeStart) : 0; let wins = 0, losses = 0, currentLevel = 1;
+    for (let i = 0; i < Math.max(safeOutcomes.length, 9); i++) {
+      const outcome = safeOutcomes[i] || null; if (!outcome) { currentLevel = i + 1; break; }
+      const planRisk = round2(balance * RISK); const lot = calculateLot(planRisk); const actualRisk = round2(lot * STOP_LOSS_PIPS * PIP_VALUE_PER_1_LOT); const profit = round2(actualRisk * RR);
+      if (outcome === 'taken') { balance = round2(balance + profit); wins++; } else if (outcome === 'loss') { balance = round2(Math.max(0, balance - actualRisk)); losses++; }
+      currentLevel = i + 2; if (balance >= TARGET || balance <= 0) break;
     }
-
-    const { email, password } = getAuthInputs();
-    if (!email || !password) {
-      alert('Mail болон code/password-оо оруулна уу.');
-      return;
-    }
-
-    try {
-      const cred = await auth.signInWithEmailAndPassword(email, password);
-      currentUser = cred.user;
-      updateAuthUI(cred.user);
-      await checkAdminStatus();
-      await loadCloudData();
-      openHomeOrBalanceSetup();
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
-
-
-  window.saveInitialBalance = async function() {
-    const value = getStartBalanceInputValue();
-    if (!value) {
-      alert('Эхлэх balance-аа зөв оруулна уу.');
-      return;
-    }
-
-    setStartBalance(value, true);
-    if (firebaseReady && currentUser && db) {
-      await db.collection('users').doc(currentUser.uid).set({
-        challenge: {
-          adminForceSetup: false,
-          startBalance: START,
-          outcomes,
-          tradeHistory,
-          journalEntries,
-          revengeUntil,
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-        }
-      }, { merge: true });
-    }
-    saveProgress();
-    render();
-
-    if (typeof saveLeaderboardStats === 'function') {
-      await saveLeaderboardStats();
-    }
-
-    showPage('home');
-  };
-
-  window.changeStartBalance = function() {
-    if (!currentUser) {
-      alert('Эхлээд нэвтэрнэ үү.');
-      return;
-    }
-
-    const raw = prompt('Шинэ эхлэх balance оруулна уу:', START > 0 ? String(START) : '');
-    if (raw === null) return;
-
-    const value = Number(raw);
-    if (!Number.isFinite(value) || value <= 0) {
-      alert('Зөв balance оруулна уу.');
-      return;
-    }
-
-    const ok = confirm('Balance солиход current progress болон history reset болно. Үргэлжлүүлэх үү?');
-    if (!ok) return;
-
-    setStartBalance(value, true);
-    saveProgress();
-    render();
-
-    if (typeof saveLeaderboardStats === 'function') {
-      saveLeaderboardStats();
-    }
-
-    showPage('home');
-  };
-
-
-
-  window.logoutUser = async function() {
-    if (!auth) return;
-    await auth.signOut();
-    currentUser = null;
-    document.body.classList.remove('is-authenticated');
-    document.body.classList.remove('balance-ready');
-    document.body.classList.remove('is-admin');
-    document.body.dataset.page = '';
-    const currentLevelTitle = document.getElementById('currentLevelTitle');
-    if (currentLevelTitle) currentLevelTitle.remove();
-    updateAuthUI(null);
-    goTop();
-  };
-
-  if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
+    const start = safeStart || balance; const profit = round2(balance - start); const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0;
+    return { startBalance: start, balance, profit, wins, losses, trades: wins + losses, winRate, currentLevel };
   }
 
-  function goTop() {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    const top = document.getElementById('top');
-    if (top) top.scrollIntoView({ block: 'start', behavior: 'instant' });
-  }
+  function getCurrentProfitValue() { const { finalBalance } = compute(); const start = Number(START || 0); const current = Number(finalBalance || 0); if (!Number.isFinite(start) || !Number.isFinite(current)) return 0; return round2(current - start); }
+  function getPublicStats(baseProfit = 0) { const { finalBalance } = compute(); const completed = getCompletedLevels(); const wins = completed.filter(l => l.outcome === 'taken').length; const losses = completed.filter(l => l.outcome === 'loss').length; const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START || 0); const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0; const currentProfit = getCurrentProfitValue(); const netProfit = round2(currentProfit - Number(baseProfit || 0)); return { name: currentUser?.displayName || 'Trader', startBalance: Number(START || 0), balance: Number(finalBalance.toFixed(2)), currentProfit: Number(currentProfit.toFixed(2)), baseProfit: Number(Number(baseProfit || 0).toFixed(2)), netProfit: Number(netProfit.toFixed(2)), bestBalance: Number(bestBalance.toFixed(2)), wins, losses, winRate, trades: wins + losses, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }; }
+  async function saveLeaderboardStats() { if (!firebaseReady || !currentUser || !db || !(START > 0)) return; try { const ref = db.collection(LEADERBOARD_COLLECTION).doc(currentUser.uid); const snap = await ref.get(); let baseProfit = 0; if (snap.exists && Number.isFinite(Number(snap.data()?.baseProfit))) baseProfit = Number(snap.data().baseProfit); await ref.set(getPublicStats(baseProfit), { merge: true }); } catch (error) { console.warn('Leaderboard хадгалах боломжгүй байна:', error); } }
+
+  window.loadLeaderboard = async function() {
+    const box = document.getElementById('leaderboardList'); if (!box) return;
+    if (!firebaseReady || !db) { box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>'; return; }
+    try { box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>'; const snap = await db.collection(LEADERBOARD_COLLECTION).orderBy('netProfit', 'desc').limit(20).get(); if (snap.empty) { box.innerHTML = '<div class="leaderboard-empty">Leaderboard хоосон байна.</div>'; return; } let rank = 0; const rows = []; snap.forEach(doc => { rank++; const data = doc.data() || {}; const isMe = currentUser && doc.id === currentUser.uid; const profit = Number(data.netProfit || 0); rows.push(`<div class="leaderboard-row ${isMe ? 'my-rank' : ''}"><div class="leaderboard-rank">#${rank}</div><div class="leaderboard-name"><strong>${escapeHTML(data.name || 'Trader')}</strong><span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span></div><div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${formatMoney(profit)}</div><div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div></div>`); }); box.innerHTML = rows.join(''); } catch (error) { console.warn('Leaderboard унших боломжгүй байна:', error); box.innerHTML = '<div class="leaderboard-empty">Leaderboard уншихад permission/index алдаа гарлаа. Firestore rules шалгаарай.</div>'; }
+  };
+
+  window.loadAdminUsers = async function() {
+    const box = document.getElementById('adminUsersList'); if (!box) return;
+    if (!firebaseReady || !currentUser || !db) { box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>'; return; }
+    const isAdmin = await checkAdminStatus(); if (!isAdmin) { box.innerHTML = '<div class="leaderboard-empty">Admin эрх байхгүй байна.</div>'; return; }
+    try { box.innerHTML = '<div class="leaderboard-empty">Users ачааллаж байна...</div>'; const snap = await db.collection('users').limit(200).get(); if (snap.empty) { box.innerHTML = '<div class="leaderboard-empty">User байхгүй байна.</div>'; return; } const rows = []; snap.forEach(doc => { const data = doc.data() || {}; const challenge = data.challenge || {}; const stats = computeUserChallenge(Number(challenge.startBalance || data.startBalance || START || 0), challenge.outcomes || []); rows.push(`<div class="admin-user-row"><div class="admin-user-main"><strong>${escapeHTML(data.name || 'Trader')}</strong><span>${escapeHTML(data.email || doc.id)}</span></div><div class="admin-cell"><strong>${formatMoney(stats.balance)}</strong><span>Balance</span></div><div class="admin-cell"><strong class="admin-profit ${stats.profit < 0 ? 'negative' : ''}">${stats.profit >= 0 ? '+' : ''}${formatMoney(stats.profit)}</strong><span>Net profit</span></div><div class="admin-cell"><strong>Level ${stats.currentLevel}</strong><span>${stats.wins}W / ${stats.losses}L · ${stats.winRate}%</span></div><div class="admin-row-actions"><button class="soft-btn danger-btn" onclick="adminResetUserChallenge('${doc.id}')">Reset account</button><button class="soft-btn" onclick="adminDeleteFromLeaderboard('${doc.id}')">Delete LB</button></div></div>`); }); box.innerHTML = rows.join(''); } catch (error) { console.warn('Admin users уншихад алдаа:', error); box.innerHTML = `<div class="leaderboard-empty">Admin data уншихад алдаа: ${escapeHTML(error.message)}</div>`; }
+  };
+
+  function getAdminResetPayload() { const token = String(Date.now()); return { challenge: { startBalance: 0, outcomes: [], tradeHistory: [], journalEntries: [], revengeUntil: 0, adminForceSetup: true, adminResetToken: token, resetAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }; }
+  window.adminResetUserChallenge = async function(userId) { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Энэ user-ийн balance/profit/progress/history бүгдийг reset хийгээд Start Balance сонгох төлөвт буцаах уу?')) return; try { await db.collection('users').doc(userId).set(getAdminResetPayload(), { merge: true }); await db.collection(LEADERBOARD_COLLECTION).doc(userId).delete().catch(() => {}); await loadLeaderboard(); await loadAdminUsers(); alert('User reset хийгдлээ. Дараа login хийхэд Start Balance сонгоно.'); } catch (error) { alert(error.message); } };
+  window.adminResetAllUsersChallenge = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('БҮХ user-ийн balance/profit/progress/history reset хийгээд leaderboard-оос бүгдийг устгах уу? Энэ action буцаах боломжгүй.')) return; try { const usersSnap = await db.collection('users').limit(500).get(); let batch = db.batch(), count = 0; usersSnap.forEach(doc => { batch.set(doc.ref, getAdminResetPayload(), { merge: true }); count++; }); await batch.commit(); const lbSnap = await db.collection(LEADERBOARD_COLLECTION).limit(500).get(); batch = db.batch(); let lbCount = 0; lbSnap.forEach(doc => { batch.delete(doc.ref); lbCount++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} user reset, ${lbCount} leaderboard item устгалаа.`); } catch (error) { alert(error.message); } };
+  window.adminClearLeaderboard = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Leaderboard дээр байгаа бүх хүнийг устгах уу? Users progress өөрчлөгдөхгүй.')) return; try { const snap = await db.collection(LEADERBOARD_COLLECTION).limit(500).get(); const batch = db.batch(); let count = 0; snap.forEach(doc => { batch.delete(doc.ref); count++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} leaderboard item устгалаа.`); } catch (error) { alert(error.message); } };
+  window.adminDeleteFromLeaderboard = async function(userId) { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Энэ user-ийг leaderboard-оос устгах уу? Account progress өөрчлөгдөхгүй.')) return; try { await db.collection(LEADERBOARD_COLLECTION).doc(userId).delete(); await loadLeaderboard(); await loadAdminUsers(); } catch (error) { alert(error.message); } };
+  window.adminResetLeaderboardSeason = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Leaderboard season reset хийх үү? User progress өөрчлөгдөхгүй. Одоогийн profit нь baseline болж, бүгд $0 net profit-оос дахин эхэлнэ.')) return; try { const usersSnap = await db.collection('users').limit(500).get(); const batch = db.batch(); let count = 0; usersSnap.forEach(doc => { const data = doc.data() || {}; const challenge = data.challenge || {}; const stats = computeUserChallenge(Number(challenge.startBalance || data.startBalance || 0), challenge.outcomes || []); const ref = db.collection(LEADERBOARD_COLLECTION).doc(doc.id); batch.set(ref, { name: data.name || 'Trader', startBalance: Number(stats.startBalance || 0), balance: Number(stats.balance || 0), currentProfit: Number(stats.profit || 0), baseProfit: Number(stats.profit || 0), netProfit: 0, bestBalance: Number(stats.balance || 0), wins: Number(stats.wins || 0), losses: Number(stats.losses || 0), winRate: Number(stats.winRate || 0), trades: Number(stats.trades || 0), updatedAt: firebase.firestore.FieldValue.serverTimestamp(), seasonResetAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); count++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} user leaderboard season reset хийгдлээ.`); } catch (error) { alert(error.message); } };
+
+  window.resetAllData = function() { if (!confirm('Progress, history, local data бүгдийг reset хийх үү?')) return; outcomes = new Array(9).fill(null); tradeHistory = []; try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(HISTORY_KEY); localStorage.removeItem(REVENGE_KEY); } catch (_) {} revengeUntil = 0; saveProgress(); render(); goTop(); };
+  window.resetPlanProgress = function() { if (!confirm('Бүх level-ийн сонголтыг reset хийх үү? Journal note хэвээр үлдэнэ.')) return; clearProgress(); goTop(); };
+
+  window.openSettingsPopup = function() { const overlay = document.getElementById('settingsOverlay'); if (!overlay) return; overlay.classList.add('show'); overlay.style.display = 'flex'; document.body.classList.add('settings-open'); };
+  window.closeSettingsPopup = function() { const overlay = document.getElementById('settingsOverlay'); if (!overlay) return; overlay.classList.remove('show'); overlay.style.display = 'none'; document.body.classList.remove('settings-open'); };
+  document.addEventListener('click', function(event) { const overlay = document.getElementById('settingsOverlay'); if (!overlay || !overlay.classList.contains('show')) return; if (event.target === overlay) closeSettingsPopup(); });
+  document.addEventListener('keydown', function(event) { if (event.key === 'Escape') closeSettingsPopup(); });
+
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  function goTop() { window.scrollTo({ top: 0, left: 0, behavior: 'instant' }); const top = document.getElementById('top'); if (top) top.scrollIntoView({ block: 'start', behavior: 'instant' }); }
 
   window.addEventListener('DOMContentLoaded', goTop);
-
-  window.addEventListener('load', () => {
-    initFirebase();
-    init();
-    render();
-    updateRevengeLock();
-    setInterval(updateRevengeLock, 1000);
-    goTop();
-    setTimeout(goTop, 80);
-});
-
-  window.openSettingsPopup = function() {
-    const overlay = document.getElementById('settingsOverlay');
-    if (!overlay) {
-      console.warn('settingsOverlay not found');
-      return;
-    }
-    overlay.classList.add('show');
-    overlay.style.display = 'flex';
-    document.body.classList.add('settings-open');
-  };
-
-  window.closeSettingsPopup = function() {
-    const overlay = document.getElementById('settingsOverlay');
-    if (!overlay) return;
-    overlay.classList.remove('show');
-    overlay.style.display = 'none';
-    document.body.classList.remove('settings-open');
-  };
-
-  document.addEventListener('click', function(event) {
-    const overlay = document.getElementById('settingsOverlay');
-    if (!overlay || !overlay.classList.contains('show')) return;
-    if (event.target === overlay) closeSettingsPopup();
-  });
-
-  document.addEventListener('keydown', function(event) {
-    if (event.key === 'Escape') closeSettingsPopup();
-  });
-
+  window.addEventListener('load', () => { initFirebase(); init(); render(); updateRevengeLock(); setInterval(updateRevengeLock, 1000); goTop(); setTimeout(goTop, 80); setTimeout(() => { if (document.body.classList.contains('is-authenticated') && !document.body.dataset.page) showPage('home'); }, 250); });
 </script>
 
-
-
-
-  <div class="settings-overlay" id="settingsOverlay" onclick="closeSettingsPopup(event)">
-    <div class="settings-modal glass-card" onclick="event.stopPropagation()">
-      <div class="settings-modal-head">
-        <div>
-          <div class="auth-kicker">SETTINGS</div>
-          <div class="auth-title">Safety / Reset menu</div>
-        </div>
-        <button class="settings-close-btn" onclick="closeSettingsPopup()" aria-label="Close">✕</button>
-      </div>
-
-      <div class="settings-actions">
-        <button class="settings-action" onclick="restartLastLevel(); closeSettingsPopup();">↺ Сүүлийн trade буцаах</button>
-        <button class="settings-action" onclick="clearOnlyHistory(); closeSettingsPopup();">History цэвэрлэх</button>
-        <button class="settings-action danger" onclick="resetOnlyProgress(); closeSettingsPopup();">Progress reset</button>
-        <button class="settings-action danger" onclick="resetEverything(); closeSettingsPopup();">Бүгд reset</button>
-        <button class="settings-action" onclick="changeStartBalance(); closeSettingsPopup();">Balance солих</button>
-      </div>
-
-      <div class="settings-note">Чухал action бүр confirm асууна. Санамсаргүй дарахад шууд устгахгүй.</div>
-    </div>
-  </div>
-
-
-
-
-
-
-
-
 <!--
-Recommended Firestore rules for admin full-control version:
+Recommended Firestore rules for this version:
 
 rules_version = '2';
 
@@ -3954,29 +832,69 @@ service cloud.firestore {
         exists(/databases/$(database)/documents/admins/$(request.auth.uid));
     }
 
+    function isOwnUser(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function validLeaderboardWrite(userId) {
+      return isOwnUser(userId)
+        && request.resource.data.keys().hasOnly([
+          'name',
+          'startBalance',
+          'balance',
+          'currentProfit',
+          'baseProfit',
+          'netProfit',
+          'bestBalance',
+          'wins',
+          'losses',
+          'winRate',
+          'trades',
+          'updatedAt'
+        ])
+        && request.resource.data.startBalance is number
+        && request.resource.data.balance is number
+        && request.resource.data.currentProfit is number
+        && request.resource.data.baseProfit is number
+        && request.resource.data.netProfit is number
+        && request.resource.data.bestBalance is number
+        && request.resource.data.wins is number
+        && request.resource.data.losses is number
+        && request.resource.data.winRate is number
+        && request.resource.data.trades is number
+        && request.resource.data.startBalance >= 0
+        && request.resource.data.balance >= 0
+        && request.resource.data.bestBalance >= 0
+        && request.resource.data.wins >= 0
+        && request.resource.data.losses >= 0
+        && request.resource.data.trades == request.resource.data.wins + request.resource.data.losses
+        && request.resource.data.winRate >= 0
+        && request.resource.data.winRate <= 100;
+    }
+
     match /admins/{adminId} {
       allow read: if isSignedIn() && request.auth.uid == adminId;
       allow write: if false;
     }
 
     match /users/{userId} {
-      allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
-      allow write: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+      allow read: if isAdmin() || isOwnUser(userId);
+      allow write: if isAdmin() || isOwnUser(userId);
 
       match /trades/{tradeId} {
-        allow read: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
-        allow write: if isSignedIn() && request.auth.uid == userId;
+        allow read: if isAdmin() || isOwnUser(userId);
+        allow create, update: if isOwnUser(userId);
         allow delete: if isAdmin();
       }
     }
 
     match /leaderboard_profit_reset_v1/{userId} {
       allow read: if isSignedIn();
-      allow write, delete: if isAdmin() || (isSignedIn() && request.auth.uid == userId);
+      allow create, update: if isAdmin() || validLeaderboardWrite(userId);
+      allow delete: if isAdmin() || isOwnUser(userId);
     }
   }
 }
 -->
-
 </body>
 </html>
