@@ -296,6 +296,61 @@
     .bottom-nav::-webkit-scrollbar { display: none; }
     .bottom-nav a { flex: 0 0 auto; min-width: 82px; min-height: 48px; padding: 0 16px; font-size: 13px; }
   }
+
+  /* ===== THREE LEVEL VIEW ===== */
+  .trading-table tr.tr-current td {
+    border-top-color: rgba(255,215,0,0.46) !important;
+    border-bottom-color: rgba(255,215,0,0.36) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 0 28px rgba(255,215,0,0.12) !important;
+  }
+
+  .trading-table tr.tr-preview td {
+    opacity: .72;
+  }
+
+  .trading-table tr.tr-previous td {
+    opacity: .86;
+  }
+
+  .level-context-label {
+    display: inline-flex;
+    margin-left: 7px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: rgba(255,249,215,0.72);
+    background: rgba(0,0,0,0.30);
+    border: 1px solid rgba(255,255,255,0.10);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .6px;
+    vertical-align: middle;
+  }
+
+  .preview-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 11px;
+    border-radius: 999px;
+    color: #fff2a8;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,215,0,0.22);
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  @media (max-width: 700px) {
+    .trading-table tr.tr-current {
+      border-color: rgba(255,215,0,0.46) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 0 28px rgba(255,215,0,0.13) !important;
+    }
+
+    .level-context-label {
+      margin-left: 0;
+      margin-top: 8px;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -636,35 +691,118 @@
     document.getElementById('statBestBalance').textContent = formatMoney(bestBalance);
   }
 
-  function renderTable() {
-    const { levels, finalBalance } = compute();
-    const tbody = document.getElementById('tableBody');
-    const wrapper = document.getElementById('levelsSection');
-    let currentIndex = outcomes.findIndex(o => o === null);
-    if (currentIndex === -1) currentIndex = Math.max(0, levels.length - 1);
-    const l = levels[currentIndex];
-    if (!tbody || !l) return;
-    if (wrapper && !document.getElementById('currentLevelTitle')) {
-      const title = document.createElement('div'); title.className = 'current-level-title page-section page-levels'; title.id = 'currentLevelTitle'; wrapper.parentNode.insertBefore(title, wrapper);
-    }
-    const titleEl = document.getElementById('currentLevelTitle');
-    if (titleEl) titleEl.innerHTML = `<span>CURRENT LEVEL · ${currentIndex + 1}-р түвшин</span><button class="level-restart-btn" onclick="restartLastLevel()">↺ Level restart</button>`;
-    let rowClass = l.outcome === 'taken' ? 'tr-taken' : (l.outcome === 'loss' ? 'tr-loss' : '');
+  function projectLevelFromBalance(idx, startBalance) {
+    const safeBalance = round2(Number(startBalance || 0));
+    const planRisk = round2(safeBalance * RISK);
+    const lot = calculateLot(planRisk);
+    const actualRisk = round2(lot * STOP_LOSS_PIPS * PIP_VALUE_PER_1_LOT);
+    const profit = round2(actualRisk * RR);
+
+    return {
+      idx,
+      startBalance: safeBalance,
+      risk: actualRisk,
+      planRisk,
+      actualRisk,
+      profit,
+      lot,
+      slPips: STOP_LOSS_PIPS,
+      outcome: null,
+      newBalance: null,
+      isProjected: true
+    };
+  }
+
+  function buildLevelRow(l, context, currentIndex) {
+    if (!l) return '';
+
+    const levelNumber = l.idx + 1;
+    const isCurrent = context === 'current';
+    const isPreview = context === 'next';
+    const isPrevious = context === 'previous';
+
+    let rowClass = '';
+    if (l.outcome === 'taken') rowClass = 'tr-taken';
+    if (l.outcome === 'loss') rowClass = 'tr-loss';
+    if (isCurrent) rowClass += ' tr-current';
+    if (isPreview) rowClass += ' tr-preview';
+    if (isPrevious) rowClass += ' tr-previous';
+
     const isGoal = l.startBalance >= TARGET || (l.newBalance && l.newBalance >= TARGET);
-    let levelDisplay = isGoal ? `<span class="goal-flag">🏆 ${currentIndex + 1}</span>` : (currentIndex >= 9 ? `<span class="level-chip extra-chip">+${currentIndex + 1}</span>` : `<span class="level-chip">${currentIndex + 1}</span>`);
-    const actionHtml = `<div class="action-group"><button class="btn-sm btn-taken" data-level="${currentIndex}" data-action="taken">✅ АВСАН</button><button class="btn-sm btn-loss" data-level="${currentIndex}" data-action="loss">❌ АЛДСАН</button></div>`;
-    const newBalText = l.outcome ? formatMoney(l.newBalance) : '—';
-    const balanceColor = l.outcome === 'taken' ? 'color: var(--green);' : (l.outcome === 'loss' ? 'color: #ffb0bc;' : 'color: rgba(255,255,255,0.55);');
-    tbody.innerHTML = `<tr class="${rowClass}">
+    let levelDisplay = isGoal
+      ? `<span class="goal-flag">🏆 ${levelNumber}</span>`
+      : (l.idx >= 9 ? `<span class="level-chip extra-chip">+${levelNumber}</span>` : `<span class="level-chip">${levelNumber}</span>`);
+
+    const contextLabel = isCurrent
+      ? 'CURRENT'
+      : (isPrevious ? 'PREVIOUS' : 'NEXT IF WIN');
+    levelDisplay += `<span class="level-context-label">${contextLabel}</span>`;
+
+    let actionHtml = '';
+    if (isCurrent) {
+      actionHtml = `<div class="action-group"><button class="btn-sm btn-taken" data-level="${currentIndex}" data-action="taken">✅ АВСАН</button><button class="btn-sm btn-loss" data-level="${currentIndex}" data-action="loss">❌ АЛДСАН</button></div>`;
+    } else if (l.outcome === 'taken') {
+      actionHtml = `<span class="outcome-badge outcome-profit">✅ АВСАН</span>`;
+    } else if (l.outcome === 'loss') {
+      actionHtml = `<span class="outcome-badge outcome-loss">❌ АЛДСАН</span>`;
+    } else {
+      actionHtml = `<span class="preview-badge">Preview only</span>`;
+    }
+
+    const newBalText = l.outcome ? formatMoney(l.newBalance) : (isPreview ? formatMoney(l.startBalance + l.profit) : '—');
+    const balanceColor = l.outcome === 'taken'
+      ? 'color: var(--green);'
+      : (l.outcome === 'loss' ? 'color: #ffb0bc;' : (isPreview ? 'color: rgba(185,255,215,0.82);' : 'color: rgba(255,255,255,0.55);'));
+
+    return `<tr class="${rowClass.trim()}">
       <td data-label="#">${levelDisplay}</td>
       <td data-label="Баланс" class="bal-cell">${formatMoney(l.startBalance)}</td>
       <td data-label="SL pips">${l.slPips}</td>
       <td data-label="Actual risk" style="color:#ffcf7a;">${formatMoney(l.risk)}<div style="margin-top:4px;color:rgba(255,249,215,0.48);font-size:10px;font-weight:800;">Plan: ${formatMoney(l.planRisk)}</div></td>
-      <td data-label="Lot" class="lot-cell">${l.lot.toFixed(2)}</td>
+      <td data-label="Lot" class="lot-cell">${Number(l.lot || 0).toFixed(2)}</td>
       <td data-label="Ашиг" style="color:#b9ffd7;">${formatMoney(l.profit)}</td>
       <td data-label="Үр дүн" style="min-width:190px;">${actionHtml}</td>
       <td data-label="Шинэ баланс" style="font-weight:900; ${balanceColor}">${newBalText}</td>
     </tr>`;
+  }
+
+  function renderTable() {
+    const { levels, finalBalance } = compute();
+    const tbody = document.getElementById('tableBody');
+    const wrapper = document.getElementById('levelsSection');
+
+    let currentIndex = outcomes.findIndex(o => o === null);
+    if (currentIndex === -1) currentIndex = Math.max(0, levels.length - 1);
+
+    const currentLevel = levels[currentIndex];
+    if (!tbody || !currentLevel) return;
+
+    if (wrapper && !document.getElementById('currentLevelTitle')) {
+      const title = document.createElement('div');
+      title.className = 'current-level-title page-section page-levels';
+      title.id = 'currentLevelTitle';
+      wrapper.parentNode.insertBefore(title, wrapper);
+    }
+
+    const titleEl = document.getElementById('currentLevelTitle');
+    if (titleEl) {
+      titleEl.innerHTML = `<span>LEVEL VIEW · өмнөх / одоо / дараагийн</span><button class="level-restart-btn" onclick="restartLastLevel()">↺ Level restart</button>`;
+    }
+
+    const rows = [];
+
+    if (currentIndex > 0 && levels[currentIndex - 1]) {
+      rows.push(buildLevelRow(levels[currentIndex - 1], 'previous', currentIndex));
+    }
+
+    rows.push(buildLevelRow(currentLevel, 'current', currentIndex));
+
+    const nextAfterWinBalance = round2(currentLevel.startBalance + currentLevel.profit);
+    if (nextAfterWinBalance < TARGET) {
+      rows.push(buildLevelRow(projectLevelFromBalance(currentIndex + 1, nextAfterWinBalance), 'next', currentIndex));
+    }
+
+    tbody.innerHTML = rows.join('');
     updateDashboard(finalBalance, levels);
   }
 
