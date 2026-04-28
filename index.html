@@ -446,6 +446,22 @@
     .chat-list { max-height: 460px; }
   }
 
+
+  /* ===== HARD FIX: HIDE LEVEL TITLE OUTSIDE LEVELS PAGE ===== */
+  body:not(.is-authenticated) .page-section,
+  body:not(.is-authenticated) #currentLevelTitle {
+    display: none !important;
+  }
+
+  body.is-authenticated:not([data-page="levels"]) #currentLevelTitle,
+  body.is-authenticated:not([data-page="levels"]) .current-level-title {
+    display: none !important;
+  }
+
+  body.is-authenticated[data-page="levels"].balance-ready #currentLevelTitle,
+  body.is-authenticated[data-page="levels"].balance-ready .current-level-title {
+    display: flex !important;
+  }
 </style>
 </head>
 <body>
@@ -945,7 +961,7 @@
 
     if (wrapper && !document.getElementById('currentLevelTitle')) {
       const title = document.createElement('div');
-      title.className = 'current-level-title page-section page-levels';
+      title.className = 'current-level-title app-only page-section page-levels';
       title.id = 'currentLevelTitle';
       wrapper.parentNode.insertBefore(title, wrapper);
     }
