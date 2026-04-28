@@ -496,6 +496,220 @@
       font-size: 11px !important;
     }
   }
+
+
+  /* ===== MOBILE LEVELS UI POLISH V2 ===== */
+  @media (max-width: 700px) {
+    .poster {
+      padding-bottom: 130px !important;
+    }
+
+    .table-wrapper.page-section.page-levels {
+      margin-bottom: 26px !important;
+      border-radius: 28px !important;
+      background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.025)) !important;
+      border: 1px solid rgba(255,255,255,0.12) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 16px 34px rgba(0,0,0,0.22) !important;
+    }
+
+    .current-level-title {
+      margin-top: 2px !important;
+      margin-bottom: 2px !important;
+      padding-left: 14px !important;
+      padding-right: 14px !important;
+    }
+
+    .current-level-title span {
+      font-size: 16px !important;
+      letter-spacing: 1.6px !important;
+      color: rgba(255,245,204,0.95) !important;
+    }
+
+    .level-restart-btn {
+      min-width: 112px !important;
+      min-height: 42px !important;
+      font-size: 13px !important;
+      border-radius: 18px !important;
+    }
+
+    .trading-table {
+      border-spacing: 0 10px !important;
+    }
+
+    .trading-table tr {
+      padding: 16px 14px !important;
+      margin: 0 0 12px !important;
+      border-radius: 24px !important;
+      overflow: hidden !important;
+    }
+
+    .trading-table tr.tr-current {
+      padding: 18px 14px !important;
+      margin: 2px 0 16px !important;
+      border-width: 2px !important;
+      border-color: rgba(255,215,0,0.62) !important;
+      background:
+        radial-gradient(circle at top left, rgba(255,215,0,0.18), transparent 34%),
+        linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.045)) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 12px 28px rgba(0,0,0,0.26), 0 0 24px rgba(255,215,0,0.12) !important;
+    }
+
+    .trading-table tr.tr-previous,
+    .trading-table tr.tr-preview {
+      padding: 10px 12px !important;
+      border-radius: 20px !important;
+      border: 1px solid rgba(255,255,255,0.10) !important;
+      background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.025)) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 8px 18px rgba(0,0,0,0.16) !important;
+      opacity: .74 !important;
+      filter: saturate(.72) brightness(.92) !important;
+    }
+
+    .trading-table tr.tr-current td,
+    .trading-table tr.tr-current td:first-child,
+    .trading-table tr.tr-current td:last-child {
+      padding: 11px 0 !important;
+      border-bottom: 1px solid rgba(255,255,255,0.10) !important;
+      background: transparent !important;
+      border-left: 0 !important;
+      border-right: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .trading-table tr.tr-current td:last-child {
+      border-bottom: 0 !important;
+    }
+
+    .trading-table tr.tr-current td::before {
+      font-size: 10px !important;
+      letter-spacing: 0.9px !important;
+      color: rgba(255,249,215,0.62) !important;
+    }
+
+    .trading-table tr.tr-current td[data-label="#"] {
+      padding-bottom: 12px !important;
+      margin-bottom: 4px !important;
+      border-bottom-color: rgba(255,215,0,0.22) !important;
+    }
+
+    .trading-table tr.tr-current td[data-label="Үр дүн"] {
+      padding-top: 14px !important;
+      justify-content: stretch !important;
+      align-items: stretch !important;
+    }
+
+    .trading-table tr.tr-current .action-group {
+      width: 100% !important;
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 10px !important;
+    }
+
+    .trading-table tr.tr-current .btn-sm {
+      min-height: 46px !important;
+      font-size: 12px !important;
+      padding: 0 10px !important;
+      border-radius: 16px !important;
+    }
+
+    .trading-table tr.tr-current .level-chip,
+    .trading-table tr.tr-current .goal-flag {
+      min-width: 56px !important;
+      width: 56px !important;
+      height: 56px !important;
+      font-size: 19px !important;
+    }
+
+    .trading-table tr.tr-current .level-context-label {
+      margin-top: 0 !important;
+      margin-left: 8px !important;
+      padding: 6px 11px !important;
+      font-size: 10px !important;
+      letter-spacing: 0.8px !important;
+    }
+
+    /* previous + next cards become compact summary cards */
+    .trading-table tr.tr-previous td,
+    .trading-table tr.tr-preview td,
+    .trading-table tr.tr-previous td:first-child,
+    .trading-table tr.tr-preview td:first-child,
+    .trading-table tr.tr-previous td:last-child,
+    .trading-table tr.tr-preview td:last-child {
+      padding: 7px 0 !important;
+      border-bottom: 1px solid rgba(255,255,255,0.06) !important;
+      background: transparent !important;
+      border-left: 0 !important;
+      border-right: 0 !important;
+    }
+
+    .trading-table tr.tr-previous td:last-child,
+    .trading-table tr.tr-preview td:last-child {
+      border-bottom: 0 !important;
+    }
+
+    .trading-table tr.tr-previous td::before,
+    .trading-table tr.tr-preview td::before {
+      font-size: 9px !important;
+      letter-spacing: 0.7px !important;
+      color: rgba(255,249,215,0.50) !important;
+    }
+
+    .trading-table tr.tr-previous td[data-label="SL pips"],
+    .trading-table tr.tr-preview td[data-label="SL pips"],
+    .trading-table tr.tr-previous td[data-label="Actual risk"],
+    .trading-table tr.tr-preview td[data-label="Actual risk"],
+    .trading-table tr.tr-previous td[data-label="Ашиг"],
+    .trading-table tr.tr-preview td[data-label="Ашиг"],
+    .trading-table tr.tr-previous td[data-label="Үр дүн"],
+    .trading-table tr.tr-preview td[data-label="Үр дүн"] {
+      display: none !important;
+    }
+
+    .trading-table tr.tr-previous td[data-label="#"],
+    .trading-table tr.tr-preview td[data-label="#"] {
+      justify-content: flex-start !important;
+      padding-bottom: 8px !important;
+      margin-bottom: 2px !important;
+      border-bottom-color: rgba(255,255,255,0.08) !important;
+    }
+
+    .trading-table tr.tr-previous .level-chip,
+    .trading-table tr.tr-preview .level-chip,
+    .trading-table tr.tr-previous .goal-flag,
+    .trading-table tr.tr-preview .goal-flag {
+      min-width: 38px !important;
+      width: 38px !important;
+      height: 38px !important;
+      font-size: 14px !important;
+      box-shadow: none !important;
+    }
+
+    .trading-table tr.tr-previous .level-context-label,
+    .trading-table tr.tr-preview .level-context-label {
+      margin-top: 0 !important;
+      margin-left: 8px !important;
+      padding: 4px 8px !important;
+      font-size: 8px !important;
+      letter-spacing: 0.75px !important;
+      background: rgba(255,255,255,0.07) !important;
+      color: rgba(255,249,215,0.72) !important;
+    }
+
+    .trading-table tr.tr-previous td[data-label="Баланс"],
+    .trading-table tr.tr-preview td[data-label="Баланс"],
+    .trading-table tr.tr-previous td[data-label="Lot"],
+    .trading-table tr.tr-preview td[data-label="Lot"],
+    .trading-table tr.tr-previous td[data-label="Шинэ баланс"],
+    .trading-table tr.tr-preview td[data-label="Шинэ баланс"] {
+      font-size: 12px !important;
+    }
+
+    .trading-table tr.tr-previous td[data-label="Шинэ баланс"],
+    .trading-table tr.tr-preview td[data-label="Шинэ баланс"] {
+      font-weight: 900 !important;
+    }
+  }
+
   /* ===== GLOBAL CHAT ===== */
   .chat-panel {
     margin: 0 16px 16px;
@@ -591,6 +805,634 @@
   body.is-authenticated[data-page="levels"].balance-ready .current-level-title {
     display: flex !important;
   }
+
+
+  /* ===== FINAL SOFT GLASS LEVEL CARD OVERRIDE ===== */
+  .trading-table tr.tr-current,
+  .trading-table tr.tr-previous,
+  .trading-table tr.tr-preview {
+    position: relative !important;
+    overflow: hidden !important;
+    backdrop-filter: blur(18px) saturate(1.15) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.15) !important;
+  }
+
+  .trading-table tr.tr-current {
+    background:
+      linear-gradient(145deg, rgba(255, 221, 115, 0.15), rgba(255,255,255,0.055) 42%, rgba(255, 214, 64, 0.08) 100%),
+      radial-gradient(circle at 12% 12%, rgba(255, 220, 120, 0.12), transparent 36%),
+      rgba(255,255,255,0.04) !important;
+    border: 1px solid rgba(255, 221, 130, 0.34) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.18),
+      0 14px 34px rgba(0,0,0,0.20),
+      0 0 16px rgba(255,215,0,0.06) !important;
+  }
+
+  .trading-table tr.tr-previous {
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03) 58%, rgba(255,255,255,0.02)),
+      rgba(255,255,255,0.025) !important;
+    border: 1px solid rgba(255,255,255,0.14) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 10px 22px rgba(0,0,0,0.16) !important;
+  }
+
+  .trading-table tr.tr-preview {
+    background:
+      linear-gradient(145deg, rgba(150, 210, 255, 0.08), rgba(255,255,255,0.03) 58%, rgba(130, 255, 210, 0.03)),
+      rgba(255,255,255,0.025) !important;
+    border: 1px solid rgba(170, 225, 255, 0.16) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.12),
+      0 10px 22px rgba(0,0,0,0.16) !important;
+  }
+
+  .trading-table tr.tr-current::before,
+  .trading-table tr.tr-previous::before,
+  .trading-table tr.tr-preview::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: inherit !important;
+    background: linear-gradient(120deg, rgba(255,255,255,0.10), transparent 38%, rgba(255,255,255,0.03)) !important;
+    pointer-events: none !important;
+  }
+
+  .trading-table tr.tr-current td,
+  .trading-table tr.tr-current td:first-child,
+  .trading-table tr.tr-current td:last-child,
+  .trading-table tr.tr-previous td,
+  .trading-table tr.tr-previous td:first-child,
+  .trading-table tr.tr-previous td:last-child,
+  .trading-table tr.tr-preview td,
+  .trading-table tr.tr-preview td:first-child,
+  .trading-table tr.tr-preview td:last-child {
+    background: transparent !important;
+    box-shadow: none !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+  }
+
+  .trading-table tr.tr-current td {
+    border-bottom-color: rgba(255,255,255,0.10) !important;
+  }
+
+  .trading-table tr.tr-previous td,
+  .trading-table tr.tr-preview td {
+    border-bottom-color: rgba(255,255,255,0.07) !important;
+  }
+
+  .level-context-label {
+    background: rgba(255,255,255,0.10) !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
+    box-shadow: none !important;
+  }
+
+  .trading-table tr.tr-current .level-context-label {
+    background: rgba(255, 215, 0, 0.16) !important;
+    color: #fff2a8 !important;
+    border-color: rgba(255, 215, 0, 0.20) !important;
+  }
+
+  .preview-badge,
+  .outcome-badge {
+    background: rgba(255,255,255,0.08) !important;
+    border-color: rgba(255,255,255,0.10) !important;
+    box-shadow: none !important;
+  }
+
+  @media (max-width: 700px) {
+    .trading-table {
+      border-spacing: 0 12px !important;
+    }
+
+    .trading-table tr.tr-current {
+      padding: 16px 14px !important;
+      border-radius: 24px !important;
+      background:
+        linear-gradient(145deg, rgba(255, 224, 120, 0.16), rgba(255,255,255,0.05) 46%, rgba(255, 215, 0, 0.07)),
+        rgba(255,255,255,0.04) !important;
+      border: 1px solid rgba(255, 220, 120, 0.28) !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.16),
+        0 10px 24px rgba(0,0,0,0.18),
+        0 0 10px rgba(255,215,0,0.04) !important;
+    }
+
+    .trading-table tr.tr-previous,
+    .trading-table tr.tr-preview {
+      padding: 10px 12px !important;
+      border-radius: 20px !important;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.10),
+        0 8px 18px rgba(0,0,0,0.14) !important;
+      opacity: 0.92 !important;
+      filter: none !important;
+    }
+
+    .trading-table tr.tr-previous {
+      background:
+        linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.025) 60%, rgba(255,255,255,0.02)),
+        rgba(255,255,255,0.025) !important;
+      border: 1px solid rgba(255,255,255,0.12) !important;
+    }
+
+    .trading-table tr.tr-preview {
+      background:
+        linear-gradient(145deg, rgba(125, 211, 252, 0.08), rgba(255,255,255,0.025) 60%, rgba(0, 245, 160, 0.025)),
+        rgba(255,255,255,0.025) !important;
+      border: 1px solid rgba(125, 211, 252, 0.14) !important;
+    }
+
+    .trading-table tr.tr-current td,
+    .trading-table tr.tr-current td:first-child,
+    .trading-table tr.tr-current td:last-child,
+    .trading-table tr.tr-previous td,
+    .trading-table tr.tr-preview td,
+    .trading-table tr.tr-previous td:first-child,
+    .trading-table tr.tr-preview td:first-child,
+    .trading-table tr.tr-previous td:last-child,
+    .trading-table tr.tr-preview td:last-child {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      background: transparent !important;
+    }
+
+    .trading-table tr.tr-current .level-chip,
+    .trading-table tr.tr-current .goal-flag {
+      min-width: 52px !important;
+      width: 52px !important;
+      height: 52px !important;
+      font-size: 18px !important;
+    }
+
+    .trading-table tr.tr-previous .level-chip,
+    .trading-table tr.tr-preview .level-chip,
+    .trading-table tr.tr-previous .goal-flag,
+    .trading-table tr.tr-preview .goal-flag {
+      min-width: 34px !important;
+      width: 34px !important;
+      height: 34px !important;
+      font-size: 13px !important;
+    }
+
+    .trading-table tr.tr-current .level-context-label {
+      padding: 6px 10px !important;
+      font-size: 9px !important;
+      border-radius: 999px !important;
+    }
+
+    .trading-table tr.tr-previous .level-context-label,
+    .trading-table tr.tr-preview .level-context-label {
+      padding: 3px 8px !important;
+      font-size: 8px !important;
+      border-radius: 999px !important;
+      background: rgba(255,255,255,0.08) !important;
+    }
+  }
+
+
+
+  /* ===== ULTRA LUXURY PREMIUM UI OVERRIDE ===== */
+  :root {
+    --gold: #f3d36a !important;
+    --gold-soft: #fff1b5 !important;
+    --gold-deep: #b88618 !important;
+    --emerald-soft: #88f5d0 !important;
+    --emerald: #1fe3aa !important;
+    --blue-soft: #8fcfff !important;
+    --text: #fff6d7 !important;
+    --muted: rgba(255, 244, 210, 0.70) !important;
+    --glass-strong: rgba(255,255,255,0.11) !important;
+    --glass-soft: rgba(255,255,255,0.055) !important;
+    --line-soft: rgba(255,255,255,0.15) !important;
+  }
+
+  html {
+    scrollbar-color: rgba(243, 211, 106, 0.40) rgba(255,255,255,0.06);
+  }
+
+  body {
+    color: var(--text) !important;
+    background:
+      radial-gradient(circle at 15% 12%, rgba(243, 211, 106, 0.18), transparent 24%),
+      radial-gradient(circle at 84% 18%, rgba(31, 227, 170, 0.10), transparent 25%),
+      radial-gradient(circle at 52% 82%, rgba(143, 207, 255, 0.08), transparent 28%),
+      linear-gradient(135deg, #060708 0%, #0c1010 34%, #10141a 68%, #060708 100%) !important;
+  }
+
+  body::before {
+    width: 460px !important;
+    height: 460px !important;
+    left: -160px !important;
+    top: 24px !important;
+    opacity: .20 !important;
+    filter: blur(42px) !important;
+    background: radial-gradient(circle, rgba(243, 211, 106, 0.95), transparent 70%) !important;
+  }
+
+  body::after {
+    width: 460px !important;
+    height: 460px !important;
+    right: -170px !important;
+    bottom: 24px !important;
+    opacity: .18 !important;
+    filter: blur(44px) !important;
+    background: radial-gradient(circle, rgba(31, 227, 170, 0.85), transparent 70%) !important;
+  }
+
+  .poster {
+    border-radius: 42px !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.045) 45%, rgba(255,255,255,0.055) 100%),
+      radial-gradient(circle at 18% 0%, rgba(243, 211, 106, 0.13), transparent 32%),
+      radial-gradient(circle at 80% 100%, rgba(31, 227, 170, 0.07), transparent 30%) !important;
+    box-shadow:
+      0 30px 90px rgba(0,0,0,0.48),
+      0 0 0 1px rgba(255,255,255,0.04) inset,
+      0 0 34px rgba(243, 211, 106, 0.05),
+      inset 0 1px 0 rgba(255,255,255,0.22) !important;
+    backdrop-filter: blur(28px) saturate(1.28) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(1.28) !important;
+  }
+
+  .poster::before {
+    opacity: .34 !important;
+    background:
+      linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.10) 16%, transparent 30%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.022) 0 1px, transparent 1px 112px) !important;
+  }
+
+  .header {
+    padding-top: 48px !important;
+    padding-bottom: 30px !important;
+    border-bottom: 1px solid rgba(243, 211, 106, 0.12) !important;
+  }
+
+  .top-pill,
+  .badge,
+  .phase-badge,
+  .next-level-pill,
+  .level-chip,
+  .goal-flag {
+    box-shadow:
+      0 10px 26px rgba(243, 211, 106, 0.12),
+      inset 0 1px 0 rgba(255,255,255,0.30) !important;
+  }
+
+  .top-pill {
+    color: #fff2bf !important;
+    background: rgba(243, 211, 106, 0.10) !important;
+    border: 1px solid rgba(243, 211, 106, 0.20) !important;
+    letter-spacing: 2.7px !important;
+  }
+
+  .main-title {
+    background: linear-gradient(180deg, #fffef8 0%, #fff0bc 24%, #f3d36a 54%, #a16a10 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: 0 8px 34px rgba(243, 211, 106, 0.12) !important;
+  }
+
+  .plan-title {
+    color: rgba(255, 245, 218, 0.82) !important;
+  }
+
+  .badge {
+    color: #fff3bf !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04)) !important;
+    border: 1px solid rgba(255,255,255,0.14) !important;
+  }
+
+  .glass-card,
+  .settings-modal,
+  .auth-glass,
+  .profile-card,
+  .next-trade-card,
+  .progress-card,
+  .info-card,
+  .quote-section,
+  .history-panel,
+  .leaderboard-panel,
+  .admin-panel,
+  .balance-setup-panel,
+  .page-title-card {
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.13), rgba(255,255,255,0.048) 48%, rgba(255,255,255,0.055)),
+      radial-gradient(circle at 0% 0%, rgba(243, 211, 106, 0.10), transparent 38%) !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+    box-shadow:
+      0 16px 42px rgba(0,0,0,0.24),
+      inset 0 1px 0 rgba(255,255,255,0.18),
+      inset 0 -1px 0 rgba(255,255,255,0.03) !important;
+    backdrop-filter: blur(22px) saturate(1.20) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.20) !important;
+  }
+
+  .stat-card,
+  .mini-card,
+  .smart-card,
+  .rule,
+  .journal-item,
+  .history-item,
+  .leaderboard-row,
+  .admin-user-row,
+  .next-mini {
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.095), rgba(255,255,255,0.03)),
+      rgba(0,0,0,0.10) !important;
+    border: 1px solid rgba(255,255,255,0.11) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08) !important;
+  }
+
+  .auth-kicker,
+  .stat-label,
+  .mini-card span,
+  .progress-head,
+  .profile-meta,
+  .smart-note,
+  .next-mini span,
+  .next-trade-note,
+  .safety-note,
+  .history-main span,
+  .leaderboard-name span,
+  .admin-user-main span,
+  .admin-cell span,
+  .risk-note,
+  .settings-note {
+    color: rgba(255, 244, 210, 0.64) !important;
+  }
+
+  .auth-title,
+  .ic-title,
+  .smart-title,
+  .profile-name,
+  .history-main strong,
+  .leaderboard-name strong,
+  .admin-user-main strong,
+  .quote-text,
+  .stat-value,
+  .mini-card strong,
+  .next-mini strong,
+  .leaderboard-balance,
+  .admin-profit {
+    color: var(--gold-soft) !important;
+  }
+
+  .auth-input,
+  .journal-textarea,
+  .settings-action,
+  .auth-tab,
+  .soft-btn,
+  .btn-sm,
+  .auth-ghost,
+  .level-restart-btn,
+  .profile-action-btn.secondary,
+  .safety-btn {
+    background: rgba(255,255,255,0.07) !important;
+    border: 1px solid rgba(255,255,255,0.14) !important;
+    color: #fff0b2 !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08) !important;
+  }
+
+  .auth-input,
+  .journal-textarea {
+    background: rgba(7, 9, 10, 0.28) !important;
+  }
+
+  .auth-btn.primary,
+  .profile-action-btn,
+  .auth-tab.active,
+  .bottom-nav a.active,
+  .home-settings-btn {
+    color: #111104 !important;
+    background: linear-gradient(135deg, #fff4bf 0%, #f3d36a 56%, #b37a12 100%) !important;
+    border: 1px solid rgba(255, 226, 145, 0.34) !important;
+    box-shadow:
+      0 12px 30px rgba(243, 211, 106, 0.18),
+      inset 0 1px 0 rgba(255,255,255,0.42) !important;
+  }
+
+  .profile-action-btn.secondary,
+  .home-logout-btn.secondary {
+    color: #fff0b2 !important;
+    background: rgba(255,255,255,0.08) !important;
+  }
+
+  .btn-taken {
+    background: linear-gradient(135deg, rgba(65, 247, 185, 0.96), rgba(4, 132, 86, 0.90)) !important;
+    border-color: rgba(71, 255, 194, 0.35) !important;
+  }
+
+  .btn-loss,
+  .danger-btn,
+  .settings-action.danger {
+    background: linear-gradient(135deg, rgba(255,120,140,0.24), rgba(130,18,35,0.60)) !important;
+    border-color: rgba(255,120,140,0.28) !important;
+    color: #ffe0e4 !important;
+  }
+
+  .bottom-nav {
+    background: rgba(255,255,255,0.11) !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+    box-shadow:
+      0 18px 50px rgba(0,0,0,0.28),
+      0 0 26px rgba(243, 211, 106, 0.06),
+      inset 0 1px 0 rgba(255,255,255,0.18) !important;
+    backdrop-filter: blur(22px) saturate(1.25) !important;
+    -webkit-backdrop-filter: blur(22px) saturate(1.25) !important;
+  }
+
+  .bottom-nav a {
+    color: rgba(255, 241, 181, 0.86) !important;
+  }
+
+  .progress-track,
+  .check-meter {
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.08) !important;
+  }
+
+  .progress-fill,
+  .check-meter div {
+    background: linear-gradient(90deg, #1fe3aa 0%, #f3d36a 52%, #fff4c9 100%) !important;
+    box-shadow: 0 0 20px rgba(243, 211, 106, 0.24) !important;
+  }
+
+  .trading-table th {
+    color: #ffefb4 !important;
+    background: rgba(0,0,0,0.42) !important;
+    border-top: 1px solid rgba(243, 211, 106, 0.12) !important;
+    border-bottom: 1px solid rgba(243, 211, 106, 0.12) !important;
+  }
+
+  .trading-table tr:hover td {
+    filter: brightness(1.05) !important;
+  }
+
+  .trading-table tr.tr-current {
+    background:
+      linear-gradient(145deg, rgba(243, 211, 106, 0.16), rgba(255,255,255,0.05) 46%, rgba(243, 211, 106, 0.06)),
+      radial-gradient(circle at 12% 0%, rgba(243, 211, 106, 0.12), transparent 40%),
+      rgba(255,255,255,0.045) !important;
+    border: 1px solid rgba(243, 211, 106, 0.26) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.18),
+      0 14px 34px rgba(0,0,0,0.18),
+      0 0 18px rgba(243, 211, 106, 0.05) !important;
+  }
+
+  .trading-table tr.tr-previous,
+  .trading-table tr.tr-preview {
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.082), rgba(255,255,255,0.025) 58%, rgba(255,255,255,0.018)),
+      rgba(255,255,255,0.028) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.10),
+      0 10px 22px rgba(0,0,0,0.14) !important;
+  }
+
+  .level-context-label {
+    color: #fff0b0 !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
+  }
+
+  .trading-table tr.tr-current .level-context-label {
+    background: rgba(243, 211, 106, 0.18) !important;
+    border-color: rgba(243, 211, 106, 0.20) !important;
+    color: #161202 !important;
+  }
+
+  .quote-section {
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .quote-section::before {
+    content: '' !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background: linear-gradient(120deg, rgba(255,255,255,0.06), transparent 42%) !important;
+    pointer-events: none !important;
+  }
+
+  .quote-text em {
+    background: linear-gradient(180deg, #fff6d0 0%, #f3d36a 60%, #a97317 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+  }
+
+  .settings-overlay {
+    background: rgba(4, 5, 7, 0.58) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+  }
+
+  .leaderboard-row.my-rank {
+    border-color: rgba(243, 211, 106, 0.28) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.10),
+      0 0 22px rgba(243, 211, 106, 0.08) !important;
+  }
+
+  .milestone-toast {
+    color: #191503 !important;
+    background: linear-gradient(135deg, #fff4c9 0%, #f3d36a 58%, #1fe3aa 100%) !important;
+    box-shadow: 0 18px 48px rgba(243, 211, 106, 0.22) !important;
+  }
+
+  @media (max-width: 980px) {
+    .poster {
+      border-radius: 34px !important;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .poster {
+      border-radius: 28px !important;
+    }
+
+    .header {
+      padding: 34px 14px 24px !important;
+    }
+
+    .page-title-card,
+    .balance-setup-panel,
+    .history-panel,
+    .leaderboard-panel,
+    .admin-panel,
+    .quote-section,
+    .journal-panel {
+      border-radius: 24px !important;
+    }
+
+    .profile-card,
+    .next-trade-card,
+    .progress-card,
+    .glass-card,
+    .stat-card,
+    .mini-card,
+    .smart-card {
+      border-radius: 22px !important;
+    }
+
+    .bottom-nav {
+      min-height: 68px !important;
+      padding: 10px !important;
+      border-radius: 999px !important;
+    }
+
+    .bottom-nav a {
+      min-height: 46px !important;
+      font-size: 12.8px !important;
+      padding: 0 15px !important;
+    }
+
+    .trading-table {
+      border-spacing: 0 12px !important;
+    }
+
+    .trading-table tr.tr-current {
+      border-radius: 24px !important;
+      padding: 16px 14px !important;
+    }
+
+    .trading-table tr.tr-previous,
+    .trading-table tr.tr-preview {
+      border-radius: 18px !important;
+      padding: 10px 12px !important;
+      opacity: 0.96 !important;
+    }
+
+    .trading-table tr.tr-current .level-chip,
+    .trading-table tr.tr-current .goal-flag {
+      width: 54px !important;
+      height: 54px !important;
+      min-width: 54px !important;
+    }
+
+    .trading-table tr.tr-previous .level-chip,
+    .trading-table tr.tr-preview .level-chip,
+    .trading-table tr.tr-previous .goal-flag,
+    .trading-table tr.tr-preview .goal-flag {
+      width: 34px !important;
+      height: 34px !important;
+      min-width: 34px !important;
+      font-size: 13px !important;
+    }
+
+    .top-pill {
+      letter-spacing: 1.7px !important;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -1270,14 +2112,106 @@
     return { startBalance: start, balance, profit, wins, losses, trades: wins + losses, winRate, currentLevel };
   }
 
-  function getCurrentProfitValue() { const { finalBalance } = compute(); const start = Number(START || 0); const current = Number(finalBalance || 0); if (!Number.isFinite(start) || !Number.isFinite(current)) return 0; return round2(current - start); }
-  function getPublicStats(baseProfit = 0) { const { finalBalance } = compute(); const completed = getCompletedLevels(); const wins = completed.filter(l => l.outcome === 'taken').length; const losses = completed.filter(l => l.outcome === 'loss').length; const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START || 0); const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0; const currentProfit = getCurrentProfitValue(); const netProfit = round2(currentProfit - Number(baseProfit || 0)); const monthKey = getLeaderboardMonthKey(); return { name: currentUser?.displayName || 'Trader', startBalance: Number(START || 0), balance: Number(finalBalance.toFixed(2)), currentProfit: Number(currentProfit.toFixed(2)), baseProfit: Number(Number(baseProfit || 0).toFixed(2)), netProfit: Number(netProfit.toFixed(2)), bestBalance: Number(bestBalance.toFixed(2)), wins, losses, winRate, trades: wins + losses, monthKey, collectionName: getLeaderboardCollectionName(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }; }
-  async function saveLeaderboardStats() { if (!firebaseReady || !currentUser || !db || !(START > 0)) return; try { const ref = db.collection(getLeaderboardCollectionName()).doc(currentUser.uid); const snap = await ref.get(); let baseProfit = getCurrentProfitValue(); if (snap.exists && Number.isFinite(Number(snap.data()?.baseProfit))) baseProfit = Number(snap.data().baseProfit); await ref.set(getPublicStats(baseProfit), { merge: true }); } catch (error) { console.warn('Leaderboard хадгалах боломжгүй байна:', error); } }
+  function getCurrentProfitValue() {
+    const { finalBalance } = compute();
+    const start = Number(START || 0);
+    const current = Number(finalBalance || 0);
+    if (!Number.isFinite(start) || !Number.isFinite(current)) return 0;
+    return round2(current - start);
+  }
+
+  function getPublicStats(baseProfit = 0) {
+    const { finalBalance } = compute();
+    const completed = getCompletedLevels();
+    const wins = completed.filter(l => l.outcome === 'taken').length;
+    const losses = completed.filter(l => l.outcome === 'loss').length;
+    const bestBalance = completed.reduce((max, l) => Math.max(max, l.newBalance || l.startBalance), START || 0);
+    const winRate = wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0;
+    const currentProfit = getCurrentProfitValue();
+    const safeBaseProfit = Number(baseProfit || 0);
+    const netProfit = round2(currentProfit - safeBaseProfit);
+
+    return {
+      name: currentUser?.displayName || 'Trader',
+      startBalance: Number(START || 0),
+      balance: Number(finalBalance.toFixed(2)),
+      currentProfit: Number(currentProfit.toFixed(2)),
+      baseProfit: Number(safeBaseProfit.toFixed(2)),
+      netProfit: Number(netProfit.toFixed(2)),
+      bestBalance: Number(bestBalance.toFixed(2)),
+      wins,
+      losses,
+      winRate,
+      trades: wins + losses,
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+  }
+
+  async function saveLeaderboardStats() {
+    if (!firebaseReady || !currentUser || !db || !(START > 0)) return false;
+
+    try {
+      const ref = db.collection(getLeaderboardCollectionName()).doc(currentUser.uid);
+      const snap = await ref.get();
+
+      // Monthly account reset already makes every month start fresh, so default baseline must be 0.
+      let baseProfit = 0;
+      if (snap.exists && Number.isFinite(Number(snap.data()?.baseProfit))) {
+        baseProfit = Number(snap.data().baseProfit);
+      }
+
+      await ref.set(getPublicStats(baseProfit), { merge: true });
+      return true;
+    } catch (error) {
+      console.warn('Leaderboard хадгалах боломжгүй байна:', error);
+      setAuthStatus('Leaderboard хадгалахгүй байна. Firestore rules-ээ шинэ rules-ээр Publish хийнэ үү.');
+      return false;
+    }
+  }
 
   window.loadLeaderboard = async function() {
-    const box = document.getElementById('leaderboardList'); if (!box) return;
-    if (!firebaseReady || !db) { box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>'; return; }
-    try { box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>'; const snap = await db.collection(getLeaderboardCollectionName()).orderBy('netProfit', 'desc').limit(20).get(); if (snap.empty) { box.innerHTML = '<div class="leaderboard-empty">Энэ сарын leaderboard хоосон байна. User login хийхэд энэ сарын оноо 0$-оос эхэлнэ.</div>'; return; } let rank = 0; const rows = []; snap.forEach(doc => { rank++; const data = doc.data() || {}; const isMe = currentUser && doc.id === currentUser.uid; const profit = Number(data.netProfit || 0); rows.push(`<div class="leaderboard-row ${isMe ? 'my-rank' : ''}"><div class="leaderboard-rank">#${rank}</div><div class="leaderboard-name"><strong>${escapeHTML(data.name || 'Trader')}</strong><span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span></div><div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${formatMoney(profit)}</div><div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div></div>`); }); box.innerHTML = rows.join(''); } catch (error) { console.warn('Leaderboard унших боломжгүй байна:', error); box.innerHTML = '<div class="leaderboard-empty">Leaderboard уншихад permission/index алдаа гарлаа. Firestore rules шалгаарай.</div>'; }
+    const box = document.getElementById('leaderboardList');
+    if (!box) return;
+
+    if (!firebaseReady || !db) {
+      box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>';
+      return;
+    }
+
+    try {
+      box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>';
+
+      if (currentUser && START > 0) {
+        await saveLeaderboardStats();
+      }
+
+      const snap = await db.collection(getLeaderboardCollectionName())
+        .orderBy('netProfit', 'desc')
+        .limit(20)
+        .get();
+
+      if (snap.empty) {
+        box.innerHTML = '<div class="leaderboard-empty">Энэ сарын leaderboard хоосон байна. User start balance сонгоод trade дарахад энд гарна.</div>';
+        return;
+      }
+
+      let rank = 0;
+      const rows = [];
+
+      snap.forEach(doc => {
+        rank++;
+        const data = doc.data() || {};
+        const isMe = currentUser && doc.id === currentUser.uid;
+        const profit = Number(data.netProfit || 0);
+
+        rows.push(`<div class="leaderboard-row ${isMe ? 'my-rank' : ''}"><div class="leaderboard-rank">#${rank}</div><div class="leaderboard-name"><strong>${escapeHTML(data.name || 'Trader')}</strong><span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span></div><div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${formatMoney(profit)}</div><div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div></div>`);
+      });
+
+      box.innerHTML = rows.join('');
+    } catch (error) {
+      console.warn('Leaderboard унших боломжгүй байна:', error);
+      box.innerHTML = `<div class="leaderboard-empty">Leaderboard уншихад алдаа: ${escapeHTML(error.message || 'Firestore rules/index шалгаарай.')}</div>`;
+    }
   };
 
 
@@ -1464,8 +2398,6 @@ service cloud.firestore {
           'losses',
           'winRate',
           'trades',
-          'monthKey',
-          'collectionName',
           'updatedAt'
         ])
         && request.resource.data.startBalance is number
