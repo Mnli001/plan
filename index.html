@@ -3436,67 +3436,6 @@ body {
 
 </style>
 
-
-<style id="real-global-chat-leaderboard-fix">
-.inline-loader-dot {
-  display: inline-block;
-  width: 18px;
-  height: 18px;
-  margin-right: 8px;
-  vertical-align: -4px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.16);
-  border-top-color: #ffd700;
-  animation: appSpinGlobalReal .75s linear infinite;
-}
-@keyframes appSpinGlobalReal { to { transform: rotate(360deg); } }
-body.is-authenticated[data-page="chat"] .page-title-card { display: none !important; }
-body.is-authenticated[data-page="chat"] .poster {
-  max-width: min(1180px, calc(100vw - 18px)) !important;
-}
-body.is-authenticated[data-page="chat"] #chatSection.chat-panel {
-  display: flex !important;
-  flex-direction: column !important;
-  width: min(980px, calc(100vw - 28px)) !important;
-  margin: 0 auto 16px !important;
-  min-height: calc(100dvh - 120px) !important;
-  max-height: calc(100dvh - 120px) !important;
-  height: calc(100dvh - 120px) !important;
-  overflow: hidden !important;
-}
-body.is-authenticated[data-page="chat"] .chat-head { flex: 0 0 auto !important; }
-body.is-authenticated[data-page="chat"] .chat-list {
-  flex: 1 1 auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  height: auto !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding: 8px 6px 10px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-form {
-  flex: 0 0 auto !important;
-  position: relative !important;
-  bottom: auto !important;
-  margin-top: 10px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-row.theirs { justify-content: flex-start !important; }
-body.is-authenticated[data-page="chat"] .chat-row.mine { justify-content: flex-end !important; }
-body.is-authenticated[data-page="chat"] .chat-bubble-wrap { max-width: min(420px, 58%) !important; }
-body.is-authenticated[data-page="chat"] .chat-message::after { display: none !important; content: none !important; }
-@media (max-width: 700px) {
-  body.is-authenticated[data-page="chat"] #chatSection.chat-panel {
-    width: calc(100vw - 14px) !important;
-    margin: 0 auto 8px !important;
-    min-height: calc(100dvh - 96px) !important;
-    max-height: calc(100dvh - 96px) !important;
-    height: calc(100dvh - 96px) !important;
-    padding: 12px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-bubble-wrap { max-width: 76% !important; }
-}
-</style>
-
 </head>
 <body>
 <div class="app-loading-overlay" id="appLoadingOverlay">
@@ -3802,7 +3741,7 @@ body.is-authenticated[data-page="chat"] .chat-message::after { display: none !im
   }
 
   function getLeaderboardCollectionName(date = new Date()) {
-    return 'leaderboard_monthly_global_current';
+    return `${LEADERBOARD_PREFIX}_${getLeaderboardMonthKey(date)}`;
   }
 
   function getCurrentChallengeMonthKey() {
@@ -4541,16 +4480,11 @@ body.is-authenticated[data-page="chat"] .chat-message::after { display: none !im
     document.querySelectorAll('.bottom-nav a[data-page]').forEach(link => link.classList.toggle('active', link.dataset.page === nextPage));
     const titles = { home: 'Home', idea: 'Idea', stats: 'Stats', levels: 'Levels', history: 'History', leaderboard: 'Leaderboard', chat: 'Chat', admin: 'Admin' };
     const title = document.getElementById('pageTitleText'); if (title) title.textContent = titles[nextPage] || 'Home';
-    const pageBusy = showDelayedLoading('Хуудас нээж байна...', 350);
-    try {
-      if (nextPage === 'idea') loadIdeaFeed();
-      if (nextPage === 'leaderboard') { updateLeaderboardCountdown(); loadLeaderboard(); }
-      if (nextPage === 'history') renderHistory();
-      if (nextPage === 'chat') { centerChatPanel(); loadGlobalChat(); }
-      if (nextPage === 'admin') loadAdminUsers();
-    } finally {
-      setTimeout(() => hideDelayedLoading(pageBusy), 500);
-    }
+    if (nextPage === 'idea') loadIdeaFeed();
+    if (nextPage === 'leaderboard') { updateLeaderboardCountdown(); loadLeaderboard(); }
+    if (nextPage === 'history') renderHistory();
+    if (nextPage === 'chat') loadGlobalChat();
+    if (nextPage === 'admin') loadAdminUsers();
     const poster = document.querySelector('.poster'); if (poster) poster.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -4572,7 +4506,6 @@ body.is-authenticated[data-page="chat"] .chat-message::after { display: none !im
             await withTimeout(checkAdminStatus(), 1200, false);
             await withTimeout(loadCloudData(), 2500, false);
             openHomeOrBalanceSetup();
-            savePublicProfile().catch(() => {});
             scheduleLeaderboardSave(900);
           } else {
             document.body.classList.remove('is-admin');
@@ -4830,6 +4763,7 @@ body.is-authenticated[data-page="chat"] .chat-message::after { display: none !im
 
     return {
       name: getDisplayNameForCurrentUser(),
+      photoData: getPhotoForCurrentUser(),
       startBalance: Number(START || 0),
       balance: Number(finalBalance.toFixed(2)),
       currentProfit: Number(currentProfit.toFixed(2)),
@@ -4866,68 +4800,6 @@ body.is-authenticated[data-page="chat"] .chat-message::after { display: none !im
     }
   }
 
-
-
-  function showDelayedLoading(message = 'Ачааллаж байна...', delay = 350) {
-    const timer = setTimeout(() => showAppLoading(message), delay);
-    return timer;
-  }
-
-  function hideDelayedLoading(timer) {
-    if (timer) clearTimeout(timer);
-    hideAppLoading();
-  }
-
-  function getSafePhotoData(value) {
-    const raw = String(value || '');
-    if (!raw) return '';
-    if (raw.startsWith('data:image/') || raw.startsWith('https://') || raw.startsWith('blob:')) return raw;
-    return '';
-  }
-
-  async function savePublicProfile() {
-    if (!firebaseReady || !db || !currentUser) return false;
-    const payload = {
-      uid: currentUser.uid,
-      name: getDisplayNameForCurrentUser(),
-      photoData: getSafePhotoData(getPhotoForCurrentUser()),
-      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
-    try {
-      await db.collection('public_profiles').doc(currentUser.uid).set(payload, { merge: true });
-      return true;
-    } catch (error) {
-      console.warn('Public profile write failed. Publish updated Firebase rules if avatars must be public:', error);
-      return false;
-    }
-  }
-
-  async function fetchPublicProfileMap(uids) {
-    const unique = [...new Set((uids || []).filter(Boolean))].slice(0, 80);
-    const out = {};
-    await Promise.all(unique.map(async (uid) => {
-      try {
-        const cached = getCachedPublicProfile(uid) || {};
-        if (cached.name || cached.photoData) out[uid] = cached;
-        const snap = await withTimeout(db.collection('public_profiles').doc(uid).get(), 2500, 'profile timeout');
-        if (snap && snap.exists) {
-          const data = snap.data() || {};
-          out[uid] = { name: safeName(data.name || cached.name || 'Trader'), photoData: getSafePhotoData(data.photoData || cached.photoData || '') };
-          cachePublicProfile(uid, out[uid]);
-        }
-      } catch (_) {}
-    }));
-    return out;
-  }
-
-  function centerChatPanel() {
-    const panel = document.getElementById('chatSection');
-    const list = document.getElementById('chatList');
-    if (!panel || !list || document.body.dataset.page !== 'chat') return;
-    panel.style.marginLeft = 'auto';
-    panel.style.marginRight = 'auto';
-    panel.style.width = window.innerWidth <= 700 ? 'calc(100vw - 14px)' : 'min(980px, calc(100vw - 28px))';
-  }
   window.loadLeaderboard = async function() {
     const box = document.getElementById('leaderboardList');
     if (!box) return;
@@ -5712,6 +5584,7 @@ body.is-authenticated[data-page="chat"] .chat-message::after { display: none !im
         .add({
           uid: currentUser.uid,
           name: getDisplayNameForCurrentUser(),
+          photoData: getPhotoForCurrentUser(),
           text,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
@@ -5838,19 +5711,6 @@ service cloud.firestore {
       }
     }
 
-
-
-
-    match /public_profiles/{userId} {
-      allow read: if isSignedIn();
-      allow create, update: if isOwnUser(userId)
-        && request.resource.data.keys().hasOnly(['uid', 'name', 'photoData', 'updatedAt'])
-        && request.resource.data.uid == request.auth.uid
-        && request.resource.data.name is string
-        && request.resource.data.photoData is string
-        && request.resource.data.photoData.size() <= 650000;
-      allow delete: if isAdmin() || isOwnUser(userId);
-    }
 
     match /idea_posts/{postId} {
       allow read: if isSignedIn();
@@ -6116,1581 +5976,246 @@ service cloud.firestore {
 </script>
 
 
-<style id="chat-level-layout-hard-fix">
-/* ===== FINAL PATCH: CHAT LIKE MESSENGER + MOBILE LEVEL FULL FILL ===== */
+<style id="one-big-chat-final-style">
+/* ===== ONE BIG FINAL CHAT FIX ===== */
+body.is-authenticated[data-page="chat"] .poster {
+  max-width: 1280px !important;
+}
 body.is-authenticated[data-page="chat"] .page-title-card {
   display: none !important;
 }
-body.is-authenticated[data-page="chat"] .poster {
-  padding-top: 0 !important;
-}
-body.is-authenticated[data-page="chat"] #chatSection,
-body.is-authenticated[data-page="chat"] .chat-panel {
+body.is-authenticated[data-page="chat"] #chatSection {
+  width: calc(100% - 32px) !important;
+  max-width: none !important;
+  margin: 0 16px 18px !important;
+  padding: 18px 18px 16px !important;
   display: flex !important;
   flex-direction: column !important;
-}
-body.is-authenticated[data-page="chat"] .chat-panel {
-  min-height: calc(100dvh - 110px) !important;
-  max-height: calc(100dvh - 110px) !important;
-  height: calc(100dvh - 110px) !important;
-  padding: 14px 16px 14px !important;
   overflow: hidden !important;
-}
-body.is-authenticated[data-page="chat"] .chat-head {
-  flex: 0 0 auto !important;
-  margin-bottom: 10px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-list {
-  flex: 1 1 auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  height: auto !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding: 6px 4px 8px !important;
-  scroll-behavior: smooth !important;
-  overscroll-behavior: contain !important;
-}
-body.is-authenticated[data-page="chat"] .chat-form {
+  box-sizing: border-box !important;
+  min-height: 560px !important;
+  height: min(720px, calc(100dvh - 150px)) !important;
   position: relative !important;
-  bottom: auto !important;
-  left: auto !important;
-  right: auto !important;
+}
+body.is-authenticated[data-page="chat"] #chatSection .chat-head {
   flex: 0 0 auto !important;
-  margin-top: 10px !important;
-  padding-top: 10px !important;
-  padding-bottom: 0 !important;
-  background: linear-gradient(180deg, rgba(8,11,12,0.02), rgba(8,11,12,0.78) 32%, rgba(8,11,12,0.94)) !important;
-  border-top: 1px solid rgba(255,255,255,0.08) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
+  width: 100% !important;
+  margin: 0 0 10px !important;
 }
-body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
-  max-width: min(360px, 52%) !important;
-}
-body.is-authenticated[data-page="chat"] .chat-row {
-  gap: 8px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-message {
-  padding: 10px 13px !important;
-  border-radius: 18px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-message-text {
-  font-size: 13px !important;
-  line-height: 1.38 !important;
-}
-body.is-authenticated[data-page="chat"] .chat-meta {
-  gap: 6px !important;
-  padding: 0 2px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-message::after,
-body.is-authenticated[data-page="chat"] .chat-row.mine .chat-message::after,
-body.is-authenticated[data-page="chat"] .chat-row.theirs .chat-message::after {
-  display: none !important;
-  content: none !important;
-}
-@media (max-width: 1100px) {
-  body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
-    max-width: min(460px, 64%) !important;
-  }
-}
-@media (max-width: 700px) {
-  body.is-authenticated[data-page="chat"] .chat-panel {
-    min-height: calc(100dvh - 94px) !important;
-    max-height: calc(100dvh - 94px) !important;
-    height: calc(100dvh - 94px) !important;
-    margin: 0 8px 8px !important;
-    padding: 12px 12px 10px !important;
-    border-radius: 22px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-list {
-    padding: 4px 2px 6px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
-    max-width: 74% !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-form {
-    grid-template-columns: minmax(0, 1fr) auto !important;
-    gap: 10px !important;
-    margin-top: 8px !important;
-    padding-top: 10px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-form .auth-input {
-    min-height: 48px !important;
-    height: 48px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-form .auth-btn.primary {
-    min-width: 88px !important;
-    min-height: 48px !important;
-    height: 48px !important;
-  }
-}
-
-/* mobile level cards full-fill */
-@media (max-width: 700px) {
-  .trading-table tr.tr-current,
-  .trading-table tr.tr-taken,
-  .trading-table tr.tr-loss,
-  .trading-table tr.tr-preview,
-  .trading-table tr.tr-previous {
-    position: relative !important;
-    overflow: hidden !important;
-    isolation: isolate !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 0 16px !important;
-    border-radius: 28px !important;
-    border: 1px solid rgba(255,255,255,0.16) !important;
-    background: transparent !important;
-    box-shadow: 0 16px 36px rgba(0,0,0,0.24) !important;
-  }
-  .trading-table tr.tr-current::before,
-  .trading-table tr.tr-taken::before,
-  .trading-table tr.tr-loss::before,
-  .trading-table tr.tr-preview::before,
-  .trading-table tr.tr-previous::before {
-    content: "" !important;
-    position: absolute !important;
-    inset: 0 !important;
-    border-radius: inherit !important;
-    z-index: -2 !important;
-    opacity: 1 !important;
-  }
-  .trading-table tr.tr-current::after,
-  .trading-table tr.tr-taken::after,
-  .trading-table tr.tr-loss::after,
-  .trading-table tr.tr-preview::after,
-  .trading-table tr.tr-previous::after {
-    content: "" !important;
-    position: absolute !important;
-    inset: 0 !important;
-    border-radius: inherit !important;
-    border: 1px solid rgba(255,255,255,0.12) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.14) !important;
-    pointer-events: none !important;
-    z-index: -1 !important;
-    animation: none !important;
-    background: transparent !important;
-    left: 0 !important;
-    width: auto !important;
-  }
-  .trading-table tr.tr-current::before {
-    background: linear-gradient(135deg, rgba(255,215,0,0.48), rgba(255,230,130,0.24) 40%, rgba(0,245,160,0.14) 100%) !important;
-  }
-  .trading-table tr.tr-taken::before {
-    background: linear-gradient(135deg, rgba(0,245,160,0.38), rgba(0,180,120,0.24) 42%, rgba(255,255,255,0.05) 100%) !important;
-  }
-  .trading-table tr.tr-loss::before {
-    background: linear-gradient(135deg, rgba(255,93,115,0.42), rgba(170,36,60,0.24) 42%, rgba(255,255,255,0.05) 100%) !important;
-  }
-  .trading-table tr.tr-preview::before {
-    background: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04) 55%, rgba(255,215,0,0.06) 100%) !important;
-  }
-  .trading-table tr.tr-previous::before {
-    background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05) 55%, rgba(0,245,160,0.04) 100%) !important;
-  }
-  .trading-table tr.tr-current td,
-  .trading-table tr.tr-taken td,
-  .trading-table tr.tr-loss td,
-  .trading-table tr.tr-preview td,
-  .trading-table tr.tr-previous td,
-  .trading-table tr.tr-current td:first-child,
-  .trading-table tr.tr-current td:last-child,
-  .trading-table tr.tr-taken td:first-child,
-  .trading-table tr.tr-taken td:last-child,
-  .trading-table tr.tr-loss td:first-child,
-  .trading-table tr.tr-loss td:last-child,
-  .trading-table tr.tr-preview td:first-child,
-  .trading-table tr.tr-preview td:last-child,
-  .trading-table tr.tr-previous td:first-child,
-  .trading-table tr.tr-previous td:last-child {
-    position: relative !important;
-    z-index: 1 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    border-radius: 0 !important;
-    border-bottom: 1px solid rgba(255,255,255,0.12) !important;
-  }
-  .trading-table tr.tr-current td:last-child,
-  .trading-table tr.tr-taken td:last-child,
-  .trading-table tr.tr-loss td:last-child,
-  .trading-table tr.tr-preview td:last-child,
-  .trading-table tr.tr-previous td:last-child {
-    border-bottom: 0 !important;
-  }
-  .trading-table tr.tr-current td[data-label="#"],
-  .trading-table tr.tr-taken td[data-label="#"],
-  .trading-table tr.tr-loss td[data-label="#"],
-  .trading-table tr.tr-preview td[data-label="#"],
-  .trading-table tr.tr-previous td[data-label="#"] {
-    padding-top: 2px !important;
-    padding-bottom: 14px !important;
-    margin-bottom: 4px !important;
-  }
-  .trading-table tr.tr-current .action-group,
-  .trading-table tr.tr-taken .action-group,
-  .trading-table tr.tr-loss .action-group {
-    width: 100% !important;
-    gap: 10px !important;
-  }
-  .trading-table tr.tr-current .btn-sm,
-  .trading-table tr.tr-taken .btn-sm,
-  .trading-table tr.tr-loss .btn-sm {
-    flex: 1 1 0 !important;
-    min-width: 0 !important;
-  }
-}
-</style>
-
-
-<script id="chat-level-layout-script">
-(function(){
-  function getChatEls(){
-    return {
-      panel: document.getElementById('chatSection'),
-      list: document.getElementById('chatList'),
-      input: document.getElementById('chatInput'),
-      form: document.querySelector('#chatSection .chat-form')
-    };
-  }
-  function syncChatViewport(){
-    const { panel, list } = getChatEls();
-    if (!panel || !list) return;
-    if (document.body.dataset.page !== 'chat') return;
-    const mobile = window.innerWidth <= 700;
-    const reserve = mobile ? 94 : 110;
-    panel.style.height = 'calc(100dvh - ' + reserve + 'px)';
-    panel.style.minHeight = 'calc(100dvh - ' + reserve + 'px)';
-    panel.style.maxHeight = 'calc(100dvh - ' + reserve + 'px)';
-    list.scrollTop = list.scrollHeight;
-  }
-  function goChatBottom(){
-    const { list } = getChatEls();
-    if (!list) return;
-    list.scrollTop = list.scrollHeight;
-  }
-  const oldShowPage = window.showPage;
-  if (typeof oldShowPage === 'function') {
-    window.showPage = function(page){
-      const out = oldShowPage.apply(this, arguments);
-      if ((page || '') === 'chat') {
-        setTimeout(syncChatViewport, 30);
-        setTimeout(goChatBottom, 120);
-      }
-      return out;
-    };
-  }
-  window.addEventListener('resize', function(){ setTimeout(syncChatViewport, 60); });
-  document.addEventListener('focusin', function(e){
-    if (e.target && e.target.id === 'chatInput') {
-      setTimeout(syncChatViewport, 100);
-      setTimeout(goChatBottom, 160);
-    }
-  });
-  document.addEventListener('submit', function(e){
-    if (e.target && e.target.closest && e.target.closest('#chatSection')) {
-      setTimeout(goChatBottom, 120);
-      setTimeout(goChatBottom, 300);
-    }
-  }, true);
-  window.addEventListener('load', function(){
-    if (document.body.dataset.page === 'chat') {
-      setTimeout(syncChatViewport, 100);
-      setTimeout(goChatBottom, 200);
-    }
-  });
-})();
-</script>
-
-
-
-<style id="absolute-final-loading-chat-leaderboard-fix">
-/* ABSOLUTE FINAL OVERRIDE */
-#appLoadingOverlay:not(.hide) { display: flex !important; }
-.inline-loader-dot-final {
-  display: inline-block; width: 18px; height: 18px; margin-right: 8px; vertical-align: -4px;
-  border-radius: 50%; border: 2px solid rgba(255,255,255,.16); border-top-color: #ffd700;
-  animation: finalSpin .75s linear infinite;
-}
-@keyframes finalSpin { to { transform: rotate(360deg); } }
-body.is-authenticated[data-page="chat"] .page-title-card { display:none!important; }
-body.is-authenticated[data-page="chat"] .poster { max-width:min(1180px,calc(100vw - 18px))!important; }
-body.is-authenticated[data-page="chat"] #chatSection.chat-panel {
-  display:flex!important; flex-direction:column!important; box-sizing:border-box!important;
-  width:min(980px,calc(100vw - 28px))!important; max-width:min(980px,calc(100vw - 28px))!important;
-  margin-left:auto!important; margin-right:auto!important; margin-top:0!important; margin-bottom:16px!important;
-  min-height:calc(100dvh - 118px)!important; height:calc(100dvh - 118px)!important; max-height:calc(100dvh - 118px)!important;
-  overflow:hidden!important;
-}
-body.is-authenticated[data-page="chat"] .chat-head{flex:0 0 auto!important;margin-bottom:10px!important;}
-body.is-authenticated[data-page="chat"] .chat-list{flex:1 1 auto!important;min-height:0!important;height:auto!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:8px 6px 10px!important;}
-body.is-authenticated[data-page="chat"] .chat-form{flex:0 0 auto!important;position:relative!important;bottom:auto!important;margin-top:10px!important;}
-body.is-authenticated[data-page="chat"] .chat-row.theirs{justify-content:flex-start!important;}
-body.is-authenticated[data-page="chat"] .chat-row.mine{justify-content:flex-end!important;}
-body.is-authenticated[data-page="chat"] .chat-bubble-wrap{max-width:min(420px,58%)!important;}
-body.is-authenticated[data-page="chat"] .chat-message{width:auto!important;max-width:100%!important;}
-body.is-authenticated[data-page="chat"] .chat-message::after{display:none!important;content:none!important;}
-@media (max-width:700px){
-  body.is-authenticated[data-page="chat"] #chatSection.chat-panel{
-    width:calc(100vw - 14px)!important;max-width:calc(100vw - 14px)!important;margin:0 auto 8px!important;
-    min-height:calc(100dvh - 96px)!important;height:calc(100dvh - 96px)!important;max-height:calc(100dvh - 96px)!important;padding:12px!important;border-radius:22px!important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-bubble-wrap{max-width:76%!important;}
-}
-</style>
-<script id="absolute-final-loading-chat-leaderboard-fix-script">
-(function(){
-  'use strict';
-  let activeLoaders = 0;
-  function htmlEsc(v){
-    try { return typeof escapeHTML === 'function' ? escapeHTML(String(v ?? '')) : String(v ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
-    catch(_) { return String(v ?? ''); }
-  }
-  function money(v){ try { return typeof formatMoney === 'function' ? formatMoney(Number(v||0)) : '$'+Number(v||0).toFixed(2); } catch(_) { return '$'+Number(v||0).toFixed(2); } }
-  function loaderHTML(text){ return '<div class="leaderboard-empty"><span class="inline-loader-dot-final"></span>'+htmlEsc(text || 'Ачааллаж байна...')+'</div>'; }
-  window.__showLoaderFinal = function(message, delay){
-    const token = { timer:null, shown:false };
-    token.timer = setTimeout(function(){
-      activeLoaders++;
-      token.shown = true;
-      try { showAppLoading(message || 'Ачааллаж байна...'); } catch(_) {}
-    }, typeof delay === 'number' ? delay : 250);
-    return token;
-  };
-  window.__hideLoaderFinal = function(token){
-    if (!token) return;
-    if (token.timer) clearTimeout(token.timer);
-    if (token.shown) activeLoaders = Math.max(0, activeLoaders - 1);
-    if (activeLoaders === 0) { try { hideAppLoading(); } catch(_) {} }
-  };
-  function safePhoto(v){
-    const s = String(v || '');
-    return (s.startsWith('data:image/') || s.startsWith('https://') || s.startsWith('blob:')) ? s : '';
-  }
-  async function savePublicProfileFinal(){
-    if (!firebaseReady || !db || !currentUser) return;
-    try {
-      await db.collection('public_profiles').doc(currentUser.uid).set({
-        uid: currentUser.uid,
-        name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : (currentUser.displayName || 'Trader'),
-        photoData: safePhoto(typeof getPhotoForCurrentUser === 'function' ? getPhotoForCurrentUser() : ''),
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge:true });
-    } catch(e){ console.warn('public_profiles unavailable; publish updated rules for public avatars:', e); }
-  }
-  async function publicProfiles(uids){
-    const ids=[...new Set((uids||[]).filter(Boolean))].slice(0,80), out={};
-    await Promise.all(ids.map(async uid=>{
-      try {
-        let cached = {};
-        try { cached = getCachedPublicProfile(uid) || {}; } catch(_) {}
-        if (cached.name || cached.photoData) out[uid] = cached;
-        const snap = await withTimeout(db.collection('public_profiles').doc(uid).get(), 2200, 'profile timeout');
-        if (snap && snap.exists) {
-          const d=snap.data()||{};
-          out[uid]={name:String(d.name||cached.name||'Trader'), photoData:safePhoto(d.photoData||cached.photoData||'')};
-          try { cachePublicProfile(uid,out[uid]); } catch(_) {}
-        }
-      } catch(_) {}
-    }));
-    return out;
-  }
-  function chatCenter(){
-    const panel=document.getElementById('chatSection');
-    if (!panel || document.body.dataset.page !== 'chat') return;
-    panel.style.marginLeft='auto'; panel.style.marginRight='auto';
-    panel.style.width = window.innerWidth <= 700 ? 'calc(100vw - 14px)' : 'min(980px, calc(100vw - 28px))';
-    panel.style.maxWidth = panel.style.width;
-  }
-  window.getLeaderboardCollectionName = function(){ return 'leaderboard_monthly_global_current'; };
-  window.saveLeaderboardStats = async function(){
-    if (!firebaseReady || !db || !currentUser || !(Number(START||0)>0)) return false;
-    try {
-      await savePublicProfileFinal();
-      let finalBalance = Number(START||0), wins=0, losses=0, trades=0, profit=0, bestBalance=Number(START||0);
-      try {
-        const c = typeof compute === 'function' ? compute() : null;
-        finalBalance = Number(c && c.finalBalance ? c.finalBalance : finalBalance);
-        const completed = typeof getCompletedLevels === 'function' ? getCompletedLevels() : [];
-        wins = completed.filter(x=>x.outcome==='taken').length;
-        losses = completed.filter(x=>x.outcome==='loss').length;
-        trades = wins+losses;
-        profit = typeof getCurrentProfitValue === 'function' ? Number(getCurrentProfitValue()||0) : Number(finalBalance - Number(START||0));
-        bestBalance = completed.reduce((m,x)=>Math.max(m, Number(x.newBalance||x.startBalance||0)), Number(START||0));
-      } catch(_) {}
-      await db.collection('leaderboard_monthly_global_current').doc(currentUser.uid).set({
-        name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : (currentUser.displayName || 'Trader'),
-        startBalance: Number(START||0), balance: Number(finalBalance.toFixed(2)), currentProfit: Number(profit.toFixed(2)), baseProfit: 0,
-        netProfit: Number(profit.toFixed(2)), bestBalance: Number(bestBalance.toFixed(2)), wins, losses, winRate: trades ? Math.round((wins/trades)*100) : 0, trades,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      }, {merge:true});
-      return true;
-    } catch(e){ console.warn('leaderboard save failed:', e); try{setAuthStatus('Leaderboard хадгалахад алдаа. Firebase Rules-ээ publish хийнэ үү.');}catch(_){} return false; }
-  };
-  window.loadLeaderboard = async function(){
-    const box=document.getElementById('leaderboardList'); if(!box) return;
-    if(!firebaseReady || !db || !currentUser){ box.innerHTML='<div class="leaderboard-empty">Leaderboard харахын тулд login хийнэ үү.</div>'; return; }
-    box.innerHTML=loaderHTML('Leaderboard ачааллаж байна...');
-    const busy=window.__showLoaderFinal('Leaderboard ачааллаж байна...',250);
-    try{
-      await window.saveLeaderboardStats().catch(()=>false);
-      const snap=await withTimeout(db.collection('leaderboard_monthly_global_current').limit(300).get(), 9000, 'leaderboard timeout');
-      const docs=[]; snap.forEach(doc=>docs.push({id:doc.id,data:doc.data()||{}}));
-      docs.sort((a,b)=>Number(b.data.netProfit||0)-Number(a.data.netProfit||0));
-      if(!docs.length){ box.innerHTML='<div class="leaderboard-empty">Leaderboard хоосон байна. Start balance сонгоод trade дарахад энд бүх user гарна.</div>'; return; }
-      const p=await publicProfiles(docs.map(x=>x.id)); let rank=0;
-      box.innerHTML=docs.slice(0,80).map(item=>{rank++; const d=item.data||{}, uid=item.id, prof=p[uid]||{}; const name=String(d.name||prof.name||'Trader'); const photo=safePhoto(prof.photoData||d.photoData||''); const profit=Number(d.netProfit||0); const isMe=currentUser&&uid===currentUser.uid; const avatar=typeof getAvatarMarkup==='function'?getAvatarMarkup(name,photo,'leaderboard-avatar',uid):'<div class="leaderboard-avatar">'+htmlEsc(name.charAt(0)||'T')+'</div>'; return `<div class="leaderboard-row ${isMe?'my-rank':''}"><div class="leaderboard-identity"><div class="leaderboard-rank-text">#${rank}</div>${avatar}<div class="leaderboard-name"><strong>${htmlEsc(name)}</strong><span>${isMe?'You · ':''}${Number(d.trades||0)} trade · Win rate ${Number(d.winRate||0)}%</span></div></div><div class="leaderboard-balance ${profit<0?'negative-profit':''}">${profit>=0?'+':''}${money(profit)}</div><div class="leaderboard-record">${Number(d.wins||0)}W / ${Number(d.losses||0)}L</div></div>`;}).join('');
-    }catch(e){ console.warn('leaderboard load failed:',e); box.innerHTML='<div class="leaderboard-empty">Leaderboard унших/хадгалахад алдаа. Firebase Rules publish хийгдсэн эсэхийг шалга. Алдаа: '+htmlEsc(e.message||e)+'</div>'; }
-    finally{ window.__hideLoaderFinal(busy); }
-  };
-  window.loadGlobalChat = function(){
-    const box=document.getElementById('chatList'); if(!box) return; chatCenter();
-    if(!firebaseReady || !db || !currentUser){ box.innerHTML='<div class="leaderboard-empty">Chat ашиглахын тулд login хийнэ үү.</div>'; return; }
-    try{ if(window.chatUnsubscribe){ window.chatUnsubscribe(); window.chatUnsubscribe=null; } }catch(_){}
-    box.innerHTML=loaderHTML('Chat ачааллаж байна...');
-    const busy=window.__showLoaderFinal('Chat ачааллаж байна...',350);
-    try{
-      window.chatUnsubscribe=db.collection('global_chat').doc('main').collection('messages').orderBy('createdAt','asc').limitToLast(100).onSnapshot(async snap=>{
-        window.__hideLoaderFinal(busy);
-        if(snap.empty){ box.innerHTML='<div class="leaderboard-empty">Одоогоор message байхгүй байна.</div>'; return; }
-        const arr=[]; snap.forEach(doc=>arr.push(doc.data()||{})); const p=await publicProfiles(arr.map(x=>x.uid));
-        box.innerHTML=arr.map(d=>{ const uid=d.uid||'', prof=p[uid]||{}; const name=String(d.name||prof.name||'Trader'); const photo=safePhoto(prof.photoData||d.photoData||''); const isMine=currentUser&&uid===currentUser.uid; const time=typeof formatChatTime==='function'?formatChatTime(d.createdAt):''; const avatar=typeof getAvatarMarkup==='function'?getAvatarMarkup(name,photo,'chat-avatar',uid):'<div class="chat-avatar">'+htmlEsc(name.charAt(0)||'T')+'</div>'; return `<div class="chat-row ${isMine?'mine':'theirs'}">${avatar}<div class="chat-bubble-wrap"><div class="chat-meta">${isMine?`<div class="chat-message-time">${htmlEsc(time)}</div><div class="chat-message-name">Та</div>`:`<div class="chat-message-name">${htmlEsc(name)}</div><div class="chat-message-time">${htmlEsc(time)}</div>`}</div><div class="chat-message"><div class="chat-message-text">${htmlEsc(d.text||'')}</div></div></div></div>`; }).join('');
-        requestAnimationFrame(()=>{ chatCenter(); box.scrollTop=box.scrollHeight; });
-      }, err=>{ window.__hideLoaderFinal(busy); console.warn('chat read failed:',err); box.innerHTML='<div class="leaderboard-empty">Chat уншихад алдаа. Firebase Rules publish хийгдсэн эсэхийг шалга. Алдаа: '+htmlEsc(err.message||err)+'</div>'; });
-    }catch(e){ window.__hideLoaderFinal(busy); box.innerHTML='<div class="leaderboard-empty">Chat эхлүүлэхэд алдаа: '+htmlEsc(e.message||e)+'</div>'; }
-  };
-  window.sendGlobalChatMessage = async function(){
-    const input=document.getElementById('chatInput'); if(!input) return;
-    if(!firebaseReady || !db || !currentUser){ try{showMiniToast('Chat бичихийн тулд login хийнэ үү.');}catch(_){alert('Chat бичихийн тулд login хийнэ үү.');} return; }
-    const text=String(input.value||'').trim(); if(!text) return; if(text.length>300){ try{showMiniToast('Message 300 тэмдэгтээс урт байж болохгүй.');}catch(_){} return; }
-    const busy=window.__showLoaderFinal('Message илгээж байна...',250);
-    input.disabled=true;
-    try{ input.value=''; await savePublicProfileFinal(); await db.collection('global_chat').doc('main').collection('messages').add({uid:currentUser.uid,name:typeof getDisplayNameForCurrentUser==='function'?getDisplayNameForCurrentUser():(currentUser.displayName||'Trader'),text,createdAt:firebase.firestore.FieldValue.serverTimestamp()}); }
-    catch(e){ input.value=text; console.warn('chat send failed:',e); try{showMiniToast(e.message||'Message илгээхэд алдаа.');}catch(_){alert(e.message||'Message илгээхэд алдаа.');} }
-    finally{ input.disabled=false; input.focus(); window.__hideLoaderFinal(busy); }
-  };
-  const oldShowPageFinal=window.showPage;
-  window.showPage=function(page){
-    const busy=window.__showLoaderFinal('Хуудас нээж байна...',280);
-    try{ const r=oldShowPageFinal?oldShowPageFinal.apply(this,arguments):undefined; setTimeout(()=>{ if(page==='chat'){ chatCenter(); window.loadGlobalChat(); } if(page==='leaderboard'){ window.loadLeaderboard(); } },80); return r; }
-    finally{ setTimeout(()=>window.__hideLoaderFinal(busy),520); }
-  };
-  window.addEventListener('resize',()=>setTimeout(chatCenter,60));
-  window.addEventListener('load',()=>{ setTimeout(()=>{ try{ if(currentUser&&firebaseReady&&db){ savePublicProfileFinal(); if(Number(START||0)>0) window.saveLeaderboardStats(); } }catch(_){} },1200); });
-})();
-</script>
-
-
-<style id="live-chat-speed-final-fix">
-/* ===== SPEED + LIVE CHAT FINAL FIX ===== */
-.app-loading,
-#appLoading,
-.loading-overlay,
-.global-loading {
-  transition: opacity .16s ease !important;
-}
-
-/* Chat page: centered, compact, Messenger-like */
-body.is-authenticated[data-page="chat"] .page-title-card {
-  display: none !important;
-}
-body.is-authenticated[data-page="chat"] .poster {
-  padding-top: 0 !important;
-}
-body.is-authenticated[data-page="chat"] #chatSection.chat-panel {
-  width: min(760px, calc(100vw - 28px)) !important;
-  max-width: min(760px, calc(100vw - 28px)) !important;
-  margin: 0 auto 14px !important;
-  height: calc(100dvh - 112px) !important;
-  min-height: 520px !important;
-  max-height: calc(100dvh - 112px) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  overflow: hidden !important;
-  padding: 14px !important;
-  border-radius: 28px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-head {
-  flex: 0 0 auto !important;
-  margin-bottom: 8px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-list {
+body.is-authenticated[data-page="chat"] #chatSection #chatList,
+body.is-authenticated[data-page="chat"] #chatSection .chat-list {
   flex: 1 1 auto !important;
-  height: auto !important;
   min-height: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
   max-height: none !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   padding: 8px 6px 10px !important;
-  scroll-behavior: smooth !important;
-  overscroll-behavior: contain !important;
-}
-body.is-authenticated[data-page="chat"] .chat-form {
-  flex: 0 0 auto !important;
-  position: relative !important;
-  bottom: auto !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) auto !important;
-  gap: 10px !important;
-  margin-top: 8px !important;
-  padding: 10px 0 0 !important;
-  background: transparent !important;
-  border-top: 1px solid rgba(255,255,255,.09) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-body.is-authenticated[data-page="chat"] .chat-form .auth-input {
-  height: 52px !important;
-  min-height: 52px !important;
-  border-radius: 999px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-form .auth-btn {
-  height: 52px !important;
-  min-height: 52px !important;
-  min-width: 96px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-row {
-  width: 100% !important;
-  gap: 8px !important;
-  margin: 5px 0 !important;
-}
-body.is-authenticated[data-page="chat"] .chat-row.mine {
-  justify-content: flex-end !important;
-}
-body.is-authenticated[data-page="chat"] .chat-row.theirs {
-  justify-content: flex-start !important;
-}
-body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
-  max-width: min(420px, 72%) !important;
-}
-body.is-authenticated[data-page="chat"] .chat-message {
-  padding: 10px 13px !important;
-  border-radius: 18px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-message::after,
-body.is-authenticated[data-page="chat"] .chat-row.mine .chat-message::after,
-body.is-authenticated[data-page="chat"] .chat-row.theirs .chat-message::after {
-  display: none !important;
-  content: none !important;
-}
-body.is-authenticated[data-page="chat"] .chat-message-text {
-  font-size: 13px !important;
-  line-height: 1.36 !important;
-}
-body.is-authenticated[data-page="chat"] .chat-avatar {
-  width: 32px !important;
-  height: 32px !important;
-  flex: 0 0 32px !important;
-}
-
-.chat-live-status {
-  color: rgba(255,249,215,.55);
-  font-size: 11px;
-  font-weight: 800;
-  margin-top: 2px;
-}
-.chat-inline-loading {
-  padding: 14px;
-  text-align: center;
-  color: rgba(255,249,215,.68);
-  font-weight: 800;
-  border: 1px solid rgba(255,255,255,.08);
-  background: rgba(255,255,255,.04);
-  border-radius: 18px;
-}
-
-@media (max-width: 700px) {
-  body.is-authenticated[data-page="chat"] #chatSection.chat-panel {
-    width: calc(100vw - 14px) !important;
-    max-width: calc(100vw - 14px) !important;
-    height: calc(100dvh - 92px) !important;
-    min-height: 0 !important;
-    max-height: calc(100dvh - 92px) !important;
-    margin: 0 auto 8px !important;
-    padding: 12px !important;
-    border-radius: 22px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
-    max-width: 76% !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-head {
-    margin-bottom: 6px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-form .auth-input,
-  body.is-authenticated[data-page="chat"] .chat-form .auth-btn {
-    height: 48px !important;
-    min-height: 48px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-form .auth-btn {
-    min-width: 82px !important;
-  }
-}
-</style>
-
-
-<script id="live-chat-speed-final-script">
-(function(){
-  'use strict';
-
-  const CHAT_COLLECTION_PATH = ['global_chat', 'main', 'messages'];
-  const LEADERBOARD_COLLECTION = 'leaderboard_monthly_global_current';
-  let chatLiveUnsub = null;
-  let chatLiveStarted = false;
-  let chatFirstSnapshot = false;
-  let chatLastCount = 0;
-  let activeDelayedLoaders = 0;
-
-  function esc(v){
-    try {
-      if (typeof escapeHTML === 'function') return escapeHTML(String(v ?? ''));
-      return String(v ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-    } catch(_) { return String(v ?? ''); }
-  }
-  function safePhoto(v){
-    const s = String(v || '');
-    return (s.startsWith('data:image/') || s.startsWith('https://') || s.startsWith('blob:')) ? s : '';
-  }
-  function money(v){
-    try { return typeof formatMoney === 'function' ? formatMoney(Number(v||0)) : '$' + Number(v||0).toFixed(2); }
-    catch(_) { return '$' + Number(v||0).toFixed(2); }
-  }
-
-  // Loading overlay should not make the site feel slow. Only show if an operation is actually slow.
-  window.__showLoaderFinal = function(message, delay){
-    const token = { timer:null, shown:false };
-    token.timer = setTimeout(function(){
-      token.shown = true;
-      activeDelayedLoaders++;
-      try { showAppLoading(message || 'Ачааллаж байна...'); } catch(_) {}
-    }, typeof delay === 'number' ? delay : 700);
-    return token;
-  };
-  window.__hideLoaderFinal = function(token){
-    if (!token) return;
-    if (token.timer) clearTimeout(token.timer);
-    if (token.shown) activeDelayedLoaders = Math.max(0, activeDelayedLoaders - 1);
-    if (activeDelayedLoaders === 0) { try { hideAppLoading(); } catch(_) {} }
-  };
-
-  function chatBox(){ return document.getElementById('chatList'); }
-  function chatPanel(){ return document.getElementById('chatSection'); }
-  function chatInput(){ return document.getElementById('chatInput'); }
-
-  function fitChat(){
-    const panel = chatPanel();
-    const box = chatBox();
-    if (!panel || !box || document.body.dataset.page !== 'chat') return;
-    const mobile = window.innerWidth <= 700;
-    panel.style.width = mobile ? 'calc(100vw - 14px)' : 'min(760px, calc(100vw - 28px))';
-    panel.style.maxWidth = panel.style.width;
-    panel.style.marginLeft = 'auto';
-    panel.style.marginRight = 'auto';
-    panel.style.height = mobile ? 'calc(100dvh - 92px)' : 'calc(100dvh - 112px)';
-    panel.style.maxHeight = panel.style.height;
-  }
-  function scrollChatBottom(force){
-    const box = chatBox();
-    if (!box) return;
-    const nearBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 180;
-    if (force || nearBottom) box.scrollTop = box.scrollHeight;
-  }
-  function addLiveStatus(text){
-    const head = document.querySelector('#chatSection .chat-head');
-    if (!head) return;
-    let s = document.getElementById('chatLiveStatus');
-    if (!s) {
-      s = document.createElement('div');
-      s.id = 'chatLiveStatus';
-      s.className = 'chat-live-status';
-      const left = head.querySelector('div') || head;
-      left.appendChild(s);
-    }
-    s.textContent = text || '';
-  }
-
-  function avatar(name, photo, cls, uid){
-    try {
-      if (typeof getAvatarMarkup === 'function') return getAvatarMarkup(name, photo, cls, uid);
-    } catch(_) {}
-    const letter = esc((name || 'T').trim().charAt(0).toUpperCase() || 'T');
-    if (photo) return `<div class="${cls} has-photo" data-avatar-uid="${esc(uid||'')}"><img src="${esc(photo)}" alt=""></div>`;
-    return `<div class="${cls}" data-avatar-uid="${esc(uid||'')}">${letter}</div>`;
-  }
-
-  async function fetchPublicProfiles(uids){
-    const ids = [...new Set((uids||[]).filter(Boolean))].slice(0,80);
-    const out = {};
-    await Promise.all(ids.map(async uid => {
-      try {
-        let cached = {};
-        try { cached = getCachedPublicProfile(uid) || {}; } catch(_) {}
-        if (cached.name || cached.photoData) out[uid] = cached;
-        if (!firebaseReady || !db) return;
-        const snap = await Promise.race([
-          db.collection('public_profiles').doc(uid).get(),
-          new Promise((_, rej) => setTimeout(() => rej(new Error('profile timeout')), 2500))
-        ]);
-        if (snap && snap.exists) {
-          const d = snap.data() || {};
-          out[uid] = { name: String(d.name || cached.name || 'Trader'), photoData: safePhoto(d.photoData || cached.photoData || '') };
-          try { cachePublicProfile(uid, out[uid]); } catch(_) {}
-        }
-      } catch(_) {}
-    }));
-    return out;
-  }
-
-  async function saveMyPublicProfileFast(){
-    if (!firebaseReady || !db || !currentUser) return;
-    try {
-      const name = typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : (currentUser.displayName || 'Trader');
-      const photoData = safePhoto(typeof getPhotoForCurrentUser === 'function' ? getPhotoForCurrentUser() : '');
-      try { cachePublicProfile(currentUser.uid, { name, photoData }); } catch(_) {}
-      // Do not await this in UI flows.
-      db.collection('public_profiles').doc(currentUser.uid).set({
-        uid: currentUser.uid,
-        name,
-        photoData,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge:true }).catch(e => console.warn('public profile save failed:', e));
-    } catch(_) {}
-  }
-
-  window.getLeaderboardCollectionName = function(){ return LEADERBOARD_COLLECTION; };
-
-  window.saveLeaderboardStats = async function(){
-    if (!firebaseReady || !db || !currentUser || !(Number(START||0)>0)) return false;
-    saveMyPublicProfileFast();
-    try {
-      let finalBalance = Number(START||0), wins = 0, losses = 0, trades = 0, profit = 0, bestBalance = Number(START||0);
-      try {
-        const c = typeof compute === 'function' ? compute() : null;
-        finalBalance = Number(c && c.finalBalance ? c.finalBalance : finalBalance);
-        const completed = typeof getCompletedLevels === 'function' ? getCompletedLevels() : [];
-        wins = completed.filter(x => x.outcome === 'taken').length;
-        losses = completed.filter(x => x.outcome === 'loss').length;
-        trades = wins + losses;
-        profit = typeof getCurrentProfitValue === 'function' ? Number(getCurrentProfitValue() || 0) : Number(finalBalance - Number(START||0));
-        bestBalance = completed.reduce((m,x) => Math.max(m, Number(x.newBalance || x.startBalance || 0)), Number(START||0));
-      } catch(_) {}
-      await db.collection(LEADERBOARD_COLLECTION).doc(currentUser.uid).set({
-        name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : (currentUser.displayName || 'Trader'),
-        startBalance: Number(START||0),
-        balance: Number(finalBalance.toFixed(2)),
-        currentProfit: Number(profit.toFixed(2)),
-        baseProfit: 0,
-        netProfit: Number(profit.toFixed(2)),
-        bestBalance: Number(bestBalance.toFixed(2)),
-        wins,
-        losses,
-        winRate: trades ? Math.round((wins / trades) * 100) : 0,
-        trades,
-        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge:true });
-      return true;
-    } catch(e) {
-      console.warn('leaderboard save failed:', e);
-      return false;
-    }
-  };
-
-  window.loadLeaderboard = async function(){
-    const box = document.getElementById('leaderboardList');
-    if (!box) return;
-    if (!firebaseReady || !db || !currentUser) {
-      box.innerHTML = '<div class="leaderboard-empty">Leaderboard харахын тулд login хийнэ үү.</div>';
-      return;
-    }
-    box.innerHTML = '<div class="leaderboard-empty">Leaderboard шинэчилж байна...</div>';
-    const loader = window.__showLoaderFinal('Leaderboard ачаалж байна...', 900);
-    try {
-      // Background write first, but do not let it make loading feel stuck.
-      await Promise.race([
-        window.saveLeaderboardStats().catch(()=>false),
-        new Promise(resolve => setTimeout(resolve, 1200))
-      ]);
-
-      const snap = await Promise.race([
-        db.collection(LEADERBOARD_COLLECTION).limit(300).get(),
-        new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 6500))
-      ]);
-      const docs = [];
-      snap.forEach(doc => docs.push({ id: doc.id, data: doc.data() || {} }));
-      docs.sort((a,b) => Number(b.data.netProfit || 0) - Number(a.data.netProfit || 0));
-      if (!docs.length) {
-        box.innerHTML = '<div class="leaderboard-empty">Leaderboard хоосон байна. Trade дарахад бүх user энд гарна.</div>';
-        return;
-      }
-      const profiles = await fetchPublicProfiles(docs.map(x => x.id));
-      let rank = 0;
-      box.innerHTML = docs.slice(0,80).map(item => {
-        rank++;
-        const d = item.data || {};
-        const uid = item.id;
-        const prof = profiles[uid] || {};
-        const name = String(d.name || prof.name || 'Trader');
-        const photo = safePhoto(prof.photoData || d.photoData || '');
-        const profit = Number(d.netProfit || 0);
-        const isMe = currentUser && uid === currentUser.uid;
-        return `<div class="leaderboard-row ${isMe ? 'my-rank' : ''}">
-          <div class="leaderboard-identity"><div class="leaderboard-rank-text">#${rank}</div>${avatar(name, photo, 'leaderboard-avatar', uid)}<div class="leaderboard-name"><strong>${esc(name)}</strong><span>${isMe ? 'You · ' : ''}${Number(d.trades||0)} trade · Win rate ${Number(d.winRate||0)}%</span></div></div>
-          <div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${money(profit)}</div>
-          <div class="leaderboard-record">${Number(d.wins||0)}W / ${Number(d.losses||0)}L</div>
-        </div>`;
-      }).join('');
-    } catch(e) {
-      console.warn('leaderboard failed:', e);
-      box.innerHTML = '<div class="leaderboard-empty">Leaderboard уншихад алдаа гарлаа. Firebase Rules publish хийгдсэн эсэхийг шалга. Алдаа: '+esc(e.message||e)+'</div>';
-    } finally {
-      window.__hideLoaderFinal(loader);
-    }
-  };
-
-  function renderMessages(arr, profiles){
-    const box = chatBox();
-    if (!box) return;
-    const wasNearBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 220;
-    if (!arr.length) {
-      box.innerHTML = '<div class="chat-inline-loading">Одоогоор message байхгүй байна.</div>';
-      addLiveStatus('Live chat ready');
-      return;
-    }
-    box.innerHTML = arr.map(d => {
-      const uid = d.uid || '';
-      const prof = profiles[uid] || {};
-      const name = String(d.name || prof.name || 'Trader');
-      const photo = safePhoto(prof.photoData || d.photoData || '');
-      const isMine = currentUser && uid === currentUser.uid;
-      const time = typeof formatChatTime === 'function' ? formatChatTime(d.createdAt) : '';
-      return `<div class="chat-row ${isMine ? 'mine' : 'theirs'}">
-        ${avatar(name, photo, 'chat-avatar', uid)}
-        <div class="chat-bubble-wrap">
-          <div class="chat-meta">${isMine ? `<div class="chat-message-time">${esc(time)}</div><div class="chat-message-name">Та</div>` : `<div class="chat-message-name">${esc(name)}</div><div class="chat-message-time">${esc(time)}</div>`}</div>
-          <div class="chat-message"><div class="chat-message-text">${esc(d.text || '')}</div></div>
-        </div>
-      </div>`;
-    }).join('');
-    addLiveStatus('Live · автоматаар шинэчлэгдэнэ');
-    requestAnimationFrame(() => { fitChat(); scrollChatBottom(wasNearBottom || arr.length > chatLastCount); chatLastCount = arr.length; });
-  }
-
-  window.loadGlobalChat = function(){
-    const box = chatBox();
-    if (!box) return;
-    fitChat();
-
-    if (!firebaseReady || !db || !currentUser) {
-      box.innerHTML = '<div class="chat-inline-loading">Chat ашиглахын тулд login хийнэ үү.</div>';
-      return;
-    }
-
-    saveMyPublicProfileFast();
-
-    if (chatLiveStarted && chatLiveUnsub) {
-      fitChat();
-      scrollChatBottom(false);
-      return;
-    }
-
-    chatLiveStarted = true;
-    chatFirstSnapshot = false;
-    box.innerHTML = '<div class="chat-inline-loading">Live chat холбогдож байна...</div>';
-    addLiveStatus('Connecting...');
-
-    const loader = window.__showLoaderFinal('Chat холбогдож байна...', 1000);
-
-    try {
-      chatLiveUnsub = db.collection(CHAT_COLLECTION_PATH[0])
-        .doc(CHAT_COLLECTION_PATH[1])
-        .collection(CHAT_COLLECTION_PATH[2])
-        .orderBy('createdAt', 'asc')
-        .limitToLast(120)
-        .onSnapshot(async function(snap){
-          window.__hideLoaderFinal(loader);
-          chatFirstSnapshot = true;
-          const arr = [];
-          snap.forEach(doc => arr.push(doc.data() || {}));
-          let profiles = {};
-          try { profiles = await fetchPublicProfiles(arr.map(x => x.uid)); } catch(_) {}
-          renderMessages(arr, profiles);
-        }, function(err){
-          window.__hideLoaderFinal(loader);
-          chatLiveStarted = false;
-          chatLiveUnsub = null;
-          console.warn('live chat failed:', err);
-          box.innerHTML = '<div class="chat-inline-loading">Chat live уншихад алдаа гарлаа. Firebase Rules publish хийгдсэн эсэхийг шалга. Алдаа: '+esc(err.message||err)+'</div>';
-          addLiveStatus('Disconnected');
-        });
-
-      setTimeout(function(){
-        if (!chatFirstSnapshot && box && chatLiveStarted) {
-          box.innerHTML = '<div class="chat-inline-loading">Live chat түр удаан байна. Холболт хүлээж байна...</div>';
-        }
-      }, 3500);
-    } catch(e) {
-      window.__hideLoaderFinal(loader);
-      chatLiveStarted = false;
-      chatLiveUnsub = null;
-      box.innerHTML = '<div class="chat-inline-loading">Chat эхлүүлэхэд алдаа: '+esc(e.message||e)+'</div>';
-      addLiveStatus('Disconnected');
-    }
-  };
-
-  window.sendGlobalChatMessage = async function(){
-    const input = chatInput();
-    if (!input) return;
-    if (!firebaseReady || !db || !currentUser) {
-      try { showMiniToast('Chat бичихийн тулд login хийнэ үү.'); } catch(_) { alert('Chat бичихийн тулд login хийнэ үү.'); }
-      return;
-    }
-    const text = String(input.value || '').trim();
-    if (!text) return;
-    if (text.length > 300) {
-      try { showMiniToast('Message 300 тэмдэгтээс урт байж болохгүй.'); } catch(_) {}
-      return;
-    }
-
-    input.value = '';
-    input.disabled = true;
-    saveMyPublicProfileFast();
-
-    // No full-screen loading for sending; live chat will append via onSnapshot.
-    try {
-      await db.collection(CHAT_COLLECTION_PATH[0]).doc(CHAT_COLLECTION_PATH[1]).collection(CHAT_COLLECTION_PATH[2]).add({
-        uid: currentUser.uid,
-        name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : (currentUser.displayName || 'Trader'),
-        text,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      requestAnimationFrame(() => scrollChatBottom(true));
-    } catch(e) {
-      input.value = text;
-      console.warn('chat send failed:', e);
-      try { showMiniToast(e.message || 'Message илгээхэд алдаа.'); } catch(_) { alert(e.message || 'Message илгээхэд алдаа.'); }
-    } finally {
-      input.disabled = false;
-      input.focus();
-    }
-  };
-
-  const oldShowPage = window.showPage;
-  window.showPage = function(page){
-    const result = oldShowPage ? oldShowPage.apply(this, arguments) : undefined;
-    setTimeout(function(){
-      if (page === 'chat') {
-        fitChat();
-        window.loadGlobalChat();
-      }
-      if (page === 'leaderboard') {
-        window.loadLeaderboard();
-      }
-    }, 80);
-    return result;
-  };
-
-  window.addEventListener('resize', () => setTimeout(fitChat, 60));
-  document.addEventListener('focusin', function(e){
-    if (e.target && e.target.id === 'chatInput') {
-      setTimeout(fitChat, 80);
-      setTimeout(() => scrollChatBottom(true), 160);
-    }
-  });
-  window.addEventListener('load', function(){
-    setTimeout(function(){
-      try {
-        if (currentUser && firebaseReady && db) {
-          saveMyPublicProfileFast();
-          if (Number(START || 0) > 0) window.saveLeaderboardStats();
-        }
-      } catch(_) {}
-    }, 1200);
-  });
-})();
-</script>
-
-
-
-<style id="clean-chat-final-v3">
-/* CLEAN CHAT V3: centered panel, stable input, real live chat */
-body.is-authenticated[data-page="chat"] .page-title-card,
-body.is-authenticated[data-page="chat"] .header {
-  display: none !important;
-}
-body.is-authenticated[data-page="chat"] .poster {
-  max-width: 980px !important;
-  width: min(980px, calc(100vw - 24px)) !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding-top: 14px !important;
-  overflow: visible !important;
-}
-body.is-authenticated[data-page="chat"] #chatSection.chat-panel,
-body.is-authenticated[data-page="chat"] .chat-panel#chatSection {
-  width: min(760px, calc(100vw - 34px)) !important;
-  max-width: min(760px, calc(100vw - 34px)) !important;
-  height: min(680px, calc(100dvh - 132px)) !important;
-  min-height: 500px !important;
-  max-height: calc(100dvh - 132px) !important;
-  margin: 0 auto 18px auto !important;
-  padding: 16px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  position: relative !important;
-  left: auto !important;
-  right: auto !important;
-  top: auto !important;
-  transform: none !important;
-  overflow: hidden !important;
-  border-radius: 30px !important;
-  box-sizing: border-box !important;
-}
-body.is-authenticated[data-page="chat"] .chat-head {
-  flex: 0 0 auto !important;
-  margin: 0 0 10px 0 !important;
-  padding: 0 !important;
-  display: flex !important;
-  align-items: flex-start !important;
-  justify-content: space-between !important;
-  gap: 12px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-head .soft-btn {
-  min-width: 92px !important;
-  min-height: 42px !important;
-}
-body.is-authenticated[data-page="chat"] #chatList.chat-list,
-body.is-authenticated[data-page="chat"] .chat-list#chatList {
-  flex: 1 1 auto !important;
-  height: auto !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  width: 100% !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  padding: 8px 8px 12px !important;
   margin: 0 !important;
-  scroll-behavior: smooth !important;
-  overscroll-behavior: contain !important;
   box-sizing: border-box !important;
 }
-body.is-authenticated[data-page="chat"] .chat-form {
-  flex: 0 0 auto !important;
-  position: relative !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 104px !important;
-  gap: 12px !important;
-  align-items: center !important;
-  margin: 10px 0 0 !important;
-  padding: 12px 0 0 !important;
-  bottom: auto !important;
-  left: auto !important;
-  right: auto !important;
-  background: transparent !important;
-  border-top: 1px solid rgba(255,255,255,.10) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-}
-body.is-authenticated[data-page="chat"] .chat-form .auth-input {
-  width: 100% !important;
-  height: 52px !important;
-  min-height: 52px !important;
-  border-radius: 999px !important;
-  padding: 0 18px !important;
-  box-sizing: border-box !important;
-}
-body.is-authenticated[data-page="chat"] .chat-form .auth-btn,
-body.is-authenticated[data-page="chat"] .chat-form .auth-btn.primary {
-  width: 104px !important;
-  min-width: 104px !important;
-  height: 52px !important;
-  min-height: 52px !important;
-  padding: 0 !important;
-  border-radius: 999px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-row {
-  width: 100% !important;
-  display: flex !important;
-  gap: 8px !important;
-  align-items: flex-end !important;
-  margin: 7px 0 !important;
-  box-sizing: border-box !important;
-}
-body.is-authenticated[data-page="chat"] .chat-row.mine { justify-content: flex-end !important; }
-body.is-authenticated[data-page="chat"] .chat-row.theirs { justify-content: flex-start !important; }
-body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
-  width: auto !important;
-  max-width: min(430px, 70%) !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-body.is-authenticated[data-page="chat"] .chat-row.mine .chat-bubble-wrap { align-items: flex-end !important; }
-body.is-authenticated[data-page="chat"] .chat-row.theirs .chat-bubble-wrap { align-items: flex-start !important; }
-body.is-authenticated[data-page="chat"] .chat-message {
-  width: fit-content !important;
-  max-width: 100% !important;
-  padding: 10px 13px !important;
-  border-radius: 18px !important;
-  overflow-wrap: anywhere !important;
-}
-body.is-authenticated[data-page="chat"] .chat-message::after,
-body.is-authenticated[data-page="chat"] .chat-row.mine .chat-message::after,
-body.is-authenticated[data-page="chat"] .chat-row.theirs .chat-message::after {
-  display: none !important;
-  content: none !important;
-}
-body.is-authenticated[data-page="chat"] .chat-message-text {
-  font-size: 13px !important;
-  line-height: 1.38 !important;
-}
-body.is-authenticated[data-page="chat"] .chat-avatar {
-  width: 32px !important;
-  height: 32px !important;
-  flex: 0 0 32px !important;
-}
-body.is-authenticated[data-page="chat"] .chat-note {
-  display: none !important;
-}
-.clean-chat-status {
-  color: rgba(255,249,215,.58);
-  font-size: 11px;
-  font-weight: 800;
-  margin-top: 3px;
-}
-.clean-chat-empty {
-  margin: auto;
-  padding: 16px;
-  border-radius: 18px;
-  color: rgba(255,249,215,.68);
-  background: rgba(255,255,255,.045);
-  border: 1px solid rgba(255,255,255,.09);
-  text-align: center;
-  font-weight: 800;
-}
-@media (max-width: 700px) {
-  body.is-authenticated[data-page="chat"] .poster {
-    width: calc(100vw - 10px) !important;
-    max-width: calc(100vw - 10px) !important;
-    padding-top: 6px !important;
-  }
-  body.is-authenticated[data-page="chat"] #chatSection.chat-panel,
-  body.is-authenticated[data-page="chat"] .chat-panel#chatSection {
-    width: calc(100vw - 14px) !important;
-    max-width: calc(100vw - 14px) !important;
-    height: calc(100dvh - 96px) !important;
-    min-height: 0 !important;
-    max-height: calc(100dvh - 96px) !important;
-    margin: 0 auto 8px !important;
-    padding: 12px !important;
-    border-radius: 22px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-head {
-    margin-bottom: 6px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-form {
-    grid-template-columns: minmax(0, 1fr) 84px !important;
-    gap: 9px !important;
-    margin-top: 8px !important;
-    padding-top: 10px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-form .auth-input,
-  body.is-authenticated[data-page="chat"] .chat-form .auth-btn,
-  body.is-authenticated[data-page="chat"] .chat-form .auth-btn.primary {
-    height: 48px !important;
-    min-height: 48px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-form .auth-btn,
-  body.is-authenticated[data-page="chat"] .chat-form .auth-btn.primary {
-    width: 84px !important;
-    min-width: 84px !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
-    max-width: 76% !important;
-  }
-  body.is-authenticated[data-page="chat"] .chat-message-text {
-    font-size: 13px !important;
-  }
-}
-</style>
-
-<script id="clean-live-chat-final-v3">
-(function(){
-  'use strict';
-  var CHAT_ROOT = 'global_chat';
-  var CHAT_DOC = 'main';
-  var CHAT_SUB = 'messages';
-  var unsub = null;
-  var started = false;
-  var lastCount = 0;
-
-  function box(){ return document.getElementById('chatList'); }
-  function input(){ return document.getElementById('chatInput'); }
-  function section(){ return document.getElementById('chatSection'); }
-  function esc(v){
-    if (typeof escapeHTML === 'function') return escapeHTML(String(v == null ? '' : v));
-    return String(v == null ? '' : v).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; });
-  }
-  function nameOf(){
-    try { if (typeof getDisplayNameForCurrentUser === 'function') return getDisplayNameForCurrentUser(); } catch(_) {}
-    return (window.currentUser && (window.currentUser.displayName || window.currentUser.email)) || (typeof currentUser !== 'undefined' && currentUser && (currentUser.displayName || currentUser.email)) || 'Trader';
-  }
-  function uidOf(){
-    return (window.currentUser && window.currentUser.uid) || (typeof currentUser !== 'undefined' && currentUser && currentUser.uid) || '';
-  }
-  function ready(){
-    var localReady = false;
-    try { localReady = !!(firebaseReady && db && currentUser); } catch(_) {}
-    return !!(localReady || (window.firebaseReady && window.db && window.currentUser));
-  }
-  function dbObj(){ try { return db || window.db; } catch(_) { return window.db; } }
-  function userObj(){ try { return currentUser || window.currentUser; } catch(_) { return window.currentUser; } }
-  function scrollBottom(){ var el = box(); if (el) el.scrollTop = el.scrollHeight; }
-  function ensureStatus(text){
-    var head = document.querySelector('#chatSection .chat-head > div');
-    if (!head) return;
-    var s = head.querySelector('.clean-chat-status');
-    if (!s) { s = document.createElement('div'); s.className='clean-chat-status'; head.appendChild(s); }
-    s.textContent = text || 'Live';
-  }
-  function avatar(name, photo, cls){
-    try {
-      if (typeof window.getAvatarMarkup === 'function') return window.getAvatarMarkup(name || 'Trader', photo || '', cls || 'chat-avatar', '');
-    } catch(_) {}
-    var initial = esc(String(name || 'T').trim().charAt(0).toUpperCase() || 'T');
-    return '<div class="'+(cls||'chat-avatar')+'">'+initial+'</div>';
-  }
-  function row(d){
-    var u = userObj();
-    var mine = u && d.uid === u.uid;
-    var nm = d.name || 'Trader';
-    var time = '';
-    try { time = typeof formatChatTime === 'function' ? formatChatTime(d.createdAt) : ''; } catch(_) {}
-    return '<div class="chat-row '+(mine?'mine':'theirs')+'">'+
-      (mine ? '' : avatar(nm, '', 'chat-avatar'))+
-      '<div class="chat-bubble-wrap"><div class="chat-meta">'+
-      (mine ? '<div class="chat-message-time">'+esc(time)+'</div><div class="chat-message-name">Та</div>' : '<div class="chat-message-name">'+esc(nm)+'</div><div class="chat-message-time">'+esc(time)+'</div>')+
-      '</div><div class="chat-message"><div class="chat-message-text">'+esc(d.text || '')+'</div></div></div>'+
-      (mine ? avatar(nm, '', 'chat-avatar') : '')+
-      '</div>';
-  }
-  function render(snap){
-    var el = box(); if (!el) return;
-    var nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 90;
-    var arr = [];
-    snap.forEach(function(doc){ arr.push(doc.data() || {}); });
-    if (!arr.length) {
-      el.innerHTML = '<div class="clean-chat-empty">Одоогоор message байхгүй байна.</div>';
-      ensureStatus('Live · message байхгүй');
-      return;
-    }
-    el.innerHTML = arr.map(row).join('');
-    ensureStatus('Live · автоматаар шинэчлэгдэнэ');
-    if (nearBottom || arr.length > lastCount) requestAnimationFrame(scrollBottom);
-    lastCount = arr.length;
-  }
-
-  window.stopGlobalChatLive = function(){
-    try { if (unsub) unsub(); } catch(_) {}
-    unsub = null; started = false;
-  };
-
-  window.loadGlobalChat = function(force){
-    var el = box(); if (!el) return;
-    ensureStatus('Live холбогдож байна...');
-    if (!ready()) {
-      el.innerHTML = '<div class="clean-chat-empty">Chat ашиглахын тулд login хийнэ үү.</div>';
-      ensureStatus('Login шаардлагатай');
-      return;
-    }
-    if (started && unsub && !force) { scrollBottom(); return; }
-    window.stopGlobalChatLive();
-    started = true;
-    el.innerHTML = '<div class="clean-chat-empty">Live chat холбогдож байна...</div>';
-    try {
-      unsub = dbObj().collection(CHAT_ROOT).doc(CHAT_DOC).collection(CHAT_SUB)
-        .orderBy('createdAt', 'asc')
-        .limitToLast(100)
-        .onSnapshot(function(snap){ render(snap); }, function(err){
-          console.warn('chat live error', err);
-          started = false; unsub = null;
-          el.innerHTML = '<div class="clean-chat-empty">Chat уншихад алдаа гарлаа: '+esc(err && err.message ? err.message : err)+'</div>';
-          ensureStatus('Disconnected');
-        });
-    } catch(e) {
-      started = false; unsub = null;
-      el.innerHTML = '<div class="clean-chat-empty">Chat эхлүүлэхэд алдаа: '+esc(e && e.message ? e.message : e)+'</div>';
-      ensureStatus('Disconnected');
-    }
-  };
-
-  window.sendGlobalChatMessage = async function(){
-    var el = input();
-    if (!el) return;
-    if (!ready()) { alert('Chat бичихийн тулд login хийнэ үү.'); return; }
-    var text = String(el.value || '').trim();
-    if (!text) return;
-    if (text.length > 300) { alert('Message 300 тэмдэгтээс урт байж болохгүй.'); return; }
-    el.value = '';
-    el.focus();
-    // Never disable the input. This fixes the “one message only” bug.
-    try {
-      await dbObj().collection(CHAT_ROOT).doc(CHAT_DOC).collection(CHAT_SUB).add({
-        uid: uidOf(),
-        name: nameOf(),
-        text: text,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      setTimeout(scrollBottom, 80);
-    } catch(e) {
-      el.value = text;
-      console.warn('send chat failed', e);
-      alert('Message илгээхэд алдаа: ' + ((e && e.message) ? e.message : e));
-    }
-  };
-
-  document.addEventListener('keydown', function(e){
-    if (e.target && e.target.id === 'chatInput' && e.key === 'Enter') {
-      e.preventDefault();
-      window.sendGlobalChatMessage();
-    }
-  }, true);
-
-  var oldShow = window.showPage;
-  window.showPage = function(page){
-    var r = oldShow ? oldShow.apply(this, arguments) : undefined;
-    if (page === 'chat') setTimeout(function(){ window.loadGlobalChat(false); scrollBottom(); }, 80);
-    return r;
-  };
-
-  window.addEventListener('resize', function(){ if (document.body.dataset.page === 'chat') setTimeout(scrollBottom, 80); });
-  window.addEventListener('load', function(){ if (document.body.dataset.page === 'chat') setTimeout(function(){ window.loadGlobalChat(false); }, 300); });
-})();
-</script>
-
-
-
-<style id="chat-actual-layout-override-v3">
-/* ===== ACTUAL CHAT LAYOUT OVERRIDE V3 =====
-   Goal:
-   1) Fill the left/right empty space inside chat card.
-   2) Keep the composer small and vertically centered.
-   3) Avoid previous duplicated chat CSS by using high-specificity selectors. */
-
-body.is-authenticated[data-page="chat"] .poster {
-  max-width: 1480px !important;
-}
-
-body.is-authenticated[data-page="chat"] #chatSection.chat-panel,
-body.is-authenticated[data-page="chat"] section#chatSection {
-  width: min(1280px, calc(100vw - 48px)) !important;
-  max-width: min(1280px, calc(100vw - 48px)) !important;
-  min-width: 0 !important;
-  margin: 0 auto 18px auto !important;
-  padding: 18px 20px 16px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-}
-
-body.is-authenticated[data-page="chat"] #chatSection .chat-head {
-  width: 100% !important;
-  flex: 0 0 auto !important;
-  margin-bottom: 10px !important;
-}
-
-body.is-authenticated[data-page="chat"] #chatList.chat-list,
-body.is-authenticated[data-page="chat"] #chatSection .chat-list {
-  width: 100% !important;
-  max-width: none !important;
-  flex: 1 1 auto !important;
-  min-height: 430px !important;
-  max-height: calc(100dvh - 300px) !important;
-  height: auto !important;
-  padding: 8px 8px 12px !important;
-  margin: 0 !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  box-sizing: border-box !important;
-}
-
 body.is-authenticated[data-page="chat"] #chatSection .chat-row {
   width: 100% !important;
+  max-width: 100% !important;
   display: flex !important;
   align-items: flex-end !important;
   gap: 10px !important;
   margin: 0 0 10px !important;
   box-sizing: border-box !important;
 }
-
-body.is-authenticated[data-page="chat"] #chatSection .chat-row.mine {
-  justify-content: flex-end !important;
+body.is-authenticated[data-page="chat"] #chatSection .chat-row.mine { justify-content: flex-end !important; }
+body.is-authenticated[data-page="chat"] #chatSection .chat-row.theirs { justify-content: flex-start !important; }
+body.is-authenticated[data-page="chat"] #chatSection .chat-avatar {
+  flex: 0 0 34px !important;
+  width: 34px !important;
+  height: 34px !important;
 }
-
-body.is-authenticated[data-page="chat"] #chatSection .chat-row.theirs {
-  justify-content: flex-start !important;
-}
-
 body.is-authenticated[data-page="chat"] #chatSection .chat-bubble-wrap {
-  max-width: 76% !important;
   width: auto !important;
   min-width: 0 !important;
+  max-width: 68% !important;
 }
-
 body.is-authenticated[data-page="chat"] #chatSection .chat-message {
   width: fit-content !important;
+  min-width: 70px !important;
   max-width: 100% !important;
-  min-width: 92px !important;
   padding: 10px 14px !important;
   border-radius: 18px !important;
   box-sizing: border-box !important;
 }
-
 body.is-authenticated[data-page="chat"] #chatSection .chat-message::after,
 body.is-authenticated[data-page="chat"] #chatSection .chat-row.mine .chat-message::after,
 body.is-authenticated[data-page="chat"] #chatSection .chat-row.theirs .chat-message::after {
   display: none !important;
   content: none !important;
 }
-
-/* Composer: direct targeting because previous CSS used .auth-input/.auth-btn repeatedly */
-body.is-authenticated[data-page="chat"] #chatSection > .chat-form,
-body.is-authenticated[data-page="chat"] section#chatSection > div.chat-form,
+body.is-authenticated[data-page="chat"] #chatSection .chat-message-text {
+  font-size: 14px !important;
+  line-height: 1.35 !important;
+}
 body.is-authenticated[data-page="chat"] #chatSection .chat-form {
+  flex: 0 0 52px !important;
   width: 100% !important;
   max-width: 100% !important;
-  min-height: 58px !important;
-  height: 58px !important;
-  margin: 10px 0 0 0 !important;
+  height: 52px !important;
+  min-height: 52px !important;
+  margin: 10px 0 0 !important;
   padding: 0 !important;
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 124px !important;
+  display: flex !important;
   align-items: center !important;
+  justify-content: center !important;
   gap: 12px !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
   position: relative !important;
-  top: auto !important;
-  bottom: auto !important;
-  left: auto !important;
-  right: auto !important;
+  inset: auto !important;
   transform: none !important;
   background: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  box-sizing: border-box !important;
 }
-
-body.is-authenticated[data-page="chat"] #chatInput.auth-input,
-body.is-authenticated[data-page="chat"] #chatSection .chat-form input#chatInput {
-  width: 100% !important;
+body.is-authenticated[data-page="chat"] #chatSection #chatInput {
+  flex: 1 1 auto !important;
+  width: auto !important;
   min-width: 0 !important;
-  height: 48px !important;
-  min-height: 48px !important;
-  max-height: 48px !important;
-  line-height: normal !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  max-height: 46px !important;
   margin: 0 !important;
   padding: 0 18px !important;
   display: block !important;
   align-self: center !important;
-  justify-self: stretch !important;
   position: static !important;
   transform: none !important;
   border-radius: 999px !important;
   box-sizing: border-box !important;
+  line-height: normal !important;
 }
-
-body.is-authenticated[data-page="chat"] #chatSection .chat-form button.auth-btn,
-body.is-authenticated[data-page="chat"] #chatSection .chat-form button.auth-btn.primary {
-  width: 124px !important;
-  min-width: 124px !important;
-  max-width: 124px !important;
-  height: 48px !important;
-  min-height: 48px !important;
-  max-height: 48px !important;
+body.is-authenticated[data-page="chat"] #chatSection .chat-form button {
+  flex: 0 0 118px !important;
+  width: 118px !important;
+  min-width: 118px !important;
+  max-width: 118px !important;
+  height: 46px !important;
+  min-height: 46px !important;
+  max-height: 46px !important;
   margin: 0 !important;
   padding: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   align-self: center !important;
-  justify-self: end !important;
   position: static !important;
   transform: none !important;
   border-radius: 999px !important;
-  line-height: 1 !important;
   box-sizing: border-box !important;
+  line-height: 1 !important;
 }
-
+body.is-authenticated[data-page="chat"] #chatSection .chat-note {
+  display: none !important;
+}
 @media (max-width: 700px) {
-  body.is-authenticated[data-page="chat"] #chatSection.chat-panel,
-  body.is-authenticated[data-page="chat"] section#chatSection {
-    width: calc(100vw - 18px) !important;
-    max-width: calc(100vw - 18px) !important;
+  body.is-authenticated[data-page="chat"] .poster { max-width: 100% !important; }
+  body.is-authenticated[data-page="chat"] #chatSection {
+    width: calc(100vw - 16px) !important;
     margin: 0 auto 12px !important;
     padding: 12px !important;
+    min-height: calc(100dvh - 106px) !important;
+    height: calc(100dvh - 106px) !important;
+    border-radius: 24px !important;
   }
-
-  body.is-authenticated[data-page="chat"] #chatList.chat-list,
-  body.is-authenticated[data-page="chat"] #chatSection .chat-list {
-    min-height: calc(100dvh - 250px) !important;
-    max-height: calc(100dvh - 250px) !important;
-    padding: 6px 2px 8px !important;
-  }
-
-  body.is-authenticated[data-page="chat"] #chatSection .chat-bubble-wrap {
-    max-width: 84% !important;
-  }
-
-  body.is-authenticated[data-page="chat"] #chatSection > .chat-form,
-  body.is-authenticated[data-page="chat"] section#chatSection > div.chat-form,
+  body.is-authenticated[data-page="chat"] #chatSection .chat-head { margin-bottom: 8px !important; }
+  body.is-authenticated[data-page="chat"] #chatSection #chatList,
+  body.is-authenticated[data-page="chat"] #chatSection .chat-list { padding: 6px 2px 8px !important; }
+  body.is-authenticated[data-page="chat"] #chatSection .chat-bubble-wrap { max-width: 82% !important; }
   body.is-authenticated[data-page="chat"] #chatSection .chat-form {
-    height: 50px !important;
-    min-height: 50px !important;
-    grid-template-columns: minmax(0, 1fr) 94px !important;
+    flex-basis: 48px !important;
+    height: 48px !important;
+    min-height: 48px !important;
     gap: 8px !important;
   }
-
-  body.is-authenticated[data-page="chat"] #chatInput.auth-input,
-  body.is-authenticated[data-page="chat"] #chatSection .chat-form input#chatInput {
-    height: 44px !important;
-    min-height: 44px !important;
-    max-height: 44px !important;
+  body.is-authenticated[data-page="chat"] #chatSection #chatInput {
+    height: 42px !important;
+    min-height: 42px !important;
+    max-height: 42px !important;
     padding: 0 14px !important;
   }
-
-  body.is-authenticated[data-page="chat"] #chatSection .chat-form button.auth-btn,
-  body.is-authenticated[data-page="chat"] #chatSection .chat-form button.auth-btn.primary {
-    width: 94px !important;
-    min-width: 94px !important;
-    max-width: 94px !important;
-    height: 44px !important;
-    min-height: 44px !important;
-    max-height: 44px !important;
+  body.is-authenticated[data-page="chat"] #chatSection .chat-form button {
+    flex-basis: 88px !important;
+    width: 88px !important;
+    min-width: 88px !important;
+    max-width: 88px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    max-height: 42px !important;
   }
 }
 </style>
-
-
-<script id="chat-input-unlock-v3">
+<script id="one-big-chat-final-script">
 (function(){
-  function unlockChatInput(){
-    var input = document.getElementById('chatInput');
-    var btn = document.querySelector('#chatSection .chat-form button');
-    if (input) { input.disabled = false; input.readOnly = false; }
-    if (btn) { btn.disabled = false; btn.removeAttribute('disabled'); }
+  function esc(s){return String(s == null ? '' : s).replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c];});}
+  function getUser(){return (window.auth && window.auth.currentUser) || window.currentUser || null;}
+  function getDb(){return window.db || null;}
+  function fmtTime(v){
+    try { if (v && typeof v.toDate === 'function') return v.toDate().toLocaleString('en-US',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}); } catch(e) {}
+    return '';
   }
-  document.addEventListener('click', function(e){
-    if (e.target && e.target.closest && e.target.closest('#chatSection .chat-form')) {
-      setTimeout(unlockChatInput, 300);
-      setTimeout(unlockChatInput, 900);
-    }
-  }, true);
-  document.addEventListener('keydown', function(e){
-    if (e.target && e.target.id === 'chatInput' && e.key === 'Enter') {
-      setTimeout(unlockChatInput, 300);
-      setTimeout(unlockChatInput, 900);
-    }
-  }, true);
-  window.addEventListener('load', unlockChatInput);
+  function initials(name){return String(name || 'T').trim().charAt(0).toUpperCase() || 'T';}
+  function avatar(name, photo, mine){
+    if (photo && /^data:image\//.test(photo)) return '<div class="chat-avatar has-photo"><img src="'+photo+'" alt=""></div>';
+    return '<div class="chat-avatar">'+esc(initials(name))+'</div>';
+  }
+  function applyChatLayout(){
+    var sec=document.getElementById('chatSection'), list=document.getElementById('chatList'), form=sec&&sec.querySelector('.chat-form'), input=document.getElementById('chatInput'), btn=form&&form.querySelector('button');
+    if(!sec) return;
+    sec.style.display='flex'; sec.style.flexDirection='column'; sec.style.overflow='hidden'; sec.style.boxSizing='border-box';
+    if(list){list.style.flex='1 1 auto'; list.style.minHeight='0'; list.style.overflowY='auto'; list.style.overflowX='hidden'; list.style.width='100%'; list.style.maxWidth='100%'; list.style.boxSizing='border-box';}
+    if(form){form.style.display='flex'; form.style.alignItems='center'; form.style.gap=(window.innerWidth<=700?'8px':'12px'); form.style.width='100%'; form.style.maxWidth='100%'; form.style.flex='0 0 '+(window.innerWidth<=700?'48px':'52px'); form.style.height=(window.innerWidth<=700?'48px':'52px'); form.style.margin='10px 0 0'; form.style.padding='0'; form.style.position='relative'; form.style.inset='auto'; form.style.transform='none'; form.style.boxSizing='border-box'; form.style.overflow='hidden';}
+    if(input){input.disabled=false; input.readOnly=false; input.style.flex='1 1 auto'; input.style.minWidth='0'; input.style.height=(window.innerWidth<=700?'42px':'46px'); input.style.minHeight=input.style.height; input.style.maxHeight=input.style.height; input.style.margin='0'; input.style.boxSizing='border-box';}
+    if(btn){btn.disabled=false; btn.style.flex='0 0 '+(window.innerWidth<=700?'88px':'118px'); btn.style.width=(window.innerWidth<=700?'88px':'118px'); btn.style.minWidth=btn.style.width; btn.style.maxWidth=btn.style.width; btn.style.height=(window.innerWidth<=700?'42px':'46px'); btn.style.minHeight=btn.style.height; btn.style.maxHeight=btn.style.height; btn.style.margin='0'; btn.style.padding='0'; btn.style.display='inline-flex'; btn.style.alignItems='center'; btn.style.justifyContent='center'; btn.style.boxSizing='border-box';}
+  }
+  function scrollBottom(){var list=document.getElementById('chatList'); if(list) list.scrollTop=list.scrollHeight;}
+  window.loadGlobalChat = function(){
+    applyChatLayout();
+    var box=document.getElementById('chatList'); if(!box) return;
+    var db=getDb(), user=getUser();
+    if(!db || !user){box.innerHTML='<div class="leaderboard-empty">Chat ашиглахын тулд login хийнэ үү.</div>'; return;}
+    try{ if(window.chatUnsubscribe){ window.chatUnsubscribe(); window.chatUnsubscribe=null; } }catch(e){}
+    box.innerHTML='<div class="leaderboard-empty">Chat ачааллаж байна...</div>';
+    window.chatUnsubscribe = db.collection('global_chat').doc('main').collection('messages').orderBy('createdAt','asc').limitToLast(100).onSnapshot(function(snap){
+      var current=getUser();
+      if(!snap || snap.empty){ box.innerHTML='<div class="leaderboard-empty">Одоогоор message байхгүй байна.</div>'; applyChatLayout(); return; }
+      var rows=[];
+      snap.forEach(function(doc){
+        var d=doc.data()||{}, name=d.name||'Trader', mine=!!(current && d.uid===current.uid), time=fmtTime(d.createdAt), text=esc(d.text||'');
+        rows.push('<div class="chat-row '+(mine?'mine':'theirs')+'">'+(mine?'':avatar(name,d.photoData,false))+'<div class="chat-bubble-wrap"><div class="chat-meta">'+(mine?'<div class="chat-message-time">'+esc(time)+'</div><div class="chat-message-name">Та</div>':'<div class="chat-message-name">'+esc(name)+'</div><div class="chat-message-time">'+esc(time)+'</div>')+'</div><div class="chat-message"><div class="chat-message-text">'+text+'</div></div></div>'+(mine?avatar(name,d.photoData,true):'')+'</div>');
+      });
+      box.innerHTML=rows.join(''); applyChatLayout(); requestAnimationFrame(scrollBottom);
+    }, function(err){ console.warn('live chat error',err); box.innerHTML='<div class="leaderboard-empty">Chat уншихад алдаа гарлаа: '+esc(err && err.message || 'permission')+'</div>'; applyChatLayout(); });
+  };
+  window.sendGlobalChatMessage = async function(){
+    var input=document.getElementById('chatInput'); if(!input) return;
+    var db=getDb(), user=getUser();
+    if(!db || !user){ alert('Chat бичихийн тулд login хийнэ үү.'); return; }
+    var text=String(input.value||'').trim(); if(!text) return; if(text.length>300){ alert('Message 300 тэмдэгтээс урт байж болохгүй.'); return; }
+    input.value=''; input.disabled=false; input.readOnly=false; applyChatLayout();
+    try{
+      await db.collection('global_chat').doc('main').collection('messages').add({uid:user.uid,name:user.displayName||user.email||'Trader',text:text,createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+      input.focus(); scrollBottom();
+    }catch(e){ input.value=text; alert((e&&e.message)||'Message илгээхэд алдаа гарлаа.'); }
+    finally{ input.disabled=false; input.readOnly=false; applyChatLayout(); }
+  };
+  var oldShow=window.showPage;
+  if(typeof oldShow==='function'){
+    window.showPage=function(page){ var r=oldShow.apply(this,arguments); if(page==='chat'){ setTimeout(function(){applyChatLayout(); window.loadGlobalChat();},30); } return r; };
+  }
+  document.addEventListener('keydown',function(e){ if(e.target && e.target.id==='chatInput' && e.key==='Enter'){ e.preventDefault(); window.sendGlobalChatMessage(); } },true);
+  window.addEventListener('resize',function(){ setTimeout(applyChatLayout,50); });
+  window.addEventListener('load',function(){ setTimeout(function(){applyChatLayout(); if(document.body.dataset.page==='chat') window.loadGlobalChat();},300); });
 })();
 </script>
 
