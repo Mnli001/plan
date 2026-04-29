@@ -2877,6 +2877,44 @@
     will-change: transform, opacity, filter;
   }
 
+
+/* ===== FINAL FIX 2026-04-29: leaderboard/chat/avatar/level color ===== */
+html, body { overflow-x: hidden !important; overflow-y: auto !important; }
+.poster { overflow: visible !important; }
+@media (max-width: 700px) {
+  .leaderboard-row { display: grid !important; grid-template-columns: minmax(0, 1fr) auto !important; align-items: center !important; gap: 10px 12px !important; }
+  .leaderboard-identity { min-width: 0 !important; grid-column: 1 / 2 !important; }
+  .leaderboard-balance { grid-column: 2 / 3 !important; justify-self: end !important; align-self: center !important; text-align: right !important; white-space: nowrap !important; min-width: max-content !important; font-size: 14px !important; }
+  .leaderboard-record { grid-column: 1 / -1 !important; text-align: left !important; padding-left: 84px !important; margin-top: -4px !important; }
+}
+.leaderboard-avatar, .chat-avatar, .idea-avatar, .profile-avatar-shell .idea-avatar { overflow: hidden !important; flex: 0 0 auto !important; }
+.leaderboard-avatar.has-photo, .chat-avatar.has-photo, .idea-avatar.has-photo { padding: 0 !important; background: rgba(255,255,255,0.06) !important; }
+.leaderboard-avatar.has-photo img, .chat-avatar.has-photo img, .idea-avatar.has-photo img { width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important; }
+.trading-table tr.tr-taken td { background: linear-gradient(90deg, rgba(0,245,160,0.46), rgba(0,245,160,0.16), rgba(255,255,255,0.045)) !important; border-top-color: rgba(0,245,160,0.72) !important; border-bottom-color: rgba(0,245,160,0.58) !important; }
+.trading-table tr.tr-taken td:first-child { border-left-color: rgba(0,245,160,0.62) !important; }
+.trading-table tr.tr-taken td:last-child { border-right-color: rgba(0,245,160,0.62) !important; }
+.trading-table tr.tr-loss td { background: linear-gradient(90deg, rgba(255,93,115,0.52), rgba(255,93,115,0.18), rgba(255,255,255,0.045)) !important; border-top-color: rgba(255,93,115,0.78) !important; border-bottom-color: rgba(255,93,115,0.62) !important; }
+.trading-table tr.tr-loss td:first-child { border-left-color: rgba(255,93,115,0.68) !important; }
+.trading-table tr.tr-loss td:last-child { border-right-color: rgba(255,93,115,0.68) !important; }
+.trading-table tr.tr-current td { background: linear-gradient(90deg, rgba(255,215,0,0.44), rgba(255,215,0,0.16), rgba(0,245,160,0.10)) !important; border-top-color: rgba(255,215,0,0.78) !important; border-bottom-color: rgba(255,215,0,0.62) !important; }
+.trading-table tr.tr-current td:first-child { border-left-color: rgba(255,215,0,0.72) !important; }
+.trading-table tr.tr-current td:last-child { border-right-color: rgba(255,215,0,0.72) !important; }
+@media (max-width: 700px) {
+  .trading-table tr.tr-taken { background: linear-gradient(135deg, rgba(0,245,160,0.36), rgba(0,245,160,0.12), rgba(255,255,255,0.045)) !important; border-color: rgba(0,245,160,0.64) !important; box-shadow: 0 16px 38px rgba(0,0,0,0.26), inset 0 0 0 1px rgba(0,245,160,0.20), inset 0 1px 0 rgba(255,255,255,0.18) !important; }
+  .trading-table tr.tr-loss { background: linear-gradient(135deg, rgba(255,93,115,0.40), rgba(255,93,115,0.14), rgba(255,255,255,0.045)) !important; border-color: rgba(255,93,115,0.66) !important; box-shadow: 0 16px 38px rgba(0,0,0,0.26), inset 0 0 0 1px rgba(255,93,115,0.20), inset 0 1px 0 rgba(255,255,255,0.18) !important; }
+  .trading-table tr.tr-current { background: linear-gradient(135deg, rgba(255,215,0,0.40), rgba(255,215,0,0.15), rgba(0,245,160,0.08)) !important; border-color: rgba(255,215,0,0.78) !important; box-shadow: 0 18px 48px rgba(0,0,0,0.30), 0 0 34px rgba(255,215,0,0.18), inset 0 0 0 1px rgba(255,215,0,0.24), inset 0 1px 0 rgba(255,255,255,0.24) !important; }
+  .trading-table tr.tr-current td, .trading-table tr.tr-taken td, .trading-table tr.tr-loss td { background: transparent !important; }
+}
+.chat-row.theirs .chat-message::after, .chat-row.mine .chat-message::after { display: none !important; content: none !important; }
+.chat-panel { overflow: visible !important; }
+.chat-list { overscroll-behavior: contain !important; -webkit-overflow-scrolling: touch !important; padding-bottom: 12px !important; }
+.chat-form { position: sticky !important; bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important; z-index: 20 !important; border-radius: 22px !important; padding: 10px !important; background: rgba(8,11,12,0.82) !important; border: 1px solid rgba(255,255,255,0.10) !important; box-shadow: 0 -12px 34px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.10) !important; }
+@media (max-width: 700px) {
+  .chat-panel { min-height: calc(100dvh - 150px) !important; }
+  .chat-list { max-height: calc(100dvh - 290px) !important; min-height: 260px !important; overflow-y: auto !important; }
+  .chat-form { grid-template-columns: minmax(0, 1fr) auto !important; bottom: calc(82px + env(safe-area-inset-bottom, 0px)) !important; }
+}
+
 </style>
 
 <style id="ultra-luxury-upgrade">
@@ -5848,6 +5886,93 @@ service cloud.firestore {
       });
     }, { passive: true, capture: true });
   })();
+
+/* ===== FINAL FIX 2026-04-29: robust leaderboard/chat/profile avatars ===== */
+(function installFinalLeaderboardChatFix(){
+  const LB_TIMEOUT_MS = 6500;
+  const PROFILE_CACHE_KEY = 'alt_public_profile_cache_v3';
+  function readPublicProfileCache(){ try { return JSON.parse(localStorage.getItem(PROFILE_CACHE_KEY) || '{}') || {}; } catch (_) { return {}; } }
+  function writePublicProfileCache(cache){ try { localStorage.setItem(PROFILE_CACHE_KEY, JSON.stringify(cache || {})); } catch (_) {} }
+  function cachePublicProfile(uid, data){ if (!uid || !data) return; const cache = readPublicProfileCache(); const old = cache[uid] || {}; cache[uid] = { name: String(data.name || old.name || 'Trader'), photoData: (typeof getSafePhotoData === 'function' ? getSafePhotoData(data.photoData || old.photoData || '') : (data.photoData || old.photoData || '')), updatedAt: Date.now() }; writePublicProfileCache(cache); }
+  function getCachedPublicProfile(uid){ return uid ? (readPublicProfileCache()[uid] || {}) : {}; }
+  function timeoutPromise(ms, label){ return new Promise((_, reject) => setTimeout(() => reject(new Error(label || 'timeout')), ms)); }
+  function withTimeout(promise, ms, label){ return Promise.race([promise, timeoutPromise(ms, label)]); }
+  function safePhoto(value){ return typeof getSafePhotoData === 'function' ? getSafePhotoData(value || '') : (typeof value === 'string' ? value : ''); }
+  function safeName(value){ const s = String(value || '').trim(); return s || 'Trader'; }
+  function esc(value){ return typeof escapeHTML === 'function' ? escapeHTML(value) : String(value || '').replace(/[&<>\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c])); }
+  function escapeAttr(value){ return String(value || '').replace(/&/g, '&amp;').replace(/\"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+  function firstLetter(name){ return esc((safeName(name)[0] || 'T').toUpperCase()); }
+
+  window.getAvatarMarkup = function(name, photoData, className = 'idea-avatar', uid = '') {
+    const cached = uid ? getCachedPublicProfile(uid) : {};
+    const displayName = safeName(name || cached.name || 'Trader');
+    const src = safePhoto(photoData || cached.photoData || '');
+    const cleanClass = String(className || 'idea-avatar').replace(/[^a-zA-Z0-9_-]/g, '') || 'idea-avatar';
+    const uidAttr = uid ? ` data-avatar-uid="${escapeAttr(uid)}"` : '';
+    const letter = firstLetter(displayName);
+    if (src) return `<div class="${cleanClass} has-photo"${uidAttr} data-avatar-name="${escapeAttr(displayName)}" data-avatar-letter="${letter}"><img src="${escapeAttr(src)}" alt="${escapeAttr(displayName)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.remove('has-photo'); this.remove(); this.parentElement.textContent=this.parentElement.getAttribute('data-avatar-letter')||'T';" /></div>`;
+    return `<div class="${cleanClass}"${uidAttr} data-avatar-name="${escapeAttr(displayName)}" data-avatar-letter="${letter}">${letter}</div>`;
+  };
+
+  async function fetchUserProfile(uid){
+    if (!uid || !window.db) return null;
+    const cached = getCachedPublicProfile(uid);
+    if (cached.photoData && Date.now() - Number(cached.updatedAt || 0) < 600000) return cached;
+    try {
+      const snap = await withTimeout(db.collection('users').doc(uid).get(), 4500, 'profile timeout');
+      if (!snap.exists) return cached || null;
+      const data = snap.data() || {};
+      const profile = { name: safeName(data.name || cached.name || 'Trader'), photoData: safePhoto(data.photoData || cached.photoData || '') };
+      cachePublicProfile(uid, profile); return profile;
+    } catch (_) { return cached || null; }
+  }
+  async function hydrateAvatars(root = document){
+    const nodes = Array.from(root.querySelectorAll('[data-avatar-uid]'));
+    const uids = [...new Set(nodes.map(n => n.getAttribute('data-avatar-uid')).filter(Boolean))].slice(0, 60);
+    await Promise.all(uids.map(async uid => { const profile = await fetchUserProfile(uid); if (!profile || !profile.photoData) return; document.querySelectorAll(`[data-avatar-uid="${CSS.escape(uid)}"]`).forEach(node => { if (node.classList.contains('has-photo')) return; const cls = Array.from(node.classList).find(c => /avatar/.test(c)) || 'idea-avatar'; node.outerHTML = window.getAvatarMarkup(profile.name || node.getAttribute('data-avatar-name') || 'Trader', profile.photoData, cls, uid); }); }));
+  }
+  function renderLeaderboardRows(docs){
+    let rank = 0;
+    return docs.map(item => { rank++; const data = item.data || {}; const uid = item.id; const cached = getCachedPublicProfile(uid); const name = safeName(data.name || cached.name || 'Trader'); const photo = safePhoto(data.photoData || cached.photoData || ''); const isMe = window.currentUser && uid === currentUser.uid; const profit = Number(data.netProfit || 0); return `
+      <div class="leaderboard-row ${isMe ? 'my-rank' : ''}">
+        <div class="leaderboard-identity"><div class="leaderboard-rank-text">#${rank}</div>${window.getAvatarMarkup(name, photo, 'leaderboard-avatar', uid)}<div class="leaderboard-name"><strong>${esc(name)}</strong><span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span></div></div>
+        <div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${typeof formatMoney === 'function' ? formatMoney(profit) : '$' + profit.toFixed(2)}</div>
+        <div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div>
+      </div>`; }).join('');
+  }
+  window.loadLeaderboard = async function(){
+    const box = document.getElementById('leaderboardList'); if (!box) return;
+    if (!window.firebaseReady || !window.db) { box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>'; return; }
+    box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>';
+    if (window.currentUser && Number(window.START || 0) > 0 && typeof saveLeaderboardStats === 'function') Promise.resolve().then(() => saveLeaderboardStats()).catch(err => console.warn('background leaderboard save failed:', err));
+    try {
+      const col = db.collection(typeof getLeaderboardCollectionName === 'function' ? getLeaderboardCollectionName() : 'leaderboard');
+      const snap = await withTimeout(col.limit(60).get(), LB_TIMEOUT_MS, 'Leaderboard timeout');
+      if (!snap || snap.empty) { box.innerHTML = '<div class="leaderboard-empty">Энэ сарын leaderboard хоосон байна. Start balance сонгоод trade дарахад энд гарна.</div>'; return; }
+      const docs = []; snap.forEach(doc => docs.push({ id: doc.id, data: doc.data() || {} }));
+      docs.sort((a, b) => Number(b.data.netProfit || 0) - Number(a.data.netProfit || 0));
+      const top = docs.slice(0, 20); top.forEach(item => cachePublicProfile(item.id, { name: item.data.name, photoData: item.data.photoData }));
+      box.innerHTML = renderLeaderboardRows(top); hydrateAvatars(box);
+    } catch (error) { console.warn('Leaderboard унших боломжгүй байна:', error); box.innerHTML = `<div class="leaderboard-empty">Leaderboard удаан ачаалж байна эсвэл Firestore rules/index хааж байна. Refresh дараад дахин шалга. Алдаа: ${esc(error.message || 'timeout')}</div>`; }
+  };
+  function scrollChatToBottomNow(){ const box = document.getElementById('chatList'); if (box) box.scrollTop = box.scrollHeight; }
+  window.loadGlobalChat = function(){
+    const box = document.getElementById('chatList'); if (!box) return;
+    if (!window.firebaseReady || !window.db || !window.currentUser) { box.innerHTML = '<div class="leaderboard-empty">Chat ашиглахын тулд login хийнэ үү.</div>'; return; }
+    try { if (window.chatUnsubscribe) { window.chatUnsubscribe(); window.chatUnsubscribe = null; } } catch (_) {}
+    box.innerHTML = '<div class="leaderboard-empty">Chat ачааллаж байна...</div>';
+    window.chatUnsubscribe = db.collection('global_chat').doc('main').collection('messages').orderBy('createdAt', 'asc').limitToLast(80).onSnapshot((snap) => {
+      if (snap.empty) { box.innerHTML = '<div class="leaderboard-empty">Одоогоор message байхгүй байна.</div>'; return; }
+      const rows = []; snap.forEach(doc => { const data = doc.data() || {}; const uid = data.uid || ''; const cached = getCachedPublicProfile(uid); const name = safeName(data.name || cached.name || 'Trader'); const photo = safePhoto(data.photoData || cached.photoData || ''); if (uid) cachePublicProfile(uid, { name, photoData: photo }); const isMine = window.currentUser && uid === currentUser.uid; const safeTime = typeof formatChatTime === 'function' ? formatChatTime(data.createdAt) : ''; rows.push(`<div class="chat-row ${isMine ? 'mine' : 'theirs'}">${window.getAvatarMarkup(name, photo, 'chat-avatar', uid)}<div class="chat-bubble-wrap"><div class="chat-meta">${isMine ? `<div class="chat-message-time">${esc(safeTime)}</div><div class="chat-message-name">Та</div>` : `<div class="chat-message-name">${esc(name)}</div><div class="chat-message-time">${esc(safeTime)}</div>`}</div><div class="chat-message"><div class="chat-message-text">${esc(data.text || '')}</div></div></div></div>`); });
+      box.innerHTML = rows.join(''); hydrateAvatars(box); requestAnimationFrame(scrollChatToBottomNow);
+    }, (error) => { console.warn('Chat уншихад алдаа:', error); box.innerHTML = '<div class="leaderboard-empty">Chat уншихад permission/index алдаа гарлаа. Firestore rules шалгаарай.</div>'; });
+  };
+  document.addEventListener('focusin', function(e){ if (e.target && e.target.id === 'chatInput') setTimeout(() => { const form = document.querySelector('.chat-form'); if (form) form.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); scrollChatToBottomNow(); }, 120); });
+  const oldSend = window.sendGlobalChatMessage;
+  window.sendGlobalChatMessage = async function(){ if (window.currentUser) { try { cachePublicProfile(currentUser.uid, { name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : 'Trader', photoData: typeof getPhotoForCurrentUser === 'function' ? getPhotoForCurrentUser() : '' }); } catch (_) {} } return oldSend ? oldSend.apply(this, arguments) : undefined; };
+  document.addEventListener('click', function(){ setTimeout(() => hydrateAvatars(document), 250); }, true);
+  window.addEventListener('load', function(){ setTimeout(() => hydrateAvatars(document), 500); });
+})();
 </script>
 
 </body>
