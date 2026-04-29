@@ -7108,5 +7108,362 @@ body.is-authenticated[data-page="chat"] .chat-avatar {
 })();
 </script>
 
+
+
+<style id="clean-chat-final-v3">
+/* CLEAN CHAT V3: centered panel, stable input, real live chat */
+body.is-authenticated[data-page="chat"] .page-title-card,
+body.is-authenticated[data-page="chat"] .header {
+  display: none !important;
+}
+body.is-authenticated[data-page="chat"] .poster {
+  max-width: 980px !important;
+  width: min(980px, calc(100vw - 24px)) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-top: 14px !important;
+  overflow: visible !important;
+}
+body.is-authenticated[data-page="chat"] #chatSection.chat-panel,
+body.is-authenticated[data-page="chat"] .chat-panel#chatSection {
+  width: min(760px, calc(100vw - 34px)) !important;
+  max-width: min(760px, calc(100vw - 34px)) !important;
+  height: min(680px, calc(100dvh - 132px)) !important;
+  min-height: 500px !important;
+  max-height: calc(100dvh - 132px) !important;
+  margin: 0 auto 18px auto !important;
+  padding: 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  top: auto !important;
+  transform: none !important;
+  overflow: hidden !important;
+  border-radius: 30px !important;
+  box-sizing: border-box !important;
+}
+body.is-authenticated[data-page="chat"] .chat-head {
+  flex: 0 0 auto !important;
+  margin: 0 0 10px 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-head .soft-btn {
+  min-width: 92px !important;
+  min-height: 42px !important;
+}
+body.is-authenticated[data-page="chat"] #chatList.chat-list,
+body.is-authenticated[data-page="chat"] .chat-list#chatList {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  width: 100% !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 8px 8px 12px !important;
+  margin: 0 !important;
+  scroll-behavior: smooth !important;
+  overscroll-behavior: contain !important;
+  box-sizing: border-box !important;
+}
+body.is-authenticated[data-page="chat"] .chat-form {
+  flex: 0 0 auto !important;
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 104px !important;
+  gap: 12px !important;
+  align-items: center !important;
+  margin: 10px 0 0 !important;
+  padding: 12px 0 0 !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  background: transparent !important;
+  border-top: 1px solid rgba(255,255,255,.10) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body.is-authenticated[data-page="chat"] .chat-form .auth-input {
+  width: 100% !important;
+  height: 52px !important;
+  min-height: 52px !important;
+  border-radius: 999px !important;
+  padding: 0 18px !important;
+  box-sizing: border-box !important;
+}
+body.is-authenticated[data-page="chat"] .chat-form .auth-btn,
+body.is-authenticated[data-page="chat"] .chat-form .auth-btn.primary {
+  width: 104px !important;
+  min-width: 104px !important;
+  height: 52px !important;
+  min-height: 52px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-row {
+  width: 100% !important;
+  display: flex !important;
+  gap: 8px !important;
+  align-items: flex-end !important;
+  margin: 7px 0 !important;
+  box-sizing: border-box !important;
+}
+body.is-authenticated[data-page="chat"] .chat-row.mine { justify-content: flex-end !important; }
+body.is-authenticated[data-page="chat"] .chat-row.theirs { justify-content: flex-start !important; }
+body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
+  width: auto !important;
+  max-width: min(430px, 70%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+body.is-authenticated[data-page="chat"] .chat-row.mine .chat-bubble-wrap { align-items: flex-end !important; }
+body.is-authenticated[data-page="chat"] .chat-row.theirs .chat-bubble-wrap { align-items: flex-start !important; }
+body.is-authenticated[data-page="chat"] .chat-message {
+  width: fit-content !important;
+  max-width: 100% !important;
+  padding: 10px 13px !important;
+  border-radius: 18px !important;
+  overflow-wrap: anywhere !important;
+}
+body.is-authenticated[data-page="chat"] .chat-message::after,
+body.is-authenticated[data-page="chat"] .chat-row.mine .chat-message::after,
+body.is-authenticated[data-page="chat"] .chat-row.theirs .chat-message::after {
+  display: none !important;
+  content: none !important;
+}
+body.is-authenticated[data-page="chat"] .chat-message-text {
+  font-size: 13px !important;
+  line-height: 1.38 !important;
+}
+body.is-authenticated[data-page="chat"] .chat-avatar {
+  width: 32px !important;
+  height: 32px !important;
+  flex: 0 0 32px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-note {
+  display: none !important;
+}
+.clean-chat-status {
+  color: rgba(255,249,215,.58);
+  font-size: 11px;
+  font-weight: 800;
+  margin-top: 3px;
+}
+.clean-chat-empty {
+  margin: auto;
+  padding: 16px;
+  border-radius: 18px;
+  color: rgba(255,249,215,.68);
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.09);
+  text-align: center;
+  font-weight: 800;
+}
+@media (max-width: 700px) {
+  body.is-authenticated[data-page="chat"] .poster {
+    width: calc(100vw - 10px) !important;
+    max-width: calc(100vw - 10px) !important;
+    padding-top: 6px !important;
+  }
+  body.is-authenticated[data-page="chat"] #chatSection.chat-panel,
+  body.is-authenticated[data-page="chat"] .chat-panel#chatSection {
+    width: calc(100vw - 14px) !important;
+    max-width: calc(100vw - 14px) !important;
+    height: calc(100dvh - 96px) !important;
+    min-height: 0 !important;
+    max-height: calc(100dvh - 96px) !important;
+    margin: 0 auto 8px !important;
+    padding: 12px !important;
+    border-radius: 22px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-head {
+    margin-bottom: 6px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-form {
+    grid-template-columns: minmax(0, 1fr) 84px !important;
+    gap: 9px !important;
+    margin-top: 8px !important;
+    padding-top: 10px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-form .auth-input,
+  body.is-authenticated[data-page="chat"] .chat-form .auth-btn,
+  body.is-authenticated[data-page="chat"] .chat-form .auth-btn.primary {
+    height: 48px !important;
+    min-height: 48px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-form .auth-btn,
+  body.is-authenticated[data-page="chat"] .chat-form .auth-btn.primary {
+    width: 84px !important;
+    min-width: 84px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
+    max-width: 76% !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-message-text {
+    font-size: 13px !important;
+  }
+}
+</style>
+
+<script id="clean-live-chat-final-v3">
+(function(){
+  'use strict';
+  var CHAT_ROOT = 'global_chat';
+  var CHAT_DOC = 'main';
+  var CHAT_SUB = 'messages';
+  var unsub = null;
+  var started = false;
+  var lastCount = 0;
+
+  function box(){ return document.getElementById('chatList'); }
+  function input(){ return document.getElementById('chatInput'); }
+  function section(){ return document.getElementById('chatSection'); }
+  function esc(v){
+    if (typeof escapeHTML === 'function') return escapeHTML(String(v == null ? '' : v));
+    return String(v == null ? '' : v).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; });
+  }
+  function nameOf(){
+    try { if (typeof getDisplayNameForCurrentUser === 'function') return getDisplayNameForCurrentUser(); } catch(_) {}
+    return (window.currentUser && (window.currentUser.displayName || window.currentUser.email)) || (typeof currentUser !== 'undefined' && currentUser && (currentUser.displayName || currentUser.email)) || 'Trader';
+  }
+  function uidOf(){
+    return (window.currentUser && window.currentUser.uid) || (typeof currentUser !== 'undefined' && currentUser && currentUser.uid) || '';
+  }
+  function ready(){
+    var localReady = false;
+    try { localReady = !!(firebaseReady && db && currentUser); } catch(_) {}
+    return !!(localReady || (window.firebaseReady && window.db && window.currentUser));
+  }
+  function dbObj(){ try { return db || window.db; } catch(_) { return window.db; } }
+  function userObj(){ try { return currentUser || window.currentUser; } catch(_) { return window.currentUser; } }
+  function scrollBottom(){ var el = box(); if (el) el.scrollTop = el.scrollHeight; }
+  function ensureStatus(text){
+    var head = document.querySelector('#chatSection .chat-head > div');
+    if (!head) return;
+    var s = head.querySelector('.clean-chat-status');
+    if (!s) { s = document.createElement('div'); s.className='clean-chat-status'; head.appendChild(s); }
+    s.textContent = text || 'Live';
+  }
+  function avatar(name, photo, cls){
+    try {
+      if (typeof window.getAvatarMarkup === 'function') return window.getAvatarMarkup(name || 'Trader', photo || '', cls || 'chat-avatar', '');
+    } catch(_) {}
+    var initial = esc(String(name || 'T').trim().charAt(0).toUpperCase() || 'T');
+    return '<div class="'+(cls||'chat-avatar')+'">'+initial+'</div>';
+  }
+  function row(d){
+    var u = userObj();
+    var mine = u && d.uid === u.uid;
+    var nm = d.name || 'Trader';
+    var time = '';
+    try { time = typeof formatChatTime === 'function' ? formatChatTime(d.createdAt) : ''; } catch(_) {}
+    return '<div class="chat-row '+(mine?'mine':'theirs')+'">'+
+      (mine ? '' : avatar(nm, '', 'chat-avatar'))+
+      '<div class="chat-bubble-wrap"><div class="chat-meta">'+
+      (mine ? '<div class="chat-message-time">'+esc(time)+'</div><div class="chat-message-name">Та</div>' : '<div class="chat-message-name">'+esc(nm)+'</div><div class="chat-message-time">'+esc(time)+'</div>')+
+      '</div><div class="chat-message"><div class="chat-message-text">'+esc(d.text || '')+'</div></div></div>'+
+      (mine ? avatar(nm, '', 'chat-avatar') : '')+
+      '</div>';
+  }
+  function render(snap){
+    var el = box(); if (!el) return;
+    var nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 90;
+    var arr = [];
+    snap.forEach(function(doc){ arr.push(doc.data() || {}); });
+    if (!arr.length) {
+      el.innerHTML = '<div class="clean-chat-empty">Одоогоор message байхгүй байна.</div>';
+      ensureStatus('Live · message байхгүй');
+      return;
+    }
+    el.innerHTML = arr.map(row).join('');
+    ensureStatus('Live · автоматаар шинэчлэгдэнэ');
+    if (nearBottom || arr.length > lastCount) requestAnimationFrame(scrollBottom);
+    lastCount = arr.length;
+  }
+
+  window.stopGlobalChatLive = function(){
+    try { if (unsub) unsub(); } catch(_) {}
+    unsub = null; started = false;
+  };
+
+  window.loadGlobalChat = function(force){
+    var el = box(); if (!el) return;
+    ensureStatus('Live холбогдож байна...');
+    if (!ready()) {
+      el.innerHTML = '<div class="clean-chat-empty">Chat ашиглахын тулд login хийнэ үү.</div>';
+      ensureStatus('Login шаардлагатай');
+      return;
+    }
+    if (started && unsub && !force) { scrollBottom(); return; }
+    window.stopGlobalChatLive();
+    started = true;
+    el.innerHTML = '<div class="clean-chat-empty">Live chat холбогдож байна...</div>';
+    try {
+      unsub = dbObj().collection(CHAT_ROOT).doc(CHAT_DOC).collection(CHAT_SUB)
+        .orderBy('createdAt', 'asc')
+        .limitToLast(100)
+        .onSnapshot(function(snap){ render(snap); }, function(err){
+          console.warn('chat live error', err);
+          started = false; unsub = null;
+          el.innerHTML = '<div class="clean-chat-empty">Chat уншихад алдаа гарлаа: '+esc(err && err.message ? err.message : err)+'</div>';
+          ensureStatus('Disconnected');
+        });
+    } catch(e) {
+      started = false; unsub = null;
+      el.innerHTML = '<div class="clean-chat-empty">Chat эхлүүлэхэд алдаа: '+esc(e && e.message ? e.message : e)+'</div>';
+      ensureStatus('Disconnected');
+    }
+  };
+
+  window.sendGlobalChatMessage = async function(){
+    var el = input();
+    if (!el) return;
+    if (!ready()) { alert('Chat бичихийн тулд login хийнэ үү.'); return; }
+    var text = String(el.value || '').trim();
+    if (!text) return;
+    if (text.length > 300) { alert('Message 300 тэмдэгтээс урт байж болохгүй.'); return; }
+    el.value = '';
+    el.focus();
+    // Never disable the input. This fixes the “one message only” bug.
+    try {
+      await dbObj().collection(CHAT_ROOT).doc(CHAT_DOC).collection(CHAT_SUB).add({
+        uid: uidOf(),
+        name: nameOf(),
+        text: text,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      setTimeout(scrollBottom, 80);
+    } catch(e) {
+      el.value = text;
+      console.warn('send chat failed', e);
+      alert('Message илгээхэд алдаа: ' + ((e && e.message) ? e.message : e));
+    }
+  };
+
+  document.addEventListener('keydown', function(e){
+    if (e.target && e.target.id === 'chatInput' && e.key === 'Enter') {
+      e.preventDefault();
+      window.sendGlobalChatMessage();
+    }
+  }, true);
+
+  var oldShow = window.showPage;
+  window.showPage = function(page){
+    var r = oldShow ? oldShow.apply(this, arguments) : undefined;
+    if (page === 'chat') setTimeout(function(){ window.loadGlobalChat(false); scrollBottom(); }, 80);
+    return r;
+  };
+
+  window.addEventListener('resize', function(){ if (document.body.dataset.page === 'chat') setTimeout(scrollBottom, 80); });
+  window.addEventListener('load', function(){ if (document.body.dataset.page === 'chat') setTimeout(function(){ window.loadGlobalChat(false); }, 300); });
+})();
+</script>
+
 </body>
 </html>
