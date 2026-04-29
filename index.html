@@ -2151,14 +2151,14 @@
         <button class="auth-btn primary idea-create-btn" onclick="openIdeaComposer()">+ Post хийх</button>
         <div>
           <div class="auth-kicker">IDEA BOARD</div>
-          <div class="auth-title">Post / зурагтай санаанууд</div>
+          <div class="auth-title">Post</div>
         </div>
       </div>
       <button class="soft-btn" onclick="loadIdeaFeed()">Refresh</button>
     </div>
 
     <div class="idea-feed" id="ideaFeed">
-      <div class="idea-feed-empty">Idea feed ачааллаж байна...</div>
+      <div class="idea-feed-empty">Refresh хийгдэж байна...</div>
     </div>
   </section>
 
@@ -2250,7 +2250,7 @@
           <div class="profile-upload-preview" id="profileUploadPreview"><span>👤</span></div>
           <div class="profile-upload-meta">
             <div class="profile-upload-kicker">Profile image</div>
-            <div class="mini-upload-note">Luxury feed дээр post, comment, profile хэсэгт энэ зураг харагдана.</div>
+            <div class="mini-upload-note">Post, comment, profile хэсэгт энэ зураг харагдана.</div>
             <div class="mini-avatar-actions">
               <button class="soft-btn" type="button" onclick="document.getElementById('profileAvatarInput').click()">Зураг upload</button>
               <button class="soft-btn" type="button" onclick="clearProfileAvatar()">Хасах</button>
@@ -2329,6 +2329,7 @@
   const LEADERBOARD_PREFIX = 'leaderboard_monthly';
   const ADMIN_RESET_TOKEN_KEY = 'xauusd_admin_reset_token_v1';
   const CHALLENGE_MONTH_LOCAL_KEY = 'xauusd_challenge_month_key_v1';
+  const PROFILE_CACHE_PREFIX = 'xauusd_profile_cache_v1';
   let activeLeaderboardMonthKey = '';
   let ideaUnsubscribe = null;
   let ideaSelectedImageData = '';
@@ -2857,7 +2858,47 @@
   window.resetOnlyProgress = function() { if (!confirm('Зөвхөн progress reset хийх үү? Balance хэвээр, history хэвээр үлдэнэ.')) return; outcomes = new Array(9).fill(null); saveProgress(); render(); showPage('home'); };
   window.resetEverything = function() { if (!confirm('Progress + history бүгд reset хийх үү? Balance хэвээр үлдэнэ.')) return; outcomes = new Array(9).fill(null); tradeHistory = []; try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(HISTORY_KEY); localStorage.removeItem(REVENGE_KEY); } catch (_) {} revengeUntil = 0; saveProgress(); render(); showPage('home'); };
 
-  function render() { renderTable(); bindButtons(); renderProStats(); updateNextTradeSummary(); renderHistory(); updateRevengeLock(); renderProfile(); }
+  function updateNextTradeSummary() {
+    const summaryBalance = document.getElementById('summaryBalance');
+    const summaryRisk = document.getElementById('summaryRisk');
+    const summaryProfit = document.getElementById('summaryProfit');
+    const summaryLot = document.getElementById('summaryLot');
+    const summaryNote = document.getElementById('summaryNote');
+    const nextLevelPill = document.getElementById('nextLevelPill');
+    if (!summaryBalance || !summaryRisk || !summaryProfit || !summaryLot || !summaryNote || !nextLevelPill) return;
+
+    const { levels, finalBalance } = compute();
+    let nextLevel = levels.find(l => l.outcome === null);
+
+    if (!nextLevel) {
+      if (finalBalance >= TARGET) {
+        nextLevelPill.textContent = 'Complete';
+        summaryBalance.textContent = formatMoney(finalBalance);
+        summaryRisk.textContent = formatMoney(0);
+        summaryProfit.textContent = formatMoney(0);
+        summaryLot.textContent = '0.00';
+        summaryNote.textContent = 'Challenge дууссан байна. Дараагийн trade хийхээс өмнө шинэ cycle эсвэл шинэ start balance сонгоно уу.';
+        return;
+      }
+      nextLevel = projectLevelFromBalance(levels.length, finalBalance);
+    }
+
+    const levelNo = Number(nextLevel.idx || 0) + 1;
+    const balance = round2(Number(nextLevel.startBalance || finalBalance || 0));
+    const planRisk = round2(Number(nextLevel.planRisk || nextLevel.risk || balance * RISK || 0));
+    const actualRisk = round2(Number(nextLevel.actualRisk || (calculateLot(planRisk) * STOP_LOSS_PIPS * PIP_VALUE_PER_1_LOT) || 0));
+    const profit = round2(Number(nextLevel.profit || planRisk * RR || 0));
+    const lot = Number(nextLevel.lot || calculateLot(planRisk) || 0);
+
+    nextLevelPill.textContent = `Level ${levelNo}`;
+    summaryBalance.textContent = formatMoney(balance);
+    summaryRisk.textContent = formatMoney(planRisk);
+    summaryProfit.textContent = formatMoney(profit);
+    summaryLot.textContent = lot.toFixed(2);
+    summaryNote.textContent = `Plan risk ${formatMoney(planRisk)} · lot-based actual risk ${formatMoney(actualRisk)} · Setup байхгүй бол trade байхгүй.`;
+  }
+
+  function render() { renderTable(); bindButtons(); renderProStats(); updateNextTradeSummary(); renderHistory(); updateRevengeLock(); renderProfile(); updateLeaderboardCountdown(); }
 
   function setAuthStatus(message) { const el = document.getElementById('authStatus'); if (el) el.textContent = message; }
   function updateAuthUI(user) {
@@ -2878,7 +2919,8 @@
     const titles = { home: 'Home', idea: 'Idea', stats: 'Stats', levels: 'Levels', history: 'History', leaderboard: 'Leaderboard', chat: 'Chat', admin: 'Admin' };
     const title = document.getElementById('pageTitleText'); if (title) title.textContent = titles[nextPage] || 'Home';
     if (nextPage === 'idea') loadIdeaFeed();
-    if (nextPage === 'leaderboard') loadLeaderboard();
+    if (nextPage === 'leaderboard') { updateLeaderboardCountdown(); loadLeaderboard(); }
+    if (nextPage === 'history') renderHistory();
     if (nextPage === 'chat') loadGlobalChat();
     if (nextPage === 'admin') loadAdminUsers();
     const poster = document.querySelector('.poster'); if (poster) poster.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -2943,7 +2985,18 @@
       const userRef = db.collection('users').doc(currentUser.uid);
       const snap = await userRef.get();
       const data = snap.exists ? snap.data() : null;
-      currentUserDocData = data || null;
+      const cachedProfile = loadProfileCache(currentUser.uid);
+      currentUserDocData = data ? {
+        ...data,
+        name: data.name || cachedProfile.name || currentUser?.displayName || '',
+        email: data.email || cachedProfile.email || currentUser?.email || '',
+        photoData: getSafePhotoData(data.photoData || cachedProfile.photoData || '')
+      } : {
+        name: cachedProfile.name || currentUser?.displayName || '',
+        email: cachedProfile.email || currentUser?.email || '',
+        photoData: getSafePhotoData(cachedProfile.photoData || '')
+      };
+      saveProfileCache(currentUserDocData, currentUser.uid);
       const challenge = data?.challenge || {};
       const currentMonth = getCurrentChallengeMonthKey();
 
@@ -3018,6 +3071,7 @@
       }, { merge: true });
 
       currentUserDocData = { name, email, photoData: registerSelectedImageData || '' };
+      saveProfileCache(currentUserDocData, cred.user.uid);
       updateAuthUI(cred.user);
       await checkAdminStatus();
       await saveLeaderboardStats();
@@ -3054,6 +3108,7 @@
       currentUser = cred.user;
 
       currentUserDocData = { name, email, photoData: registerSelectedImageData || '' };
+      saveProfileCache(currentUserDocData, cred.user.uid);
       updateAuthUI(cred.user);
       await checkAdminStatus();
       await loadCloudData();
@@ -3252,12 +3307,33 @@
     return (typeof value === 'string' && value.startsWith('data:image')) ? value : '';
   }
 
+  function getProfileCacheKey(uid = currentUser?.uid) {
+    return uid ? `${PROFILE_CACHE_PREFIX}_${uid}` : '';
+  }
+
+  function loadProfileCache(uid = currentUser?.uid) {
+    const key = getProfileCacheKey(uid);
+    return key ? loadJSON(key, {}) : {};
+  }
+
+  function saveProfileCache(data = {}, uid = currentUser?.uid) {
+    const key = getProfileCacheKey(uid);
+    if (!key) return;
+    saveJSON(key, {
+      name: String(data.name || ''),
+      email: String(data.email || ''),
+      photoData: getSafePhotoData(data.photoData || '')
+    });
+  }
+
   function getDisplayNameForCurrentUser() {
-    return (currentUserDocData && currentUserDocData.name) || currentUser?.displayName || 'Trader';
+    const cached = loadProfileCache();
+    return (currentUserDocData && currentUserDocData.name) || cached.name || currentUser?.displayName || 'Trader';
   }
 
   function getPhotoForCurrentUser() {
-    return getSafePhotoData((currentUserDocData && currentUserDocData.photoData) || '');
+    const cached = loadProfileCache();
+    return getSafePhotoData((currentUserDocData && currentUserDocData.photoData) || cached.photoData || '');
   }
 
   function getInitialLetter(name) {
@@ -3280,7 +3356,39 @@
   }
 
   async function compressUserImage(file) {
-    return compressIdeaImage(file);
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = () => reject(new Error('Зураг уншихад алдаа гарлаа.'));
+      reader.onload = () => {
+        const img = new Image();
+        img.onerror = () => reject(new Error('Зураг боловсруулахад алдаа гарлаа.'));
+        img.onload = () => {
+          const maxSide = 512;
+          let { width, height } = img;
+          const ratio = Math.min(1, maxSide / Math.max(width, height));
+          width = Math.max(1, Math.round(width * ratio));
+          height = Math.max(1, Math.round(height * ratio));
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const qualities = [0.84, 0.76, 0.68, 0.60, 0.52, 0.44];
+          let output = '';
+          for (const quality of qualities) {
+            output = canvas.toDataURL('image/jpeg', quality);
+            if (output.length <= 220000) break;
+          }
+          if (!output || output.length > 320000) {
+            reject(new Error('Profile зураг хэт том байна. Жаахан жижиг зураг сонгоно уу.'));
+            return;
+          }
+          resolve(output);
+        };
+        img.src = reader.result;
+      };
+      reader.readAsDataURL(file);
+    });
   }
 
   function resetIdeaComposer() {
@@ -3401,6 +3509,7 @@
   window.handleRegisterAvatarPick = async function(event) {
     const file = event && event.target && event.target.files ? event.target.files[0] : null;
     if (!file) return;
+    showAppLoading('Profile зураг уншиж байна...');
     try {
       registerSelectedImageData = await compressUserImage(file);
       setPreviewAvatar('registerAvatarPreview', registerSelectedImageData, document.getElementById('nameInput')?.value || 'Trader');
@@ -3408,6 +3517,8 @@
     } catch (error) {
       if (event.target) event.target.value = '';
       showMiniToast(error.message || 'Зураг боловсруулахад алдаа гарлаа.');
+    } finally {
+      hideAppLoading();
     }
   };
 
@@ -3439,6 +3550,7 @@
   window.handleProfileAvatarPick = async function(event) {
     const file = event && event.target && event.target.files ? event.target.files[0] : null;
     if (!file) return;
+    showAppLoading('Profile зураг уншиж байна...');
     try {
       profileSelectedImageData = await compressUserImage(file);
       setPreviewAvatar('profileUploadPreview', profileSelectedImageData, document.getElementById('profileNameInput')?.value || getDisplayNameForCurrentUser());
@@ -3446,6 +3558,8 @@
     } catch (error) {
       if (event.target) event.target.value = '';
       showMiniToast(error.message || 'Зураг боловсруулахад алдаа гарлаа.');
+    } finally {
+      hideAppLoading();
     }
   };
 
@@ -3461,6 +3575,7 @@
     const nameInput = document.getElementById('profileNameInput');
     const name = (nameInput?.value || '').trim();
     if (!name) return showMiniToast('Нэрээ оруулна уу.');
+    showAppLoading('Profile хадгалж байна...');
     try {
       await db.collection('users').doc(currentUser.uid).set({
         name,
@@ -3470,12 +3585,15 @@
       }, { merge: true });
       try { await currentUser.updateProfile({ displayName: name }); } catch (_) {}
       currentUserDocData = { ...(currentUserDocData || {}), name, email: currentUser.email || '', photoData: profileSelectedImageData || '' };
+      saveProfileCache(currentUserDocData, currentUser.uid);
       renderProfile();
       closeProfilePopup();
       if (document.body.dataset.page === 'idea') loadIdeaFeed();
       showMiniToast('Profile амжилттай шинэчлэгдлээ.', 'success');
     } catch (error) {
       showMiniToast(error.message || 'Profile хадгалахад алдаа гарлаа.');
+    } finally {
+      hideAppLoading();
     }
   };
 
@@ -3637,7 +3755,7 @@
       ideaUnsubscribe = null;
     }
 
-    box.innerHTML = '<div class="idea-feed-empty">Luxury feed ачааллаж байна...</div>';
+    box.innerHTML = '<div class="idea-feed-empty">Refresh хийгдэж байна...</div>';
 
     ideaUnsubscribe = db.collection('idea_posts')
       .orderBy('createdAt', 'desc')
