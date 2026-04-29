@@ -1555,6 +1555,67 @@
     }
   }
 
+
+  /* ===== IDEA MODAL SCROLL FIX ===== */
+  .idea-modal-overlay {
+    align-items: flex-start !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-top: max(18px, env(safe-area-inset-top, 0px)) !important;
+    padding-bottom: max(18px, env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .idea-modal {
+    max-height: calc(100vh - 36px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+  }
+
+  .idea-modal-actions {
+    position: sticky !important;
+    bottom: 0 !important;
+    z-index: 5 !important;
+    padding-top: 14px !important;
+    padding-bottom: 2px !important;
+    background: linear-gradient(180deg, rgba(20,24,24,0), rgba(20,24,24,0.90) 32%, rgba(20,24,24,0.96)) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+
+  .idea-preview-box img {
+    max-height: 46vh !important;
+    object-fit: contain !important;
+    background: rgba(0,0,0,0.22) !important;
+  }
+
+  body.idea-modal-open {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+  }
+
+  @media (max-width: 700px) {
+    .idea-modal-overlay {
+      padding: 10px !important;
+      align-items: flex-start !important;
+    }
+
+    .idea-modal {
+      width: 100% !important;
+      max-height: calc(100vh - 20px) !important;
+      border-radius: 24px !important;
+    }
+
+    .idea-preview-box img {
+      max-height: 38vh !important;
+    }
+
+    .idea-textarea {
+      min-height: 110px !important;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -2720,10 +2781,14 @@
   window.openIdeaComposer = function() {
     if (!currentUser) return showMiniToast('Post хийхийн тулд login хийнэ үү.');
     const overlay = document.getElementById('ideaModalOverlay');
-    if (overlay) overlay.classList.add('open');
+    if (overlay) {
+      overlay.classList.add('open');
+      overlay.scrollTop = 0;
+    }
+    document.body.classList.add('idea-modal-open');
     setTimeout(() => {
       const textInput = document.getElementById('ideaTextInput');
-      if (textInput) textInput.focus();
+      if (textInput) textInput.focus({ preventScroll: true });
     }, 30);
   };
 
@@ -2731,6 +2796,7 @@
     if (event && event.target && event.target.id !== 'ideaModalOverlay') return;
     const overlay = document.getElementById('ideaModalOverlay');
     if (overlay) overlay.classList.remove('open');
+    document.body.classList.remove('idea-modal-open');
     resetIdeaComposer();
   };
 
@@ -2796,7 +2862,10 @@
       const previewWrap = document.getElementById('ideaPreviewWrap');
       const previewImage = document.getElementById('ideaPreviewImage');
       if (previewImage) previewImage.src = dataUrl;
-      if (previewWrap) previewWrap.classList.add('has-image');
+      if (previewWrap) {
+        previewWrap.classList.add('has-image');
+        setTimeout(() => previewWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
+      }
       showMiniToast('Зураг бэлэн боллоо.', 'success');
     } catch (error) {
       showMiniToast(error.message || 'Зураг боловсруулахад алдаа гарлаа.');
