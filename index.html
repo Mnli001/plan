@@ -2855,6 +2855,28 @@
     min-height: auto !important;
   }
 
+
+
+  /* ===== LEVEL BUGFIX: visible transition + never stuck lock ===== */
+  #levelsSection.level-out-animate .tr-current,
+  #levelsSection.level-out-animate .tr-previous,
+  #levelsSection.level-out-animate .tr-preview {
+    animation: levelOldRowsExit .24s ease-in forwards !important;
+    will-change: transform, opacity, filter;
+  }
+  #levelsSection.level-in-animate .tr-current {
+    animation: levelCurrentSlideUp .82s cubic-bezier(.16, 1, .3, 1) both !important;
+    will-change: transform, opacity, filter;
+  }
+  #levelsSection.level-in-animate .tr-previous {
+    animation: levelPrevSlideDown .72s cubic-bezier(.16, 1, .3, 1) both !important;
+    will-change: transform, opacity, filter;
+  }
+  #levelsSection.level-in-animate .tr-preview {
+    animation: levelNextRise .88s cubic-bezier(.16, 1, .3, 1) both !important;
+    will-change: transform, opacity, filter;
+  }
+
 </style>
 
 <style id="ultra-luxury-upgrade">
@@ -3352,6 +3374,28 @@ body {
       pointer-events: auto !important;
     }
   }
+
+
+  /* ===== LEVEL BUGFIX: visible transition + never stuck lock ===== */
+  #levelsSection.level-out-animate .tr-current,
+  #levelsSection.level-out-animate .tr-previous,
+  #levelsSection.level-out-animate .tr-preview {
+    animation: levelOldRowsExit .24s ease-in forwards !important;
+    will-change: transform, opacity, filter;
+  }
+  #levelsSection.level-in-animate .tr-current {
+    animation: levelCurrentSlideUp .82s cubic-bezier(.16, 1, .3, 1) both !important;
+    will-change: transform, opacity, filter;
+  }
+  #levelsSection.level-in-animate .tr-previous {
+    animation: levelPrevSlideDown .72s cubic-bezier(.16, 1, .3, 1) both !important;
+    will-change: transform, opacity, filter;
+  }
+  #levelsSection.level-in-animate .tr-preview {
+    animation: levelNextRise .88s cubic-bezier(.16, 1, .3, 1) both !important;
+    will-change: transform, opacity, filter;
+  }
+
 </style>
 
 </head>
@@ -4056,6 +4100,39 @@ body {
     saveProgress(); render();
   };
 
+  function savePrivateTradeLog(levelData, type) {
+    // Safe optional private/admin log. Older versions called this function but did not define it,
+    // which stopped Levels after pressing АВСАН/АЛДСАН. This helper must never block UI progress.
+    if (!levelData) return;
+    try {
+      const log = {
+        level: Number(levelData.idx || 0) + 1,
+        outcome: type,
+        startBalance: round2(levelData.startBalance),
+        risk: round2(levelData.risk),
+        profit: round2(levelData.profit),
+        lot: Number(levelData.lot || 0),
+        newBalance: type === 'taken'
+          ? round2(levelData.startBalance + levelData.profit)
+          : round2(Math.max(0, levelData.startBalance - levelData.risk)),
+        createdAt: Date.now()
+      };
+      const logs = loadJSON('alt_private_trade_logs_v1', []);
+      if (Array.isArray(logs)) {
+        logs.push(log);
+        saveJSON('alt_private_trade_logs_v1', logs.slice(-300));
+      }
+      if (firebaseReady && currentUser && db) {
+        db.collection('users').doc(currentUser.uid).collection('tradeLogs').add({
+          ...log,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        }).catch(error => console.warn('Private trade log save skipped:', error));
+      }
+    } catch (error) {
+      console.warn('Private trade log skipped:', error);
+    }
+  }
+
   function finalizeSetOutcome(idx, type) {
     const beforeLevel = compute().levels[idx];
 
@@ -4089,22 +4166,32 @@ body {
     }
 
     const wrapper = document.getElementById('levelsSection');
-    if (wrapper) {
-      clearTimeout(wrapper._levelOutcomeTimer);
-      clearTimeout(wrapper._levelShiftTimer);
-      wrapper.classList.remove('level-out-animate', 'level-in-animate', 'level-shift-animate');
-      wrapper.classList.add('level-action-lock');
+    const canAnimate = wrapper && document.body.dataset.page === 'levels';
+
+    if (!canAnimate) {
+      return finalizeSetOutcome(idx, type);
     }
 
-    const ok = finalizeSetOutcome(idx, type);
+    clearTimeout(wrapper._levelOutcomeTimer);
+    clearTimeout(wrapper._levelShiftTimer);
+    clearTimeout(wrapper._levelUnlockTimer);
 
-    if (wrapper) {
-      wrapper._levelOutcomeTimer = setTimeout(() => {
-        wrapper.classList.remove('level-action-lock', 'level-out-animate', 'level-in-animate', 'level-shift-animate');
-      }, 650);
-    }
+    wrapper.classList.remove('level-in-animate', 'level-shift-animate');
+    wrapper.classList.add('level-action-lock', 'level-out-animate');
 
-    return ok;
+    wrapper._levelOutcomeTimer = setTimeout(() => {
+      try {
+        finalizeSetOutcome(idx, type);
+      } finally {
+        // finalizeSetOutcome() re-renders rows and calls animateLevelShift().
+        // This fallback guarantees buttons never remain locked if a browser drops an animation frame.
+        wrapper._levelUnlockTimer = setTimeout(() => {
+          wrapper.classList.remove('level-action-lock', 'level-out-animate', 'level-in-animate', 'level-shift-animate');
+        }, 980);
+      }
+    }, 240);
+
+    return true;
   }
 
   function resetOutcome(idx) { if (idx < 0 || idx >= outcomes.length) return; outcomes[idx] = null; if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1); while (outcomes.length < 9) outcomes.push(null); saveProgress(); render(); }
