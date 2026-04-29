@@ -1781,7 +1781,7 @@
         <div><div class="auth-kicker">Арилжааны баталгаажуулалт</div><div class="auth-title" id="tradeProofTitle">Screenshot илгээх</div></div>
         <button class="settings-close-btn" type="button" onclick="closeTradeProofModal()">×</button>
       </div>
-      <div class="note" id="tradeProofNote">Admin approve хийсний дараа л таны баланс, level, history шинэчлэгдэнэ.</div>
+      <div class="note" id="tradeProofNote">Зөвхөн АВСАН үед admin approve шаардлагатай. АЛДСАН бол шууд бүртгэгдэнэ.</div>
       <div class="upload-row" style="margin-top:12px;">
         <div class="avatar-preview">SS</div>
         <div>
@@ -2161,7 +2161,7 @@
       if (isCurrent) {
         const pending = pendingApprovalMap[String(currentIndex)];
         if (pending) action = `<span class="pending-badge">ADMIN ХЯНАЖ БАЙНА · ${pending.requestedOutcome === 'taken' ? 'АВСАН' : 'АЛДСАН'}</span>`;
-        else action = `<div class="action-group"><button class="btn-sm btn-taken" type="button" onclick="requestTradeProof(${currentIndex}, 'taken')">АВСАН</button><button class="btn-sm btn-loss" type="button" onclick="requestTradeProof(${currentIndex}, 'loss')">АЛДСАН</button></div>`;
+        else action = `<div class="action-group"><button class="btn-sm btn-taken" type="button" onclick="requestTradeProof(${currentIndex}, 'taken')">АВСАН</button><button class="btn-sm btn-loss" type="button" onclick="setOutcome(${currentIndex}, 'loss')">АЛДСАН</button></div>`;
       }
       if (!isCurrent && l.outcome === 'taken') action = '<span class="outcome-badge outcome-profit">АВСАН</span>';
       if (!isCurrent && l.outcome === 'loss') action = '<span class="outcome-badge outcome-loss">АЛДСАН</span>';
@@ -2317,11 +2317,15 @@
       }
     }
     window.requestTradeProof = function(idx, type) {
+      if (type === 'loss') {
+        setOutcome(idx, 'loss');
+        return;
+      }
       if (!currentUser || !db) return showMiniToast('Эхлээд login хийнэ үү.');
       if (pendingApprovalMap[String(idx)]) return showMiniToast('Энэ level дээр admin review хүлээгдэж байна.');
       const levelData = compute().levels[idx];
       if (!levelData) return showMiniToast('Level мэдээлэл олдсонгүй.');
-      activeTradeRequest = { idx, type, levelData };
+      activeTradeRequest = { idx, type: 'taken', levelData };
       tradeProofImageData = '';
       const input = document.getElementById('tradeProofInput');
       const comment = document.getElementById('tradeProofComment');
@@ -2331,8 +2335,8 @@
       if (comment) comment.value = '';
       if (img) img.removeAttribute('src');
       if (wrap) wrap.classList.remove('show');
-      document.getElementById('tradeProofTitle').textContent = `Түвшин ${idx + 1} · ${type === 'taken' ? 'АВСАН' : 'АЛДСАН'} баталгаажуулах`;
-      document.getElementById('tradeProofNote').textContent = `Баланс ${formatMoney(levelData.startBalance)} · Эрсдэл ${formatMoney(levelData.risk)} · Ашиг ${formatMoney(levelData.profit)} · Лот ${Number(levelData.lot).toFixed(2)}. Screenshot илгээсний дараа admin approve хийх хүртэл үр дүн нэмэгдэхгүй.`;
+      document.getElementById('tradeProofTitle').textContent = `Түвшин ${idx + 1} · АВСАН баталгаажуулах`;
+      document.getElementById('tradeProofNote').textContent = `Баланс ${formatMoney(levelData.startBalance)} · Эрсдэл ${formatMoney(levelData.risk)} · Ашиг ${formatMoney(levelData.profit)} · Лот ${Number(levelData.lot).toFixed(2)}. Зөвхөн АВСАН үед screenshot илгээж, admin approve хийсний дараа үр дүн нэмэгдэнэ.`;
       document.getElementById('tradeProofOverlay').classList.add('open');
       document.body.classList.add('modal-open');
     };
