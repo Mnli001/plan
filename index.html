@@ -263,6 +263,34 @@
     }
     .admin-tool-btn.active strong,
     .admin-tool-btn.active span { color: #071109; }
+    .soft-btn.danger, .btn-sm.danger {
+      color: #fff1f4 !important;
+      background: linear-gradient(135deg, rgba(255,93,115,.92), rgba(111,21,35,.92)) !important;
+      border-color: rgba(255,140,156,.34) !important;
+    }
+    .approval-image {
+      width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      border-radius: 18px;
+      background: rgba(0,0,0,.24);
+      border: 1px solid rgba(255,255,255,.10);
+      margin-top: 10px;
+      cursor: zoom-in;
+    }
+    .pending-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 34px;
+      padding: 0 13px;
+      border-radius: 999px;
+      color: #071109;
+      background: linear-gradient(135deg, #fff2a8, #ffd700 58%, #b47b00);
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
     .admin-section-title {
       margin-top: 18px;
       padding-top: 14px;
@@ -1613,6 +1641,7 @@
         <button class="admin-tool-btn active" id="adminUsersBtn" type="button" onclick="loadAdminUsers()"><strong>Хэрэглэгч шинэчлэх</strong><span>Бүх хэрэглэгч, баланс, түвшин, дахин тохируулах удирдлагыг харна.</span></button>
         <button class="admin-tool-btn" id="adminChatBtn" type="button" onclick="loadAdminChatMessages()"><strong>Чат хянах</strong><span>Сүүлийн мессежүүдийг хараад нэг нэгээр устгана.</span></button>
         <button class="admin-tool-btn" id="adminIdeaBtn" type="button" onclick="loadAdminIdeaPosts()"><strong>Санааны нийтлэл хянах</strong><span>Хэрэглэгчийн нийтлэлүүдийг хараад админ эрхээр устгана.</span></button>
+        <button class="admin-tool-btn" id="adminApprovalBtn" type="button" onclick="loadAdminTradeApprovals()"><strong>Арилжаа батлах</strong><span>Screenshot-тай Авсан/Алдсан хүсэлтийг шалгаад зөвшөөрнө.</span></button>
       </div>
       <div class="admin-pane" id="adminUsersPane">
         <div class="admin-section-title"><div class="auth-title">Хэрэглэгчид</div><div class="note">Хэрэглэгч бүрийн сорилтын явц, эрэмбэ, аппын мэдээллийг эндээс удирдана. “User устгах” нь тухайн хэрэглэгчийн app data, leaderboard, чат, санааны нийтлэлийг устгана.</div></div>
@@ -1637,6 +1666,13 @@
           <button class="soft-btn" type="button" onclick="loadAdminIdeaPosts()">Нийтлэл шинэчлэх</button>
         </div>
         <div class="admin-list" id="adminIdeaList"><div class="leaderboard-empty">Санааны нийтлэл ачаалахад бэлэн.</div></div>
+      </div>
+      <div class="admin-pane hidden" id="adminApprovalPane">
+        <div class="admin-section-title"><div class="auth-title">Арилжаа баталгаажуулах хүсэлтүүд</div><div class="note">User “Авсан/Алдсан” дарахад screenshot хавсаргасан хүсэлт энд орж ирнэ. Admin зөвшөөрөх хүртэл баланс, level, history өөрчлөгдөхгүй.</div></div>
+        <div class="admin-pane-actions">
+          <button class="soft-btn" type="button" onclick="loadAdminTradeApprovals()">Хүсэлт шинэчлэх</button>
+        </div>
+        <div class="admin-list" id="adminApprovalList"><div class="leaderboard-empty">Баталгаажуулах хүсэлт ачаалахад бэлэн.</div></div>
       </div>
     </section>
 
@@ -1739,6 +1775,33 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="tradeProofOverlay" onclick="closeTradeProofModal(event)">
+    <div class="modal glass-card" onclick="event.stopPropagation()">
+      <div class="settings-head">
+        <div><div class="auth-kicker">Арилжааны баталгаажуулалт</div><div class="auth-title" id="tradeProofTitle">Screenshot илгээх</div></div>
+        <button class="settings-close-btn" type="button" onclick="closeTradeProofModal()">×</button>
+      </div>
+      <div class="note" id="tradeProofNote">Admin approve хийсний дараа л таны баланс, level, history шинэчлэгдэнэ.</div>
+      <div class="upload-row" style="margin-top:12px;">
+        <div class="avatar-preview">SS</div>
+        <div>
+          <div class="mini-actions">
+            <button class="soft-btn" type="button" onclick="document.getElementById('tradeProofInput').click()">Screenshot оруулах</button>
+            <button class="soft-btn" type="button" onclick="removeTradeProofImage()">Хасах</button>
+          </div>
+          <div class="note">Зураг автоматаар багасаж Firestore-д хадгалагдана. Firebase Storage хэрэглэхгүй.</div>
+          <input id="tradeProofInput" type="file" accept="image/*" hidden onchange="handleTradeProofPick(event)" />
+        </div>
+      </div>
+      <textarea id="tradeProofComment" class="idea-textarea" maxlength="500" placeholder="Тайлбар бичих бол энд бичнэ үү..." style="margin-top:12px;min-height:90px;"></textarea>
+      <div class="preview-box" id="tradeProofPreviewWrap"><img id="tradeProofPreviewImage" alt="Арилжааны screenshot"></div>
+      <div class="modal-actions">
+        <button class="soft-btn" type="button" onclick="closeTradeProofModal()">Цуцлах</button>
+        <button class="auth-btn primary" id="tradeProofSubmitBtn" type="button" onclick="submitTradeProofRequest()">Admin руу илгээх</button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="imageOverlay" onclick="closeImageLightbox(event)">
     <div class="modal glass-card" onclick="event.stopPropagation()" style="width:min(1000px, calc(100vw - 28px));">
       <div class="modal-actions" style="margin-top:0;"><button class="settings-close-btn" type="button" onclick="closeImageLightbox()">×</button></div>
@@ -1787,6 +1850,9 @@
     let registerSelectedImageData = '';
     let profileSelectedImageData = '';
     let ideaSelectedImageData = '';
+    let tradeProofImageData = '';
+    let activeTradeRequest = null;
+    let pendingApprovalMap = {};
     let ideaEditingId = '';
     let ideaUnsubscribe = null;
     let chatUnsubscribe = null;
@@ -2092,7 +2158,11 @@
       const contextLabel = isCurrent ? 'ОДООГИЙН' : (context === 'previous' ? 'ӨМНӨХ' : 'АВСАН ТОХИОЛДОЛД ДАРААГИЙН');
       const levelDisplay = `${l.newBalance >= TARGET || l.startBalance >= TARGET ? `<span class="goal-flag">🏆 ${n}</span>` : `<span class="level-chip">${n}</span>`}<span class="level-context-label">${contextLabel}</span>`;
       let action = '<span class="preview-badge">Зөвхөн урьдчилсан харагдац</span>';
-      if (isCurrent) action = `<div class="action-group"><button class="btn-sm btn-taken" type="button" onclick="setOutcome(${currentIndex}, 'taken')">АВСАН</button><button class="btn-sm btn-loss" type="button" onclick="setOutcome(${currentIndex}, 'loss')">АЛДСАН</button></div>`;
+      if (isCurrent) {
+        const pending = pendingApprovalMap[String(currentIndex)];
+        if (pending) action = `<span class="pending-badge">ADMIN ХЯНАЖ БАЙНА · ${pending.requestedOutcome === 'taken' ? 'АВСАН' : 'АЛДСАН'}</span>`;
+        else action = `<div class="action-group"><button class="btn-sm btn-taken" type="button" onclick="requestTradeProof(${currentIndex}, 'taken')">АВСАН</button><button class="btn-sm btn-loss" type="button" onclick="requestTradeProof(${currentIndex}, 'loss')">АЛДСАН</button></div>`;
+      }
       if (!isCurrent && l.outcome === 'taken') action = '<span class="outcome-badge outcome-profit">АВСАН</span>';
       if (!isCurrent && l.outcome === 'loss') action = '<span class="outcome-badge outcome-loss">АЛДСАН</span>';
       const newBal = l.outcome || context === 'next' ? formatMoney(l.newBalance) : '-';
@@ -2226,6 +2296,109 @@
       });
       saveJSON(HISTORY_KEY, tradeHistory);
     }
+
+    function approvalDocId(uid, idx, mk = monthKey()) {
+      return `${uid}_${mk}_${idx}`;
+    }
+    async function loadMyPendingApprovals() {
+      pendingApprovalMap = {};
+      if (!firebaseReady || !currentUser || !db) return;
+      try {
+        const max = Math.max(outcomes.length, 9);
+        const docs = await Promise.all(Array.from({ length: max }, (_, i) => db.collection('trade_approvals').doc(approvalDocId(currentUser.uid, i)).get().catch(() => null)));
+        docs.forEach((snap, i) => {
+          if (snap && snap.exists) {
+            const d = snap.data() || {};
+            if (d.status === 'pending' && d.monthKey === monthKey()) pendingApprovalMap[String(i)] = d;
+          }
+        });
+      } catch (error) {
+        console.warn('Pending approval load error:', error);
+      }
+    }
+    window.requestTradeProof = function(idx, type) {
+      if (!currentUser || !db) return showMiniToast('Эхлээд login хийнэ үү.');
+      if (pendingApprovalMap[String(idx)]) return showMiniToast('Энэ level дээр admin review хүлээгдэж байна.');
+      const levelData = compute().levels[idx];
+      if (!levelData) return showMiniToast('Level мэдээлэл олдсонгүй.');
+      activeTradeRequest = { idx, type, levelData };
+      tradeProofImageData = '';
+      const input = document.getElementById('tradeProofInput');
+      const comment = document.getElementById('tradeProofComment');
+      const img = document.getElementById('tradeProofPreviewImage');
+      const wrap = document.getElementById('tradeProofPreviewWrap');
+      if (input) input.value = '';
+      if (comment) comment.value = '';
+      if (img) img.removeAttribute('src');
+      if (wrap) wrap.classList.remove('show');
+      document.getElementById('tradeProofTitle').textContent = `Түвшин ${idx + 1} · ${type === 'taken' ? 'АВСАН' : 'АЛДСАН'} баталгаажуулах`;
+      document.getElementById('tradeProofNote').textContent = `Баланс ${formatMoney(levelData.startBalance)} · Эрсдэл ${formatMoney(levelData.risk)} · Ашиг ${formatMoney(levelData.profit)} · Лот ${Number(levelData.lot).toFixed(2)}. Screenshot илгээсний дараа admin approve хийх хүртэл үр дүн нэмэгдэхгүй.`;
+      document.getElementById('tradeProofOverlay').classList.add('open');
+      document.body.classList.add('modal-open');
+    };
+    window.closeTradeProofModal = function(event) {
+      if (event && event.target.id !== 'tradeProofOverlay') return;
+      document.getElementById('tradeProofOverlay').classList.remove('open');
+      document.body.classList.remove('modal-open');
+    };
+    window.handleTradeProofPick = async function(event) {
+      const file = event?.target?.files?.[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) return showMiniToast('Зөвхөн зураг оруулна уу.');
+      try {
+        tradeProofImageData = await compressImage(file, 1200, 700000);
+        document.getElementById('tradeProofPreviewImage').src = tradeProofImageData;
+        document.getElementById('tradeProofPreviewWrap').classList.add('show');
+        showMiniToast('Screenshot бэлэн боллоо.', 'success');
+      } catch (error) {
+        showMiniToast(error.message || 'Screenshot боловсруулахад алдаа гарлаа.');
+      }
+    };
+    window.removeTradeProofImage = function() {
+      tradeProofImageData = '';
+      document.getElementById('tradeProofInput').value = '';
+      document.getElementById('tradeProofPreviewImage').removeAttribute('src');
+      document.getElementById('tradeProofPreviewWrap').classList.remove('show');
+    };
+    window.submitTradeProofRequest = async function() {
+      if (!activeTradeRequest || !currentUser || !db) return showMiniToast('Хүсэлт олдсонгүй.');
+      if (!safePhoto(tradeProofImageData)) return showMiniToast('Эхлээд screenshot оруулна уу.');
+      const { idx, type, levelData } = activeTradeRequest;
+      if (pendingApprovalMap[String(idx)]) return showMiniToast('Энэ level дээр pending хүсэлт байна.');
+      const comment = String(document.getElementById('tradeProofComment')?.value || '').trim().slice(0, 500);
+      const payload = {
+        uid: currentUser.uid,
+        name: displayName(),
+        email: currentUser.email || '',
+        monthKey: monthKey(),
+        levelIndex: idx,
+        level: idx + 1,
+        requestedOutcome: type,
+        status: 'pending',
+        startBalance: levelData.startBalance,
+        risk: levelData.risk,
+        profit: levelData.profit,
+        lot: levelData.lot,
+        slPips: levelData.slPips,
+        proofImageData: safePhoto(tradeProofImageData),
+        comment,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      };
+      showAppLoading('Screenshot хүсэлт илгээж байна...');
+      try {
+        await db.collection('trade_approvals').doc(approvalDocId(currentUser.uid, idx)).set(payload, { merge: true });
+        pendingApprovalMap[String(idx)] = { ...payload, createdAt: new Date() };
+        closeTradeProofModal();
+        renderTable();
+        showMiniToast('Admin review руу илгээлээ. Батлагдтал level өөрчлөгдөхгүй.', 'success');
+      } catch (error) {
+        showMiniToast(error.message || 'Хүсэлт илгээхэд алдаа гарлаа. Firestore rules шалгаарай.');
+      } finally {
+        hideAppLoading();
+      }
+    };
+
     function finalizeSetOutcome(idx, type) {
       if (idx < 0 || idx >= outcomes.length) return;
       if (idx > 0 && outcomes[idx - 1] === null) return showMiniToast(`Эхлээд ${idx}-р level-ийн үр дүнг сонгоно уу.`);
@@ -2513,6 +2686,7 @@
           saveJSON(STORAGE_KEY, outcomes);
           saveJSON(HISTORY_KEY, tradeHistory);
         }
+        await loadMyPendingApprovals();
         render();
       } catch (error) {
         console.warn('Cloud load error:', error);
@@ -3071,9 +3245,11 @@
       document.getElementById('adminUsersBtn')?.classList.toggle('active', tab === 'users');
       document.getElementById('adminChatBtn')?.classList.toggle('active', tab === 'chat');
       document.getElementById('adminIdeaBtn')?.classList.toggle('active', tab === 'idea');
+      document.getElementById('adminApprovalBtn')?.classList.toggle('active', tab === 'approval');
       document.getElementById('adminUsersPane')?.classList.toggle('hidden', tab !== 'users');
       document.getElementById('adminChatPane')?.classList.toggle('hidden', tab !== 'chat');
       document.getElementById('adminIdeaPane')?.classList.toggle('hidden', tab !== 'idea');
+      document.getElementById('adminApprovalPane')?.classList.toggle('hidden', tab !== 'approval');
       const admin = document.getElementById('adminSection');
       if (admin) admin.scrollIntoView({ block: 'start', behavior: 'smooth' });
     }
@@ -3187,6 +3363,145 @@
       }
       await ref.delete();
     }
+
+    window.loadAdminTradeApprovals = async function() {
+      const box = document.getElementById('adminApprovalList');
+      if (!box) return;
+      if (!(await requireAdmin())) return;
+      setAdminActiveTab('approval');
+      box.innerHTML = '<div class="leaderboard-empty">Баталгаажуулах хүсэлтүүд ачааллаж байна...</div>';
+      try {
+        const snap = await db.collection('trade_approvals').where('status', '==', 'pending').limit(80).get();
+        if (snap.empty) {
+          box.innerHTML = '<div class="leaderboard-empty">Pending хүсэлт алга байна.</div>';
+          return;
+        }
+        const rows = [];
+        snap.forEach(doc => rows.push({ id: doc.id, d: doc.data() || {} }));
+        rows.sort((a, b) => {
+          const at = a.d.createdAt?.toMillis ? a.d.createdAt.toMillis() : 0;
+          const bt = b.d.createdAt?.toMillis ? b.d.createdAt.toMillis() : 0;
+          return bt - at;
+        });
+        box.innerHTML = rows.map(({ id, d }) => `
+          <div class="admin-user-row">
+            <div class="admin-user-main"><strong>${escapeHTML(d.name || 'Арилжаачин')} · Түвшин ${Number(d.level || 0)}</strong><span>${escapeHTML(d.email || d.uid || '')} · ${formatTime(d.createdAt)} · ${escapeHTML(d.monthKey || '')}</span></div>
+            <div class="admin-cell"><strong>${d.requestedOutcome === 'taken' ? 'АВСАН' : 'АЛДСАН'}</strong><span>Хүссэн үр дүн</span></div>
+            <div class="admin-cell"><strong>${formatMoney(d.startBalance)} → ${d.requestedOutcome === 'taken' ? '+' + formatMoney(d.profit) : '-' + formatMoney(d.risk)}</strong><span>Баланс / дүн</span></div>
+            <div class="mini-actions">
+              <button class="soft-btn" type="button" onclick="adminApproveTradeRequest('${id}')">Approve</button>
+              <button class="soft-btn danger" type="button" onclick="adminRejectTradeRequest('${id}')">Reject</button>
+            </div>
+            <div class="admin-cell" style="grid-column:1 / -1;"><strong>${escapeHTML(d.comment || 'Тайлбаргүй')}</strong><span>User тайлбар</span>${safePhoto(d.proofImageData) ? `<img class="approval-image" src="${escapeAttr(d.proofImageData)}" alt="Trade proof screenshot" onclick="openImageLightbox('${escapeAttr(d.proofImageData)}')">` : ''}</div>
+          </div>`).join('');
+      } catch (error) {
+        box.innerHTML = `<div class="leaderboard-empty">Хүсэлт уншихад алдаа: ${escapeHTML(error.message)}</div>`;
+      }
+    };
+    async function applyApprovedTradeToUser(reqId, req) {
+      const userRef = db.collection('users').doc(req.uid);
+      const userSnap = await userRef.get();
+      const data = userSnap.exists ? userSnap.data() : {};
+      const ch = data.challenge || {};
+      const userStart = Number(ch.startBalance || req.startBalance || 0);
+      let userOutcomes = Array.isArray(ch.outcomes) ? ch.outcomes.slice() : [];
+      let userHistory = Array.isArray(ch.tradeHistory) ? ch.tradeHistory.slice() : [];
+      while (userOutcomes.length <= Number(req.levelIndex)) userOutcomes.push(null);
+      if (userOutcomes[req.levelIndex] && userOutcomes[req.levelIndex] !== req.requestedOutcome) {
+        throw new Error('Энэ level аль хэдийн өөр үр дүнтэй байна. Эхлээд user progress шалга.');
+      }
+      userOutcomes[req.levelIndex] = req.requestedOutcome;
+      userOutcomes = userOutcomes.slice(0, Number(req.levelIndex) + 1);
+      while (userOutcomes.length < 9) userOutcomes.push(null);
+      const historyItem = {
+        id: `${Date.now()}_${req.levelIndex}_${req.requestedOutcome}_approved`,
+        level: Number(req.level || Number(req.levelIndex) + 1),
+        outcome: req.requestedOutcome,
+        startBalance: Number(req.startBalance || 0),
+        risk: Number(req.risk || 0),
+        profit: Number(req.profit || 0),
+        lot: Number(req.lot || 0),
+        newBalance: req.requestedOutcome === 'taken' ? round2(Number(req.startBalance || 0) + Number(req.profit || 0)) : round2(Math.max(0, Number(req.startBalance || 0) - Number(req.risk || 0))),
+        date: new Date().toLocaleString('mn-MN'),
+        approvedBy: currentUser.uid,
+        approvalId: reqId
+      };
+      if (!userHistory.some(h => h.approvalId === reqId)) userHistory.push(historyItem);
+      let sim = userStart;
+      let wins = 0, losses = 0;
+      userOutcomes.forEach(o => {
+        if (o !== 'taken' && o !== 'loss') return;
+        const risk = round2(sim * RISK);
+        if (o === 'taken') { sim = round2(sim + risk * RR); wins++; }
+        else { sim = round2(Math.max(0, sim - risk)); losses++; }
+      });
+      const finalBalance = round2(sim);
+      const bestBalance = userHistory.reduce((max, h) => Math.max(max, Number(h.newBalance || h.startBalance || 0)), userStart);
+      const batch = db.batch();
+      batch.set(userRef, {
+        challenge: {
+          adminForceSetup: false,
+          challengeMonthKey: monthKey(),
+          startBalance: userStart,
+          outcomes: userOutcomes,
+          tradeHistory: userHistory,
+          revengeUntil: req.requestedOutcome === 'loss' ? Date.now() + 10 * 60 * 1000 : Number(ch.revengeUntil || 0),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }
+      }, { merge: true });
+      batch.set(db.collection(leaderboardCollectionName()).doc(req.uid), {
+        name: data.name || req.name || 'Арилжаачин',
+        startBalance: userStart,
+        balance: finalBalance,
+        currentProfit: round2(finalBalance - userStart),
+        baseProfit: 0,
+        netProfit: round2(finalBalance - userStart),
+        bestBalance: round2(bestBalance),
+        wins,
+        losses,
+        winRate: wins + losses ? Math.round((wins / (wins + losses)) * 100) : 0,
+        trades: wins + losses,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+      batch.set(db.collection('trade_approvals').doc(reqId), { status: 'approved', approvedBy: currentUser.uid, approvedAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+      await batch.commit();
+    }
+    window.adminApproveTradeRequest = async function(reqId) {
+      if (!(await requireAdmin())) return;
+      if (!reqId) return;
+      if (!confirm('Энэ screenshot-ийг зөв гэж үзээд trade-г батлах уу? Баталсны дараа user-ийн баланс/level/history шинэчлэгдэнэ.')) return;
+      showAppLoading('Trade баталж байна...');
+      try {
+        const ref = db.collection('trade_approvals').doc(reqId);
+        const snap = await ref.get();
+        if (!snap.exists) throw new Error('Хүсэлт олдсонгүй.');
+        const req = snap.data() || {};
+        if (req.status !== 'pending') throw new Error('Энэ хүсэлт pending биш байна.');
+        await applyApprovedTradeToUser(reqId, req);
+        showMiniToast('Trade батлагдлаа.', 'success');
+        loadAdminTradeApprovals();
+        loadAdminUsers();
+        loadLeaderboard();
+      } catch (error) {
+        showMiniToast(error.message || 'Trade батлахад алдаа гарлаа.');
+      } finally {
+        hideAppLoading();
+      }
+    };
+    window.adminRejectTradeRequest = async function(reqId) {
+      if (!(await requireAdmin())) return;
+      if (!reqId) return;
+      const reason = prompt('Reject хийх шалтгаан:', 'Screenshot тохирохгүй байна.');
+      if (reason === null) return;
+      try {
+        await db.collection('trade_approvals').doc(reqId).set({ status: 'rejected', rejectReason: String(reason).slice(0, 300), rejectedBy: currentUser.uid, rejectedAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+        showMiniToast('Хүсэлт reject хийгдлээ.', 'success');
+        loadAdminTradeApprovals();
+      } catch (error) {
+        showMiniToast(error.message || 'Reject хийхэд алдаа гарлаа.');
+      }
+    };
+
     window.loadAdminIdeaPosts = async function() {
       const box = document.getElementById('adminIdeaList');
       if (!box) return;
@@ -3233,6 +3548,7 @@
       if (!(await checkAdminStatus())) return showMiniToast('Admin эрх байхгүй.');
       if (!confirm('Энэ user-ийн challenge reset хийх үү?')) return;
       await db.collection('users').doc(userId).set(resetPayload(), { merge: true });
+      await deleteQueryBatch(db.collection('trade_approvals').where('uid', '==', userId)).catch(() => {});
       await db.collection(leaderboardCollectionName()).doc(userId).delete().catch(() => {});
       loadAdminUsers();
       loadLeaderboard();
@@ -3285,9 +3601,10 @@
       try {
         const chatDeleted = await deleteQueryBatch(db.collection('global_chat').doc('main').collection('messages').where('uid', '==', userId));
         const ideasDeleted = await adminDeleteUserIdeaPosts(userId);
+        const approvalsDeleted = await deleteQueryBatch(db.collection('trade_approvals').where('uid', '==', userId));
         await db.collection(leaderboardCollectionName()).doc(userId).delete().catch(() => {});
         await db.collection('users').doc(userId).delete().catch(() => {});
-        showMiniToast(`User data устгалаа: ${chatDeleted} чат, ${ideasDeleted} нийтлэл.`, 'success');
+        showMiniToast(`User data устгалаа: ${chatDeleted} чат, ${ideasDeleted} нийтлэл, ${approvalsDeleted} approval.`, 'success');
         loadAdminUsers();
         loadLeaderboard();
         if (document.body.dataset.page === 'chat') loadGlobalChat();
@@ -3303,6 +3620,7 @@
       if (!confirm('Энэ user-ийн Firestore document-ийг устгах уу? Auth account устахгүй, зөвхөн app data устна.')) return;
       try {
         await db.collection('users').doc(userId).delete();
+        await deleteQueryBatch(db.collection('trade_approvals').where('uid', '==', userId)).catch(() => {});
         await db.collection(leaderboardCollectionName()).doc(userId).delete().catch(() => {});
         showMiniToast('User app data устгагдлаа.', 'success');
         loadAdminUsers();
