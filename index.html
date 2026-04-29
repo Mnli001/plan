@@ -1616,6 +1616,54 @@
     }
   }
 
+
+  /* ===== IDEA MODAL DARK OVERLAY FIX ===== */
+  .idea-modal-overlay,
+  #ideaModalOverlay.idea-modal-overlay {
+    background:
+      radial-gradient(circle at 50% 22%, rgba(243,211,106,0.08), transparent 28%),
+      rgba(2, 4, 5, 0.78) !important;
+    backdrop-filter: blur(18px) saturate(1.12) brightness(0.62) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.12) brightness(0.62) !important;
+  }
+
+  #ideaModalOverlay .idea-modal {
+    background:
+      linear-gradient(145deg, rgba(28,31,29,0.96), rgba(13,17,18,0.96) 54%, rgba(8,11,13,0.98)),
+      radial-gradient(circle at 12% 0%, rgba(243,211,106,0.12), transparent 42%) !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
+    box-shadow:
+      0 30px 90px rgba(0,0,0,0.58),
+      inset 0 1px 0 rgba(255,255,255,0.16) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  #ideaModalOverlay .idea-modal-actions {
+    background:
+      linear-gradient(180deg, rgba(13,17,18,0), rgba(13,17,18,0.92) 34%, rgba(8,11,13,0.98)) !important;
+  }
+
+  #ideaModalOverlay .idea-textarea,
+  #ideaModalOverlay .idea-upload-box {
+    background: rgba(255,255,255,0.055) !important;
+    border-color: rgba(255,255,255,0.13) !important;
+    color: #fff6d7 !important;
+  }
+
+  #ideaModalOverlay .idea-textarea::placeholder {
+    color: rgba(255,246,215,0.44) !important;
+  }
+
+  #ideaModalOverlay .idea-upload-box {
+    border-color: rgba(243,211,106,0.28) !important;
+  }
+
+  #ideaModalOverlay .idea-close-btn {
+    background: rgba(255,255,255,0.08) !important;
+    color: #fff2b8 !important;
+  }
+
 </style>
 </head>
 <body>
