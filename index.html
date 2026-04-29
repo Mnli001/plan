@@ -5975,5 +5975,292 @@ service cloud.firestore {
 })();
 </script>
 
+
+<style id="chat-level-layout-hard-fix">
+/* ===== FINAL PATCH: CHAT LIKE MESSENGER + MOBILE LEVEL FULL FILL ===== */
+body.is-authenticated[data-page="chat"] .page-title-card {
+  display: none !important;
+}
+body.is-authenticated[data-page="chat"] .poster {
+  padding-top: 0 !important;
+}
+body.is-authenticated[data-page="chat"] #chatSection,
+body.is-authenticated[data-page="chat"] .chat-panel {
+  display: flex !important;
+  flex-direction: column !important;
+}
+body.is-authenticated[data-page="chat"] .chat-panel {
+  min-height: calc(100dvh - 110px) !important;
+  max-height: calc(100dvh - 110px) !important;
+  height: calc(100dvh - 110px) !important;
+  padding: 14px 16px 14px !important;
+  overflow: hidden !important;
+}
+body.is-authenticated[data-page="chat"] .chat-head {
+  flex: 0 0 auto !important;
+  margin-bottom: 10px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  height: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 6px 4px 8px !important;
+  scroll-behavior: smooth !important;
+  overscroll-behavior: contain !important;
+}
+body.is-authenticated[data-page="chat"] .chat-form {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  flex: 0 0 auto !important;
+  margin-top: 10px !important;
+  padding-top: 10px !important;
+  padding-bottom: 0 !important;
+  background: linear-gradient(180deg, rgba(8,11,12,0.02), rgba(8,11,12,0.78) 32%, rgba(8,11,12,0.94)) !important;
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
+  max-width: min(360px, 52%) !important;
+}
+body.is-authenticated[data-page="chat"] .chat-row {
+  gap: 8px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-message {
+  padding: 10px 13px !important;
+  border-radius: 18px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-message-text {
+  font-size: 13px !important;
+  line-height: 1.38 !important;
+}
+body.is-authenticated[data-page="chat"] .chat-meta {
+  gap: 6px !important;
+  padding: 0 2px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-message::after,
+body.is-authenticated[data-page="chat"] .chat-row.mine .chat-message::after,
+body.is-authenticated[data-page="chat"] .chat-row.theirs .chat-message::after {
+  display: none !important;
+  content: none !important;
+}
+@media (max-width: 1100px) {
+  body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
+    max-width: min(460px, 64%) !important;
+  }
+}
+@media (max-width: 700px) {
+  body.is-authenticated[data-page="chat"] .chat-panel {
+    min-height: calc(100dvh - 94px) !important;
+    max-height: calc(100dvh - 94px) !important;
+    height: calc(100dvh - 94px) !important;
+    margin: 0 8px 8px !important;
+    padding: 12px 12px 10px !important;
+    border-radius: 22px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-list {
+    padding: 4px 2px 6px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
+    max-width: 74% !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-form {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    gap: 10px !important;
+    margin-top: 8px !important;
+    padding-top: 10px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-form .auth-input {
+    min-height: 48px !important;
+    height: 48px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-form .auth-btn.primary {
+    min-width: 88px !important;
+    min-height: 48px !important;
+    height: 48px !important;
+  }
+}
+
+/* mobile level cards full-fill */
+@media (max-width: 700px) {
+  .trading-table tr.tr-current,
+  .trading-table tr.tr-taken,
+  .trading-table tr.tr-loss,
+  .trading-table tr.tr-preview,
+  .trading-table tr.tr-previous {
+    position: relative !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 16px !important;
+    border-radius: 28px !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+    background: transparent !important;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.24) !important;
+  }
+  .trading-table tr.tr-current::before,
+  .trading-table tr.tr-taken::before,
+  .trading-table tr.tr-loss::before,
+  .trading-table tr.tr-preview::before,
+  .trading-table tr.tr-previous::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: inherit !important;
+    z-index: -2 !important;
+    opacity: 1 !important;
+  }
+  .trading-table tr.tr-current::after,
+  .trading-table tr.tr-taken::after,
+  .trading-table tr.tr-loss::after,
+  .trading-table tr.tr-preview::after,
+  .trading-table tr.tr-previous::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: inherit !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.14) !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+    animation: none !important;
+    background: transparent !important;
+    left: 0 !important;
+    width: auto !important;
+  }
+  .trading-table tr.tr-current::before {
+    background: linear-gradient(135deg, rgba(255,215,0,0.48), rgba(255,230,130,0.24) 40%, rgba(0,245,160,0.14) 100%) !important;
+  }
+  .trading-table tr.tr-taken::before {
+    background: linear-gradient(135deg, rgba(0,245,160,0.38), rgba(0,180,120,0.24) 42%, rgba(255,255,255,0.05) 100%) !important;
+  }
+  .trading-table tr.tr-loss::before {
+    background: linear-gradient(135deg, rgba(255,93,115,0.42), rgba(170,36,60,0.24) 42%, rgba(255,255,255,0.05) 100%) !important;
+  }
+  .trading-table tr.tr-preview::before {
+    background: linear-gradient(135deg, rgba(255,255,255,0.10), rgba(255,255,255,0.04) 55%, rgba(255,215,0,0.06) 100%) !important;
+  }
+  .trading-table tr.tr-previous::before {
+    background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05) 55%, rgba(0,245,160,0.04) 100%) !important;
+  }
+  .trading-table tr.tr-current td,
+  .trading-table tr.tr-taken td,
+  .trading-table tr.tr-loss td,
+  .trading-table tr.tr-preview td,
+  .trading-table tr.tr-previous td,
+  .trading-table tr.tr-current td:first-child,
+  .trading-table tr.tr-current td:last-child,
+  .trading-table tr.tr-taken td:first-child,
+  .trading-table tr.tr-taken td:last-child,
+  .trading-table tr.tr-loss td:first-child,
+  .trading-table tr.tr-loss td:last-child,
+  .trading-table tr.tr-preview td:first-child,
+  .trading-table tr.tr-preview td:last-child,
+  .trading-table tr.tr-previous td:first-child,
+  .trading-table tr.tr-previous td:last-child {
+    position: relative !important;
+    z-index: 1 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.12) !important;
+  }
+  .trading-table tr.tr-current td:last-child,
+  .trading-table tr.tr-taken td:last-child,
+  .trading-table tr.tr-loss td:last-child,
+  .trading-table tr.tr-preview td:last-child,
+  .trading-table tr.tr-previous td:last-child {
+    border-bottom: 0 !important;
+  }
+  .trading-table tr.tr-current td[data-label="#"],
+  .trading-table tr.tr-taken td[data-label="#"],
+  .trading-table tr.tr-loss td[data-label="#"],
+  .trading-table tr.tr-preview td[data-label="#"],
+  .trading-table tr.tr-previous td[data-label="#"] {
+    padding-top: 2px !important;
+    padding-bottom: 14px !important;
+    margin-bottom: 4px !important;
+  }
+  .trading-table tr.tr-current .action-group,
+  .trading-table tr.tr-taken .action-group,
+  .trading-table tr.tr-loss .action-group {
+    width: 100% !important;
+    gap: 10px !important;
+  }
+  .trading-table tr.tr-current .btn-sm,
+  .trading-table tr.tr-taken .btn-sm,
+  .trading-table tr.tr-loss .btn-sm {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+  }
+}
+</style>
+
+
+<script id="chat-level-layout-script">
+(function(){
+  function getChatEls(){
+    return {
+      panel: document.getElementById('chatSection'),
+      list: document.getElementById('chatList'),
+      input: document.getElementById('chatInput'),
+      form: document.querySelector('#chatSection .chat-form')
+    };
+  }
+  function syncChatViewport(){
+    const { panel, list } = getChatEls();
+    if (!panel || !list) return;
+    if (document.body.dataset.page !== 'chat') return;
+    const mobile = window.innerWidth <= 700;
+    const reserve = mobile ? 94 : 110;
+    panel.style.height = 'calc(100dvh - ' + reserve + 'px)';
+    panel.style.minHeight = 'calc(100dvh - ' + reserve + 'px)';
+    panel.style.maxHeight = 'calc(100dvh - ' + reserve + 'px)';
+    list.scrollTop = list.scrollHeight;
+  }
+  function goChatBottom(){
+    const { list } = getChatEls();
+    if (!list) return;
+    list.scrollTop = list.scrollHeight;
+  }
+  const oldShowPage = window.showPage;
+  if (typeof oldShowPage === 'function') {
+    window.showPage = function(page){
+      const out = oldShowPage.apply(this, arguments);
+      if ((page || '') === 'chat') {
+        setTimeout(syncChatViewport, 30);
+        setTimeout(goChatBottom, 120);
+      }
+      return out;
+    };
+  }
+  window.addEventListener('resize', function(){ setTimeout(syncChatViewport, 60); });
+  document.addEventListener('focusin', function(e){
+    if (e.target && e.target.id === 'chatInput') {
+      setTimeout(syncChatViewport, 100);
+      setTimeout(goChatBottom, 160);
+    }
+  });
+  document.addEventListener('submit', function(e){
+    if (e.target && e.target.closest && e.target.closest('#chatSection')) {
+      setTimeout(goChatBottom, 120);
+      setTimeout(goChatBottom, 300);
+    }
+  }, true);
+  window.addEventListener('load', function(){
+    if (document.body.dataset.page === 'chat') {
+      setTimeout(syncChatViewport, 100);
+      setTimeout(goChatBottom, 200);
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
