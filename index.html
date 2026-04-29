@@ -917,6 +917,98 @@
     to { transform: rotate(360deg); }
   }
 
+
+  /* ===== iOS SAFARI AUTH WHITE-CARD FIX ===== */
+  /* iPhone/Safari дээр backdrop-filter заримдаа auth card-ийг цагаан болгож render хийдэг.
+     Энэ override нь login/register хэсгийг үргэлж dark luxury glass болгож тогтвортой харуулна. */
+  #authPanel .auth-glass,
+  body:not(.is-authenticated) #authPanel .auth-glass {
+    background:
+      radial-gradient(circle at 12% 0%, rgba(243,211,106,0.13), transparent 42%),
+      linear-gradient(145deg, rgba(19, 23, 22, 0.96), rgba(10, 14, 15, 0.92) 52%, rgba(8, 10, 12, 0.96)) !important;
+    border: 1px solid rgba(255,255,255,0.18) !important;
+    box-shadow:
+      0 26px 70px rgba(0,0,0,0.44),
+      inset 0 1px 0 rgba(255,255,255,0.18),
+      inset 0 -1px 0 rgba(255,255,255,0.04) !important;
+    color: #fff6d7 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  #authPanel .auth-title,
+  #authPanel .auth-kicker,
+  #authPanel #authStatus,
+  #authPanel .auth-status,
+  #authPanel label {
+    color: #fff1b5 !important;
+    text-shadow: none !important;
+  }
+
+  #authPanel .auth-kicker {
+    color: rgba(255,246,215,0.62) !important;
+  }
+
+  #authPanel #authStatus,
+  #authPanel .auth-status {
+    color: rgba(255,246,215,0.68) !important;
+  }
+
+  #authPanel .auth-input {
+    color: #fff6d7 !important;
+    background: rgba(255,255,255,0.10) !important;
+    border: 1px solid rgba(255,255,255,0.16) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 8px 20px rgba(0,0,0,0.12) !important;
+    -webkit-text-fill-color: #fff6d7 !important;
+  }
+
+  #authPanel .auth-input::placeholder {
+    color: rgba(255,246,215,0.42) !important;
+    -webkit-text-fill-color: rgba(255,246,215,0.42) !important;
+  }
+
+  #authPanel .auth-tab:not(.active),
+  #authPanel .auth-ghost {
+    color: rgba(255,246,215,0.80) !important;
+    background: rgba(255,255,255,0.08) !important;
+    border: 1px solid rgba(255,255,255,0.14) !important;
+  }
+
+  #authPanel .auth-tab.active,
+  #authPanel .auth-btn.primary {
+    color: #111104 !important;
+    background: linear-gradient(135deg, #fff4bf 0%, #ffd800 55%, #b77b00 100%) !important;
+    border: 1px solid rgba(255,226,145,0.34) !important;
+    box-shadow:
+      0 12px 30px rgba(243,211,106,0.18),
+      inset 0 1px 0 rgba(255,255,255,0.45) !important;
+  }
+
+  @media (max-width: 700px) {
+    body:not(.is-authenticated) #authPanel {
+      padding-left: 12px !important;
+      padding-right: 12px !important;
+    }
+
+    body:not(.is-authenticated) #authPanel .auth-glass {
+      border-radius: 30px !important;
+      padding: 20px !important;
+    }
+
+    #authPanel .auth-input {
+      height: 52px !important;
+      border-radius: 999px !important;
+      font-size: 15px !important;
+    }
+
+    #authPanel .auth-btn.primary {
+      min-height: 52px !important;
+      border-radius: 999px !important;
+    }
+  }
+
 </style>
 </head>
 <body>
