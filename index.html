@@ -615,9 +615,318 @@
     margin-top: 16px !important;
   }
 
+
+  /* ===== NEXT IF WIN CALCULATION CLARITY ===== */
+  .trading-table tr.tr-preview .preview-badge {
+    color: rgba(255,245,210,0.82) !important;
+    background: rgba(255,255,255,0.075) !important;
+    border-color: rgba(255,255,255,0.10) !important;
+  }
+
+
+  /* ===== MOBILE LEVEL FULL-FILL + SOFT GLASS FIX ===== */
+  @media (max-width: 700px) {
+    .table-wrapper.page-section.page-levels {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+      overflow: visible !important;
+      background: transparent !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .trading-table {
+      width: 100% !important;
+      border-spacing: 0 12px !important;
+      border-collapse: separate !important;
+    }
+
+    .trading-table tr.tr-current,
+    .trading-table tr.tr-previous,
+    .trading-table tr.tr-preview {
+      position: relative !important;
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      isolation: isolate !important;
+      border-radius: 26px !important;
+      border: 1px solid rgba(255,255,255,0.16) !important;
+      padding: 14px 14px !important;
+      margin: 0 0 14px !important;
+      background: rgba(255,255,255,0.055) !important;
+      box-shadow:
+        0 14px 32px rgba(0,0,0,0.22),
+        inset 0 1px 0 rgba(255,255,255,0.16) !important;
+      backdrop-filter: blur(22px) saturate(1.18) !important;
+      -webkit-backdrop-filter: blur(22px) saturate(1.18) !important;
+    }
+
+    .trading-table tr.tr-current::before,
+    .trading-table tr.tr-previous::before,
+    .trading-table tr.tr-preview::before {
+      content: '' !important;
+      position: absolute !important;
+      inset: 0 !important;
+      z-index: -2 !important;
+      border-radius: inherit !important;
+      pointer-events: none !important;
+    }
+
+    .trading-table tr.tr-current::after,
+    .trading-table tr.tr-previous::after,
+    .trading-table tr.tr-preview::after {
+      content: '' !important;
+      position: absolute !important;
+      inset: 0 !important;
+      z-index: -1 !important;
+      border-radius: inherit !important;
+      background:
+        linear-gradient(120deg, rgba(255,255,255,0.12), transparent 34%, rgba(255,255,255,0.035)),
+        linear-gradient(180deg, rgba(255,255,255,0.06), transparent 42%, rgba(0,0,0,0.035)) !important;
+      pointer-events: none !important;
+    }
+
+    .trading-table tr.tr-current {
+      border-color: rgba(243,211,106,0.36) !important;
+      box-shadow:
+        0 16px 36px rgba(0,0,0,0.24),
+        0 0 22px rgba(243,211,106,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.20) !important;
+    }
+
+    .trading-table tr.tr-current::before {
+      background:
+        radial-gradient(circle at 0% 0%, rgba(243,211,106,0.22), transparent 42%),
+        linear-gradient(135deg, rgba(243,211,106,0.18), rgba(255,255,255,0.075) 44%, rgba(31,227,170,0.07)) !important;
+    }
+
+    .trading-table tr.tr-previous::before {
+      background:
+        radial-gradient(circle at 0% 0%, rgba(255,255,255,0.11), transparent 38%),
+        linear-gradient(135deg, rgba(255,255,255,0.105), rgba(255,255,255,0.04) 58%, rgba(31,227,170,0.055)) !important;
+    }
+
+    .trading-table tr.tr-preview::before {
+      background:
+        radial-gradient(circle at 0% 0%, rgba(125,211,252,0.12), transparent 38%),
+        linear-gradient(135deg, rgba(255,255,255,0.095), rgba(255,255,255,0.035) 58%, rgba(31,227,170,0.065)) !important;
+    }
+
+    .trading-table tr.tr-current td,
+    .trading-table tr.tr-previous td,
+    .trading-table tr.tr-preview td,
+    .trading-table tr.tr-current td:first-child,
+    .trading-table tr.tr-current td:last-child,
+    .trading-table tr.tr-previous td:first-child,
+    .trading-table tr.tr-previous td:last-child,
+    .trading-table tr.tr-preview td:first-child,
+    .trading-table tr.tr-preview td:last-child {
+      position: relative !important;
+      z-index: 1 !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      gap: 12px !important;
+      width: 100% !important;
+      padding: 11px 0 !important;
+      margin: 0 !important;
+      background: transparent !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border-bottom: 1px solid rgba(255,255,255,0.09) !important;
+    }
+
+    .trading-table tr.tr-current td:last-child,
+    .trading-table tr.tr-previous td:last-child,
+    .trading-table tr.tr-preview td:last-child {
+      border-bottom: 0 !important;
+    }
+
+    .trading-table td::after {
+      display: none !important;
+    }
+
+    .trading-table td::before {
+      color: rgba(255,246,215,0.62) !important;
+      font-size: 10px !important;
+      letter-spacing: 1px !important;
+    }
+
+    .trading-table td[data-label="#"] {
+      justify-content: center !important;
+      padding: 8px 0 13px !important;
+      margin: 0 0 4px !important;
+      border-bottom: 1px solid rgba(255,255,255,0.11) !important;
+    }
+
+    .trading-table td[data-label="#"]::before {
+      display: none !important;
+    }
+
+    .trading-table tr.tr-current td[data-label="#"] {
+      border-bottom-color: rgba(243,211,106,0.20) !important;
+    }
+
+    .trading-table tr.tr-current .level-chip,
+    .trading-table tr.tr-current .goal-flag {
+      width: 58px !important;
+      height: 58px !important;
+      min-width: 58px !important;
+      font-size: 20px !important;
+    }
+
+    .trading-table tr.tr-previous .level-chip,
+    .trading-table tr.tr-preview .level-chip,
+    .trading-table tr.tr-previous .goal-flag,
+    .trading-table tr.tr-preview .goal-flag {
+      width: 38px !important;
+      height: 38px !important;
+      min-width: 38px !important;
+      font-size: 14px !important;
+      opacity: .86 !important;
+    }
+
+    .trading-table tr.tr-current .level-context-label {
+      margin-left: 10px !important;
+      padding: 7px 13px !important;
+      font-size: 10px !important;
+      background: rgba(243,211,106,0.24) !important;
+      border-color: rgba(243,211,106,0.26) !important;
+      color: #151004 !important;
+    }
+
+    .trading-table tr.tr-previous .level-context-label,
+    .trading-table tr.tr-preview .level-context-label {
+      margin-left: 8px !important;
+      padding: 5px 10px !important;
+      font-size: 8px !important;
+      background: rgba(255,255,255,0.09) !important;
+      border-color: rgba(255,255,255,0.11) !important;
+      color: rgba(255,246,215,0.80) !important;
+    }
+
+    .trading-table tr.tr-previous,
+    .trading-table tr.tr-preview {
+      opacity: .92 !important;
+      filter: none !important;
+      padding-top: 10px !important;
+      padding-bottom: 10px !important;
+    }
+
+    .trading-table tr.tr-previous td[data-label="SL pips"],
+    .trading-table tr.tr-preview td[data-label="SL pips"],
+    .trading-table tr.tr-previous td[data-label="Үр дүн"],
+    .trading-table tr.tr-preview td[data-label="Үр дүн"] {
+      display: none !important;
+    }
+
+    .trading-table tr.tr-previous td,
+    .trading-table tr.tr-preview td {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+      font-size: 12px !important;
+    }
+
+    .trading-table tr.tr-current .action-group {
+      width: 100% !important;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 10px !important;
+    }
+
+    .trading-table tr.tr-current .btn-sm {
+      min-height: 46px !important;
+      border-radius: 18px !important;
+      font-size: 12px !important;
+    }
+
+    .bottom-nav {
+      z-index: 2000 !important;
+    }
+  }
+
+  /* ===== APP LOADING OVERLAY ===== */
+  .app-loading-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+      radial-gradient(circle at 50% 35%, rgba(243,211,106,0.16), transparent 32%),
+      rgba(5,7,8,0.70);
+    backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
+    transition: opacity .28s ease, visibility .28s ease;
+  }
+
+  .app-loading-overlay.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .app-loader-card {
+    width: min(330px, calc(100vw - 48px));
+    padding: 26px 22px;
+    border-radius: 32px;
+    text-align: center;
+    background:
+      linear-gradient(145deg, rgba(255,255,255,0.15), rgba(255,255,255,0.055)),
+      radial-gradient(circle at 50% 0%, rgba(243,211,106,0.16), transparent 42%);
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow:
+      0 28px 70px rgba(0,0,0,0.42),
+      inset 0 1px 0 rgba(255,255,255,0.22);
+  }
+
+  .app-loader-ring {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,255,255,0.12);
+    border-top-color: #f3d36a;
+    border-right-color: rgba(31,227,170,0.75);
+    animation: appLoaderSpin .85s linear infinite;
+    box-shadow: 0 0 24px rgba(243,211,106,0.18);
+  }
+
+  .app-loader-title {
+    color: #fff1b5;
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  .app-loader-sub {
+    margin-top: 8px;
+    color: rgba(255,246,215,0.66);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  @keyframes appLoaderSpin {
+    to { transform: rotate(360deg); }
+  }
+
 </style>
 </head>
 <body>
+<div class="app-loading-overlay" id="appLoadingOverlay">
+  <div class="app-loader-card">
+    <div class="app-loader-ring"></div>
+    <div class="app-loader-title">Loading</div>
+    <div class="app-loader-sub">Account data уншиж байна...</div>
+  </div>
+</div>
 <div class="poster">
   <header class="header" id="top">
     <div class="top-pill">XAUUSD · АЛТ $1000 CHALLENGE · DISCIPLINE MODE</div>
@@ -837,6 +1146,25 @@
   let lastMilestone = 0;
   let revengeUntil = Number(localStorage.getItem(REVENGE_KEY) || 0);
 
+  let appLoadingMinimumDone = false;
+  setTimeout(() => { appLoadingMinimumDone = true; }, 450);
+
+  function showAppLoading(message = 'Account data уншиж байна...') {
+    const overlay = document.getElementById('appLoadingOverlay');
+    const sub = overlay ? overlay.querySelector('.app-loader-sub') : null;
+    if (sub) sub.textContent = message;
+    if (overlay) overlay.classList.remove('hide');
+  }
+
+  function hideAppLoading() {
+    const overlay = document.getElementById('appLoadingOverlay');
+    if (!overlay) return;
+    const hide = () => overlay.classList.add('hide');
+    if (appLoadingMinimumDone) hide();
+    else setTimeout(hide, 450);
+  }
+
+
   function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
   function round2(value) { return Math.round((Number(value || 0) + Number.EPSILON) * 100) / 100; }
   function calculateLot(risk, slPips = STOP_LOSS_PIPS, pipValue = PIP_VALUE_PER_1_LOT) {
@@ -1050,22 +1378,26 @@
 
   function projectLevelFromBalance(idx, startBalance) {
     const safeBalance = round2(Number(startBalance || 0));
-    const planRisk = round2(safeBalance * RISK);
-    const lot = calculateLot(planRisk);
+
+    // NEXT IF WIN must use the same system as every real level:
+    // risk = balance × 20%, profit = risk × 2.
+    // Lot is only a position-size reference, not the source of profit/risk.
+    const risk = round2(safeBalance * RISK);
+    const profit = round2(risk * RR);
+    const lot = calculateLot(risk);
     const actualRisk = round2(lot * STOP_LOSS_PIPS * PIP_VALUE_PER_1_LOT);
-    const profit = round2(actualRisk * RR);
 
     return {
       idx,
       startBalance: safeBalance,
-      risk: actualRisk,
-      planRisk,
+      risk,
+      planRisk: risk,
       actualRisk,
       profit,
       lot,
       slPips: STOP_LOSS_PIPS,
       outcome: null,
-      newBalance: null,
+      newBalance: round2(safeBalance + profit),
       isProjected: true
     };
   }
@@ -1106,7 +1438,7 @@
       actionHtml = `<span class="preview-badge">Preview only</span>`;
     }
 
-    const newBalText = l.outcome ? formatMoney(l.newBalance) : (isPreview ? formatMoney(l.startBalance + l.profit) : '—');
+    const newBalText = l.outcome ? formatMoney(l.newBalance) : (isPreview && l.newBalance !== null ? formatMoney(l.newBalance) : '—');
     const balanceColor = l.outcome === 'taken'
       ? 'color: var(--green);'
       : (l.outcome === 'loss' ? 'color: #ffb0bc;' : (isPreview ? 'color: rgba(185,255,215,0.82);' : 'color: rgba(255,255,255,0.55);'));
@@ -1143,7 +1475,7 @@
 
     const titleEl = document.getElementById('currentLevelTitle');
     if (titleEl) {
-      titleEl.innerHTML = `<span>LEVEL VIEW · previous / current / next</span><button class="level-restart-btn" onclick="restartLastLevel()">↺ Level restart</button>`;
+      titleEl.innerHTML = `<span>LEVEL VIEW · PREVIOUS / CURRENT / NEXT IF WIN</span><button class="level-restart-btn" onclick="restartLastLevel()">↺ Level restart</button>`;
     }
 
     const rows = [];
@@ -1220,11 +1552,28 @@
   function initFirebase() {
     try {
       const hasConfig = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes('YOUR_');
-      if (!hasConfig || typeof firebase === 'undefined') { setAuthStatus('Firebase config оруулаагүй байна. Одоогоор progress localStorage дээр хадгалагдана.'); return; }
+      if (!hasConfig || typeof firebase === 'undefined') { setAuthStatus('Firebase config оруулаагүй байна. Одоогоор progress localStorage дээр хадгалагдана.'); hideAppLoading(); return; }
       if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
       auth = firebase.auth(); db = firebase.firestore(); firebaseReady = true;
-      auth.onAuthStateChanged(async (user) => { currentUser = user; updateAuthUI(user); if (user) { await checkAdminStatus(); await loadCloudData(); await saveLeaderboardStats(); openHomeOrBalanceSetup(); } else { document.body.classList.remove('is-admin'); } });
-    } catch (error) { console.warn('Firebase init error:', error); setAuthStatus('Firebase эхлүүлэхэд алдаа гарлаа. Config-оо шалгаарай.'); }
+      auth.onAuthStateChanged(async (user) => {
+        showAppLoading(user ? 'Cloud progress уншиж байна...' : 'Login screen бэлдэж байна...');
+        try {
+          currentUser = user;
+          updateAuthUI(user);
+
+          if (user) {
+            await checkAdminStatus();
+            await loadCloudData();
+            await saveLeaderboardStats();
+            openHomeOrBalanceSetup();
+          } else {
+            document.body.classList.remove('is-admin');
+          }
+        } finally {
+          hideAppLoading();
+        }
+      });
+    } catch (error) { console.warn('Firebase init error:', error); setAuthStatus('Firebase эхлүүлэхэд алдаа гарлаа. Config-оо шалгаарай.'); hideAppLoading(); }
   }
 
   function clearLocalChallengeAfterAdminReset(resetToken = '') {
@@ -1292,6 +1641,7 @@
   }
 
   window.registerUser = async function() {
+    showAppLoading('Бүртгэл үүсгэж байна...');
     if (!firebaseReady || !auth || !db) return alert('Эхлээд Firebase config-оо зөв оруулна уу.');
     const { name, email, password } = getAuthInputs(); if (!name || !email || !password) return alert('Нэр, mail, password гурвууланг нь бөглөнө үү.');
     try { const cred = await auth.createUserWithEmailAndPassword(email, password); await cred.user.updateProfile({ displayName: name }); currentUser = cred.user; await db.collection('users').doc(cred.user.uid).set({ name, email, createdAt: firebase.firestore.FieldValue.serverTimestamp(), challenge: { adminForceSetup: true, challengeMonthKey: getCurrentChallengeMonthKey(), outcomes, journalEntries, tradeHistory, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }, { merge: true }); updateAuthUI(cred.user); await checkAdminStatus(); await saveLeaderboardStats(); setAuthStatus('Бүртгэл амжилттай. Одоо эхлэх balance-аа сонго.'); render(); } catch (error) { alert(error.message); }
