@@ -2834,6 +2834,27 @@
     }
   }
 
+
+  /* ===== FIX: DESKTOP SCROLL + MODAL LOCK SAFETY ===== */
+  html, body {
+    height: auto !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+  }
+
+  body.settings-open,
+  body.idea-modal-open {
+    overflow-y: hidden !important;
+  }
+
+  body:not(.settings-open):not(.idea-modal-open) {
+    position: static !important;
+  }
+
+  .poster {
+    min-height: auto !important;
+  }
+
 </style>
 
 <style id="ultra-luxury-upgrade">
@@ -3707,6 +3728,22 @@ body {
     else setTimeout(hide, 450);
   }
 
+  function runInBackground(task, label = 'background task') {
+    Promise.resolve()
+      .then(task)
+      .catch((error) => console.warn(`${label} error:`, error));
+  }
+
+  function withTimeout(promise, ms, fallback = null) {
+    let timer;
+    return Promise.race([
+      promise,
+      new Promise(resolve => {
+        timer = setTimeout(() => resolve(fallback), ms);
+      })
+    ]).finally(() => clearTimeout(timer));
+  }
+
 
 
   let miniToastTimer = null;
@@ -3762,16 +3799,21 @@ body {
 
   function animateLevelShift() {
     const wrapper = document.getElementById('levelsSection');
-    if (!wrapper) return;
+    if (!wrapper || document.body.dataset.page !== 'levels') return;
 
-    wrapper.classList.remove('level-out-animate', 'level-in-animate', 'level-action-lock', 'level-shift-animate');
-    void wrapper.offsetWidth;
-    wrapper.classList.add('level-in-animate');
-
+    clearTimeout(wrapper._levelOutcomeTimer);
     clearTimeout(wrapper._levelShiftTimer);
+
+    wrapper.classList.remove('level-out-animate', 'level-in-animate', 'level-shift-animate');
+    wrapper.classList.add('level-action-lock');
+
+    requestAnimationFrame(() => {
+      wrapper.classList.add('level-in-animate');
+    });
+
     wrapper._levelShiftTimer = setTimeout(() => {
-      wrapper.classList.remove('level-in-animate', 'level-shift-animate');
-    }, 950);
+      wrapper.classList.remove('level-out-animate', 'level-in-animate', 'level-shift-animate', 'level-action-lock');
+    }, 520);
   }
 
 
@@ -3899,15 +3941,26 @@ body {
   function needMoreLevels() { const { finalBalance } = compute(); if (finalBalance >= TARGET) return false; const last = outcomes[outcomes.length - 1]; return last === 'taken' || last === 'loss'; }
   function addLevelIfNeeded() { while (needMoreLevels()) outcomes.push(null); }
 
+  let leaderboardSaveTimer = null;
+
+  function scheduleLeaderboardSave(delay = 500) {
+    clearTimeout(leaderboardSaveTimer);
+    leaderboardSaveTimer = setTimeout(() => {
+      runInBackground(() => saveLeaderboardStats(), 'leaderboard save');
+    }, delay);
+  }
+
   function saveProgress() {
     saveJSON(STORAGE_KEY, outcomes);
     if (firebaseReady && currentUser && db) {
       db.collection('users').doc(currentUser.uid).set({
-        name: currentUser.displayName || '', email: currentUser.email || '',
+        name: getDisplayNameForCurrentUser(),
+        email: currentUser.email || '',
+        photoData: getPhotoForCurrentUser(),
         challenge: { adminForceSetup: false, challengeMonthKey: getCurrentChallengeMonthKey(), startBalance: START, outcomes, journalEntries, tradeHistory, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }
       }, { merge: true }).catch((error) => { console.warn('Cloud save error:', error); setAuthStatus('Cloud дээр хадгалахад алдаа гарлаа. Firestore rules/config-оо шалга.'); });
     }
-    saveLeaderboardStats();
+    scheduleLeaderboardSave();
   }
 
   function recordTradeHistory(levelData, type) {
@@ -3968,22 +4021,22 @@ body {
     }
 
     const wrapper = document.getElementById('levelsSection');
-    const shouldAnimate = wrapper && document.body.dataset.page === 'levels';
-
-    if (!shouldAnimate) {
-      return finalizeSetOutcome(idx, type);
+    if (wrapper) {
+      clearTimeout(wrapper._levelOutcomeTimer);
+      clearTimeout(wrapper._levelShiftTimer);
+      wrapper.classList.remove('level-out-animate', 'level-in-animate', 'level-shift-animate');
+      wrapper.classList.add('level-action-lock');
     }
 
-    wrapper.classList.remove('level-in-animate', 'level-shift-animate');
-    wrapper.classList.add('level-action-lock', 'level-out-animate');
+    const ok = finalizeSetOutcome(idx, type);
 
-    clearTimeout(wrapper._levelOutcomeTimer);
-    wrapper._levelOutcomeTimer = setTimeout(() => {
-      finalizeSetOutcome(idx, type);
-      wrapper.classList.remove('level-out-animate', 'level-action-lock');
-    }, 230);
+    if (wrapper) {
+      wrapper._levelOutcomeTimer = setTimeout(() => {
+        wrapper.classList.remove('level-action-lock', 'level-out-animate', 'level-in-animate', 'level-shift-animate');
+      }, 650);
+    }
 
-    return true;
+    return ok;
   }
 
   function resetOutcome(idx) { if (idx < 0 || idx >= outcomes.length) return; outcomes[idx] = null; if (outcomes.length > idx + 1) outcomes = outcomes.slice(0, idx + 1); while (outcomes.length < 9) outcomes.push(null); saveProgress(); render(); }
@@ -4161,7 +4214,7 @@ body {
     const el = document.getElementById('profileName');
     if (el) el.textContent = name;
     const avatarShell = document.getElementById('profileAvatarShell');
-    if (avatarShell) avatarShell.innerHTML = getAvatarMarkup(name, (currentUserDocData && currentUserDocData.photoData) || '', 'idea-avatar');
+    if (avatarShell) avatarShell.innerHTML = getAvatarMarkup(name, getPhotoForCurrentUser(), 'idea-avatar');
     const { finalBalance } = compute();
     const meta = document.getElementById('profileMeta');
     if (meta) meta.textContent = `${email} · ${START > 0 ? `Start ${formatMoney(START)} · ` : ''}${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`;
@@ -4227,6 +4280,9 @@ body {
 
   window.showPage = function(page) {
     const allowed = ['home', 'idea', 'stats', 'levels', 'history', 'leaderboard', 'chat', 'admin']; const nextPage = allowed.includes(page) ? page : 'home';
+    document.body.classList.remove('settings-open', 'idea-modal-open');
+    document.body.style.position = '';
+    document.body.style.overflow = '';
     document.body.dataset.page = nextPage;
     document.querySelectorAll('.bottom-nav a[data-page]').forEach(link => link.classList.toggle('active', link.dataset.page === nextPage));
     const titles = { home: 'Home', idea: 'Idea', stats: 'Stats', levels: 'Levels', history: 'History', leaderboard: 'Leaderboard', chat: 'Chat', admin: 'Admin' };
@@ -4248,16 +4304,16 @@ body {
       if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
       auth = firebase.auth(); db = firebase.firestore(); firebaseReady = true;
       auth.onAuthStateChanged(async (user) => {
-        showAppLoading(user ? 'Cloud progress уншиж байна...' : 'Login screen бэлдэж байна...');
+        showAppLoading(user ? 'Account нээж байна...' : 'Login screen бэлдэж байна...');
         try {
           currentUser = user;
           updateAuthUI(user);
 
           if (user) {
-            await checkAdminStatus();
-            await loadCloudData();
-            await saveLeaderboardStats();
+            await withTimeout(checkAdminStatus(), 1200, false);
+            await withTimeout(loadCloudData(), 2500, false);
             openHomeOrBalanceSetup();
+            scheduleLeaderboardSave(900);
           } else {
             document.body.classList.remove('is-admin');
           }
@@ -4340,7 +4396,7 @@ body {
       if (Array.isArray(challenge.tradeHistory)) { tradeHistory = challenge.tradeHistory; saveJSON(HISTORY_KEY, tradeHistory); }
       if (challenge.revengeUntil) { revengeUntil = Number(challenge.revengeUntil); localStorage.setItem(REVENGE_KEY, String(revengeUntil)); }
       try { localStorage.setItem(CHALLENGE_MONTH_LOCAL_KEY, currentMonth); } catch (_) {}
-      await syncMyPublicProfileData({ name: currentUserDocData.name || '', photoData: currentUserDocData.photoData || '' });
+      runInBackground(() => syncMyPublicProfileData({ name: currentUserDocData.name || '', photoData: currentUserDocData.photoData || '' }), 'profile public sync');
       setAuthStatus('Cloud sync on.'); render();
     } catch (error) { console.warn('Cloud load error:', error); setAuthStatus('Cloud progress уншихад алдаа гарлаа. Firestore rules/config-оо шалга.'); }
   }
@@ -4630,7 +4686,12 @@ body {
   }
 
   function getSafePhotoData(value) {
-    return (typeof value === 'string' && value.startsWith('data:image')) ? value : '';
+    if (typeof value !== 'string') return '';
+    const v = value.trim();
+    if (v.startsWith('data:image')) return v;
+    if (/^https:\/\/[^"'<>]+$/i.test(v)) return v;
+    if (/^blob:[^"'<>]+$/i.test(v)) return v;
+    return '';
   }
 
   function getProfileCacheKey(uid = currentUser?.uid) {
@@ -4709,8 +4770,9 @@ body {
 
   function getAvatarMarkup(name, photoData, className = 'idea-avatar') {
     const safePhoto = getSafePhotoData(photoData);
-    if (safePhoto) return `<div class="${className} has-photo"><img src="${safePhoto}" alt="avatar" loading="lazy" /></div>`;
-    return `<div class="${className}">${getInitialLetter(name)}</div>`;
+    const safeClass = String(className || 'idea-avatar').replace(/[^a-zA-Z0-9_-]/g, '');
+    if (safePhoto) return `<div class="${safeClass} has-photo"><img src="${safePhoto.replace(/&/g, '&amp;').replace(/"/g, '&quot;')}" alt="avatar" loading="lazy" onerror="this.closest('div').classList.remove('has-photo'); this.closest('div').textContent='${getInitialLetter(name)}';" /></div>`;
+    return `<div class="${safeClass}">${getInitialLetter(name)}</div>`;
   }
 
   function setPreviewAvatar(targetId, photoData, fallbackName = 'Trader') {
