@@ -7466,122 +7466,59 @@ body.is-authenticated[data-page="chat"] .chat-note {
 </script>
 
 
-<style id="chat-alignment-final-patch">
-/* FINAL CHAT INPUT ALIGNMENT FIX */
-body.is-authenticated[data-page="chat"] #chatSection .chat-form {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 14px !important;
-  width: 100% !important;
-  min-height: 72px !important;
-  margin-top: 10px !important;
-  padding: 8px 0 0 !important;
-  box-sizing: border-box !important;
+
+<style id="chat-actual-layout-override-v3">
+/* ===== ACTUAL CHAT LAYOUT OVERRIDE V3 =====
+   Goal:
+   1) Fill the left/right empty space inside chat card.
+   2) Keep the composer small and vertically centered.
+   3) Avoid previous duplicated chat CSS by using high-specificity selectors. */
+
+body.is-authenticated[data-page="chat"] .poster {
+  max-width: 1480px !important;
 }
 
-body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-input,
-body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-btn,
-body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-btn.primary {
-  margin: 0 !important;
-  align-self: center !important;
-  position: relative !important;
-  top: auto !important;
-  bottom: auto !important;
-  transform: none !important;
-  box-sizing: border-box !important;
-}
-
-body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-input {
-  flex: 1 1 auto !important;
-  width: auto !important;
+body.is-authenticated[data-page="chat"] #chatSection.chat-panel,
+body.is-authenticated[data-page="chat"] section#chatSection {
+  width: min(1280px, calc(100vw - 48px)) !important;
+  max-width: min(1280px, calc(100vw - 48px)) !important;
   min-width: 0 !important;
-  height: 56px !important;
-  min-height: 56px !important;
-  max-height: 56px !important;
-  line-height: 56px !important;
-  padding: 0 22px !important;
-  border-radius: 28px !important;
-  display: block !important;
+  margin: 0 auto 18px auto !important;
+  padding: 18px 20px 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
-body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-input::placeholder {
-  line-height: normal !important;
+body.is-authenticated[data-page="chat"] #chatSection .chat-head {
+  width: 100% !important;
+  flex: 0 0 auto !important;
+  margin-bottom: 10px !important;
 }
 
-body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-btn,
-body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-btn.primary {
-  flex: 0 0 148px !important;
-  width: 148px !important;
-  min-width: 148px !important;
-  max-width: 148px !important;
-  height: 56px !important;
-  min-height: 56px !important;
-  max-height: 56px !important;
-  border-radius: 28px !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  line-height: 1 !important;
-  padding: 0 !important;
-}
-
-@media (max-width: 700px) {
-  body.is-authenticated[data-page="chat"] #chatSection .chat-form {
-    gap: 10px !important;
-    min-height: 60px !important;
-  }
-
-  body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-input {
-    height: 48px !important;
-    min-height: 48px !important;
-    max-height: 48px !important;
-    line-height: 48px !important;
-    padding: 0 18px !important;
-    border-radius: 24px !important;
-  }
-
-  body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-btn,
-  body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-btn.primary {
-    flex: 0 0 110px !important;
-    width: 110px !important;
-    min-width: 110px !important;
-    max-width: 110px !important;
-    height: 48px !important;
-    min-height: 48px !important;
-    max-height: 48px !important;
-    border-radius: 24px !important;
-  }
-}
-</style>
-
-
-<style id="chat-width-input-final-fix">
-/* ===== CHAT WIDTH + SMALLER INPUT FINAL FIX ===== */
-body.is-authenticated[data-page="chat"] #chatSection {
-  max-width: 1320px !important;
-  width: min(1320px, calc(100vw - 32px)) !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-body.is-authenticated[data-page="chat"] #chatSection .chat-panel {
-  padding-left: 16px !important;
-  padding-right: 16px !important;
-}
-
+body.is-authenticated[data-page="chat"] #chatList.chat-list,
 body.is-authenticated[data-page="chat"] #chatSection .chat-list {
   width: 100% !important;
-  max-width: 100% !important;
-  padding-left: 4px !important;
-  padding-right: 4px !important;
+  max-width: none !important;
+  flex: 1 1 auto !important;
+  min-height: 430px !important;
+  max-height: calc(100dvh - 300px) !important;
+  height: auto !important;
+  padding: 8px 8px 12px !important;
+  margin: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
 }
 
 body.is-authenticated[data-page="chat"] #chatSection .chat-row {
+  width: 100% !important;
   display: flex !important;
   align-items: flex-end !important;
-  width: 100% !important;
   gap: 10px !important;
+  margin: 0 0 10px !important;
+  box-sizing: border-box !important;
 }
 
 body.is-authenticated[data-page="chat"] #chatSection .chat-row.mine {
@@ -7593,112 +7530,169 @@ body.is-authenticated[data-page="chat"] #chatSection .chat-row.theirs {
 }
 
 body.is-authenticated[data-page="chat"] #chatSection .chat-bubble-wrap {
-  max-width: 72% !important;
-}
-
-body.is-authenticated[data-page="chat"] #chatSection .chat-row.mine .chat-bubble-wrap,
-body.is-authenticated[data-page="chat"] #chatSection .chat-row.theirs .chat-bubble-wrap {
-  max-width: 72% !important;
+  max-width: 76% !important;
+  width: auto !important;
+  min-width: 0 !important;
 }
 
 body.is-authenticated[data-page="chat"] #chatSection .chat-message {
-  min-width: 150px !important;
+  width: fit-content !important;
   max-width: 100% !important;
+  min-width: 92px !important;
   padding: 10px 14px !important;
   border-radius: 18px !important;
+  box-sizing: border-box !important;
 }
 
-body.is-authenticated[data-page="chat"] #chatSection .chat-message-text {
-  font-size: 14px !important;
-  line-height: 1.35 !important;
+body.is-authenticated[data-page="chat"] #chatSection .chat-message::after,
+body.is-authenticated[data-page="chat"] #chatSection .chat-row.mine .chat-message::after,
+body.is-authenticated[data-page="chat"] #chatSection .chat-row.theirs .chat-message::after {
+  display: none !important;
+  content: none !important;
 }
 
-/* Section 3: make input and send a bit smaller and vertically centered */
+/* Composer: direct targeting because previous CSS used .auth-input/.auth-btn repeatedly */
+body.is-authenticated[data-page="chat"] #chatSection > .chat-form,
+body.is-authenticated[data-page="chat"] section#chatSection > div.chat-form,
 body.is-authenticated[data-page="chat"] #chatSection .chat-form {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 58px !important;
+  height: 58px !important;
+  margin: 10px 0 0 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 124px !important;
+  align-items: center !important;
   gap: 12px !important;
-  min-height: 56px !important;
-  padding-top: 8px !important;
+  position: relative !important;
+  top: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-sizing: border-box !important;
 }
 
-body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-input {
+body.is-authenticated[data-page="chat"] #chatInput.auth-input,
+body.is-authenticated[data-page="chat"] #chatSection .chat-form input#chatInput {
+  width: 100% !important;
+  min-width: 0 !important;
   height: 48px !important;
   min-height: 48px !important;
   max-height: 48px !important;
-  line-height: 48px !important;
+  line-height: normal !important;
+  margin: 0 !important;
   padding: 0 18px !important;
-  border-radius: 24px !important;
-  font-size: 14px !important;
+  display: block !important;
+  align-self: center !important;
+  justify-self: stretch !important;
+  position: static !important;
+  transform: none !important;
+  border-radius: 999px !important;
+  box-sizing: border-box !important;
 }
 
-body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-btn,
-body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-btn.primary {
-  flex: 0 0 126px !important;
-  width: 126px !important;
-  min-width: 126px !important;
-  max-width: 126px !important;
+body.is-authenticated[data-page="chat"] #chatSection .chat-form button.auth-btn,
+body.is-authenticated[data-page="chat"] #chatSection .chat-form button.auth-btn.primary {
+  width: 124px !important;
+  min-width: 124px !important;
+  max-width: 124px !important;
   height: 48px !important;
   min-height: 48px !important;
   max-height: 48px !important;
-  border-radius: 24px !important;
-  font-size: 14px !important;
-}
-
-@media (max-width: 900px) {
-  body.is-authenticated[data-page="chat"] #chatSection {
-    width: min(100vw - 18px, 100%) !important;
-  }
-  body.is-authenticated[data-page="chat"] #chatSection .chat-bubble-wrap,
-  body.is-authenticated[data-page="chat"] #chatSection .chat-row.mine .chat-bubble-wrap,
-  body.is-authenticated[data-page="chat"] #chatSection .chat-row.theirs .chat-bubble-wrap {
-    max-width: 80% !important;
-  }
-  body.is-authenticated[data-page="chat"] #chatSection .chat-message {
-    min-width: 120px !important;
-  }
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  align-self: center !important;
+  justify-self: end !important;
+  position: static !important;
+  transform: none !important;
+  border-radius: 999px !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
 }
 
 @media (max-width: 700px) {
-  body.is-authenticated[data-page="chat"] #chatSection .chat-panel {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+  body.is-authenticated[data-page="chat"] #chatSection.chat-panel,
+  body.is-authenticated[data-page="chat"] section#chatSection {
+    width: calc(100vw - 18px) !important;
+    max-width: calc(100vw - 18px) !important;
+    margin: 0 auto 12px !important;
+    padding: 12px !important;
   }
+
+  body.is-authenticated[data-page="chat"] #chatList.chat-list,
   body.is-authenticated[data-page="chat"] #chatSection .chat-list {
-    padding-left: 2px !important;
-    padding-right: 2px !important;
+    min-height: calc(100dvh - 250px) !important;
+    max-height: calc(100dvh - 250px) !important;
+    padding: 6px 2px 8px !important;
   }
-  body.is-authenticated[data-page="chat"] #chatSection .chat-bubble-wrap,
-  body.is-authenticated[data-page="chat"] #chatSection .chat-row.mine .chat-bubble-wrap,
-  body.is-authenticated[data-page="chat"] #chatSection .chat-row.theirs .chat-bubble-wrap {
+
+  body.is-authenticated[data-page="chat"] #chatSection .chat-bubble-wrap {
     max-width: 84% !important;
   }
-  body.is-authenticated[data-page="chat"] #chatSection .chat-message {
-    min-width: 96px !important;
-    padding: 8px 12px !important;
-  }
+
+  body.is-authenticated[data-page="chat"] #chatSection > .chat-form,
+  body.is-authenticated[data-page="chat"] section#chatSection > div.chat-form,
   body.is-authenticated[data-page="chat"] #chatSection .chat-form {
-    gap: 10px !important;
+    height: 50px !important;
+    min-height: 50px !important;
+    grid-template-columns: minmax(0, 1fr) 94px !important;
+    gap: 8px !important;
   }
-  body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-input {
+
+  body.is-authenticated[data-page="chat"] #chatInput.auth-input,
+  body.is-authenticated[data-page="chat"] #chatSection .chat-form input#chatInput {
     height: 44px !important;
     min-height: 44px !important;
     max-height: 44px !important;
-    line-height: 44px !important;
     padding: 0 14px !important;
-    border-radius: 22px !important;
   }
-  body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-btn,
-  body.is-authenticated[data-page="chat"] #chatSection .chat-form .auth-btn.primary {
-    flex: 0 0 102px !important;
-    width: 102px !important;
-    min-width: 102px !important;
-    max-width: 102px !important;
+
+  body.is-authenticated[data-page="chat"] #chatSection .chat-form button.auth-btn,
+  body.is-authenticated[data-page="chat"] #chatSection .chat-form button.auth-btn.primary {
+    width: 94px !important;
+    min-width: 94px !important;
+    max-width: 94px !important;
     height: 44px !important;
     min-height: 44px !important;
     max-height: 44px !important;
-    border-radius: 22px !important;
   }
 }
 </style>
+
+
+<script id="chat-input-unlock-v3">
+(function(){
+  function unlockChatInput(){
+    var input = document.getElementById('chatInput');
+    var btn = document.querySelector('#chatSection .chat-form button');
+    if (input) { input.disabled = false; input.readOnly = false; }
+    if (btn) { btn.disabled = false; btn.removeAttribute('disabled'); }
+  }
+  document.addEventListener('click', function(e){
+    if (e.target && e.target.closest && e.target.closest('#chatSection .chat-form')) {
+      setTimeout(unlockChatInput, 300);
+      setTimeout(unlockChatInput, 900);
+    }
+  }, true);
+  document.addEventListener('keydown', function(e){
+    if (e.target && e.target.id === 'chatInput' && e.key === 'Enter') {
+      setTimeout(unlockChatInput, 300);
+      setTimeout(unlockChatInput, 900);
+    }
+  }, true);
+  window.addEventListener('load', unlockChatInput);
+})();
+</script>
 
 </body>
 </html>
