@@ -4495,11 +4495,11 @@ body {
       const hasConfig = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes('YOUR_');
       if (!hasConfig || typeof firebase === 'undefined') { setAuthStatus('Firebase config оруулаагүй байна. Одоогоор progress localStorage дээр хадгалагдана.'); hideAppLoading(); return; }
       if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-      auth = firebase.auth(); db = firebase.firestore(); firebaseReady = true;
+      auth = firebase.auth(); db = firebase.firestore(); firebaseReady = true; window.auth = auth; window.db = db; window.firebaseReady = true;
       auth.onAuthStateChanged(async (user) => {
         showAppLoading(user ? 'Account нээж байна...' : 'Login screen бэлдэж байна...');
         try {
-          currentUser = user;
+          currentUser = user; window.currentUser = user;
           updateAuthUI(user);
 
           if (user) {
@@ -5915,7 +5915,7 @@ service cloud.firestore {
   };
 
   async function fetchUserProfile(uid){
-    if (!uid || !window.db) return null;
+    if (!uid || !db) return null;
     const cached = getCachedPublicProfile(uid);
     if (cached.photoData && Date.now() - Number(cached.updatedAt || 0) < 600000) return cached;
     try {
@@ -5933,7 +5933,7 @@ service cloud.firestore {
   }
   function renderLeaderboardRows(docs){
     let rank = 0;
-    return docs.map(item => { rank++; const data = item.data || {}; const uid = item.id; const cached = getCachedPublicProfile(uid); const name = safeName(data.name || cached.name || 'Trader'); const photo = safePhoto(data.photoData || cached.photoData || ''); const isMe = window.currentUser && uid === currentUser.uid; const profit = Number(data.netProfit || 0); return `
+    return docs.map(item => { rank++; const data = item.data || {}; const uid = item.id; const cached = getCachedPublicProfile(uid); const name = safeName(data.name || cached.name || 'Trader'); const photo = safePhoto(data.photoData || cached.photoData || ''); const isMe = currentUser && uid === currentUser.uid; const profit = Number(data.netProfit || 0); return `
       <div class="leaderboard-row ${isMe ? 'my-rank' : ''}">
         <div class="leaderboard-identity"><div class="leaderboard-rank-text">#${rank}</div>${window.getAvatarMarkup(name, photo, 'leaderboard-avatar', uid)}<div class="leaderboard-name"><strong>${esc(name)}</strong><span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span></div></div>
         <div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${typeof formatMoney === 'function' ? formatMoney(profit) : '$' + profit.toFixed(2)}</div>
@@ -5942,9 +5942,9 @@ service cloud.firestore {
   }
   window.loadLeaderboard = async function(){
     const box = document.getElementById('leaderboardList'); if (!box) return;
-    if (!window.firebaseReady || !window.db) { box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>'; return; }
+    if (!firebaseReady || !db) { box.innerHTML = '<div class="leaderboard-empty">Firebase холбогдоогүй байна.</div>'; return; }
     box.innerHTML = '<div class="leaderboard-empty">Leaderboard ачааллаж байна...</div>';
-    if (window.currentUser && Number(window.START || 0) > 0 && typeof saveLeaderboardStats === 'function') Promise.resolve().then(() => saveLeaderboardStats()).catch(err => console.warn('background leaderboard save failed:', err));
+    if (currentUser && Number(START || 0) > 0 && typeof saveLeaderboardStats === 'function') Promise.resolve().then(() => saveLeaderboardStats()).catch(err => console.warn('background leaderboard save failed:', err));
     try {
       const col = db.collection(typeof getLeaderboardCollectionName === 'function' ? getLeaderboardCollectionName() : 'leaderboard');
       const snap = await withTimeout(col.limit(60).get(), LB_TIMEOUT_MS, 'Leaderboard timeout');
@@ -5958,18 +5958,18 @@ service cloud.firestore {
   function scrollChatToBottomNow(){ const box = document.getElementById('chatList'); if (box) box.scrollTop = box.scrollHeight; }
   window.loadGlobalChat = function(){
     const box = document.getElementById('chatList'); if (!box) return;
-    if (!window.firebaseReady || !window.db || !window.currentUser) { box.innerHTML = '<div class="leaderboard-empty">Chat ашиглахын тулд login хийнэ үү.</div>'; return; }
+    if (!firebaseReady || !db || !currentUser) { box.innerHTML = '<div class="leaderboard-empty">Chat ашиглахын тулд login хийнэ үү.</div>'; return; }
     try { if (window.chatUnsubscribe) { window.chatUnsubscribe(); window.chatUnsubscribe = null; } } catch (_) {}
     box.innerHTML = '<div class="leaderboard-empty">Chat ачааллаж байна...</div>';
     window.chatUnsubscribe = db.collection('global_chat').doc('main').collection('messages').orderBy('createdAt', 'asc').limitToLast(80).onSnapshot((snap) => {
       if (snap.empty) { box.innerHTML = '<div class="leaderboard-empty">Одоогоор message байхгүй байна.</div>'; return; }
-      const rows = []; snap.forEach(doc => { const data = doc.data() || {}; const uid = data.uid || ''; const cached = getCachedPublicProfile(uid); const name = safeName(data.name || cached.name || 'Trader'); const photo = safePhoto(data.photoData || cached.photoData || ''); if (uid) cachePublicProfile(uid, { name, photoData: photo }); const isMine = window.currentUser && uid === currentUser.uid; const safeTime = typeof formatChatTime === 'function' ? formatChatTime(data.createdAt) : ''; rows.push(`<div class="chat-row ${isMine ? 'mine' : 'theirs'}">${window.getAvatarMarkup(name, photo, 'chat-avatar', uid)}<div class="chat-bubble-wrap"><div class="chat-meta">${isMine ? `<div class="chat-message-time">${esc(safeTime)}</div><div class="chat-message-name">Та</div>` : `<div class="chat-message-name">${esc(name)}</div><div class="chat-message-time">${esc(safeTime)}</div>`}</div><div class="chat-message"><div class="chat-message-text">${esc(data.text || '')}</div></div></div></div>`); });
+      const rows = []; snap.forEach(doc => { const data = doc.data() || {}; const uid = data.uid || ''; const cached = getCachedPublicProfile(uid); const name = safeName(data.name || cached.name || 'Trader'); const photo = safePhoto(data.photoData || cached.photoData || ''); if (uid) cachePublicProfile(uid, { name, photoData: photo }); const isMine = currentUser && uid === currentUser.uid; const safeTime = typeof formatChatTime === 'function' ? formatChatTime(data.createdAt) : ''; rows.push(`<div class="chat-row ${isMine ? 'mine' : 'theirs'}">${window.getAvatarMarkup(name, photo, 'chat-avatar', uid)}<div class="chat-bubble-wrap"><div class="chat-meta">${isMine ? `<div class="chat-message-time">${esc(safeTime)}</div><div class="chat-message-name">Та</div>` : `<div class="chat-message-name">${esc(name)}</div><div class="chat-message-time">${esc(safeTime)}</div>`}</div><div class="chat-message"><div class="chat-message-text">${esc(data.text || '')}</div></div></div></div>`); });
       box.innerHTML = rows.join(''); hydrateAvatars(box); requestAnimationFrame(scrollChatToBottomNow);
     }, (error) => { console.warn('Chat уншихад алдаа:', error); box.innerHTML = '<div class="leaderboard-empty">Chat уншихад permission/index алдаа гарлаа. Firestore rules шалгаарай.</div>'; });
   };
   document.addEventListener('focusin', function(e){ if (e.target && e.target.id === 'chatInput') setTimeout(() => { const form = document.querySelector('.chat-form'); if (form) form.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); scrollChatToBottomNow(); }, 120); });
   const oldSend = window.sendGlobalChatMessage;
-  window.sendGlobalChatMessage = async function(){ if (window.currentUser) { try { cachePublicProfile(currentUser.uid, { name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : 'Trader', photoData: typeof getPhotoForCurrentUser === 'function' ? getPhotoForCurrentUser() : '' }); } catch (_) {} } return oldSend ? oldSend.apply(this, arguments) : undefined; };
+  window.sendGlobalChatMessage = async function(){ if (currentUser) { try { cachePublicProfile(currentUser.uid, { name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : 'Trader', photoData: typeof getPhotoForCurrentUser === 'function' ? getPhotoForCurrentUser() : '' }); } catch (_) {} } return oldSend ? oldSend.apply(this, arguments) : undefined; };
   document.addEventListener('click', function(){ setTimeout(() => hydrateAvatars(document), 250); }, true);
   window.addEventListener('load', function(){ setTimeout(() => hydrateAvatars(document), 500); });
 })();
