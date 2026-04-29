@@ -3436,6 +3436,67 @@ body {
 
 </style>
 
+
+<style id="real-global-chat-leaderboard-fix">
+.inline-loader-dot {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  vertical-align: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.16);
+  border-top-color: #ffd700;
+  animation: appSpinGlobalReal .75s linear infinite;
+}
+@keyframes appSpinGlobalReal { to { transform: rotate(360deg); } }
+body.is-authenticated[data-page="chat"] .page-title-card { display: none !important; }
+body.is-authenticated[data-page="chat"] .poster {
+  max-width: min(1180px, calc(100vw - 18px)) !important;
+}
+body.is-authenticated[data-page="chat"] #chatSection.chat-panel {
+  display: flex !important;
+  flex-direction: column !important;
+  width: min(980px, calc(100vw - 28px)) !important;
+  margin: 0 auto 16px !important;
+  min-height: calc(100dvh - 120px) !important;
+  max-height: calc(100dvh - 120px) !important;
+  height: calc(100dvh - 120px) !important;
+  overflow: hidden !important;
+}
+body.is-authenticated[data-page="chat"] .chat-head { flex: 0 0 auto !important; }
+body.is-authenticated[data-page="chat"] .chat-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  height: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 8px 6px 10px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-form {
+  flex: 0 0 auto !important;
+  position: relative !important;
+  bottom: auto !important;
+  margin-top: 10px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-row.theirs { justify-content: flex-start !important; }
+body.is-authenticated[data-page="chat"] .chat-row.mine { justify-content: flex-end !important; }
+body.is-authenticated[data-page="chat"] .chat-bubble-wrap { max-width: min(420px, 58%) !important; }
+body.is-authenticated[data-page="chat"] .chat-message::after { display: none !important; content: none !important; }
+@media (max-width: 700px) {
+  body.is-authenticated[data-page="chat"] #chatSection.chat-panel {
+    width: calc(100vw - 14px) !important;
+    margin: 0 auto 8px !important;
+    min-height: calc(100dvh - 96px) !important;
+    max-height: calc(100dvh - 96px) !important;
+    height: calc(100dvh - 96px) !important;
+    padding: 12px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-bubble-wrap { max-width: 76% !important; }
+}
+</style>
+
 </head>
 <body>
 <div class="app-loading-overlay" id="appLoadingOverlay">
@@ -3741,7 +3802,7 @@ body {
   }
 
   function getLeaderboardCollectionName(date = new Date()) {
-    return `${LEADERBOARD_PREFIX}_${getLeaderboardMonthKey(date)}`;
+    return 'leaderboard_monthly_global_current';
   }
 
   function getCurrentChallengeMonthKey() {
@@ -4480,11 +4541,16 @@ body {
     document.querySelectorAll('.bottom-nav a[data-page]').forEach(link => link.classList.toggle('active', link.dataset.page === nextPage));
     const titles = { home: 'Home', idea: 'Idea', stats: 'Stats', levels: 'Levels', history: 'History', leaderboard: 'Leaderboard', chat: 'Chat', admin: 'Admin' };
     const title = document.getElementById('pageTitleText'); if (title) title.textContent = titles[nextPage] || 'Home';
-    if (nextPage === 'idea') loadIdeaFeed();
-    if (nextPage === 'leaderboard') { updateLeaderboardCountdown(); loadLeaderboard(); }
-    if (nextPage === 'history') renderHistory();
-    if (nextPage === 'chat') loadGlobalChat();
-    if (nextPage === 'admin') loadAdminUsers();
+    const pageBusy = showDelayedLoading('Хуудас нээж байна...', 350);
+    try {
+      if (nextPage === 'idea') loadIdeaFeed();
+      if (nextPage === 'leaderboard') { updateLeaderboardCountdown(); loadLeaderboard(); }
+      if (nextPage === 'history') renderHistory();
+      if (nextPage === 'chat') { centerChatPanel(); loadGlobalChat(); }
+      if (nextPage === 'admin') loadAdminUsers();
+    } finally {
+      setTimeout(() => hideDelayedLoading(pageBusy), 500);
+    }
     const poster = document.querySelector('.poster'); if (poster) poster.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -4506,6 +4572,7 @@ body {
             await withTimeout(checkAdminStatus(), 1200, false);
             await withTimeout(loadCloudData(), 2500, false);
             openHomeOrBalanceSetup();
+            savePublicProfile().catch(() => {});
             scheduleLeaderboardSave(900);
           } else {
             document.body.classList.remove('is-admin');
@@ -4763,7 +4830,6 @@ body {
 
     return {
       name: getDisplayNameForCurrentUser(),
-      photoData: getPhotoForCurrentUser(),
       startBalance: Number(START || 0),
       balance: Number(finalBalance.toFixed(2)),
       currentProfit: Number(currentProfit.toFixed(2)),
@@ -4800,6 +4866,68 @@ body {
     }
   }
 
+
+
+  function showDelayedLoading(message = 'Ачааллаж байна...', delay = 350) {
+    const timer = setTimeout(() => showAppLoading(message), delay);
+    return timer;
+  }
+
+  function hideDelayedLoading(timer) {
+    if (timer) clearTimeout(timer);
+    hideAppLoading();
+  }
+
+  function getSafePhotoData(value) {
+    const raw = String(value || '');
+    if (!raw) return '';
+    if (raw.startsWith('data:image/') || raw.startsWith('https://') || raw.startsWith('blob:')) return raw;
+    return '';
+  }
+
+  async function savePublicProfile() {
+    if (!firebaseReady || !db || !currentUser) return false;
+    const payload = {
+      uid: currentUser.uid,
+      name: getDisplayNameForCurrentUser(),
+      photoData: getSafePhotoData(getPhotoForCurrentUser()),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    try {
+      await db.collection('public_profiles').doc(currentUser.uid).set(payload, { merge: true });
+      return true;
+    } catch (error) {
+      console.warn('Public profile write failed. Publish updated Firebase rules if avatars must be public:', error);
+      return false;
+    }
+  }
+
+  async function fetchPublicProfileMap(uids) {
+    const unique = [...new Set((uids || []).filter(Boolean))].slice(0, 80);
+    const out = {};
+    await Promise.all(unique.map(async (uid) => {
+      try {
+        const cached = getCachedPublicProfile(uid) || {};
+        if (cached.name || cached.photoData) out[uid] = cached;
+        const snap = await withTimeout(db.collection('public_profiles').doc(uid).get(), 2500, 'profile timeout');
+        if (snap && snap.exists) {
+          const data = snap.data() || {};
+          out[uid] = { name: safeName(data.name || cached.name || 'Trader'), photoData: getSafePhotoData(data.photoData || cached.photoData || '') };
+          cachePublicProfile(uid, out[uid]);
+        }
+      } catch (_) {}
+    }));
+    return out;
+  }
+
+  function centerChatPanel() {
+    const panel = document.getElementById('chatSection');
+    const list = document.getElementById('chatList');
+    if (!panel || !list || document.body.dataset.page !== 'chat') return;
+    panel.style.marginLeft = 'auto';
+    panel.style.marginRight = 'auto';
+    panel.style.width = window.innerWidth <= 700 ? 'calc(100vw - 14px)' : 'min(980px, calc(100vw - 28px))';
+  }
   window.loadLeaderboard = async function() {
     const box = document.getElementById('leaderboardList');
     if (!box) return;
@@ -5584,7 +5712,6 @@ body {
         .add({
           uid: currentUser.uid,
           name: getDisplayNameForCurrentUser(),
-          photoData: getPhotoForCurrentUser(),
           text,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
@@ -5711,6 +5838,19 @@ service cloud.firestore {
       }
     }
 
+
+
+
+    match /public_profiles/{userId} {
+      allow read: if isSignedIn();
+      allow create, update: if isOwnUser(userId)
+        && request.resource.data.keys().hasOnly(['uid', 'name', 'photoData', 'updatedAt'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.name is string
+        && request.resource.data.photoData is string
+        && request.resource.data.photoData.size() <= 650000;
+      allow delete: if isAdmin() || isOwnUser(userId);
+    }
 
     match /idea_posts/{postId} {
       allow read: if isSignedIn();
@@ -6259,6 +6399,184 @@ body.is-authenticated[data-page="chat"] .chat-row.theirs .chat-message::after {
       setTimeout(goChatBottom, 200);
     }
   });
+})();
+</script>
+
+
+
+<style id="absolute-final-loading-chat-leaderboard-fix">
+/* ABSOLUTE FINAL OVERRIDE */
+#appLoadingOverlay:not(.hide) { display: flex !important; }
+.inline-loader-dot-final {
+  display: inline-block; width: 18px; height: 18px; margin-right: 8px; vertical-align: -4px;
+  border-radius: 50%; border: 2px solid rgba(255,255,255,.16); border-top-color: #ffd700;
+  animation: finalSpin .75s linear infinite;
+}
+@keyframes finalSpin { to { transform: rotate(360deg); } }
+body.is-authenticated[data-page="chat"] .page-title-card { display:none!important; }
+body.is-authenticated[data-page="chat"] .poster { max-width:min(1180px,calc(100vw - 18px))!important; }
+body.is-authenticated[data-page="chat"] #chatSection.chat-panel {
+  display:flex!important; flex-direction:column!important; box-sizing:border-box!important;
+  width:min(980px,calc(100vw - 28px))!important; max-width:min(980px,calc(100vw - 28px))!important;
+  margin-left:auto!important; margin-right:auto!important; margin-top:0!important; margin-bottom:16px!important;
+  min-height:calc(100dvh - 118px)!important; height:calc(100dvh - 118px)!important; max-height:calc(100dvh - 118px)!important;
+  overflow:hidden!important;
+}
+body.is-authenticated[data-page="chat"] .chat-head{flex:0 0 auto!important;margin-bottom:10px!important;}
+body.is-authenticated[data-page="chat"] .chat-list{flex:1 1 auto!important;min-height:0!important;height:auto!important;max-height:none!important;overflow-y:auto!important;overflow-x:hidden!important;padding:8px 6px 10px!important;}
+body.is-authenticated[data-page="chat"] .chat-form{flex:0 0 auto!important;position:relative!important;bottom:auto!important;margin-top:10px!important;}
+body.is-authenticated[data-page="chat"] .chat-row.theirs{justify-content:flex-start!important;}
+body.is-authenticated[data-page="chat"] .chat-row.mine{justify-content:flex-end!important;}
+body.is-authenticated[data-page="chat"] .chat-bubble-wrap{max-width:min(420px,58%)!important;}
+body.is-authenticated[data-page="chat"] .chat-message{width:auto!important;max-width:100%!important;}
+body.is-authenticated[data-page="chat"] .chat-message::after{display:none!important;content:none!important;}
+@media (max-width:700px){
+  body.is-authenticated[data-page="chat"] #chatSection.chat-panel{
+    width:calc(100vw - 14px)!important;max-width:calc(100vw - 14px)!important;margin:0 auto 8px!important;
+    min-height:calc(100dvh - 96px)!important;height:calc(100dvh - 96px)!important;max-height:calc(100dvh - 96px)!important;padding:12px!important;border-radius:22px!important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-bubble-wrap{max-width:76%!important;}
+}
+</style>
+<script id="absolute-final-loading-chat-leaderboard-fix-script">
+(function(){
+  'use strict';
+  let activeLoaders = 0;
+  function htmlEsc(v){
+    try { return typeof escapeHTML === 'function' ? escapeHTML(String(v ?? '')) : String(v ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+    catch(_) { return String(v ?? ''); }
+  }
+  function money(v){ try { return typeof formatMoney === 'function' ? formatMoney(Number(v||0)) : '$'+Number(v||0).toFixed(2); } catch(_) { return '$'+Number(v||0).toFixed(2); } }
+  function loaderHTML(text){ return '<div class="leaderboard-empty"><span class="inline-loader-dot-final"></span>'+htmlEsc(text || 'Ачааллаж байна...')+'</div>'; }
+  window.__showLoaderFinal = function(message, delay){
+    const token = { timer:null, shown:false };
+    token.timer = setTimeout(function(){
+      activeLoaders++;
+      token.shown = true;
+      try { showAppLoading(message || 'Ачааллаж байна...'); } catch(_) {}
+    }, typeof delay === 'number' ? delay : 250);
+    return token;
+  };
+  window.__hideLoaderFinal = function(token){
+    if (!token) return;
+    if (token.timer) clearTimeout(token.timer);
+    if (token.shown) activeLoaders = Math.max(0, activeLoaders - 1);
+    if (activeLoaders === 0) { try { hideAppLoading(); } catch(_) {} }
+  };
+  function safePhoto(v){
+    const s = String(v || '');
+    return (s.startsWith('data:image/') || s.startsWith('https://') || s.startsWith('blob:')) ? s : '';
+  }
+  async function savePublicProfileFinal(){
+    if (!firebaseReady || !db || !currentUser) return;
+    try {
+      await db.collection('public_profiles').doc(currentUser.uid).set({
+        uid: currentUser.uid,
+        name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : (currentUser.displayName || 'Trader'),
+        photoData: safePhoto(typeof getPhotoForCurrentUser === 'function' ? getPhotoForCurrentUser() : ''),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge:true });
+    } catch(e){ console.warn('public_profiles unavailable; publish updated rules for public avatars:', e); }
+  }
+  async function publicProfiles(uids){
+    const ids=[...new Set((uids||[]).filter(Boolean))].slice(0,80), out={};
+    await Promise.all(ids.map(async uid=>{
+      try {
+        let cached = {};
+        try { cached = getCachedPublicProfile(uid) || {}; } catch(_) {}
+        if (cached.name || cached.photoData) out[uid] = cached;
+        const snap = await withTimeout(db.collection('public_profiles').doc(uid).get(), 2200, 'profile timeout');
+        if (snap && snap.exists) {
+          const d=snap.data()||{};
+          out[uid]={name:String(d.name||cached.name||'Trader'), photoData:safePhoto(d.photoData||cached.photoData||'')};
+          try { cachePublicProfile(uid,out[uid]); } catch(_) {}
+        }
+      } catch(_) {}
+    }));
+    return out;
+  }
+  function chatCenter(){
+    const panel=document.getElementById('chatSection');
+    if (!panel || document.body.dataset.page !== 'chat') return;
+    panel.style.marginLeft='auto'; panel.style.marginRight='auto';
+    panel.style.width = window.innerWidth <= 700 ? 'calc(100vw - 14px)' : 'min(980px, calc(100vw - 28px))';
+    panel.style.maxWidth = panel.style.width;
+  }
+  window.getLeaderboardCollectionName = function(){ return 'leaderboard_monthly_global_current'; };
+  window.saveLeaderboardStats = async function(){
+    if (!firebaseReady || !db || !currentUser || !(Number(START||0)>0)) return false;
+    try {
+      await savePublicProfileFinal();
+      let finalBalance = Number(START||0), wins=0, losses=0, trades=0, profit=0, bestBalance=Number(START||0);
+      try {
+        const c = typeof compute === 'function' ? compute() : null;
+        finalBalance = Number(c && c.finalBalance ? c.finalBalance : finalBalance);
+        const completed = typeof getCompletedLevels === 'function' ? getCompletedLevels() : [];
+        wins = completed.filter(x=>x.outcome==='taken').length;
+        losses = completed.filter(x=>x.outcome==='loss').length;
+        trades = wins+losses;
+        profit = typeof getCurrentProfitValue === 'function' ? Number(getCurrentProfitValue()||0) : Number(finalBalance - Number(START||0));
+        bestBalance = completed.reduce((m,x)=>Math.max(m, Number(x.newBalance||x.startBalance||0)), Number(START||0));
+      } catch(_) {}
+      await db.collection('leaderboard_monthly_global_current').doc(currentUser.uid).set({
+        name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : (currentUser.displayName || 'Trader'),
+        startBalance: Number(START||0), balance: Number(finalBalance.toFixed(2)), currentProfit: Number(profit.toFixed(2)), baseProfit: 0,
+        netProfit: Number(profit.toFixed(2)), bestBalance: Number(bestBalance.toFixed(2)), wins, losses, winRate: trades ? Math.round((wins/trades)*100) : 0, trades,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, {merge:true});
+      return true;
+    } catch(e){ console.warn('leaderboard save failed:', e); try{setAuthStatus('Leaderboard хадгалахад алдаа. Firebase Rules-ээ publish хийнэ үү.');}catch(_){} return false; }
+  };
+  window.loadLeaderboard = async function(){
+    const box=document.getElementById('leaderboardList'); if(!box) return;
+    if(!firebaseReady || !db || !currentUser){ box.innerHTML='<div class="leaderboard-empty">Leaderboard харахын тулд login хийнэ үү.</div>'; return; }
+    box.innerHTML=loaderHTML('Leaderboard ачааллаж байна...');
+    const busy=window.__showLoaderFinal('Leaderboard ачааллаж байна...',250);
+    try{
+      await window.saveLeaderboardStats().catch(()=>false);
+      const snap=await withTimeout(db.collection('leaderboard_monthly_global_current').limit(300).get(), 9000, 'leaderboard timeout');
+      const docs=[]; snap.forEach(doc=>docs.push({id:doc.id,data:doc.data()||{}}));
+      docs.sort((a,b)=>Number(b.data.netProfit||0)-Number(a.data.netProfit||0));
+      if(!docs.length){ box.innerHTML='<div class="leaderboard-empty">Leaderboard хоосон байна. Start balance сонгоод trade дарахад энд бүх user гарна.</div>'; return; }
+      const p=await publicProfiles(docs.map(x=>x.id)); let rank=0;
+      box.innerHTML=docs.slice(0,80).map(item=>{rank++; const d=item.data||{}, uid=item.id, prof=p[uid]||{}; const name=String(d.name||prof.name||'Trader'); const photo=safePhoto(prof.photoData||d.photoData||''); const profit=Number(d.netProfit||0); const isMe=currentUser&&uid===currentUser.uid; const avatar=typeof getAvatarMarkup==='function'?getAvatarMarkup(name,photo,'leaderboard-avatar',uid):'<div class="leaderboard-avatar">'+htmlEsc(name.charAt(0)||'T')+'</div>'; return `<div class="leaderboard-row ${isMe?'my-rank':''}"><div class="leaderboard-identity"><div class="leaderboard-rank-text">#${rank}</div>${avatar}<div class="leaderboard-name"><strong>${htmlEsc(name)}</strong><span>${isMe?'You · ':''}${Number(d.trades||0)} trade · Win rate ${Number(d.winRate||0)}%</span></div></div><div class="leaderboard-balance ${profit<0?'negative-profit':''}">${profit>=0?'+':''}${money(profit)}</div><div class="leaderboard-record">${Number(d.wins||0)}W / ${Number(d.losses||0)}L</div></div>`;}).join('');
+    }catch(e){ console.warn('leaderboard load failed:',e); box.innerHTML='<div class="leaderboard-empty">Leaderboard унших/хадгалахад алдаа. Firebase Rules publish хийгдсэн эсэхийг шалга. Алдаа: '+htmlEsc(e.message||e)+'</div>'; }
+    finally{ window.__hideLoaderFinal(busy); }
+  };
+  window.loadGlobalChat = function(){
+    const box=document.getElementById('chatList'); if(!box) return; chatCenter();
+    if(!firebaseReady || !db || !currentUser){ box.innerHTML='<div class="leaderboard-empty">Chat ашиглахын тулд login хийнэ үү.</div>'; return; }
+    try{ if(window.chatUnsubscribe){ window.chatUnsubscribe(); window.chatUnsubscribe=null; } }catch(_){}
+    box.innerHTML=loaderHTML('Chat ачааллаж байна...');
+    const busy=window.__showLoaderFinal('Chat ачааллаж байна...',350);
+    try{
+      window.chatUnsubscribe=db.collection('global_chat').doc('main').collection('messages').orderBy('createdAt','asc').limitToLast(100).onSnapshot(async snap=>{
+        window.__hideLoaderFinal(busy);
+        if(snap.empty){ box.innerHTML='<div class="leaderboard-empty">Одоогоор message байхгүй байна.</div>'; return; }
+        const arr=[]; snap.forEach(doc=>arr.push(doc.data()||{})); const p=await publicProfiles(arr.map(x=>x.uid));
+        box.innerHTML=arr.map(d=>{ const uid=d.uid||'', prof=p[uid]||{}; const name=String(d.name||prof.name||'Trader'); const photo=safePhoto(prof.photoData||d.photoData||''); const isMine=currentUser&&uid===currentUser.uid; const time=typeof formatChatTime==='function'?formatChatTime(d.createdAt):''; const avatar=typeof getAvatarMarkup==='function'?getAvatarMarkup(name,photo,'chat-avatar',uid):'<div class="chat-avatar">'+htmlEsc(name.charAt(0)||'T')+'</div>'; return `<div class="chat-row ${isMine?'mine':'theirs'}">${avatar}<div class="chat-bubble-wrap"><div class="chat-meta">${isMine?`<div class="chat-message-time">${htmlEsc(time)}</div><div class="chat-message-name">Та</div>`:`<div class="chat-message-name">${htmlEsc(name)}</div><div class="chat-message-time">${htmlEsc(time)}</div>`}</div><div class="chat-message"><div class="chat-message-text">${htmlEsc(d.text||'')}</div></div></div></div>`; }).join('');
+        requestAnimationFrame(()=>{ chatCenter(); box.scrollTop=box.scrollHeight; });
+      }, err=>{ window.__hideLoaderFinal(busy); console.warn('chat read failed:',err); box.innerHTML='<div class="leaderboard-empty">Chat уншихад алдаа. Firebase Rules publish хийгдсэн эсэхийг шалга. Алдаа: '+htmlEsc(err.message||err)+'</div>'; });
+    }catch(e){ window.__hideLoaderFinal(busy); box.innerHTML='<div class="leaderboard-empty">Chat эхлүүлэхэд алдаа: '+htmlEsc(e.message||e)+'</div>'; }
+  };
+  window.sendGlobalChatMessage = async function(){
+    const input=document.getElementById('chatInput'); if(!input) return;
+    if(!firebaseReady || !db || !currentUser){ try{showMiniToast('Chat бичихийн тулд login хийнэ үү.');}catch(_){alert('Chat бичихийн тулд login хийнэ үү.');} return; }
+    const text=String(input.value||'').trim(); if(!text) return; if(text.length>300){ try{showMiniToast('Message 300 тэмдэгтээс урт байж болохгүй.');}catch(_){} return; }
+    const busy=window.__showLoaderFinal('Message илгээж байна...',250);
+    input.disabled=true;
+    try{ input.value=''; await savePublicProfileFinal(); await db.collection('global_chat').doc('main').collection('messages').add({uid:currentUser.uid,name:typeof getDisplayNameForCurrentUser==='function'?getDisplayNameForCurrentUser():(currentUser.displayName||'Trader'),text,createdAt:firebase.firestore.FieldValue.serverTimestamp()}); }
+    catch(e){ input.value=text; console.warn('chat send failed:',e); try{showMiniToast(e.message||'Message илгээхэд алдаа.');}catch(_){alert(e.message||'Message илгээхэд алдаа.');} }
+    finally{ input.disabled=false; input.focus(); window.__hideLoaderFinal(busy); }
+  };
+  const oldShowPageFinal=window.showPage;
+  window.showPage=function(page){
+    const busy=window.__showLoaderFinal('Хуудас нээж байна...',280);
+    try{ const r=oldShowPageFinal?oldShowPageFinal.apply(this,arguments):undefined; setTimeout(()=>{ if(page==='chat'){ chatCenter(); window.loadGlobalChat(); } if(page==='leaderboard'){ window.loadLeaderboard(); } },80); return r; }
+    finally{ setTimeout(()=>window.__hideLoaderFinal(busy),520); }
+  };
+  window.addEventListener('resize',()=>setTimeout(chatCenter,60));
+  window.addEventListener('load',()=>{ setTimeout(()=>{ try{ if(currentUser&&firebaseReady&&db){ savePublicProfileFinal(); if(Number(START||0)>0) window.saveLeaderboardStats(); } }catch(_){} },1200); });
 })();
 </script>
 
