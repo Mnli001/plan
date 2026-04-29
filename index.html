@@ -2039,6 +2039,78 @@
     .idea-comment-form { grid-template-columns: 1fr; }
   }
 
+
+
+  /* ===== PROFILE AVATAR PERFECT CIRCLE FIX ===== */
+  .profile-avatar-shell {
+    width: 82px !important;
+    height: 82px !important;
+    min-width: 82px !important;
+    flex: 0 0 82px !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .profile-avatar-shell .idea-avatar,
+  .profile-avatar-shell .idea-avatar.has-photo,
+  .profile-avatar-shell .profile-avatar-photo {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    flex: 0 0 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .profile-avatar-shell .idea-avatar img,
+  .profile-avatar-shell .idea-avatar.has-photo img,
+  .profile-avatar-shell .profile-avatar-photo img,
+  .profile-avatar-shell img {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    display: block !important;
+  }
+
+  .mini-avatar-preview,
+  .profile-upload-preview {
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .mini-avatar-preview img,
+  .profile-upload-preview img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+    display: block !important;
+  }
+
+  @media (max-width: 768px) {
+    .profile-avatar-shell {
+      width: 76px !important;
+      height: 76px !important;
+      min-width: 76px !important;
+      flex-basis: 76px !important;
+    }
+  }
+
 </style>
 </head>
 <body>
