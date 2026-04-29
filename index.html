@@ -1664,6 +1664,381 @@
     color: #fff2b8 !important;
   }
 
+
+
+  /* ===== IDEA POST SPACING / MOBILE COMPACT FIX ===== */
+  .idea-post {
+    position: relative;
+    padding: 18px 18px 18px;
+  }
+  .idea-post-head {
+    position: relative;
+    min-height: 52px;
+    margin-bottom: 10px;
+    align-items: flex-start;
+  }
+  .idea-post-user {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-right: 110px;
+  }
+  .idea-post-meta {
+    gap: 2px;
+  }
+  .idea-post-delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 13px;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  }
+  .idea-post-text {
+    margin-top: 2px;
+    margin-bottom: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .idea-post {
+      padding: 16px 14px 16px !important;
+      border-radius: 22px !important;
+    }
+    .idea-post-head {
+      flex-direction: row !important;
+      align-items: flex-start !important;
+      min-height: 46px !important;
+      margin-bottom: 8px !important;
+      gap: 8px !important;
+    }
+    .idea-post-user {
+      gap: 10px !important;
+      padding-right: 96px !important;
+    }
+    .idea-avatar {
+      width: 42px !important;
+      height: 42px !important;
+      flex-basis: 42px !important;
+      font-size: 14px !important;
+    }
+    .idea-post-name {
+      font-size: 15px !important;
+      line-height: 1.15 !important;
+    }
+    .idea-post-time {
+      font-size: 11px !important;
+    }
+    .idea-post-delete {
+      top: 0 !important;
+      right: 0 !important;
+      align-self: auto !important;
+      min-height: 34px !important;
+      padding: 0 12px !important;
+      border-radius: 999px !important;
+      font-size: 12px !important;
+    }
+    .idea-post-text {
+      font-size: 14px !important;
+      line-height: 1.55 !important;
+      margin-bottom: 10px !important;
+    }
+    .idea-post-image-wrap {
+      border-radius: 18px !important;
+    }
+  }
+
+
+
+  /* ===== LUXURY IDEA FEED / PROFILE UPGRADE ===== */
+  .home-settings-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    align-items: center;
+  }
+  .home-profile-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.08);
+    color: #fff2a8;
+    font-size: 21px;
+    cursor: pointer;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.12);
+  }
+  .profile-card {
+    grid-template-columns: auto minmax(0,1fr) auto !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+  .profile-avatar-shell {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    flex: 0 0 78px;
+    overflow: hidden;
+    border: 1px solid rgba(255,234,156,0.28);
+    background: radial-gradient(circle at 30% 20%, rgba(255,235,150,0.45), rgba(255,255,255,0.08));
+    box-shadow: 0 18px 36px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .profile-avatar-shell .idea-avatar,
+  .profile-avatar-shell .profile-avatar-photo {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+  .profile-avatar-photo {
+    object-fit: cover;
+    display: block;
+  }
+  .auth-upload-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.05);
+  }
+  .mini-avatar-preview {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .mini-avatar-preview img { width: 100%; height: 100%; object-fit: cover; display:block; }
+  .mini-avatar-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .mini-upload-note { color: rgba(255,249,215,0.62); font-size: 12px; font-weight: 700; }
+  .profile-overlay, .image-lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 18px;
+    background: rgba(4,7,10,0.64);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  .profile-overlay.open, .image-lightbox-overlay.open { display: flex; }
+  .profile-modal {
+    width: min(560px, calc(100vw - 28px));
+    max-height: calc(100vh - 42px);
+    overflow: auto;
+    padding: 22px;
+    border-radius: 30px;
+  }
+  .profile-form-grid { display: grid; gap: 14px; }
+  .profile-upload-box {
+    padding: 16px;
+    border-radius: 24px;
+    border: 1px dashed rgba(255,226,120,0.34);
+    background: rgba(255,255,255,0.04);
+  }
+  .profile-upload-head { display:flex; align-items:center; gap: 14px; margin-bottom: 12px; }
+  .profile-upload-preview {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(255,255,255,0.08);
+    display:flex; align-items:center; justify-content:center;
+    border: 1px solid rgba(255,255,255,0.16);
+    flex: 0 0 82px;
+  }
+  .profile-upload-preview img { width:100%; height:100%; object-fit: cover; display:block; }
+  .profile-upload-meta { display:grid; gap: 6px; }
+  .profile-upload-kicker { color:#fff0a8; font-weight:900; text-transform:uppercase; letter-spacing:.08em; font-size:12px; }
+  .profile-modal-actions { display:flex; justify-content:flex-end; gap:12px; margin-top: 16px; }
+
+  .idea-panel { overflow: visible; }
+  .idea-feed { gap: 18px; }
+  .idea-post {
+    position: relative;
+    border-radius: 30px;
+    padding: 20px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.045)),
+      radial-gradient(circle at top left, rgba(255,225,110,0.07), transparent 38%),
+      radial-gradient(circle at bottom right, rgba(64,224,208,0.05), transparent 34%);
+    border: 1px solid rgba(255,245,199,0.13);
+    box-shadow: 0 22px 44px rgba(0,0,0,0.20), inset 0 1px 0 rgba(255,255,255,0.12);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .idea-post:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 28px 52px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.14);
+    border-color: rgba(255,235,160,0.18);
+  }
+  .idea-avatar.has-photo {
+    padding: 0 !important;
+    overflow: hidden;
+    background: rgba(255,255,255,0.08) !important;
+  }
+  .idea-avatar.has-photo img { width:100%; height:100%; object-fit: cover; display:block; }
+  .idea-post-head { margin-bottom: 10px; }
+  .idea-post-text { margin-bottom: 12px; }
+  .idea-post-image-wrap {
+    position: relative;
+    border-radius: 24px;
+    overflow: hidden;
+    cursor: zoom-in;
+    border: 1px solid rgba(255,255,255,0.13);
+    background: rgba(5,8,10,0.22);
+  }
+  .idea-post-image {
+    display: block;
+    width: 100%;
+    max-height: 640px;
+    object-fit: cover;
+    transition: transform .22s ease, filter .22s ease;
+  }
+  .idea-post-image-wrap:hover .idea-post-image {
+    transform: scale(1.01);
+    filter: saturate(1.04);
+  }
+  .idea-post-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .idea-action-btn {
+    min-height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,246,214,0.92);
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: .02em;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .idea-action-btn:hover { transform: translateY(-1px); filter: brightness(1.05); }
+  .idea-action-btn.liked {
+    background: linear-gradient(135deg, rgba(255,221,126,0.18), rgba(255,189,89,0.10));
+    border-color: rgba(255,221,126,0.28);
+    color: #fff0a8;
+  }
+  .idea-action-btn.comment-open {
+    border-color: rgba(177,237,224,0.20);
+    background: rgba(177,237,224,0.08);
+  }
+  .idea-owner-actions { margin-left: auto; display:flex; gap:10px; flex-wrap:wrap; }
+  .idea-comments {
+    margin-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 14px;
+    display: none;
+  }
+  .idea-comments.open { display: block; }
+  .idea-comments-list { display: grid; gap: 10px; margin-bottom: 12px; }
+  .idea-comment-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    padding: 10px 12px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.045);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .idea-comment-item .idea-avatar { width: 34px; height: 34px; flex-basis: 34px; font-size: 12px; }
+  .idea-comment-body { flex: 1 1 auto; min-width: 0; }
+  .idea-comment-head { display:flex; align-items:center; justify-content:space-between; gap: 10px; margin-bottom: 4px; }
+  .idea-comment-name { color:#fff2b2; font-size: 13px; font-weight: 900; }
+  .idea-comment-time { color: rgba(255,249,215,0.54); font-size: 11px; font-weight: 800; white-space: nowrap; }
+  .idea-comment-text { color: rgba(255,249,215,0.90); font-size: 13px; line-height: 1.5; font-weight: 700; word-break: break-word; }
+  .idea-comment-empty {
+    padding: 14px;
+    border-radius: 16px;
+    text-align:center;
+    color: rgba(255,249,215,0.56);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .idea-comment-form { display:grid; grid-template-columns: 1fr auto; gap: 10px; }
+  .idea-comment-input {
+    min-height: 48px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color:#fff8d8;
+    padding: 0 14px;
+    font-size: 14px;
+    font-weight: 700;
+    outline: none;
+  }
+  .idea-comment-submit {
+    min-width: 100px;
+    min-height: 48px;
+  }
+  .image-lightbox-card {
+    width: min(1000px, calc(100vw - 28px));
+    max-height: calc(100vh - 28px);
+    padding: 14px;
+    border-radius: 30px;
+    position: relative;
+    display: grid;
+    gap: 10px;
+  }
+  .image-lightbox-card img {
+    width: 100%;
+    max-height: calc(100vh - 110px);
+    object-fit: contain;
+    border-radius: 22px;
+    background: rgba(0,0,0,0.22);
+  }
+  .image-lightbox-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.16);
+    background: rgba(255,255,255,0.08);
+    color: #fff2a8;
+    font-weight: 900;
+    cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    .home-settings-row { gap: 10px; }
+    .profile-card { grid-template-columns: 1fr !important; }
+    .profile-avatar-shell { width: 72px; height:72px; }
+    .profile-side { justify-items: stretch !important; }
+    .profile-upload-head { align-items:flex-start; }
+    .idea-post { border-radius: 24px; padding: 16px; }
+    .idea-post-actions { gap: 8px; }
+    .idea-action-btn { min-height: 36px; padding: 0 12px; font-size: 12px; }
+    .idea-owner-actions { margin-left: 0; width: 100%; }
+    .idea-comment-form { grid-template-columns: 1fr; }
+  }
+
 </style>
 </head>
 <body>
@@ -1707,6 +2082,17 @@
         <input id="nameInput" class="auth-input" type="text" placeholder="Нэр" autocomplete="name" />
         <input id="emailInput" class="auth-input" type="email" placeholder="Mail" autocomplete="email" />
         <input id="passwordInput" class="auth-input" type="password" placeholder="Password" autocomplete="new-password" />
+        <div class="auth-upload-row">
+          <div class="mini-avatar-preview" id="registerAvatarPreview"><span>👤</span></div>
+          <div>
+            <div class="mini-avatar-actions">
+              <button class="soft-btn" type="button" onclick="document.getElementById('registerAvatarInput').click()">Зураг upload</button>
+              <button class="soft-btn" type="button" onclick="clearRegisterAvatar()">Хасах</button>
+            </div>
+            <div class="mini-upload-note">Profile зураг optional. Upload хийгээгүй бол emoji/avatar ашиглана.</div>
+            <input id="registerAvatarInput" type="file" accept="image/*" hidden onchange="handleRegisterAvatarPick(event)" />
+          </div>
+        </div>
         <button class="auth-btn primary big-auth-btn" onclick="registerUser()">Бүртгүүлэх</button>
       </div>
       <div class="auth-status" id="authStatus">Эхлээд account-аараа нэвтэрнэ үү.</div>
@@ -1727,12 +2113,13 @@
     </div>
   </section>
 
-  <section class="home-settings-row app-only page-section page-home" id="homeSettingsRow"><button class="home-settings-btn" type="button" onclick="openSettingsPopup()" aria-label="Settings">⚙️</button></section>
+  <section class="home-settings-row app-only page-section page-home" id="homeSettingsRow"><button class="home-profile-btn" type="button" onclick="openProfilePopup()" aria-label="Profile">👤</button><button class="home-settings-btn" type="button" onclick="openSettingsPopup()" aria-label="Settings">⚙️</button></section>
 
   <section class="profile-wrap app-only page-section page-home" id="profileSection">
     <div class="profile-card glass-card">
+      <div class="profile-avatar-shell" id="profileAvatarShell"><div class="idea-avatar">T</div></div>
       <div class="profile-info"><div class="auth-kicker">TRADER PROFILE</div><div class="profile-name" id="profileName">Guest Trader</div><div class="profile-meta" id="profileMeta">Challenge эхлэхэд бэлэн</div></div>
-      <div class="profile-side"><div class="phase-badge" id="phaseBadge">Phase 1</div><div class="profile-actions"><button class="profile-action-btn secondary" onclick="changeStartBalance()">Balance солих</button><button class="profile-action-btn" id="homeLogoutBtn" onclick="logoutUser()">Гарах</button></div></div>
+      <div class="profile-side"><div class="phase-badge" id="phaseBadge">Phase 1</div><div class="profile-actions"><button class="profile-action-btn secondary" onclick="openProfilePopup()">Profile засах</button><button class="profile-action-btn secondary" onclick="changeStartBalance()">Balance солих</button><button class="profile-action-btn" id="homeLogoutBtn" onclick="logoutUser()">Гарах</button></div></div>
     </div>
   </section>
 
@@ -1853,12 +2240,46 @@
   </div>
 </div>
 
+<div class="profile-overlay" id="profileOverlay" onclick="closeProfilePopup(event)">
+  <div class="profile-modal glass-card" onclick="event.stopPropagation()">
+    <div class="settings-modal-head"><div><div class="auth-kicker">PROFILE</div><div class="auth-title">Нэр / зураг шинэчлэх</div></div><button class="settings-close-btn" onclick="closeProfilePopup()" aria-label="Close">✕</button></div>
+    <div class="profile-form-grid">
+      <input id="profileNameInput" class="auth-input" type="text" maxlength="40" placeholder="Display нэр" />
+      <div class="profile-upload-box">
+        <div class="profile-upload-head">
+          <div class="profile-upload-preview" id="profileUploadPreview"><span>👤</span></div>
+          <div class="profile-upload-meta">
+            <div class="profile-upload-kicker">Profile image</div>
+            <div class="mini-upload-note">Luxury feed дээр post, comment, profile хэсэгт энэ зураг харагдана.</div>
+            <div class="mini-avatar-actions">
+              <button class="soft-btn" type="button" onclick="document.getElementById('profileAvatarInput').click()">Зураг upload</button>
+              <button class="soft-btn" type="button" onclick="clearProfileAvatar()">Хасах</button>
+            </div>
+          </div>
+        </div>
+        <input id="profileAvatarInput" type="file" accept="image/*" hidden onchange="handleProfileAvatarPick(event)" />
+      </div>
+    </div>
+    <div class="profile-modal-actions">
+      <button class="soft-btn" type="button" onclick="closeProfilePopup()">Cancel</button>
+      <button class="auth-btn primary" type="button" onclick="saveProfilePopup()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="image-lightbox-overlay" id="imageLightboxOverlay" onclick="closeImageLightbox(event)">
+  <div class="image-lightbox-card glass-card" onclick="event.stopPropagation()">
+    <button class="image-lightbox-close" type="button" onclick="closeImageLightbox()">✕</button>
+    <img id="imageLightboxImage" alt="Full screen idea image" />
+  </div>
+</div>
+
 <div class="idea-modal-overlay" id="ideaModalOverlay" onclick="closeIdeaComposer(event)">
   <div class="idea-modal glass-card" onclick="event.stopPropagation()">
     <div class="idea-modal-head">
       <div>
-        <div class="auth-kicker">NEW IDEA POST</div>
-        <div class="auth-title">Text + зураг оруулах</div>
+        <div class="auth-kicker" id="ideaModalKicker">NEW IDEA POST</div>
+        <div class="auth-title" id="ideaModalTitle">Text + зураг оруулах</div>
       </div>
       <button class="idea-close-btn" type="button" onclick="closeIdeaComposer()" aria-label="Close">✕</button>
     </div>
@@ -1882,7 +2303,7 @@
 
     <div class="idea-modal-actions">
       <button class="soft-btn" type="button" onclick="closeIdeaComposer()">Cancel</button>
-      <button class="auth-btn primary" type="button" onclick="submitIdeaPost()">Post</button>
+      <button class="auth-btn primary" id="ideaSubmitBtn" type="button" onclick="submitIdeaPost()">Post</button>
     </div>
   </div>
 </div>
@@ -1911,6 +2332,12 @@
   let activeLeaderboardMonthKey = '';
   let ideaUnsubscribe = null;
   let ideaSelectedImageData = '';
+  let ideaEditingId = '';
+  let registerSelectedImageData = '';
+  let profileSelectedImageData = '';
+  let currentUserDocData = null;
+  const ideaCommentUnsubscribers = {};
+  const openIdeaCommentPosts = new Set();
 
   function getLeaderboardMonthKey(date = new Date()) {
     return `${date.getFullYear()}_${String(date.getMonth() + 1).padStart(2, '0')}`;
@@ -2414,13 +2841,16 @@
   function renderMilestone() { const finalBalance = compute().finalBalance; const milestones = [100, 200, 500, 700, 1000]; const hit = milestones.filter(m => finalBalance >= m).pop() || 0; if (hit && hit > lastMilestone) { lastMilestone = hit; showMilestone(hit >= 1000 ? '🏆 Challenge complete: $1,000 reached!' : `🔥 Milestone reached: $${hit}`); } }
   function showMilestone(message) { const toast = document.getElementById('milestoneToast'); toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3200); }
   function updateRevengeLock() { const el = document.getElementById('revengeLock'); if (!el) return; const left = revengeUntil - Date.now(); if (left <= 0) { el.textContent = 'Ready'; el.style.background = 'linear-gradient(135deg, #bfffe4, #00f5a0 60%, #007a4d)'; return; } const min = Math.floor(left / 60000); const sec = Math.floor((left % 60000) / 1000); el.textContent = `${min}:${String(sec).padStart(2, '0')}`; el.style.background = 'linear-gradient(135deg, #ffd2d9, #ff5d73 58%, #8a1628)'; }
-  function renderProfile() { const name = currentUser?.displayName || 'Guest Trader'; const email = currentUser?.email || 'local browser mode'; const el = document.getElementById('profileName'); if (el) el.textContent = name; const { finalBalance } = compute(); const meta = document.getElementById('profileMeta'); if (meta) meta.textContent = `${email} · ${START > 0 ? `Start ${formatMoney(START)} · ` : ''}${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`; }
-  function getOpenLevelData() { const data = compute(); let currentIndex = outcomes.findIndex(o => o === null); if (currentIndex === -1) currentIndex = Math.max(0, data.levels.length - 1); return data.levels[currentIndex] || data.levels[data.levels.length - 1] || null; }
-  function updateNextTradeSummary() { const level = getOpenLevelData(); if (!level) return; const setText = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; }; setText('nextLevelPill', `Level ${level.idx + 1}`); setText('summaryBalance', formatMoney(level.startBalance)); setText('summaryRisk', formatMoney(level.risk)); setText('summaryProfit', formatMoney(level.profit)); setText('summaryLot', Number(level.lot || 0).toFixed(2)); const note = document.getElementById('summaryNote'); if (note) note.textContent = `Next trade: 20% risk ${formatMoney(level.risk)}, RR 1:2 profit ${formatMoney(level.profit)}, lot ${Number(level.lot || 0).toFixed(2)}.`; }
-
-  async function savePrivateTradeLog(levelData, type) {
-    if (!firebaseReady || !currentUser || !db || !levelData) return;
-    try { await db.collection('users').doc(currentUser.uid).collection('trades').doc(`${Date.now()}_${levelData.idx + 1}_${type}`).set({ level: levelData.idx + 1, outcome: type, startBalance: Number(levelData.startBalance || 0), planRisk: Number(levelData.planRisk || 0), risk: Number(levelData.risk || 0), profit: Number(levelData.profit || 0), lot: Number(levelData.lot || 0), newBalance: type === 'taken' ? Number(levelData.startBalance + levelData.profit) : Math.max(0, Number(levelData.startBalance - levelData.risk)), createdAt: firebase.firestore.FieldValue.serverTimestamp() }); } catch (error) { console.warn('Private trade log хадгалах боломжгүй байна:', error); }
+  function renderProfile() {
+    const name = (currentUserDocData && currentUserDocData.name) || currentUser?.displayName || 'Guest Trader';
+    const email = (currentUserDocData && currentUserDocData.email) || currentUser?.email || 'local browser mode';
+    const el = document.getElementById('profileName');
+    if (el) el.textContent = name;
+    const avatarShell = document.getElementById('profileAvatarShell');
+    if (avatarShell) avatarShell.innerHTML = getAvatarMarkup(name, (currentUserDocData && currentUserDocData.photoData) || '', 'idea-avatar');
+    const { finalBalance } = compute();
+    const meta = document.getElementById('profileMeta');
+    if (meta) meta.textContent = `${email} · ${START > 0 ? `Start ${formatMoney(START)} · ` : ''}${formatMoney(finalBalance)} balance · ${getCompletedLevels().length} trade completed`;
   }
 
   window.clearOnlyHistory = function() { if (!confirm('Зөвхөн trade history-г цэвэрлэх үү? Progress хэвээр үлдэнэ.')) return; tradeHistory = []; saveJSON(HISTORY_KEY, tradeHistory); saveProgress(); render(); };
@@ -2513,6 +2943,7 @@
       const userRef = db.collection('users').doc(currentUser.uid);
       const snap = await userRef.get();
       const data = snap.exists ? snap.data() : null;
+      currentUserDocData = data || null;
       const challenge = data?.challenge || {};
       const currentMonth = getCurrentChallengeMonthKey();
 
@@ -2573,6 +3004,7 @@
       await db.collection('users').doc(cred.user.uid).set({
         name,
         email,
+        photoData: registerSelectedImageData || '',
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         challenge: {
           adminForceSetup: true,
@@ -2585,6 +3017,7 @@
         }
       }, { merge: true });
 
+      currentUserDocData = { name, email, photoData: registerSelectedImageData || '' };
       updateAuthUI(cred.user);
       await checkAdminStatus();
       await saveLeaderboardStats();
@@ -2620,6 +3053,7 @@
       const cred = await auth.signInWithEmailAndPassword(email, password);
       currentUser = cred.user;
 
+      currentUserDocData = { name, email, photoData: registerSelectedImageData || '' };
       updateAuthUI(cred.user);
       await checkAdminStatus();
       await loadCloudData();
@@ -2635,7 +3069,7 @@
 
   window.saveInitialBalance = async function() { const value = getStartBalanceInputValue(); if (!value) return showMiniToast('Эхлэх balance-аа зөв оруулна уу.'); setStartBalance(value, true); if (firebaseReady && currentUser && db) await db.collection('users').doc(currentUser.uid).set({ challenge: { adminForceSetup: false, challengeMonthKey: getCurrentChallengeMonthKey(), startBalance: START, outcomes, tradeHistory, journalEntries, revengeUntil, updatedAt: firebase.firestore.FieldValue.serverTimestamp() } }, { merge: true }); saveProgress(); render(); await saveLeaderboardStats(); showPage('home'); };
   window.changeStartBalance = function() { if (!currentUser) return alert('Эхлээд нэвтэрнэ үү.'); const raw = prompt('Шинэ эхлэх balance оруулна уу:', START > 0 ? String(START) : ''); if (raw === null) return; const value = Number(raw); if (!Number.isFinite(value) || value <= 0) return alert('Зөв balance оруулна уу.'); if (!confirm('Balance солиход current progress болон history reset болно. Үргэлжлүүлэх үү?')) return; setStartBalance(value, true); saveProgress(); render(); saveLeaderboardStats(); showPage('home'); };
-  window.logoutUser = async function() { if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe = null; } if (ideaUnsubscribe) { ideaUnsubscribe(); ideaUnsubscribe = null; } closeIdeaComposer(); if (!auth) return; await auth.signOut(); currentUser = null; document.body.classList.remove('is-authenticated', 'balance-ready', 'is-admin'); document.body.dataset.page = ''; const currentLevelTitle = document.getElementById('currentLevelTitle'); if (currentLevelTitle) currentLevelTitle.remove(); updateAuthUI(null); goTop(); };
+  window.logoutUser = async function() { if (chatUnsubscribe) { chatUnsubscribe(); chatUnsubscribe = null; } if (ideaUnsubscribe) { ideaUnsubscribe(); ideaUnsubscribe = null; } Object.keys(ideaCommentUnsubscribers).forEach((key) => { try { ideaCommentUnsubscribers[key](); } catch (_) {} delete ideaCommentUnsubscribers[key]; }); openIdeaCommentPosts.clear(); closeIdeaComposer(); closeProfilePopup(); closeImageLightbox(); if (!auth) return; await auth.signOut(); currentUser = null; currentUserDocData = null; registerSelectedImageData = ''; profileSelectedImageData = ''; document.body.classList.remove('is-authenticated', 'balance-ready', 'is-admin'); document.body.dataset.page = ''; const currentLevelTitle = document.getElementById('currentLevelTitle'); if (currentLevelTitle) currentLevelTitle.remove(); updateAuthUI(null); goTop(); };
 
   async function checkAdminStatus() { document.body.classList.remove('is-admin'); if (!firebaseReady || !currentUser || !db) return false; try { const snap = await db.collection('admins').doc(currentUser.uid).get(); const isAdmin = snap.exists; document.body.classList.toggle('is-admin', isAdmin); return isAdmin; } catch (error) { console.warn('Admin шалгах боломжгүй байна:', error); return false; } }
 
@@ -2814,8 +3248,44 @@
     return escapeHTML(value || '').replace(/\n/g, '<br>');
   }
 
+  function getSafePhotoData(value) {
+    return (typeof value === 'string' && value.startsWith('data:image')) ? value : '';
+  }
+
+  function getDisplayNameForCurrentUser() {
+    return (currentUserDocData && currentUserDocData.name) || currentUser?.displayName || 'Trader';
+  }
+
+  function getPhotoForCurrentUser() {
+    return getSafePhotoData((currentUserDocData && currentUserDocData.photoData) || '');
+  }
+
+  function getInitialLetter(name) {
+    const cleaned = String(name || 'T').trim();
+    return escapeHTML((cleaned[0] || 'T').toUpperCase());
+  }
+
+  function getAvatarMarkup(name, photoData, className = 'idea-avatar') {
+    const safePhoto = getSafePhotoData(photoData);
+    if (safePhoto) return `<div class="${className} has-photo"><img src="${safePhoto}" alt="avatar" loading="lazy" /></div>`;
+    return `<div class="${className}">${getInitialLetter(name)}</div>`;
+  }
+
+  function setPreviewAvatar(targetId, photoData, fallbackName = 'Trader') {
+    const box = document.getElementById(targetId);
+    if (!box) return;
+    const safePhoto = getSafePhotoData(photoData);
+    if (safePhoto) box.innerHTML = `<img src="${safePhoto}" alt="Profile preview" />`;
+    else box.innerHTML = `<span>${getInitialLetter(fallbackName)}</span>`;
+  }
+
+  async function compressUserImage(file) {
+    return compressIdeaImage(file);
+  }
+
   function resetIdeaComposer() {
     ideaSelectedImageData = '';
+    ideaEditingId = '';
     const textInput = document.getElementById('ideaTextInput');
     const fileInput = document.getElementById('ideaImageInput');
     const previewWrap = document.getElementById('ideaPreviewWrap');
@@ -2824,6 +3294,12 @@
     if (fileInput) fileInput.value = '';
     if (previewImage) previewImage.removeAttribute('src');
     if (previewWrap) previewWrap.classList.remove('has-image');
+    const submitBtn = document.getElementById('ideaSubmitBtn');
+    const kicker = document.getElementById('ideaModalKicker');
+    const title = document.getElementById('ideaModalTitle');
+    if (submitBtn) submitBtn.textContent = 'Post';
+    if (kicker) kicker.textContent = 'NEW IDEA POST';
+    if (title) title.textContent = 'Text + зураг оруулах';
   }
 
   window.openIdeaComposer = function() {
@@ -2921,6 +3397,232 @@
     }
   };
 
+
+  window.handleRegisterAvatarPick = async function(event) {
+    const file = event && event.target && event.target.files ? event.target.files[0] : null;
+    if (!file) return;
+    try {
+      registerSelectedImageData = await compressUserImage(file);
+      setPreviewAvatar('registerAvatarPreview', registerSelectedImageData, document.getElementById('nameInput')?.value || 'Trader');
+      showMiniToast('Profile зураг бэлэн боллоо.', 'success');
+    } catch (error) {
+      if (event.target) event.target.value = '';
+      showMiniToast(error.message || 'Зураг боловсруулахад алдаа гарлаа.');
+    }
+  };
+
+  window.clearRegisterAvatar = function() {
+    registerSelectedImageData = '';
+    const input = document.getElementById('registerAvatarInput');
+    if (input) input.value = '';
+    setPreviewAvatar('registerAvatarPreview', '', document.getElementById('nameInput')?.value || 'Trader');
+  };
+
+  window.openProfilePopup = function() {
+    if (!currentUser) return showMiniToast('Эхлээд login хийнэ үү.');
+    const overlay = document.getElementById('profileOverlay');
+    const nameInput = document.getElementById('profileNameInput');
+    profileSelectedImageData = getPhotoForCurrentUser();
+    if (nameInput) nameInput.value = getDisplayNameForCurrentUser();
+    setPreviewAvatar('profileUploadPreview', profileSelectedImageData, getDisplayNameForCurrentUser());
+    if (overlay) overlay.classList.add('open');
+    document.body.classList.add('settings-open');
+  };
+
+  window.closeProfilePopup = function(event) {
+    if (event && event.target && event.target.id !== 'profileOverlay') return;
+    const overlay = document.getElementById('profileOverlay');
+    if (overlay) overlay.classList.remove('open');
+    document.body.classList.remove('settings-open');
+  };
+
+  window.handleProfileAvatarPick = async function(event) {
+    const file = event && event.target && event.target.files ? event.target.files[0] : null;
+    if (!file) return;
+    try {
+      profileSelectedImageData = await compressUserImage(file);
+      setPreviewAvatar('profileUploadPreview', profileSelectedImageData, document.getElementById('profileNameInput')?.value || getDisplayNameForCurrentUser());
+      showMiniToast('Шинэ profile зураг бэлэн боллоо.', 'success');
+    } catch (error) {
+      if (event.target) event.target.value = '';
+      showMiniToast(error.message || 'Зураг боловсруулахад алдаа гарлаа.');
+    }
+  };
+
+  window.clearProfileAvatar = function() {
+    profileSelectedImageData = '';
+    const input = document.getElementById('profileAvatarInput');
+    if (input) input.value = '';
+    setPreviewAvatar('profileUploadPreview', '', document.getElementById('profileNameInput')?.value || getDisplayNameForCurrentUser());
+  };
+
+  window.saveProfilePopup = async function() {
+    if (!currentUser || !firebaseReady || !db) return showMiniToast('Эхлээд login хийнэ үү.');
+    const nameInput = document.getElementById('profileNameInput');
+    const name = (nameInput?.value || '').trim();
+    if (!name) return showMiniToast('Нэрээ оруулна уу.');
+    try {
+      await db.collection('users').doc(currentUser.uid).set({
+        name,
+        email: currentUser.email || (currentUserDocData && currentUserDocData.email) || '',
+        photoData: profileSelectedImageData || '',
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+      try { await currentUser.updateProfile({ displayName: name }); } catch (_) {}
+      currentUserDocData = { ...(currentUserDocData || {}), name, email: currentUser.email || '', photoData: profileSelectedImageData || '' };
+      renderProfile();
+      closeProfilePopup();
+      if (document.body.dataset.page === 'idea') loadIdeaFeed();
+      showMiniToast('Profile амжилттай шинэчлэгдлээ.', 'success');
+    } catch (error) {
+      showMiniToast(error.message || 'Profile хадгалахад алдаа гарлаа.');
+    }
+  };
+
+  window.openIdeaImage = function(src) {
+    const safeSrc = getSafePhotoData(src);
+    if (!safeSrc) return;
+    const overlay = document.getElementById('imageLightboxOverlay');
+    const image = document.getElementById('imageLightboxImage');
+    if (image) image.src = safeSrc;
+    if (overlay) overlay.classList.add('open');
+    document.body.classList.add('settings-open');
+  };
+
+  window.closeImageLightbox = function(event) {
+    if (event && event.target && event.target.id !== 'imageLightboxOverlay') return;
+    const overlay = document.getElementById('imageLightboxOverlay');
+    const image = document.getElementById('imageLightboxImage');
+    if (overlay) overlay.classList.remove('open');
+    if (image) image.removeAttribute('src');
+    document.body.classList.remove('settings-open');
+  };
+
+  window.toggleIdeaLike = async function(postId, isLiked) {
+    if (!currentUser || !firebaseReady || !db) return showMiniToast('Эхлээд login хийнэ үү.');
+    if (!postId) return;
+    try {
+      const ref = db.collection('idea_posts').doc(postId);
+      await ref.set({
+        likes: isLiked ? firebase.firestore.FieldValue.arrayRemove(currentUser.uid) : firebase.firestore.FieldValue.arrayUnion(currentUser.uid),
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+    } catch (error) {
+      showMiniToast(error.message || 'Like хадгалахад алдаа гарлаа.');
+    }
+  };
+
+  function renderIdeaComments(postId, snap) {
+    const list = document.getElementById(`ideaCommentsList_${postId}`);
+    if (!list) return;
+    if (!snap || snap.empty) {
+      list.innerHTML = '<div class="idea-comment-empty">Одоогоор comment алга байна. Эхний comment-оо бичээрэй.</div>';
+      return;
+    }
+    const rows = [];
+    snap.forEach(doc => {
+      const data = doc.data() || {};
+      const name = escapeHTML(data.name || 'Trader');
+      const time = formatChatTime(data.createdAt);
+      const text = formatIdeaText(data.text || '');
+      rows.push(`
+        <div class="idea-comment-item">
+          ${getAvatarMarkup(name, data.photoData || '', 'idea-avatar')}
+          <div class="idea-comment-body">
+            <div class="idea-comment-head"><div class="idea-comment-name">${name}</div><div class="idea-comment-time">${time}</div></div>
+            <div class="idea-comment-text">${text}</div>
+          </div>
+        </div>
+      `);
+    });
+    list.innerHTML = rows.join('');
+  }
+
+  function subscribeIdeaComments(postId) {
+    if (!postId || !db || !firebaseReady) return;
+    if (ideaCommentUnsubscribers[postId]) return;
+    const list = document.getElementById(`ideaCommentsList_${postId}`);
+    if (list) list.innerHTML = '<div class="idea-comment-empty">Comment ачааллаж байна...</div>';
+    ideaCommentUnsubscribers[postId] = db.collection('idea_posts').doc(postId).collection('comments')
+      .orderBy('createdAt', 'asc')
+      .limit(80)
+      .onSnapshot((snap) => renderIdeaComments(postId, snap), () => {
+        const list = document.getElementById(`ideaCommentsList_${postId}`);
+        if (list) list.innerHTML = '<div class="idea-comment-empty">Comment уншихад алдаа гарлаа.</div>';
+      });
+  }
+
+  window.toggleIdeaComments = function(postId) {
+    if (!postId) return;
+    const panel = document.getElementById(`ideaComments_${postId}`);
+    const btn = document.getElementById(`ideaCommentBtn_${postId}`);
+    if (!panel) return;
+    const isOpen = panel.classList.contains('open');
+    if (isOpen) {
+      panel.classList.remove('open');
+      if (btn) btn.classList.remove('comment-open');
+      openIdeaCommentPosts.delete(postId);
+    } else {
+      panel.classList.add('open');
+      if (btn) btn.classList.add('comment-open');
+      openIdeaCommentPosts.add(postId);
+      subscribeIdeaComments(postId);
+    }
+  };
+
+  window.submitIdeaComment = async function(postId) {
+    if (!currentUser || !firebaseReady || !db) return showMiniToast('Эхлээд login хийнэ үү.');
+    const input = document.getElementById(`ideaCommentInput_${postId}`);
+    const value = (input?.value || '').trim();
+    if (!value) return showMiniToast('Comment хоосон байж болохгүй.');
+    if (value.length > 300) return showMiniToast('Comment 300 тэмдэгтээс урт байж болохгүй.');
+    try {
+      const ref = db.collection('idea_posts').doc(postId);
+      await ref.collection('comments').add({
+        uid: currentUser.uid,
+        name: getDisplayNameForCurrentUser(),
+        photoData: getPhotoForCurrentUser(),
+        text: value,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      await ref.set({ commentCount: firebase.firestore.FieldValue.increment(1), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+      if (input) input.value = '';
+      showMiniToast('Comment нэмэгдлээ.', 'success');
+    } catch (error) {
+      showMiniToast(error.message || 'Comment хадгалахад алдаа гарлаа.');
+    }
+  };
+
+  window.editIdeaPost = async function(postId) {
+    if (!currentUser || !firebaseReady || !db) return showMiniToast('Эхлээд login хийнэ үү.');
+    if (!postId) return;
+    try {
+      const snap = await db.collection('idea_posts').doc(postId).get();
+      if (!snap.exists) return showMiniToast('Post олдсонгүй.');
+      const data = snap.data() || {};
+      if (data.uid !== currentUser.uid) return showMiniToast('Зөвхөн өөрийн постыг edit хийж болно.');
+      ideaEditingId = postId;
+      const textInput = document.getElementById('ideaTextInput');
+      const previewWrap = document.getElementById('ideaPreviewWrap');
+      const previewImage = document.getElementById('ideaPreviewImage');
+      const submitBtn = document.getElementById('ideaSubmitBtn');
+      const kicker = document.getElementById('ideaModalKicker');
+      const title = document.getElementById('ideaModalTitle');
+      if (textInput) textInput.value = data.text || '';
+      ideaSelectedImageData = getSafePhotoData(data.imageData || '');
+      if (previewImage && ideaSelectedImageData) previewImage.src = ideaSelectedImageData;
+      if (previewWrap) previewWrap.classList.toggle('has-image', !!ideaSelectedImageData);
+      if (submitBtn) submitBtn.textContent = 'Save';
+      if (kicker) kicker.textContent = 'EDIT POST';
+      if (title) title.textContent = 'Постоо засварлах';
+      const overlay = document.getElementById('ideaModalOverlay');
+      if (overlay) overlay.classList.add('open');
+      document.body.classList.add('idea-modal-open');
+    } catch (error) {
+      showMiniToast(error.message || 'Post edit хийхэд алдаа гарлаа.');
+    }
+  };
+
   window.loadIdeaFeed = function() {
     const box = document.getElementById('ideaFeed');
     if (!box) return;
@@ -2935,7 +3637,7 @@
       ideaUnsubscribe = null;
     }
 
-    box.innerHTML = '<div class="idea-feed-empty">Idea feed ачааллаж байна...</div>';
+    box.innerHTML = '<div class="idea-feed-empty">Luxury feed ачааллаж байна...</div>';
 
     ideaUnsubscribe = db.collection('idea_posts')
       .orderBy('createdAt', 'desc')
@@ -2950,30 +3652,50 @@
         snap.forEach(doc => {
           const data = doc.data() || {};
           const isMine = currentUser && data.uid === currentUser.uid;
-          const initials = escapeHTML(String(data.name || 'Trader').trim().slice(0, 1).toUpperCase() || 'T');
           const safeName = escapeHTML(data.name || 'Trader');
           const safeTime = formatChatTime(data.createdAt);
           const safeText = formatIdeaText(data.text || '');
           const safeImage = typeof data.imageData === 'string' && data.imageData.startsWith('data:image') ? data.imageData : '';
+          const likes = Array.isArray(data.likes) ? data.likes : [];
+          const liked = currentUser ? likes.includes(currentUser.uid) : false;
+          const likeCount = likes.length;
+          const commentCount = Number(data.commentCount || 0);
+          const commentsOpen = openIdeaCommentPosts.has(doc.id);
           rows.push(`
             <article class="idea-post">
               <div class="idea-post-head">
                 <div class="idea-post-user">
-                  <div class="idea-avatar">${initials}</div>
+                  ${getAvatarMarkup(data.name || 'Trader', data.photoData || '', 'idea-avatar')}
                   <div class="idea-post-meta">
                     <div class="idea-post-name">${safeName}</div>
-                    <div class="idea-post-time">${safeTime}</div>
+                    <div class="idea-post-time">${safeTime}${data.editedAt ? ' · edited' : ''}</div>
                   </div>
                 </div>
                 ${isMine ? `<button class="idea-post-delete" onclick="deleteIdeaPost('${doc.id}')">Устгах</button>` : ''}
               </div>
               ${safeText ? `<div class="idea-post-text">${safeText}</div>` : ''}
-              ${safeImage ? `<div class="idea-post-image-wrap"><img class="idea-post-image" src="${safeImage}" alt="Idea post image" loading="lazy" /></div>` : ''}
+              ${safeImage ? `<div class="idea-post-image-wrap" onclick="openIdeaImage(this.dataset.src)" data-src="${safeImage}"><img class="idea-post-image" src="${safeImage}" alt="Idea post image" loading="lazy" /></div>` : ''}
+              <div class="idea-post-actions">
+                <button class="idea-action-btn ${liked ? 'liked' : ''}" onclick="toggleIdeaLike('${doc.id}', ${liked ? 'true' : 'false'})">❤ Like · ${likeCount}</button>
+                <button class="idea-action-btn ${commentsOpen ? 'comment-open' : ''}" id="ideaCommentBtn_${doc.id}" onclick="toggleIdeaComments('${doc.id}')">💬 Comment · ${commentCount}</button>
+                ${isMine ? `<div class="idea-owner-actions"><button class="idea-action-btn" onclick="editIdeaPost('${doc.id}')">✏️ Edit</button></div>` : ''}
+              </div>
+              <div class="idea-comments ${commentsOpen ? 'open' : ''}" id="ideaComments_${doc.id}">
+                <div class="idea-comments-list" id="ideaCommentsList_${doc.id}">${commentsOpen ? '<div class="idea-comment-empty">Comment ачааллаж байна...</div>' : ''}</div>
+                <div class="idea-comment-form">
+                  <input class="idea-comment-input" id="ideaCommentInput_${doc.id}" type="text" maxlength="300" placeholder="Comment бичих..." onkeydown="if(event.key === 'Enter'){ event.preventDefault(); submitIdeaComment('${doc.id}'); }" />
+                  <button class="auth-btn primary idea-comment-submit" type="button" onclick="submitIdeaComment('${doc.id}')">Send</button>
+                </div>
+              </div>
             </article>
           `);
         });
 
         box.innerHTML = rows.join('');
+        openIdeaCommentPosts.forEach((postId) => {
+          const panel = document.getElementById(`ideaComments_${postId}`);
+          if (panel) subscribeIdeaComments(postId);
+        });
       }, (error) => {
         console.warn('Idea feed уншихад алдаа:', error);
         box.innerHTML = '<div class="idea-feed-empty">Idea feed уншихад permission/index алдаа гарлаа. Firestore rules-ээ шинэчилнэ үү.</div>';
@@ -2987,16 +3709,29 @@
     if (!message && !ideaSelectedImageData) return showMiniToast('Text эсвэл зураг оруулна уу.');
     if (message.length > 1000) return showMiniToast('Text 1000 тэмдэгтээс урт байж болохгүй.');
 
+    const payload = {
+      uid: currentUser.uid,
+      name: getDisplayNameForCurrentUser(),
+      photoData: getPhotoForCurrentUser(),
+      text: message,
+      imageData: ideaSelectedImageData || '',
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
     try {
-      await db.collection('idea_posts').add({
-        uid: currentUser.uid,
-        name: currentUser.displayName || 'Trader',
-        text: message,
-        imageData: ideaSelectedImageData || '',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      if (ideaEditingId) {
+        await db.collection('idea_posts').doc(ideaEditingId).set({ ...payload, editedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+        showMiniToast('Post амжилттай шинэчлэгдлээ.', 'success');
+      } else {
+        await db.collection('idea_posts').add({
+          ...payload,
+          likes: [],
+          commentCount: 0,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showMiniToast('Post амжилттай нийтлэгдлээ.', 'success');
+      }
       closeIdeaComposer();
-      showMiniToast('Post амжилттай нийтлэгдлээ.', 'success');
     } catch (error) {
       console.warn('Idea post хийхэд алдаа:', error);
       showMiniToast(error.message || 'Post хийхэд алдаа гарлаа.');
@@ -3009,6 +3744,8 @@
     if (!confirm('Энэ постыг устгах уу?')) return;
     try {
       await db.collection('idea_posts').doc(postId).delete();
+      if (ideaCommentUnsubscribers[postId]) { try { ideaCommentUnsubscribers[postId](); } catch (_) {} delete ideaCommentUnsubscribers[postId]; }
+      openIdeaCommentPosts.delete(postId);
       showMiniToast('Пост устгагдлаа.', 'success');
     } catch (error) {
       console.warn('Idea post устгахад алдаа:', error);
