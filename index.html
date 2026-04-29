@@ -6580,5 +6580,533 @@ body.is-authenticated[data-page="chat"] .chat-message::after{display:none!import
 })();
 </script>
 
+
+<style id="live-chat-speed-final-fix">
+/* ===== SPEED + LIVE CHAT FINAL FIX ===== */
+.app-loading,
+#appLoading,
+.loading-overlay,
+.global-loading {
+  transition: opacity .16s ease !important;
+}
+
+/* Chat page: centered, compact, Messenger-like */
+body.is-authenticated[data-page="chat"] .page-title-card {
+  display: none !important;
+}
+body.is-authenticated[data-page="chat"] .poster {
+  padding-top: 0 !important;
+}
+body.is-authenticated[data-page="chat"] #chatSection.chat-panel {
+  width: min(760px, calc(100vw - 28px)) !important;
+  max-width: min(760px, calc(100vw - 28px)) !important;
+  margin: 0 auto 14px !important;
+  height: calc(100dvh - 112px) !important;
+  min-height: 520px !important;
+  max-height: calc(100dvh - 112px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding: 14px !important;
+  border-radius: 28px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-head {
+  flex: 0 0 auto !important;
+  margin-bottom: 8px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-list {
+  flex: 1 1 auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 8px 6px 10px !important;
+  scroll-behavior: smooth !important;
+  overscroll-behavior: contain !important;
+}
+body.is-authenticated[data-page="chat"] .chat-form {
+  flex: 0 0 auto !important;
+  position: relative !important;
+  bottom: auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  gap: 10px !important;
+  margin-top: 8px !important;
+  padding: 10px 0 0 !important;
+  background: transparent !important;
+  border-top: 1px solid rgba(255,255,255,.09) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body.is-authenticated[data-page="chat"] .chat-form .auth-input {
+  height: 52px !important;
+  min-height: 52px !important;
+  border-radius: 999px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-form .auth-btn {
+  height: 52px !important;
+  min-height: 52px !important;
+  min-width: 96px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-row {
+  width: 100% !important;
+  gap: 8px !important;
+  margin: 5px 0 !important;
+}
+body.is-authenticated[data-page="chat"] .chat-row.mine {
+  justify-content: flex-end !important;
+}
+body.is-authenticated[data-page="chat"] .chat-row.theirs {
+  justify-content: flex-start !important;
+}
+body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
+  max-width: min(420px, 72%) !important;
+}
+body.is-authenticated[data-page="chat"] .chat-message {
+  padding: 10px 13px !important;
+  border-radius: 18px !important;
+}
+body.is-authenticated[data-page="chat"] .chat-message::after,
+body.is-authenticated[data-page="chat"] .chat-row.mine .chat-message::after,
+body.is-authenticated[data-page="chat"] .chat-row.theirs .chat-message::after {
+  display: none !important;
+  content: none !important;
+}
+body.is-authenticated[data-page="chat"] .chat-message-text {
+  font-size: 13px !important;
+  line-height: 1.36 !important;
+}
+body.is-authenticated[data-page="chat"] .chat-avatar {
+  width: 32px !important;
+  height: 32px !important;
+  flex: 0 0 32px !important;
+}
+
+.chat-live-status {
+  color: rgba(255,249,215,.55);
+  font-size: 11px;
+  font-weight: 800;
+  margin-top: 2px;
+}
+.chat-inline-loading {
+  padding: 14px;
+  text-align: center;
+  color: rgba(255,249,215,.68);
+  font-weight: 800;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.04);
+  border-radius: 18px;
+}
+
+@media (max-width: 700px) {
+  body.is-authenticated[data-page="chat"] #chatSection.chat-panel {
+    width: calc(100vw - 14px) !important;
+    max-width: calc(100vw - 14px) !important;
+    height: calc(100dvh - 92px) !important;
+    min-height: 0 !important;
+    max-height: calc(100dvh - 92px) !important;
+    margin: 0 auto 8px !important;
+    padding: 12px !important;
+    border-radius: 22px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-bubble-wrap {
+    max-width: 76% !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-head {
+    margin-bottom: 6px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-form .auth-input,
+  body.is-authenticated[data-page="chat"] .chat-form .auth-btn {
+    height: 48px !important;
+    min-height: 48px !important;
+  }
+  body.is-authenticated[data-page="chat"] .chat-form .auth-btn {
+    min-width: 82px !important;
+  }
+}
+</style>
+
+
+<script id="live-chat-speed-final-script">
+(function(){
+  'use strict';
+
+  const CHAT_COLLECTION_PATH = ['global_chat', 'main', 'messages'];
+  const LEADERBOARD_COLLECTION = 'leaderboard_monthly_global_current';
+  let chatLiveUnsub = null;
+  let chatLiveStarted = false;
+  let chatFirstSnapshot = false;
+  let chatLastCount = 0;
+  let activeDelayedLoaders = 0;
+
+  function esc(v){
+    try {
+      if (typeof escapeHTML === 'function') return escapeHTML(String(v ?? ''));
+      return String(v ?? '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    } catch(_) { return String(v ?? ''); }
+  }
+  function safePhoto(v){
+    const s = String(v || '');
+    return (s.startsWith('data:image/') || s.startsWith('https://') || s.startsWith('blob:')) ? s : '';
+  }
+  function money(v){
+    try { return typeof formatMoney === 'function' ? formatMoney(Number(v||0)) : '$' + Number(v||0).toFixed(2); }
+    catch(_) { return '$' + Number(v||0).toFixed(2); }
+  }
+
+  // Loading overlay should not make the site feel slow. Only show if an operation is actually slow.
+  window.__showLoaderFinal = function(message, delay){
+    const token = { timer:null, shown:false };
+    token.timer = setTimeout(function(){
+      token.shown = true;
+      activeDelayedLoaders++;
+      try { showAppLoading(message || 'Ачааллаж байна...'); } catch(_) {}
+    }, typeof delay === 'number' ? delay : 700);
+    return token;
+  };
+  window.__hideLoaderFinal = function(token){
+    if (!token) return;
+    if (token.timer) clearTimeout(token.timer);
+    if (token.shown) activeDelayedLoaders = Math.max(0, activeDelayedLoaders - 1);
+    if (activeDelayedLoaders === 0) { try { hideAppLoading(); } catch(_) {} }
+  };
+
+  function chatBox(){ return document.getElementById('chatList'); }
+  function chatPanel(){ return document.getElementById('chatSection'); }
+  function chatInput(){ return document.getElementById('chatInput'); }
+
+  function fitChat(){
+    const panel = chatPanel();
+    const box = chatBox();
+    if (!panel || !box || document.body.dataset.page !== 'chat') return;
+    const mobile = window.innerWidth <= 700;
+    panel.style.width = mobile ? 'calc(100vw - 14px)' : 'min(760px, calc(100vw - 28px))';
+    panel.style.maxWidth = panel.style.width;
+    panel.style.marginLeft = 'auto';
+    panel.style.marginRight = 'auto';
+    panel.style.height = mobile ? 'calc(100dvh - 92px)' : 'calc(100dvh - 112px)';
+    panel.style.maxHeight = panel.style.height;
+  }
+  function scrollChatBottom(force){
+    const box = chatBox();
+    if (!box) return;
+    const nearBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 180;
+    if (force || nearBottom) box.scrollTop = box.scrollHeight;
+  }
+  function addLiveStatus(text){
+    const head = document.querySelector('#chatSection .chat-head');
+    if (!head) return;
+    let s = document.getElementById('chatLiveStatus');
+    if (!s) {
+      s = document.createElement('div');
+      s.id = 'chatLiveStatus';
+      s.className = 'chat-live-status';
+      const left = head.querySelector('div') || head;
+      left.appendChild(s);
+    }
+    s.textContent = text || '';
+  }
+
+  function avatar(name, photo, cls, uid){
+    try {
+      if (typeof getAvatarMarkup === 'function') return getAvatarMarkup(name, photo, cls, uid);
+    } catch(_) {}
+    const letter = esc((name || 'T').trim().charAt(0).toUpperCase() || 'T');
+    if (photo) return `<div class="${cls} has-photo" data-avatar-uid="${esc(uid||'')}"><img src="${esc(photo)}" alt=""></div>`;
+    return `<div class="${cls}" data-avatar-uid="${esc(uid||'')}">${letter}</div>`;
+  }
+
+  async function fetchPublicProfiles(uids){
+    const ids = [...new Set((uids||[]).filter(Boolean))].slice(0,80);
+    const out = {};
+    await Promise.all(ids.map(async uid => {
+      try {
+        let cached = {};
+        try { cached = getCachedPublicProfile(uid) || {}; } catch(_) {}
+        if (cached.name || cached.photoData) out[uid] = cached;
+        if (!firebaseReady || !db) return;
+        const snap = await Promise.race([
+          db.collection('public_profiles').doc(uid).get(),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('profile timeout')), 2500))
+        ]);
+        if (snap && snap.exists) {
+          const d = snap.data() || {};
+          out[uid] = { name: String(d.name || cached.name || 'Trader'), photoData: safePhoto(d.photoData || cached.photoData || '') };
+          try { cachePublicProfile(uid, out[uid]); } catch(_) {}
+        }
+      } catch(_) {}
+    }));
+    return out;
+  }
+
+  async function saveMyPublicProfileFast(){
+    if (!firebaseReady || !db || !currentUser) return;
+    try {
+      const name = typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : (currentUser.displayName || 'Trader');
+      const photoData = safePhoto(typeof getPhotoForCurrentUser === 'function' ? getPhotoForCurrentUser() : '');
+      try { cachePublicProfile(currentUser.uid, { name, photoData }); } catch(_) {}
+      // Do not await this in UI flows.
+      db.collection('public_profiles').doc(currentUser.uid).set({
+        uid: currentUser.uid,
+        name,
+        photoData,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge:true }).catch(e => console.warn('public profile save failed:', e));
+    } catch(_) {}
+  }
+
+  window.getLeaderboardCollectionName = function(){ return LEADERBOARD_COLLECTION; };
+
+  window.saveLeaderboardStats = async function(){
+    if (!firebaseReady || !db || !currentUser || !(Number(START||0)>0)) return false;
+    saveMyPublicProfileFast();
+    try {
+      let finalBalance = Number(START||0), wins = 0, losses = 0, trades = 0, profit = 0, bestBalance = Number(START||0);
+      try {
+        const c = typeof compute === 'function' ? compute() : null;
+        finalBalance = Number(c && c.finalBalance ? c.finalBalance : finalBalance);
+        const completed = typeof getCompletedLevels === 'function' ? getCompletedLevels() : [];
+        wins = completed.filter(x => x.outcome === 'taken').length;
+        losses = completed.filter(x => x.outcome === 'loss').length;
+        trades = wins + losses;
+        profit = typeof getCurrentProfitValue === 'function' ? Number(getCurrentProfitValue() || 0) : Number(finalBalance - Number(START||0));
+        bestBalance = completed.reduce((m,x) => Math.max(m, Number(x.newBalance || x.startBalance || 0)), Number(START||0));
+      } catch(_) {}
+      await db.collection(LEADERBOARD_COLLECTION).doc(currentUser.uid).set({
+        name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : (currentUser.displayName || 'Trader'),
+        startBalance: Number(START||0),
+        balance: Number(finalBalance.toFixed(2)),
+        currentProfit: Number(profit.toFixed(2)),
+        baseProfit: 0,
+        netProfit: Number(profit.toFixed(2)),
+        bestBalance: Number(bestBalance.toFixed(2)),
+        wins,
+        losses,
+        winRate: trades ? Math.round((wins / trades) * 100) : 0,
+        trades,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge:true });
+      return true;
+    } catch(e) {
+      console.warn('leaderboard save failed:', e);
+      return false;
+    }
+  };
+
+  window.loadLeaderboard = async function(){
+    const box = document.getElementById('leaderboardList');
+    if (!box) return;
+    if (!firebaseReady || !db || !currentUser) {
+      box.innerHTML = '<div class="leaderboard-empty">Leaderboard харахын тулд login хийнэ үү.</div>';
+      return;
+    }
+    box.innerHTML = '<div class="leaderboard-empty">Leaderboard шинэчилж байна...</div>';
+    const loader = window.__showLoaderFinal('Leaderboard ачаалж байна...', 900);
+    try {
+      // Background write first, but do not let it make loading feel stuck.
+      await Promise.race([
+        window.saveLeaderboardStats().catch(()=>false),
+        new Promise(resolve => setTimeout(resolve, 1200))
+      ]);
+
+      const snap = await Promise.race([
+        db.collection(LEADERBOARD_COLLECTION).limit(300).get(),
+        new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 6500))
+      ]);
+      const docs = [];
+      snap.forEach(doc => docs.push({ id: doc.id, data: doc.data() || {} }));
+      docs.sort((a,b) => Number(b.data.netProfit || 0) - Number(a.data.netProfit || 0));
+      if (!docs.length) {
+        box.innerHTML = '<div class="leaderboard-empty">Leaderboard хоосон байна. Trade дарахад бүх user энд гарна.</div>';
+        return;
+      }
+      const profiles = await fetchPublicProfiles(docs.map(x => x.id));
+      let rank = 0;
+      box.innerHTML = docs.slice(0,80).map(item => {
+        rank++;
+        const d = item.data || {};
+        const uid = item.id;
+        const prof = profiles[uid] || {};
+        const name = String(d.name || prof.name || 'Trader');
+        const photo = safePhoto(prof.photoData || d.photoData || '');
+        const profit = Number(d.netProfit || 0);
+        const isMe = currentUser && uid === currentUser.uid;
+        return `<div class="leaderboard-row ${isMe ? 'my-rank' : ''}">
+          <div class="leaderboard-identity"><div class="leaderboard-rank-text">#${rank}</div>${avatar(name, photo, 'leaderboard-avatar', uid)}<div class="leaderboard-name"><strong>${esc(name)}</strong><span>${isMe ? 'You · ' : ''}${Number(d.trades||0)} trade · Win rate ${Number(d.winRate||0)}%</span></div></div>
+          <div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${money(profit)}</div>
+          <div class="leaderboard-record">${Number(d.wins||0)}W / ${Number(d.losses||0)}L</div>
+        </div>`;
+      }).join('');
+    } catch(e) {
+      console.warn('leaderboard failed:', e);
+      box.innerHTML = '<div class="leaderboard-empty">Leaderboard уншихад алдаа гарлаа. Firebase Rules publish хийгдсэн эсэхийг шалга. Алдаа: '+esc(e.message||e)+'</div>';
+    } finally {
+      window.__hideLoaderFinal(loader);
+    }
+  };
+
+  function renderMessages(arr, profiles){
+    const box = chatBox();
+    if (!box) return;
+    const wasNearBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 220;
+    if (!arr.length) {
+      box.innerHTML = '<div class="chat-inline-loading">Одоогоор message байхгүй байна.</div>';
+      addLiveStatus('Live chat ready');
+      return;
+    }
+    box.innerHTML = arr.map(d => {
+      const uid = d.uid || '';
+      const prof = profiles[uid] || {};
+      const name = String(d.name || prof.name || 'Trader');
+      const photo = safePhoto(prof.photoData || d.photoData || '');
+      const isMine = currentUser && uid === currentUser.uid;
+      const time = typeof formatChatTime === 'function' ? formatChatTime(d.createdAt) : '';
+      return `<div class="chat-row ${isMine ? 'mine' : 'theirs'}">
+        ${avatar(name, photo, 'chat-avatar', uid)}
+        <div class="chat-bubble-wrap">
+          <div class="chat-meta">${isMine ? `<div class="chat-message-time">${esc(time)}</div><div class="chat-message-name">Та</div>` : `<div class="chat-message-name">${esc(name)}</div><div class="chat-message-time">${esc(time)}</div>`}</div>
+          <div class="chat-message"><div class="chat-message-text">${esc(d.text || '')}</div></div>
+        </div>
+      </div>`;
+    }).join('');
+    addLiveStatus('Live · автоматаар шинэчлэгдэнэ');
+    requestAnimationFrame(() => { fitChat(); scrollChatBottom(wasNearBottom || arr.length > chatLastCount); chatLastCount = arr.length; });
+  }
+
+  window.loadGlobalChat = function(){
+    const box = chatBox();
+    if (!box) return;
+    fitChat();
+
+    if (!firebaseReady || !db || !currentUser) {
+      box.innerHTML = '<div class="chat-inline-loading">Chat ашиглахын тулд login хийнэ үү.</div>';
+      return;
+    }
+
+    saveMyPublicProfileFast();
+
+    if (chatLiveStarted && chatLiveUnsub) {
+      fitChat();
+      scrollChatBottom(false);
+      return;
+    }
+
+    chatLiveStarted = true;
+    chatFirstSnapshot = false;
+    box.innerHTML = '<div class="chat-inline-loading">Live chat холбогдож байна...</div>';
+    addLiveStatus('Connecting...');
+
+    const loader = window.__showLoaderFinal('Chat холбогдож байна...', 1000);
+
+    try {
+      chatLiveUnsub = db.collection(CHAT_COLLECTION_PATH[0])
+        .doc(CHAT_COLLECTION_PATH[1])
+        .collection(CHAT_COLLECTION_PATH[2])
+        .orderBy('createdAt', 'asc')
+        .limitToLast(120)
+        .onSnapshot(async function(snap){
+          window.__hideLoaderFinal(loader);
+          chatFirstSnapshot = true;
+          const arr = [];
+          snap.forEach(doc => arr.push(doc.data() || {}));
+          let profiles = {};
+          try { profiles = await fetchPublicProfiles(arr.map(x => x.uid)); } catch(_) {}
+          renderMessages(arr, profiles);
+        }, function(err){
+          window.__hideLoaderFinal(loader);
+          chatLiveStarted = false;
+          chatLiveUnsub = null;
+          console.warn('live chat failed:', err);
+          box.innerHTML = '<div class="chat-inline-loading">Chat live уншихад алдаа гарлаа. Firebase Rules publish хийгдсэн эсэхийг шалга. Алдаа: '+esc(err.message||err)+'</div>';
+          addLiveStatus('Disconnected');
+        });
+
+      setTimeout(function(){
+        if (!chatFirstSnapshot && box && chatLiveStarted) {
+          box.innerHTML = '<div class="chat-inline-loading">Live chat түр удаан байна. Холболт хүлээж байна...</div>';
+        }
+      }, 3500);
+    } catch(e) {
+      window.__hideLoaderFinal(loader);
+      chatLiveStarted = false;
+      chatLiveUnsub = null;
+      box.innerHTML = '<div class="chat-inline-loading">Chat эхлүүлэхэд алдаа: '+esc(e.message||e)+'</div>';
+      addLiveStatus('Disconnected');
+    }
+  };
+
+  window.sendGlobalChatMessage = async function(){
+    const input = chatInput();
+    if (!input) return;
+    if (!firebaseReady || !db || !currentUser) {
+      try { showMiniToast('Chat бичихийн тулд login хийнэ үү.'); } catch(_) { alert('Chat бичихийн тулд login хийнэ үү.'); }
+      return;
+    }
+    const text = String(input.value || '').trim();
+    if (!text) return;
+    if (text.length > 300) {
+      try { showMiniToast('Message 300 тэмдэгтээс урт байж болохгүй.'); } catch(_) {}
+      return;
+    }
+
+    input.value = '';
+    input.disabled = true;
+    saveMyPublicProfileFast();
+
+    // No full-screen loading for sending; live chat will append via onSnapshot.
+    try {
+      await db.collection(CHAT_COLLECTION_PATH[0]).doc(CHAT_COLLECTION_PATH[1]).collection(CHAT_COLLECTION_PATH[2]).add({
+        uid: currentUser.uid,
+        name: typeof getDisplayNameForCurrentUser === 'function' ? getDisplayNameForCurrentUser() : (currentUser.displayName || 'Trader'),
+        text,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      requestAnimationFrame(() => scrollChatBottom(true));
+    } catch(e) {
+      input.value = text;
+      console.warn('chat send failed:', e);
+      try { showMiniToast(e.message || 'Message илгээхэд алдаа.'); } catch(_) { alert(e.message || 'Message илгээхэд алдаа.'); }
+    } finally {
+      input.disabled = false;
+      input.focus();
+    }
+  };
+
+  const oldShowPage = window.showPage;
+  window.showPage = function(page){
+    const result = oldShowPage ? oldShowPage.apply(this, arguments) : undefined;
+    setTimeout(function(){
+      if (page === 'chat') {
+        fitChat();
+        window.loadGlobalChat();
+      }
+      if (page === 'leaderboard') {
+        window.loadLeaderboard();
+      }
+    }, 80);
+    return result;
+  };
+
+  window.addEventListener('resize', () => setTimeout(fitChat, 60));
+  document.addEventListener('focusin', function(e){
+    if (e.target && e.target.id === 'chatInput') {
+      setTimeout(fitChat, 80);
+      setTimeout(() => scrollChatBottom(true), 160);
+    }
+  });
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      try {
+        if (currentUser && firebaseReady && db) {
+          saveMyPublicProfileFast();
+          if (Number(START || 0) > 0) window.saveLeaderboardStats();
+        }
+      } catch(_) {}
+    }, 1200);
+  });
+})();
+</script>
+
 </body>
 </html>
