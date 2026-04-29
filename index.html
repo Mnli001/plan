@@ -2,7 +2,7 @@
 <html lang="mn">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover" />
 <title>АЛТ $1000 Challenge</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
@@ -199,8 +199,13 @@
   .history-money, .leaderboard-balance, .admin-profit { text-align: right; font-family: 'Cinzel', serif; font-weight: 900; }
   .history-money.win, .leaderboard-balance, .admin-profit { color: var(--green); }
   .history-money.loss, .leaderboard-balance.negative-profit, .admin-profit.negative { color: var(--red) !important; }
-  .leaderboard-row { display: grid; grid-template-columns: 58px 1fr auto auto; gap: 12px; align-items: center; border-radius: 22px; }
+  .leaderboard-row { display: grid; grid-template-columns: minmax(180px, 1.2fr) minmax(0, 1fr) auto auto; gap: 12px; align-items: center; border-radius: 22px; }
   .leaderboard-row.my-rank { border-color: rgba(255,215,0,0.42); box-shadow: 0 0 24px rgba(255,215,0,0.10); }
+  .leaderboard-identity { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .leaderboard-rank-text { min-width: 28px; color: rgba(255,249,215,0.78); font-size: 14px; font-weight: 900; letter-spacing: 0.4px; text-align: left; }
+  .leaderboard-avatar { width: 44px; height: 44px; border-radius: 999px; flex: 0 0 44px; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; font-family: 'Cinzel', serif; font-size: 15px; font-weight: 900; color: #201706; background: linear-gradient(135deg, rgba(251,224,110,0.96), rgba(204,163,37,0.96)); border: 1px solid rgba(255,231,136,0.36); box-shadow: 0 10px 28px rgba(187,142,12,0.22), inset 0 1px 0 rgba(255,255,255,0.34); }
+  .leaderboard-avatar.has-photo { padding: 0; background: rgba(255,255,255,0.06); }
+  .leaderboard-avatar.has-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .leaderboard-record { text-align: right; color: rgba(255,249,215,0.70); font-size: 12px; font-weight: 900; min-width: 82px; }
   .leaderboard-empty { padding: 14px; border-radius: 18px; color: rgba(255,249,215,0.66); background: rgba(0,0,0,0.18); border: 1px solid rgba(255,255,255,0.08); font-weight: 800; }
   .leaderboard-buttons, .admin-actions, .admin-row-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
@@ -293,8 +298,9 @@
     .trading-table td[data-label="#"]::before { display: none; }
     .level-chip, .goal-flag { min-width: 52px; height: 52px; font-size: 18px; }
     .action-group { justify-content: flex-end; gap: 10px; }
-    .history-item, .leaderboard-row { grid-template-columns: auto 1fr; }
-    .history-money, .leaderboard-balance, .leaderboard-record { grid-column: 2 / -1; text-align: left; }
+    .history-item { grid-template-columns: auto 1fr; }
+    .leaderboard-row { grid-template-columns: 1fr; gap: 10px; }
+    .leaderboard-balance, .leaderboard-record { text-align: left; }
     .bottom-nav { width: calc(100vw - 18px); max-width: 760px; min-height: 70px; padding: 11px 10px; gap: 7px; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); overflow-x: auto; justify-content: flex-start; scrollbar-width: none; }
     .bottom-nav::-webkit-scrollbar { display: none; }
     .bottom-nav a { flex: 0 0 auto; min-width: 82px; min-height: 48px; padding: 0 16px; font-size: 13px; }
@@ -538,6 +544,7 @@
     align-items: center;
     justify-content: center;
     flex: 0 0 34px;
+    overflow: hidden;
     font-size: 12px;
     font-weight: 900;
     font-family: 'Cinzel', serif;
@@ -546,6 +553,8 @@
     border: 1px solid rgba(255,255,255,0.16);
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 24px rgba(0,0,0,0.14);
   }
+  .chat-avatar.has-photo { padding: 0; }
+  .chat-avatar.has-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .chat-row.mine .chat-avatar {
     order: 2;
     background: linear-gradient(135deg, rgba(251,224,110,0.96), rgba(204,163,37,0.96));
@@ -2111,7 +2120,1151 @@
     }
   }
 
+
+
+  /* iOS / mobile viewport + keyboard stability fix */
+  :root {
+    --app-vh: 1vh;
+    --app-real-height: 100vh;
+    --keyboard-height: 0px;
+  }
+
+  html {
+    min-height: 100%;
+    height: -webkit-fill-available;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.06), transparent 18%),
+      radial-gradient(circle at 18% 8%, rgba(255, 230, 120, 0.18), transparent 28%),
+      radial-gradient(circle at 82% 16%, rgba(120, 255, 214, 0.12), transparent 25%),
+      radial-gradient(circle at 48% 82%, rgba(140, 120, 255, 0.12), transparent 32%),
+      linear-gradient(145deg, #0b0d0c 0%, #10130f 45%, #080909 100%) !important;
+    background-color: #090c0c !important;
+    overscroll-behavior-y: none;
+    overflow-x: hidden;
+  }
+
+  body {
+    min-height: var(--app-real-height);
+    min-height: calc(var(--app-vh) * 100);
+    min-height: -webkit-fill-available;
+    background-color: #090c0c !important;
+    overscroll-behavior-y: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body::selection { background: rgba(255,215,0,0.22); }
+
+  body::after {
+    box-shadow: 0 0 0 200vmax rgba(8, 9, 9, 0.001);
+  }
+
+  .poster {
+    min-height: min(calc(var(--app-vh) * 100 - 18px), calc(var(--app-real-height) - 18px));
+  }
+
+  .chat-panel {
+    min-height: min(520px, calc(var(--app-vh) * 100 - 140px));
+  }
+
+  .chat-list {
+    overscroll-behavior: contain;
+    scroll-padding-bottom: calc(var(--keyboard-height) + 120px);
+  }
+
+  .chat-form {
+    position: sticky;
+    bottom: 0;
+    z-index: 3;
+    padding-top: 10px;
+    padding-bottom: max(4px, env(safe-area-inset-bottom, 0px));
+    background: linear-gradient(180deg, rgba(11,13,12,0), rgba(11,13,12,0.72) 34%, rgba(11,13,12,0.92));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  body.keyboard-open .bottom-nav {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(135%);
+  }
+
+  body.keyboard-open {
+    padding-bottom: max(28px, env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  body.keyboard-open .chat-panel {
+    margin-bottom: 12px;
+  }
+
+  @supports (height: 100dvh) {
+    html, body { min-height: 100dvh; }
+    .poster { min-height: calc(100dvh - 18px); }
+    .chat-panel { min-height: min(520px, calc(100dvh - 140px)); }
+  }
+
+  @media (max-width: 768px) {
+    body {
+      padding-bottom: calc(118px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+
+    .poster {
+      min-height: calc(var(--app-vh) * 100 - 12px);
+    }
+
+    .chat-panel {
+      min-height: calc(var(--app-vh) * 100 - 170px);
+    }
+
+    .chat-list {
+      max-height: calc(var(--app-vh) * 100 - 320px) !important;
+      min-height: 180px;
+    }
+
+    body.keyboard-open .chat-list {
+      max-height: calc(var(--app-vh) * 100 - 250px) !important;
+    }
+  }
+
+
+
+  /* ===== SOFT LUXURY GLOBAL POLISH ===== */
+  html {
+    min-height: 100%;
+    background: #090b0c;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #090b0c;
+    background-attachment: fixed;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+
+  body,
+  .poster,
+  .glass-card,
+  .idea-post,
+  .chat-panel,
+  .idea-panel,
+  .leaderboard-panel,
+  .history-panel,
+  .journal-panel,
+  .balance-setup-panel,
+  .admin-panel,
+  .settings-modal,
+  .idea-modal,
+  .profile-card,
+  .stat-card,
+  .smart-card,
+  .table-card,
+  .next-trade-card,
+  .home-settings-btn,
+  .bottom-nav,
+  .chat-message,
+  .trading-table tr,
+  .history-item,
+  .leaderboard-row,
+  .admin-user-row,
+  .idea-comment-item,
+  .idea-comments {
+    will-change: auto;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  img {
+    image-rendering: auto;
+    -webkit-user-drag: none;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.03);
+    border-radius: 999px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(255,226,136,0.46), rgba(171,132,26,0.40));
+    border-radius: 999px;
+    border: 2px solid rgba(0,0,0,0.12);
+  }
+
+  * {
+    scrollbar-color: rgba(255,226,136,0.42) rgba(255,255,255,0.03);
+    scrollbar-width: thin;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 1px rgba(255,240,168,0.34), 0 0 0 4px rgba(255,215,0,0.10) !important;
+  }
+
+  .poster {
+    border-radius: 36px;
+    background:
+      linear-gradient(155deg, rgba(255,255,255,0.16), rgba(255,255,255,0.05) 36%, rgba(255,255,255,0.07) 100%),
+      radial-gradient(circle at 14% 12%, rgba(255,215,0,0.11), transparent 28%),
+      radial-gradient(circle at 84% 22%, rgba(123,239,210,0.08), transparent 26%),
+      linear-gradient(145deg, rgba(7,10,10,0.94), rgba(13,17,18,0.90) 55%, rgba(8,10,10,0.96));
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 28px 80px rgba(0,0,0,0.46), inset 0 1px 0 rgba(255,255,255,0.24), inset 0 -1px 0 rgba(255,255,255,0.04);
+    backdrop-filter: blur(26px) saturate(1.35);
+    -webkit-backdrop-filter: blur(26px) saturate(1.35);
+  }
+
+  .poster::before {
+    background:
+      linear-gradient(118deg, transparent 0%, rgba(255,255,255,0.07) 18%, transparent 32%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 112px);
+    opacity: 0.85;
+  }
+
+  .header {
+    padding-top: 44px;
+    padding-bottom: 30px;
+    border-bottom-color: rgba(255,223,128,0.10);
+  }
+
+  .top-pill,
+  .badge,
+  .phase-badge,
+  .preview-badge,
+  .level-context-label,
+  .leaderboard-countdown,
+  .lock-display {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .top-pill,
+  .auth-kicker,
+  .stat-label,
+  .history-head .auth-kicker,
+  .leaderboard-head .auth-kicker,
+  .next-trade-head .auth-kicker,
+  .journal-head .auth-kicker,
+  .admin-head .auth-kicker {
+    letter-spacing: 1.8px;
+  }
+
+  .main-title {
+    letter-spacing: 0.01em;
+    text-shadow: 0 8px 30px rgba(255,215,0,0.08);
+  }
+
+  .plan-title {
+    color: rgba(255,249,215,0.78);
+    letter-spacing: 1.2px;
+    line-height: 1.52;
+  }
+
+  .glass-card,
+  .idea-post,
+  .chat-panel,
+  .idea-panel,
+  .leaderboard-panel,
+  .history-panel,
+  .journal-panel,
+  .balance-setup-panel,
+  .admin-panel,
+  .settings-modal,
+  .idea-modal,
+  .profile-card,
+  .stat-card,
+  .smart-card,
+  .table-card,
+  .next-trade-card {
+    background:
+      linear-gradient(155deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04) 42%, rgba(255,255,255,0.06) 100%),
+      radial-gradient(circle at 0% 0%, rgba(255,215,0,0.06), transparent 28%),
+      linear-gradient(180deg, rgba(9,11,11,0.22), rgba(9,11,11,0.08));
+    border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 16px 46px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(255,255,255,0.03);
+    backdrop-filter: blur(18px) saturate(1.2);
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+  }
+
+  .page-title-card,
+  .profile-card,
+  .chat-panel,
+  .idea-panel,
+  .leaderboard-panel,
+  .history-panel,
+  .journal-panel,
+  .balance-setup-panel,
+  .admin-panel {
+    border-radius: 28px;
+  }
+
+  .auth-title,
+  .section-title,
+  .smart-title,
+  .profile-name,
+  .idea-post-name,
+  .leaderboard-name strong,
+  .history-main strong,
+  .next-trade-title,
+  .settings-modal-head .auth-title {
+    letter-spacing: 0.02em;
+    text-shadow: 0 4px 14px rgba(0,0,0,0.18);
+  }
+
+  .auth-kicker,
+  .stat-note,
+  .smart-note,
+  .next-trade-note,
+  .risk-note,
+  .settings-note,
+  .admin-note,
+  .leaderboard-name span,
+  .history-main span,
+  .idea-post-time,
+  .chat-note,
+  .chat-message-time,
+  .idea-comment-time {
+    color: rgba(255,249,215,0.56);
+  }
+
+  .auth-tab,
+  .auth-btn,
+  .auth-ghost,
+  .soft-btn,
+  .btn-sm,
+  .profile-action-btn,
+  .level-restart-btn,
+  .home-settings-btn,
+  .settings-close-btn,
+  .settings-action,
+  .idea-action-btn,
+  .idea-post-delete,
+  .idea-close-btn {
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 10px 24px rgba(0,0,0,0.14);
+    transition: transform .18s ease, filter .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+
+  .auth-btn.primary,
+  .profile-action-btn,
+  .bottom-nav a.active,
+  .home-settings-btn,
+  .idea-create-btn,
+  .idea-comment-submit,
+  .chat-form .auth-btn.primary {
+    box-shadow: 0 14px 34px rgba(184,141,13,0.18), inset 0 1px 0 rgba(255,255,255,0.34) !important;
+  }
+
+  .auth-btn:hover,
+  .auth-ghost:hover,
+  .soft-btn:hover,
+  .btn-sm:hover,
+  .profile-action-btn:hover,
+  .level-restart-btn:hover,
+  .home-settings-btn:hover,
+  .settings-action:hover,
+  .idea-action-btn:hover,
+  .idea-post-delete:hover,
+  .idea-close-btn:hover,
+  .idea-create-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.04);
+  }
+
+  .auth-input,
+  .idea-textarea,
+  .idea-comment-input,
+  .chat-form .auth-input {
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
+    border-color: rgba(255,255,255,0.12);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.18);
+  }
+
+  .auth-input::placeholder,
+  .idea-textarea::placeholder,
+  .idea-comment-input::placeholder {
+    color: rgba(255,249,215,0.36);
+  }
+
+  .auth-input:focus,
+  .idea-textarea:focus,
+  .idea-comment-input:focus {
+    border-color: rgba(255,217,111,0.32);
+    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
+  }
+
+  .stat-card {
+    border-radius: 24px;
+    min-height: 120px;
+  }
+
+  .stat-value,
+  .money,
+  .profile-name,
+  .leaderboard-balance,
+  .history-money,
+  .admin-profit,
+  .next-trade-value {
+    letter-spacing: 0.01em;
+  }
+
+  .current-level-title span {
+    line-height: 1.3;
+    letter-spacing: 1.4px;
+  }
+
+  .trading-table {
+    border-spacing: 0 12px;
+  }
+
+  .trading-table tr {
+    border-radius: 26px !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.10) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.10), 0 12px 34px rgba(0,0,0,0.12);
+    overflow: hidden;
+  }
+
+  .trading-table tr td {
+    background: transparent !important;
+  }
+
+  .trading-table tr.tr-current {
+    background:
+      linear-gradient(135deg, rgba(255,231,121,0.17), rgba(255,255,255,0.05) 45%, rgba(110,244,200,0.08));
+    border-color: rgba(255,215,0,0.30) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 18px 42px rgba(178,140,18,0.12), 0 0 0 1px rgba(255,215,0,0.07);
+  }
+
+  .trading-table tr.tr-previous {
+    background: linear-gradient(135deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025));
+    opacity: 0.96;
+  }
+
+  .trading-table tr.tr-preview {
+    background: linear-gradient(135deg, rgba(145,170,180,0.07), rgba(255,255,255,0.02));
+    opacity: 0.86;
+  }
+
+  .phase-badge,
+  .preview-badge,
+  .level-context-label {
+    border-color: rgba(255,255,255,0.10);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+  }
+
+  .leaderboard-row,
+  .history-item,
+  .admin-user-row,
+  .idea-comment-item {
+    background: linear-gradient(145deg, rgba(255,255,255,0.075), rgba(255,255,255,0.028));
+    border-color: rgba(255,255,255,0.10);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 10px 26px rgba(0,0,0,0.10);
+  }
+
+  .leaderboard-row.my-rank {
+    box-shadow: 0 16px 34px rgba(164,127,15,0.12), inset 0 1px 0 rgba(255,255,255,0.10);
+  }
+
+  .leaderboard-rank-text,
+  .leaderboard-record,
+  .history-main span {
+    letter-spacing: 0.02em;
+  }
+
+  .leaderboard-avatar,
+  .idea-avatar,
+  .chat-avatar,
+  .profile-avatar-shell,
+  .profile-avatar-shell .idea-avatar {
+    box-shadow: 0 10px 24px rgba(184,141,13,0.16), inset 0 1px 0 rgba(255,255,255,0.28);
+  }
+
+  .idea-feed {
+    gap: 18px;
+  }
+
+  .idea-post {
+    border-radius: 30px;
+    padding: 20px;
+  }
+
+  .idea-post-text {
+    line-height: 1.72;
+    font-size: 15px;
+  }
+
+  .idea-post-image-wrap,
+  .idea-preview-box,
+  .idea-comments,
+  .idea-upload-box,
+  .idea-modal,
+  .settings-modal {
+    border-radius: 24px;
+  }
+
+  .idea-post-image-wrap,
+  .idea-preview-box {
+    background: rgba(8,11,12,0.30);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+  }
+
+  .idea-post-image,
+  .idea-preview-box img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .idea-action-btn {
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
+    border-color: rgba(255,255,255,0.11);
+  }
+
+  .idea-action-btn.liked {
+    box-shadow: 0 12px 28px rgba(186,143,15,0.12), inset 0 1px 0 rgba(255,255,255,0.16);
+  }
+
+  .idea-comments {
+    margin-top: 14px;
+    padding: 14px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(255,255,255,0.02));
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .chat-list {
+    padding-right: 4px;
+  }
+
+  .chat-message {
+    border-radius: 20px;
+  }
+
+  .chat-row.theirs .chat-message {
+    background: linear-gradient(180deg, rgba(20,24,28,0.64), rgba(14,17,20,0.44));
+    border-color: rgba(255,255,255,0.10);
+  }
+
+  .chat-row.mine .chat-message {
+    background: linear-gradient(135deg, rgba(251,224,110,0.96), rgba(220,180,45,0.90));
+  }
+
+  .chat-message-text,
+  .idea-comment-text,
+  .idea-post-text,
+  .next-trade-note,
+  .smart-note,
+  .risk-note,
+  .settings-note,
+  .admin-note,
+  .balance-setup-note {
+    font-weight: 700;
+  }
+
+  .bottom-nav {
+    background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.09));
+    border: 1px solid rgba(255,255,255,0.18);
+    box-shadow: 0 18px 48px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.20);
+    backdrop-filter: blur(22px) saturate(1.3);
+    -webkit-backdrop-filter: blur(22px) saturate(1.3);
+  }
+
+  .bottom-nav a {
+    color: rgba(255,243,185,0.88);
+    letter-spacing: 0.01em;
+  }
+
+  .bottom-nav a:not(.active):hover {
+    background: rgba(255,255,255,0.06);
+  }
+
+  .page-title-card {
+    background: linear-gradient(145deg, rgba(255,255,255,0.14), rgba(255,255,255,0.05));
+    border: 1px solid rgba(255,255,255,0.16);
+    box-shadow: 0 12px 34px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.18);
+  }
+
+  .settings-modal,
+  .idea-modal,
+  .profile-popup {
+    box-shadow: 0 24px 70px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.16);
+  }
+
+  .loading-overlay,
+  .loader-overlay {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  @media (max-width: 900px) {
+    .profile-card {
+      grid-template-columns: 1fr !important;
+      gap: 14px !important;
+    }
+
+    .profile-side {
+      justify-items: start;
+      min-width: 0;
+    }
+
+    .profile-actions {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 700px) {
+    body {
+      padding-top: 12px;
+    }
+
+    .poster {
+      border-radius: 28px;
+    }
+
+    .header {
+      padding: 28px 16px 20px;
+    }
+
+    .top-pill {
+      padding: 8px 13px;
+      font-size: 10px;
+      letter-spacing: 1.4px;
+    }
+
+    .plan-title {
+      font-size: 14px;
+      letter-spacing: 0.6px;
+      line-height: 1.5;
+    }
+
+    .page-title-card,
+    .chat-panel,
+    .idea-panel,
+    .leaderboard-panel,
+    .history-panel,
+    .journal-panel,
+    .balance-setup-panel,
+    .admin-panel,
+    .profile-card {
+      margin-left: 12px !important;
+      margin-right: 12px !important;
+      border-radius: 24px;
+    }
+
+    .auth-panel,
+    .dashboard,
+    .progress-wrap,
+    .pro-stats,
+    .smart-grid,
+    .table-wrapper,
+    .info-section,
+    .profile-wrap,
+    .next-trade-panel,
+    .home-settings-row {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .stat-card,
+    .smart-card,
+    .next-trade-card {
+      border-radius: 22px;
+    }
+
+    .trading-table {
+      border-spacing: 0 10px !important;
+    }
+
+    .trading-table tr {
+      border-radius: 24px !important;
+    }
+
+    .trading-table tr.tr-current {
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), 0 14px 28px rgba(178,140,18,0.10);
+    }
+
+    .idea-post {
+      padding: 16px;
+      border-radius: 24px;
+    }
+
+    .idea-post-head {
+      gap: 10px;
+    }
+
+    .idea-post-user {
+      gap: 10px;
+    }
+
+    .idea-post-name {
+      font-size: 16px;
+    }
+
+    .idea-post-text {
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .chat-form {
+      gap: 10px;
+    }
+
+    .bottom-nav {
+      border-radius: 28px;
+      min-height: 72px;
+      padding: 10px 10px;
+    }
+
+    .bottom-nav a {
+      min-width: 84px;
+      min-height: 48px;
+      padding: 0 15px;
+      font-size: 13px;
+    }
+  }
+
 </style>
+
+<style id="ultra-luxury-upgrade">
+/* ===== ULTRA LUXURY UPGRADE + AUDIT POLISH ===== */
+:root {
+  --lux-gold-1: #fff3b7;
+  --lux-gold-2: #ffd85d;
+  --lux-gold-3: #b88718;
+  --lux-ink: #090c0d;
+  --lux-panel: rgba(255,255,255,0.10);
+  --lux-panel-2: rgba(255,255,255,0.05);
+  --lux-border: rgba(255,255,255,0.14);
+  --lux-shadow: 0 20px 60px rgba(0,0,0,0.24);
+}
+
+html, body {
+  min-height: 100%;
+  background:
+    radial-gradient(circle at 14% 12%, rgba(255,214,92,0.11), transparent 26%),
+    radial-gradient(circle at 84% 18%, rgba(83,221,194,0.08), transparent 24%),
+    linear-gradient(180deg, #07090a, #090c0d 42%, #060809 100%) !important;
+}
+
+body {
+  color: rgba(255,250,222,0.94);
+  scroll-behavior: smooth;
+}
+
+.poster {
+  overflow: hidden;
+}
+
+.page-title-card,
+.glass-card,
+.idea-post,
+.chat-panel,
+.leaderboard-panel,
+.history-panel,
+.admin-panel,
+.idea-panel,
+.next-trade-card,
+.progress-card,
+.smart-card,
+.profile-card,
+.settings-modal,
+.idea-modal,
+.table-wrapper {
+  border-color: rgba(255,255,255,0.16) !important;
+  box-shadow: 0 18px 52px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(255,255,255,0.02) !important;
+}
+
+.auth-title,
+.section-title,
+.smart-title,
+.next-trade-title,
+.profile-name,
+.idea-post-name,
+.chat-message-name,
+.leaderboard-name strong {
+  text-wrap: balance;
+}
+
+/* smooth entrances */
+@keyframes softFadeUp {
+  from { opacity: 0; transform: translateY(16px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes softBubbleInMine {
+  from { opacity: 0; transform: translateX(18px) translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: translateX(0) translateY(0) scale(1); }
+}
+@keyframes softBubbleInTheirs {
+  from { opacity: 0; transform: translateX(-18px) translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: translateX(0) translateY(0) scale(1); }
+}
+@keyframes subtleFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-1px); }
+}
+@keyframes goldSweep {
+  from { transform: translateX(-130%); opacity: 0; }
+  10% { opacity: .65; }
+  to { transform: translateX(130%); opacity: 0; }
+}
+@keyframes shimmerPulse {
+  0%,100% { box-shadow: 0 0 0 1px rgba(255,215,0,0.08), 0 18px 46px rgba(178,140,18,0.10); }
+  50% { box-shadow: 0 0 0 1px rgba(255,215,0,0.16), 0 20px 54px rgba(178,140,18,0.15); }
+}
+
+.soft-enter {
+  animation: softFadeUp .55s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+.soft-item-enter {
+  animation: softFadeUp .42s cubic-bezier(.22,.61,.36,1) both;
+}
+.chat-row.mine.soft-item-enter { animation-name: softBubbleInMine; }
+.chat-row.theirs.soft-item-enter { animation-name: softBubbleInTheirs; }
+
+/* premium page feel */
+.page-title-card {
+  position: relative;
+  overflow: hidden;
+}
+.page-title-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 12%, rgba(255,255,255,0.08) 24%, transparent 36%);
+  transform: translateX(-120%);
+  animation: goldSweep 7.5s linear infinite;
+  pointer-events: none;
+}
+
+/* next trade summary */
+.next-trade-card {
+  position: relative;
+  overflow: hidden;
+}
+.next-trade-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(255,215,0,0.10), transparent 30%);
+  pointer-events: none;
+}
+.next-trade-grid {
+  gap: 12px !important;
+}
+.next-trade-card .next-trade-item,
+.next-trade-card .summary-item,
+.next-trade-grid > div {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 18px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+}
+.next-trade-value {
+  text-shadow: 0 4px 14px rgba(0,0,0,0.22);
+}
+
+/* levels cinematic */
+.table-wrapper {
+  position: relative;
+}
+.trading-table tr {
+  position: relative;
+  overflow: hidden;
+}
+.trading-table tr.tr-current {
+  isolation: isolate;
+  animation: shimmerPulse 5s ease-in-out infinite;
+}
+.trading-table tr.tr-current::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -20%;
+  width: 28%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  filter: blur(2px);
+  animation: goldSweep 5.5s ease-in-out infinite;
+  pointer-events: none;
+}
+.trading-table tr.tr-current td {
+  background:
+    linear-gradient(135deg, rgba(255,234,142,0.20), rgba(255,255,255,0.045) 46%, rgba(90,236,196,0.08)) !important;
+  border-top-color: rgba(255,225,124,0.36) !important;
+  border-bottom-color: rgba(255,225,124,0.30) !important;
+}
+.trading-table tr.tr-current .level-chip,
+.trading-table tr.tr-current .goal-flag,
+.trading-table tr.tr-current .phase-badge,
+.trading-table tr.tr-current .level-context-label {
+  animation: subtleFloat 3.8s ease-in-out infinite;
+}
+.trading-table tr.tr-preview td,
+.trading-table tr.tr-previous td {
+  opacity: 0.95;
+}
+.trading-table td {
+  font-weight: 800;
+}
+
+/* app-like chat */
+.chat-panel {
+  position: relative;
+  overflow: hidden;
+}
+.chat-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(255,215,0,0.05), transparent 26%),
+    radial-gradient(circle at 100% 100%, rgba(76,198,174,0.05), transparent 30%);
+  pointer-events: none;
+}
+.chat-list {
+  padding: 10px 4px 8px !important;
+  scroll-behavior: smooth;
+}
+.chat-row {
+  align-items: flex-end;
+}
+.chat-message {
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.10);
+}
+.chat-row.theirs .chat-message::after,
+.chat-row.mine .chat-message::after {
+  content: "";
+  position: absolute;
+  bottom: 12px;
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+.chat-row.theirs .chat-message::after {
+  left: -5px;
+  background: linear-gradient(180deg, rgba(20,24,28,0.82), rgba(14,17,20,0.64));
+  border-left: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.chat-row.mine .chat-message::after {
+  right: -5px;
+  background: linear-gradient(135deg, rgba(251,224,110,0.96), rgba(220,180,45,0.90));
+}
+.chat-row.mine .chat-message,
+.chat-row.theirs .chat-message {
+  border-radius: 22px !important;
+}
+.chat-form {
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  padding-top: 10px;
+  padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, rgba(8,11,12,0), rgba(8,11,12,0.72) 28%, rgba(8,11,12,0.92));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.chat-form .auth-input {
+  min-height: 58px;
+}
+.chat-form .auth-btn.primary {
+  min-width: 108px;
+}
+.chat-avatar {
+  flex-shrink: 0;
+}
+
+/* idea feed - instagram/facebook hybrid */
+.idea-panel {
+  position: relative;
+  overflow: hidden;
+}
+.idea-feed {
+  display: grid;
+  gap: 20px !important;
+}
+.idea-post {
+  position: relative;
+  overflow: hidden;
+}
+.idea-post::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 0% 0%, rgba(255,215,0,0.06), transparent 22%);
+  pointer-events: none;
+}
+.idea-post-head {
+  margin-bottom: 12px;
+  gap: 12px;
+}
+.idea-post-meta {
+  min-width: 0;
+}
+.idea-post-name {
+  font-size: 17px !important;
+}
+.idea-post-time {
+  font-size: 12px !important;
+}
+.idea-post-text {
+  margin-bottom: 14px !important;
+}
+.idea-post-image-wrap {
+  border: 1px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+.idea-post-image {
+  transition: transform .5s ease;
+}
+.idea-post-image-wrap:hover .idea-post-image {
+  transform: scale(1.015);
+}
+.idea-post-actions {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.idea-action-btn {
+  min-height: 42px;
+  border-radius: 999px;
+  padding: 0 16px;
+}
+.idea-owner-actions {
+  margin-left: auto;
+}
+.idea-comments {
+  margin-top: 16px !important;
+}
+.idea-comment-item {
+  border-radius: 18px !important;
+}
+.idea-comment-form {
+  padding-top: 8px;
+}
+.idea-comment-submit {
+  min-width: 92px;
+}
+
+/* leaderboard richer layout */
+.leaderboard-row {
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.leaderboard-row:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 38px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.leaderboard-rank {
+  align-items: center;
+}
+.leaderboard-rank-text {
+  opacity: 0.84;
+}
+
+/* buttons + nav even softer */
+.bottom-nav a {
+  transition: background .18s ease, transform .18s ease, box-shadow .18s ease, color .18s ease;
+}
+.bottom-nav a:hover {
+  transform: translateY(-1px);
+}
+.bottom-nav a.active {
+  box-shadow: 0 12px 30px rgba(184,141,13,0.18), inset 0 1px 0 rgba(255,255,255,0.30);
+}
+.soft-btn,
+.auth-btn,
+.idea-action-btn,
+.idea-post-delete,
+.profile-action-btn,
+.home-settings-btn,
+.home-profile-btn {
+  border-radius: 999px !important;
+}
+
+/* small comfort fixes */
+.history-list,
+.leaderboard-list,
+.idea-feed,
+.chat-list {
+  min-width: 0;
+}
+.idea-post-text,
+.chat-message-text,
+.history-main,
+.leaderboard-name {
+  overflow-wrap: anywhere;
+}
+.profile-avatar-shell,
+.profile-avatar-shell img,
+.profile-avatar-shell .idea-avatar,
+.profile-avatar-shell .idea-avatar img,
+.idea-avatar,
+.idea-avatar img,
+.chat-avatar,
+.chat-avatar img,
+.leaderboard-avatar,
+.leaderboard-avatar img {
+  object-fit: cover;
+}
+
+/* mobile tuning */
+@media (max-width: 700px) {
+  .chat-form {
+    gap: 10px;
+    align-items: stretch;
+  }
+  .chat-form .auth-input {
+    min-height: 54px;
+  }
+  .chat-form .auth-btn.primary {
+    min-width: 96px;
+    min-height: 54px;
+  }
+  .idea-post {
+    padding: 16px !important;
+  }
+  .idea-post-actions {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .idea-action-btn {
+    flex: 1 1 calc(50% - 8px);
+    justify-content: center;
+  }
+  .idea-owner-actions {
+    width: 100%;
+    margin-left: 0;
+  }
+  .idea-owner-actions .idea-action-btn {
+    width: 100%;
+  }
+  .leaderboard-row {
+    gap: 8px !important;
+  }
+  .next-trade-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .trading-table tr.tr-current::after {
+    display: none;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="app-loading-overlay" id="appLoadingOverlay">
@@ -2447,6 +3600,94 @@
   let firebaseReady = false;
   let lastMilestone = 0;
   let revengeUntil = Number(localStorage.getItem(REVENGE_KEY) || 0);
+
+
+
+  function updateMobileViewportState() {
+    const vv = window.visualViewport;
+    const viewportHeight = vv ? vv.height : window.innerHeight;
+    const realHeight = window.innerHeight || viewportHeight;
+    const offsetTop = vv ? vv.offsetTop : 0;
+    const keyboardHeight = Math.max(0, realHeight - viewportHeight - offsetTop);
+
+    document.documentElement.style.setProperty('--app-vh', `${viewportHeight * 0.01}px`);
+    document.documentElement.style.setProperty('--app-real-height', `${realHeight}px`);
+    document.documentElement.style.setProperty('--keyboard-height', `${keyboardHeight}px`);
+
+    document.body.classList.toggle('keyboard-open', keyboardHeight > 120);
+  }
+
+  function scrollChatPanelToBottom(force = false) {
+    const box = document.getElementById('chatList');
+    if (!box) return;
+    const distance = box.scrollHeight - box.scrollTop - box.clientHeight;
+    if (force || distance < 180) {
+      box.scrollTop = box.scrollHeight;
+    }
+  }
+
+  function stabilizeAfterKeyboardClose() {
+    updateMobileViewportState();
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: window.scrollY, left: 0, behavior: 'auto' });
+      scrollChatPanelToBottom(true);
+    });
+    setTimeout(() => {
+      updateMobileViewportState();
+      scrollChatPanelToBottom(true);
+    }, 180);
+    setTimeout(() => {
+      updateMobileViewportState();
+    }, 420);
+  }
+
+  window.addEventListener('resize', updateMobileViewportState, { passive: true });
+  window.addEventListener('orientationchange', () => {
+    setTimeout(updateMobileViewportState, 150);
+    setTimeout(stabilizeAfterKeyboardClose, 300);
+  });
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', updateMobileViewportState, { passive: true });
+    window.visualViewport.addEventListener('scroll', updateMobileViewportState, { passive: true });
+  }
+
+  document.addEventListener('focusin', (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    if (target.id === 'chatInput') {
+      document.body.classList.add('keyboard-open');
+      updateMobileViewportState();
+      setTimeout(() => {
+        target.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+        scrollChatPanelToBottom(true);
+      }, 120);
+      setTimeout(() => scrollChatPanelToBottom(true), 300);
+    }
+  });
+
+  document.addEventListener('focusout', (event) => {
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    if (target.id === 'chatInput') {
+      setTimeout(stabilizeAfterKeyboardClose, 60);
+    }
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      setTimeout(updateMobileViewportState, 50);
+      setTimeout(stabilizeAfterKeyboardClose, 180);
+    }
+  });
+
+  window.addEventListener('pageshow', () => {
+    setTimeout(updateMobileViewportState, 60);
+    setTimeout(stabilizeAfterKeyboardClose, 180);
+  });
+
+  setTimeout(updateMobileViewportState, 0);
+  setTimeout(updateMobileViewportState, 300);
 
   let appLoadingMinimumDone = false;
   setTimeout(() => { appLoadingMinimumDone = true; }, 450);
@@ -3099,6 +4340,7 @@
       if (Array.isArray(challenge.tradeHistory)) { tradeHistory = challenge.tradeHistory; saveJSON(HISTORY_KEY, tradeHistory); }
       if (challenge.revengeUntil) { revengeUntil = Number(challenge.revengeUntil); localStorage.setItem(REVENGE_KEY, String(revengeUntil)); }
       try { localStorage.setItem(CHALLENGE_MONTH_LOCAL_KEY, currentMonth); } catch (_) {}
+      await syncMyPublicProfileData({ name: currentUserDocData.name || '', photoData: currentUserDocData.photoData || '' });
       setAuthStatus('Cloud sync on.'); render();
     } catch (error) { console.warn('Cloud load error:', error); setAuthStatus('Cloud progress уншихад алдаа гарлаа. Firestore rules/config-оо шалга.'); }
   }
@@ -3147,6 +4389,7 @@
       updateAuthUI(cred.user);
       await checkAdminStatus();
       await saveLeaderboardStats();
+      await syncMyPublicProfileData({ name, photoData: registerSelectedImageData || '' });
 
       setAuthStatus('Бүртгэл амжилттай. Одоо эхлэх balance-аа сонго.');
       showMiniToast('Бүртгэл амжилттай.', 'success');
@@ -3270,7 +4513,8 @@
     const netProfit = round2(currentProfit - safeBaseProfit);
 
     return {
-      name: currentUser?.displayName || 'Trader',
+      name: getDisplayNameForCurrentUser(),
+      photoData: getPhotoForCurrentUser(),
       startBalance: Number(START || 0),
       balance: Number(finalBalance.toFixed(2)),
       currentProfit: Number(currentProfit.toFixed(2)),
@@ -3342,7 +4586,17 @@
         const isMe = currentUser && doc.id === currentUser.uid;
         const profit = Number(data.netProfit || 0);
 
-        rows.push(`<div class="leaderboard-row ${isMe ? 'my-rank' : ''}"><div class="leaderboard-rank">#${rank}</div><div class="leaderboard-name"><strong>${escapeHTML(data.name || 'Trader')}</strong><span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span></div><div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${formatMoney(profit)}</div><div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div></div>`);
+        rows.push(`
+          <div class="leaderboard-row ${isMe ? 'my-rank' : ''}">
+            <div class="leaderboard-identity">
+              <div class="leaderboard-rank-text">#${rank}</div>
+              ${getAvatarMarkup(data.name || 'Trader', data.photoData || '', 'leaderboard-avatar')}
+              <div class="leaderboard-name"><strong>${escapeHTML(data.name || 'Trader')}</strong><span>${isMe ? 'You · ' : ''}${Number(data.trades || 0)} trade · Win rate ${Number(data.winRate || 0)}%</span></div>
+            </div>
+            <div class="leaderboard-balance ${profit < 0 ? 'negative-profit' : ''}">${profit >= 0 ? '+' : ''}${formatMoney(profit)}</div>
+            <div class="leaderboard-record">${Number(data.wins || 0)}W / ${Number(data.losses || 0)}L</div>
+          </div>
+        `);
       });
 
       box.innerHTML = rows.join('');
@@ -3406,6 +4660,46 @@
   function getPhotoForCurrentUser() {
     const cached = loadProfileCache();
     return getSafePhotoData((currentUserDocData && currentUserDocData.photoData) || cached.photoData || '');
+  }
+
+  async function syncMyPublicProfileData(options = {}) {
+    if (!firebaseReady || !db || !currentUser) return;
+    const safeName = String(options.name || getDisplayNameForCurrentUser() || 'Trader');
+    const safePhoto = getSafePhotoData(options.photoData || getPhotoForCurrentUser() || '');
+
+    try {
+      await db.collection(getLeaderboardCollectionName()).doc(currentUser.uid).set({
+        name: safeName,
+        photoData: safePhoto,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+    } catch (_) {}
+
+    try {
+      const postsSnap = await db.collection('idea_posts').where('uid', '==', currentUser.uid).limit(80).get();
+      if (!postsSnap.empty) {
+        let batch = db.batch();
+        let count = 0;
+        postsSnap.forEach(doc => {
+          batch.set(doc.ref, { name: safeName, photoData: safePhoto, updatedAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true });
+          count++;
+        });
+        if (count) await batch.commit();
+      }
+    } catch (_) {}
+
+    try {
+      const chatSnap = await db.collection('global_chat').doc('main').collection('messages').where('uid', '==', currentUser.uid).limit(80).get();
+      if (!chatSnap.empty) {
+        let batch = db.batch();
+        let count = 0;
+        chatSnap.forEach(doc => {
+          batch.set(doc.ref, { name: safeName, photoData: safePhoto }, { merge: true });
+          count++;
+        });
+        if (count) await batch.commit();
+      }
+    } catch (_) {}
   }
 
   function getInitialLetter(name) {
@@ -3658,9 +4952,13 @@
       try { await currentUser.updateProfile({ displayName: name }); } catch (_) {}
       currentUserDocData = { ...(currentUserDocData || {}), name, email: currentUser.email || '', photoData: profileSelectedImageData || '' };
       saveProfileCache(currentUserDocData, currentUser.uid);
+      await saveLeaderboardStats();
+      await syncMyPublicProfileData({ name, photoData: profileSelectedImageData || '' });
       renderProfile();
       closeProfilePopup();
       if (document.body.dataset.page === 'idea') loadIdeaFeed();
+      if (document.body.dataset.page === 'leaderboard') loadLeaderboard();
+      if (document.body.dataset.page === 'chat') loadGlobalChat();
       showMiniToast('Profile амжилттай шинэчлэгдлээ.', 'success');
     } catch (error) {
       showMiniToast(error.message || 'Profile хадгалахад алдаа гарлаа.');
@@ -3919,6 +5217,7 @@
           commentCount: 0,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
+      setTimeout(() => scrollChatPanelToBottom(true), 50);
         showMiniToast('Post амжилттай нийтлэгдлээ.', 'success');
       }
       closeIdeaComposer();
@@ -3974,13 +5273,12 @@
         snap.forEach(doc => {
           const data = doc.data() || {};
           const isMine = currentUser && data.uid === currentUser.uid;
-          const initials = escapeHTML(String(data.name || 'Trader').trim().slice(0, 1).toUpperCase() || 'T');
           const safeName = escapeHTML(data.name || 'Trader');
           const safeTime = formatChatTime(data.createdAt);
           const safeText = escapeHTML(data.text || '');
           rows.push(`
             <div class="chat-row ${isMine ? 'mine' : 'theirs'}">
-              <div class="chat-avatar">${initials}</div>
+              ${getAvatarMarkup(data.name || 'Trader', data.photoData || '', 'chat-avatar')}
               <div class="chat-bubble-wrap">
                 <div class="chat-meta">
                   ${isMine ? `<div class="chat-message-time">${safeTime}</div><div class="chat-message-name">Та</div>` : `<div class="chat-message-name">${safeName}</div><div class="chat-message-time">${safeTime}</div>`}
@@ -3995,7 +5293,7 @@
 
         box.innerHTML = rows.join('');
         requestAnimationFrame(() => {
-          box.scrollTop = box.scrollHeight;
+          scrollChatPanelToBottom(true);
         });
       }, (error) => {
         console.warn('Chat уншихад алдаа:', error);
@@ -4030,7 +5328,8 @@
         .collection('messages')
         .add({
           uid: currentUser.uid,
-          name: currentUser.displayName || 'Trader',
+          name: getDisplayNameForCurrentUser(),
+          photoData: getPhotoForCurrentUser(),
           text,
           createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
@@ -4053,7 +5352,7 @@
   window.adminMonthlyResetAllAccountsNow = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Энэ сарын monthly account reset-ийг ОДОО бүх user дээр хийх үү? Бүх user дахин start balance сонгоно.')) return; try { const monthKey = getCurrentChallengeMonthKey(); const usersSnap = await db.collection('users').limit(500).get(); let batch = db.batch(), count = 0; usersSnap.forEach(doc => { batch.set(doc.ref, getMonthlyAccountResetPayload(monthKey), { merge: true }); count++; }); await batch.commit(); const lbSnap = await db.collection(getLeaderboardCollectionName()).limit(500).get(); batch = db.batch(); let lbCount = 0; lbSnap.forEach(doc => { batch.delete(doc.ref); lbCount++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} user monthly account reset, ${lbCount} leaderboard item устгалаа.`); } catch (error) { alert(error.message); } };
   window.adminClearLeaderboard = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Leaderboard дээр байгаа бүх хүнийг устгах уу? Users progress өөрчлөгдөхгүй.')) return; try { const snap = await db.collection(getLeaderboardCollectionName()).limit(500).get(); const batch = db.batch(); let count = 0; snap.forEach(doc => { batch.delete(doc.ref); count++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} leaderboard item устгалаа.`); } catch (error) { alert(error.message); } };
   window.adminDeleteFromLeaderboard = async function(userId) { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Энэ user-ийг leaderboard-оос устгах уу? Account progress өөрчлөгдөхгүй.')) return; try { await db.collection(getLeaderboardCollectionName()).doc(userId).delete(); await loadLeaderboard(); await loadAdminUsers(); } catch (error) { alert(error.message); } };
-  window.adminResetLeaderboardSeason = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Leaderboard season reset хийх үү? User progress өөрчлөгдөхгүй. Одоогийн profit нь baseline болж, бүгд $0 net profit-оос дахин эхэлнэ.')) return; try { const usersSnap = await db.collection('users').limit(500).get(); const batch = db.batch(); let count = 0; usersSnap.forEach(doc => { const data = doc.data() || {}; const challenge = data.challenge || {}; const stats = computeUserChallenge(Number(challenge.startBalance || data.startBalance || 0), challenge.outcomes || []); const ref = db.collection(getLeaderboardCollectionName()).doc(doc.id); batch.set(ref, { name: data.name || 'Trader', startBalance: Number(stats.startBalance || 0), balance: Number(stats.balance || 0), currentProfit: Number(stats.profit || 0), baseProfit: Number(stats.profit || 0), netProfit: 0, bestBalance: Number(stats.balance || 0), wins: Number(stats.wins || 0), losses: Number(stats.losses || 0), winRate: Number(stats.winRate || 0), trades: Number(stats.trades || 0), updatedAt: firebase.firestore.FieldValue.serverTimestamp(), seasonResetAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); count++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} user leaderboard season reset хийгдлээ.`); } catch (error) { alert(error.message); } };
+  window.adminResetLeaderboardSeason = async function() { if (!(await checkAdminStatus())) return alert('Admin эрх байхгүй байна.'); if (!confirm('Leaderboard season reset хийх үү? User progress өөрчлөгдөхгүй. Одоогийн profit нь baseline болж, бүгд $0 net profit-оос дахин эхэлнэ.')) return; try { const usersSnap = await db.collection('users').limit(500).get(); const batch = db.batch(); let count = 0; usersSnap.forEach(doc => { const data = doc.data() || {}; const challenge = data.challenge || {}; const stats = computeUserChallenge(Number(challenge.startBalance || data.startBalance || 0), challenge.outcomes || []); const ref = db.collection(getLeaderboardCollectionName()).doc(doc.id); batch.set(ref, { name: data.name || 'Trader', photoData: getSafePhotoData(data.photoData || ''), startBalance: Number(stats.startBalance || 0), balance: Number(stats.balance || 0), currentProfit: Number(stats.profit || 0), baseProfit: Number(stats.profit || 0), netProfit: 0, bestBalance: Number(stats.balance || 0), wins: Number(stats.wins || 0), losses: Number(stats.losses || 0), winRate: Number(stats.winRate || 0), trades: Number(stats.trades || 0), updatedAt: firebase.firestore.FieldValue.serverTimestamp(), seasonResetAt: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }); count++; }); await batch.commit(); await loadLeaderboard(); await loadAdminUsers(); alert(`${count} user leaderboard season reset хийгдлээ.`); } catch (error) { alert(error.message); } };
 
   window.resetAllData = function() { if (!confirm('Progress, history, local data бүгдийг reset хийх үү?')) return; outcomes = new Array(9).fill(null); tradeHistory = []; try { localStorage.removeItem(STORAGE_KEY); localStorage.removeItem(HISTORY_KEY); localStorage.removeItem(REVENGE_KEY); } catch (_) {} revengeUntil = 0; saveProgress(); render(); goTop(); };
   window.resetPlanProgress = function() { if (!confirm('Бүх level-ийн сонголтыг reset хийх үү? Journal note хэвээр үлдэнэ.')) return; clearProgress(); goTop(); };
@@ -4214,5 +5513,69 @@ service cloud.firestore {
   }
 }
 -->
+
+<script id="ultra-luxury-script">
+(function(){
+  function applyEntranceAnimation() {
+    const current = document.body?.dataset?.page || 'home';
+    const visible = document.querySelectorAll('.page-title-card, .page-section.page-' + current);
+    let i = 0;
+    visible.forEach((el) => {
+      el.classList.remove('soft-enter');
+      el.style.setProperty('--enter-delay', Math.min(i++, 8) * 55 + 'ms');
+      void el.offsetWidth;
+      el.classList.add('soft-enter');
+    });
+  }
+
+  function markItemEnter(el) {
+    if (!el || !(el instanceof Element)) return;
+    if (el.dataset.ultraAnimated === '1') return;
+    el.dataset.ultraAnimated = '1';
+    el.classList.add('soft-item-enter');
+  }
+
+  function scanExistingAnimatedItems() {
+    document.querySelectorAll('.idea-post, .chat-row, .leaderboard-row, .history-item, .admin-user-row').forEach(markItemEnter);
+  }
+
+  const originalShowPage = window.showPage;
+  if (typeof originalShowPage === 'function') {
+    window.showPage = function(page) {
+      originalShowPage(page);
+      requestAnimationFrame(() => {
+        applyEntranceAnimation();
+        scanExistingAnimatedItems();
+      });
+    };
+  }
+
+  window.addEventListener('load', function(){
+    setTimeout(() => {
+      applyEntranceAnimation();
+      scanExistingAnimatedItems();
+    }, 120);
+  });
+
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      mutation.addedNodes.forEach((node) => {
+        if (!(node instanceof Element)) return;
+        if (node.matches('.idea-post, .chat-row, .leaderboard-row, .history-item, .admin-user-row')) markItemEnter(node);
+        node.querySelectorAll?.('.idea-post, .chat-row, .leaderboard-row, .history-item, .admin-user-row').forEach(markItemEnter);
+      });
+    }
+  });
+
+  if (document.body) {
+    observer.observe(document.body, { childList: true, subtree: true });
+  } else {
+    window.addEventListener('DOMContentLoaded', function(){
+      observer.observe(document.body, { childList: true, subtree: true });
+    }, { once: true });
+  }
+})();
+</script>
+
 </body>
 </html>
