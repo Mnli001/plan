@@ -1439,7 +1439,7 @@
       <div class="plan-title">АЛДАГДЛЫГ ХӨӨХГҮЙ · ЗӨВХӨН ТӨЛӨВЛӨГӨӨГӨӨ ДАГАНА · ЛОТ-ОО ЗӨВ ТООЦООЛНО</div>
       <div class="badges">
         <span class="badge">RR 1:2</span>
-        <span class="badge">Эрсдэл = Баланс × 20%</span>
+        <span class="badge">Лот = $50 тутамд 0.01</span>
         <span class="badge">Лот 0.01 алхамтай</span>
         <span class="badge">Зорилго $1,000</span>
       </div>
@@ -1494,7 +1494,7 @@
         <div>
           <div class="auth-kicker">Эхлэх баланс</div>
           <div class="auth-title">Эхлэх балансаа сонго</div>
-          <div class="note">$50-$100 хооронд хүссэн дүнгээрээ сорилтод оролцож болно. Үүнээс 20% эрсдэл, RR 1:2 ашиг, лот автоматаар тооцогдоно.</div>
+          <div class="note">$50-$100 хооронд хүссэн дүнгээрээ сорилтод оролцож болно. Лот нь $50 balance тутамд 0.01-ээр нэмэгдэнэ. SL 100 pip, TP 200 pip буюу RR 1:2 хэвээр байна.</div>
         </div>
         <div class="balance-setup-form">
           <input id="startBalanceSetupInput" class="auth-input" type="number" min="50" max="100" step="0.01" placeholder="50 - 100" inputmode="decimal" />
@@ -1538,7 +1538,7 @@
         </div>
         <div class="next-trade-grid">
           <div class="next-mini"><span>Баланс</span><strong id="summaryBalance">$0.00</strong></div>
-          <div class="next-mini"><span>20% эрсдэл</span><strong id="summaryRisk">$0.00</strong></div>
+          <div class="next-mini"><span>100 pip эрсдэл</span><strong id="summaryRisk">$0.00</strong></div>
           <div class="next-mini"><span>RR 1:2 ашиг</span><strong id="summaryProfit">$0.00</strong></div>
           <div class="next-mini"><span>Лот</span><strong id="summaryLot">0.01</strong></div>
         </div>
@@ -1549,7 +1549,7 @@
     <section class="dashboard app-only page-section page-home" id="homeDashboard">
       <div class="stat-card glass-card"><div class="stat-label">Одоогийн баланс</div><div class="stat-value" id="currentBalance">$0.00</div><div class="stat-note">Сүүлийн үр дүнгээр</div></div>
       <div class="stat-card glass-card"><div class="stat-label">Зорилгын явц</div><div class="stat-value" id="progressPercent">0%</div><div class="stat-note">$1,000 хүртэлх зам</div></div>
-      <div class="stat-card glass-card"><div class="stat-label">Дараагийн эрсдэл</div><div class="stat-value" id="nextRisk">$0.00</div><div class="stat-note">Баланс × 20%</div></div>
+      <div class="stat-card glass-card"><div class="stat-label">Дараагийн эрсдэл</div><div class="stat-value" id="nextRisk">$0.00</div><div class="stat-note">Lot × 100 pip × $10</div></div>
       <div class="stat-card glass-card"><div class="stat-label">Одоогийн лот</div><div class="stat-value" id="nextLot">0.01</div><div class="stat-note">0.01 алхам руу доош</div></div>
     </section>
 
@@ -1596,7 +1596,7 @@
     </div>
     <div class="table-wrapper app-only page-section page-levels glass-card" id="levelsSection">
       <table class="trading-table" id="tradeTable">
-        <thead><tr><th>#</th><th>БАЛАНС</th><th>SL ПИПС</th><th>20% ЭРСДЭЛ</th><th>ЛОТ</th><th>АШИГ</th><th>ҮР ДҮН</th><th>ШИНЭ БАЛАНС</th></tr></thead>
+        <thead><tr><th>#</th><th>БАЛАНС</th><th>SL ПИПС</th><th>100 PIP ЭРСДЭЛ</th><th>ЛОТ</th><th>200 PIP АШИГ</th><th>ҮР ДҮН</th><th>ШИНЭ БАЛАНС</th></tr></thead>
         <tbody id="tableBody"></tbody>
       </table>
     </div>
@@ -1681,7 +1681,7 @@
       <div class="info-card glass-card">
         <div class="auth-title">Үндсэн дүрэм</div>
         <div class="rules-grid">
-          <div class="rule">Эрсдэл: балансын 20%-иар бодно.</div>
+          <div class="rule">Лот: $50 balance тутамд 0.01-ээр нэмэгдэнэ.</div>
           <div class="rule">Ашиг: эрсдэл × 2 буюу RR 1:2.</div>
           <div class="rule">Лот: эрсдэлээс тооцоод 0.01 алхам руу доош тайрна.</div>
           <div class="rule">Алдагдлын дараа нөхөх гэж орохгүй.</div>
@@ -1692,7 +1692,7 @@
       <div class="quote-text">Зах зээл чамайг шагнах албагүй. Харин чи дүрмээ хамгаалж чадвал боломж ирэх мөчид бэлэн байна.</div>
       <div class="quote-sub">Чухал нь хурд биш, дүрмээ эвдэхгүй байх.</div>
     </section>
-    <div class="risk-note app-only page-section page-home">Санамж: 20% эрсдэл бол өндөр эрсдэл. Бодит оролт хийхээс өмнө XAUUSD-ийн stop-loss, спред, брокерийн лотын алхмаа шалга.</div>
+    <div class="risk-note app-only page-section page-home">Санамж: SL 100 pip, TP 200 pip гэсэн тогтмол системээр тооцож байна. Бодит оролт хийхээс өмнө XAUUSD-ийн stop-loss, спред, брокерийн лотын алхмаа шалга.</div>
     <footer class="footer app-only page-section page-home">АРИЛЖААГАА ТӨЛӨВЛӨ · ЛОТОО ТООЦООЛ · СЭТГЭЛ ХӨДЛӨЛГҮЙ ГҮЙЦЭТГЭ</footer>
   </div>
 
@@ -1814,7 +1814,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script>
-    const RISK = 0.20;
     const RR = 2;
     const TARGET = 1000;
     const STOP_LOSS_PIPS = 100;
@@ -1864,9 +1863,28 @@
 
     function round2(value) { return Math.round((Number(value || 0) + Number.EPSILON) * 100) / 100; }
     function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
-    function calculateLot(risk) {
-      const rawLot = Number(risk || 0) / STOP_LOSS_PIPS / PIP_VALUE_PER_1_LOT;
-      return round2(clamp(Math.floor(rawLot * 100) / 100, MIN_LOT, MAX_LOT));
+    function calculateLotByBalance(balance) {
+      const b = Number(balance || 0);
+
+      // Шинэ систем:
+      // $50-$99.99   = 0.01 lot
+      // $100-$149.99 = 0.02 lot
+      // $150-$199.99 = 0.03 lot гэх мэт
+      // $50 хүрээгүй байсан ч хамгийн багадаа 0.01 lot.
+      const step = Math.max(1, Math.floor(b / 50));
+      const lot = step * 0.01;
+
+      return round2(clamp(lot, MIN_LOT, MAX_LOT));
+    }
+
+    function calculateRiskByLot(lot) {
+      // 100 pip SL дээр 1 lot = $10 per pip.
+      return round2(Number(lot || 0) * STOP_LOSS_PIPS * PIP_VALUE_PER_1_LOT);
+    }
+
+    function calculateProfitByLot(lot) {
+      // RR 1:2 буюу TP 200 pip.
+      return round2(calculateRiskByLot(lot) * RR);
     }
     function formatMoney(value) { return `$${Number(value || 0).toFixed(2)}`; }
     function escapeHTML(value) {
@@ -2107,9 +2125,9 @@
       const levels = [];
       for (let i = 0; i < outcomes.length; i++) {
         const startBalance = round2(balance);
-        const risk = round2(startBalance * RISK);
-        const profit = round2(risk * RR);
-        const lot = calculateLot(risk);
+        const lot = calculateLotByBalance(startBalance);
+        const risk = calculateRiskByLot(lot);
+        const profit = calculateProfitByLot(lot);
         const outcome = outcomes[i] || null;
         let newBalance = null;
         if (outcome === 'taken') newBalance = round2(startBalance + profit);
@@ -2128,9 +2146,11 @@
       while (outcomes.length < 9) outcomes.push(null);
     }
     function projectLevel(idx, startBalance) {
-      const risk = round2(startBalance * RISK);
-      const profit = round2(risk * RR);
-      return { idx, startBalance: round2(startBalance), risk, profit, lot: calculateLot(risk), slPips: STOP_LOSS_PIPS, outcome: null, newBalance: round2(startBalance + profit), projected: true };
+      const safeStartBalance = round2(startBalance);
+      const lot = calculateLotByBalance(safeStartBalance);
+      const risk = calculateRiskByLot(lot);
+      const profit = calculateProfitByLot(lot);
+      return { idx, startBalance: safeStartBalance, risk, profit, lot, slPips: STOP_LOSS_PIPS, outcome: null, newBalance: round2(safeStartBalance + profit), projected: true };
     }
 
     function completedLevels() {
@@ -2172,7 +2192,7 @@
         <td data-label="#">${levelDisplay}</td>
         <td data-label="Баланс" class="bal-cell">${formatMoney(l.startBalance)}</td>
         <td data-label="SL пипс">${l.slPips}</td>
-        <td data-label="20% эрсдэл" style="color:#ffcf7a;">${formatMoney(l.risk)}</td>
+        <td data-label="100 pip эрсдэл" style="color:#ffcf7a;">${formatMoney(l.risk)}</td>
         <td data-label="Лот" class="lot-cell">${Number(l.lot || 0).toFixed(2)}</td>
         <td data-label="Ашиг" style="color:#b9ffd7;">${formatMoney(l.profit)}</td>
         <td data-label="Үр дүн">${action}</td>
@@ -3232,8 +3252,9 @@
       for (let i = 0; i < Math.max(list.length, 9); i++) {
         const outcome = list[i];
         if (!outcome) { currentLevel = i + 1; break; }
-        const risk = round2(balance * RISK);
-        const profit = round2(risk * RR);
+        const lot = calculateLotByBalance(balance);
+        const risk = calculateRiskByLot(lot);
+        const profit = calculateProfitByLot(lot);
         if (outcome === 'taken') { balance = round2(balance + profit); wins++; }
         if (outcome === 'loss') { balance = round2(Math.max(0, balance - risk)); losses++; }
         currentLevel = i + 2;
@@ -3436,8 +3457,10 @@
       let wins = 0, losses = 0;
       userOutcomes.forEach(o => {
         if (o !== 'taken' && o !== 'loss') return;
-        const risk = round2(sim * RISK);
-        if (o === 'taken') { sim = round2(sim + risk * RR); wins++; }
+        const lot = calculateLotByBalance(sim);
+        const risk = calculateRiskByLot(lot);
+        const profit = calculateProfitByLot(lot);
+        if (o === 'taken') { sim = round2(sim + profit); wins++; }
         else { sim = round2(Math.max(0, sim - risk)); losses++; }
       });
       const finalBalance = round2(sim);
